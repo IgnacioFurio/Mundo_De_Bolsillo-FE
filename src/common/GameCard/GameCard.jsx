@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 //components
+import { InfoButton } from '../InfoButton/InfoButton';
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
 //Css
 import './GameCard.css'
 //GameCard helpers
 import { descriptionSlicer } from '../../helpers/GameCard.helper';
-import { InfoButton } from '../InfoButton/InfoButton';
 
 export const GameCard = ({dataCard}) => {
 
@@ -29,8 +29,9 @@ export const GameCard = ({dataCard}) => {
         showMore ? setShowMore(false) : setShowMore(true);        
     };
 
+
     return (
-        <Container className={showMoreStyle}>
+        <Container className={showMoreStyle} >
             <Row >
                 <Col className='gameTitle border-bottom border-success-subtle rounded m-2 fs-6 fw-bold'>
                     {dataCard.title}
