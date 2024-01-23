@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
+//components
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
 //Css
 import './GameCard.css'
 //GameCard helpers
 import { descriptionSlicer } from '../../helpers/GameCard.helper';
+import { InfoButton } from '../InfoButton/InfoButton';
 
 export const GameCard = ({dataCard}) => {
 
@@ -15,16 +17,20 @@ export const GameCard = ({dataCard}) => {
 
 
     useEffect(() => {
-        setDescription(descriptionSlicer(description));
-        showMore ? setShowMoreStyle("gameCardShow border border-success rounded my-3") : setShowMoreStyle("gameCard border border-success rounded my-3");
+        setDescription(descriptionSlicer(description));        
     },[]);
 
-    const handleShowDescription = () => {
+    useEffect(() => {
+        showMore ? setShowMoreStyle("gameCardShow border border-success rounded my-3") : setShowMoreStyle("gameCard border border-success rounded my-3");
 
+    }, [showMore]);
+
+    const handleShowDescription = () => {
+        showMore ? setShowMore(false) : setShowMore(true);        
     };
 
     return (
-        <Container className={showMoreStyle} onClick={() => {}}>
+        <Container className={showMoreStyle}>
             <Row >
                 <Col className='gameTitle border-bottom border-success-subtle rounded m-2 fs-6 fw-bold'>
                     {dataCard.title}
@@ -32,9 +38,14 @@ export const GameCard = ({dataCard}) => {
             </Row>
             <Row>
                 <Col className='px-4 fs-6 text-break'>
-                    {description}
+                    {showMore ? dataCard.description : description}
                 </Col>
             </Row>
+            <Row>                    
+                <Col className="d-flex justify-content-end align-items-end">
+                {description.length === 83 ? <InfoButton clickFunction={() => handleShowDescription()} status={showMore}/> : ""}
+                </Col>
+            </Row> 
         </Container>
     )
 };
