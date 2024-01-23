@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { Container, Row , Col} from 'react-bootstrap';
 //Css
 import './GameCard.css'
+//GameCard helpers
+import { descriptionSlicer } from '../../helpers/GameCard.helper';
 
 export const GameCard = ({dataCard}) => {
 
@@ -12,18 +14,18 @@ export const GameCard = ({dataCard}) => {
 
 
     useEffect(() => {
-        if (description.length > 90) {setDescription(description.slice(0,90) + "...")};
+        setDescription(descriptionSlicer(description));
     },[]);
 
     return (
-        <Container className='gameCard border border-success rounded my-2'>
+        <Container className='gameCard border border-success rounded my-3'>
             <Row >
-                <Col className='gameTitle border-bottom border-success-subtle rounded m-2 fs-5 fw-bold'>
+                <Col className='gameTitle border-bottom border-success-subtle rounded m-2 fs-6 fw-bold'>
                     {dataCard.title}
                 </Col>
             </Row>
             <Row>
-                <Col className='px-4 fs-6'>
+                <Col className='px-4 fs-6 text-break'>
                     {description}
                 </Col>
             </Row>
