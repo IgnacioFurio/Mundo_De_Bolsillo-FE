@@ -10,15 +10,21 @@ export const GameCard = ({dataCard}) => {
 
     const [ description, setDescription ] = useState(dataCard.description);
 
-    const [ longword, setLongword ] =useState("");
+    const [ showMore, setShowMore ] = useState(false);
+    const [ showMoreStyle, setShowMoreStyle] = useState("gameCard border border-success rounded my-3");
 
 
     useEffect(() => {
         setDescription(descriptionSlicer(description));
+        showMore ? setShowMoreStyle("gameCardShow border border-success rounded my-3") : setShowMoreStyle("gameCard border border-success rounded my-3");
     },[]);
 
+    const handleShowDescription = () => {
+
+    };
+
     return (
-        <Container className='gameCard border border-success rounded my-3'>
+        <Container className={showMoreStyle} onClick={() => {}}>
             <Row >
                 <Col className='gameTitle border-bottom border-success-subtle rounded m-2 fs-6 fw-bold'>
                     {dataCard.title}
