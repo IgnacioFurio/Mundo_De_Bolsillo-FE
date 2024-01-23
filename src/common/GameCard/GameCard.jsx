@@ -9,7 +9,6 @@ import './GameCard.css'
 import { descriptionSlicer } from '../../helpers/GameCard.helper';
 
 export const GameCard = ({dataCard}) => {
-
     const [ description, setDescription ] = useState(dataCard.description);
 
     const [ showMore, setShowMore ] = useState(false);
@@ -31,7 +30,7 @@ export const GameCard = ({dataCard}) => {
 
 
     return (
-        <Container className={showMoreStyle} >
+        <Container className={showMoreStyle}>
             <Row >
                 <Col className='gameTitle border-bottom border-success-subtle rounded m-2 fs-6 fw-bold'>
                     {dataCard.title}

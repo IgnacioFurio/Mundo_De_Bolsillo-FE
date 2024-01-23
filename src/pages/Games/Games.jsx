@@ -13,12 +13,9 @@ export const Games = () => {
         .catch(error => console.log(error));
     },[]);
 
-    useEffect(() => {
-    });
-
     return (
         <div className='m-3'>
-        {games.map(data => {return <GameCard key={data.id} dataCard={data}/>})}
+            {games.map(data => {return <GameCard key={data.id} dataCard={data}/>})}
         </div>
     )
 }
