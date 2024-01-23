@@ -1,8 +1,15 @@
 .gameCard{
     cursor: pointer;
-    height: 8em;    
+    height: 9em;
+    transition: 0.3s;
 }
+.gameCard:hover{
+    box-shadow: 0.2em 0.2em 0.6em; 
+    transition: 0.3s;
+}
+
 .gameCardShow{
     cursor: pointer;
-    height: auto;    
+    height: fit-content;  
+    box-shadow: 0.2em 0.2em 0.6em;   
 }
