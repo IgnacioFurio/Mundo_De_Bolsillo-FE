@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 //microservices
 import { getAllgames } from '../../services/game.apicalls';
+//components
+import { GameCard } from '../../common/GameCard/GameCard';
 
 export const Games = () => {
     const [ games, setGames ] = useState([]);
@@ -12,10 +14,11 @@ export const Games = () => {
     },[]);
 
     useEffect(() => {
-        console.log(games);
     });
 
     return (
-        <div>Games</div>
+        <div className='m-3'>
+        {games.map(data => {return <GameCard key={data.id} dataCard={data}/>})}
+        </div>
     )
 }
