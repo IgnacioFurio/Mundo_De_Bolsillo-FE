@@ -1,11 +1,13 @@
 import React from 'react'
-import { InfoButton } from "./common/InfoButton/InfoButton";
+import { Games } from './pages/Games/Games'
 
 export const App = () => {
   return (
-    <>
-      <div>APP</div>
-      <InfoButton />
-    </>
+    <div>
+      <div>HEADER</div>
+      <div>BODY</div>
+      <Games />
+      <div>FOOTER</div>
+    </div>
   )
 }

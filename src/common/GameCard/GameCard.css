@@ -1,0 +1,8 @@
+.gameCard{
+    cursor: pointer;
+    height: 8em;    
+}
+.gameCardShow{
+    cursor: pointer;
+    height: auto;    
+}
