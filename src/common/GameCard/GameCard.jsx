@@ -43,13 +43,13 @@ export const GameCard = ({dataCard}) => {
     };
 
     return (
-        <Container className={showMoreStyle} onClick={(e) => handleClickGame(e)}>
-            <Row >
+        <Container className={showMoreStyle}>
+            <Row onClick={(e) => handleClickGame(e)}>
                 <Col className='gameTitle border-bottom border-success-subtle rounded m-2 fs-6 fw-bold'>
                     {dataCard.title}
                 </Col>
             </Row>
-            <Row>
+            <Row onClick={(e) => handleClickGame(e)}>
                 <Col className='px-4 fs-6 text-break'>
                     {showMore ? dataCard.description : description}
                 </Col>
