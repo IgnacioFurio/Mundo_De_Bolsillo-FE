@@ -1,15 +1,22 @@
 .gameCard{
     cursor: pointer;
     height: 9em;
-    transition: 0.3s;
+    transition: 1s;
+    border: solid 0.1em rgb(21, 177, 21);
+    border-top-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
 }
 .gameCard:hover{
-    box-shadow: 0.2em 0.2em 0.6em; 
-    transition: 0.3s;
+    box-shadow: 0.4em 0.4em 0.9em; 
+    transition: 0.5s;
 }
 
 .gameCardShow{
     cursor: pointer;
     height: fit-content;  
-    box-shadow: 0.2em 0.2em 0.6em;   
+    box-shadow: 0.2em 0.2em 0.6em;
+    transition: 1s;
+    border: solid 0.1em rgb(21, 177, 21);
+    border-top-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;   
 }
