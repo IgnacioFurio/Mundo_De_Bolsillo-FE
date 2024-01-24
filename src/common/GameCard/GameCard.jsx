@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react'
+//Redux
+import { useDispatch, useSelector } from 'react-redux';
+
 //components
+import { InfoButton } from '../InfoButton/InfoButton';
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
 //Css
 import './GameCard.css'
 //GameCard helpers
 import { descriptionSlicer } from '../../helpers/GameCard.helper';
-import { InfoButton } from '../InfoButton/InfoButton';
+import { gameInfo } from '../../services/game.slice';
+import { useNavigate } from 'react-router-dom';
 
 export const GameCard = ({dataCard}) => {
+
+    const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     const [ description, setDescription ] = useState(dataCard.description);
 
@@ -17,20 +26,24 @@ export const GameCard = ({dataCard}) => {
 
 
     useEffect(() => {
-        setDescription(descriptionSlicer(description));        
+        setDescription(descriptionSlicer(description)); 
     },[]);
 
     useEffect(() => {
-        showMore ? setShowMoreStyle("gameCardShow border border-success rounded my-3") : setShowMoreStyle("gameCard border border-success rounded my-3");
-
+        showMore ? setShowMoreStyle("gameCardShow my-3") : setShowMoreStyle("gameCard my-3");
     }, [showMore]);
 
     const handleShowDescription = () => {
         showMore ? setShowMore(false) : setShowMore(true);        
     };
 
+    const handleClickGame = (e) => {
+        dispatch(gameInfo({gameInformation: dataCard}));
+        navigate("/game-details");
+    };
+
     return (
-        <Container className={showMoreStyle}>
+        <Container className={showMoreStyle} onClick={(e) => handleClickGame(e)}>
             <Row >
                 <Col className='gameTitle border-bottom border-success-subtle rounded m-2 fs-6 fw-bold'>
                     {dataCard.title}
