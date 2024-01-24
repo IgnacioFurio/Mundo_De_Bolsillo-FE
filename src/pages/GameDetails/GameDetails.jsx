@@ -15,7 +15,7 @@ export const GameDetails = () => {
     const [ gameInformation, setGameInformation ] = useState(dataRdx.gameInformation);
 
     useEffect(() => {
-        console.log(dataRdx);
+        console.log(gameInformation);
     },[]);
 
     return (
