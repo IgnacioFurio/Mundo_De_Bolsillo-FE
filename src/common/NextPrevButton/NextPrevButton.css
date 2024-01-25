@@ -1,0 +1,49 @@
+.prevButtonDesign{
+    height: 2em;
+    width: 2em;
+    border-left: solid 0.3em brown;
+    border-right: transparent;
+    border-top: transparent;
+    border-bottom: solid 0.3em brown;
+    background-color: transparent;
+    transition: 0.3s;
+}
+
+.prevButtonDesign{
+    transform: rotate(45deg);
+}
+
+.prevButtonDesign:hover{
+    height: 2.5em;
+    width: 2.5em;
+    transition: 0.4s;
+}
+
+.nextButtonDesign{
+    height: 2em;
+    width: 2em;
+    border-left: transparent;
+    border-right: solid 0.3em brown;
+    border-top: solid 0.3em brown;
+    border-bottom: transparent;
+    background-color: transparent;
+    transition: 0.3s;
+}
+
+.nextButtonDesign{
+    transform: rotate(45deg);
+}
+
+.nextButtonDesign:hover{
+    height: 2.5em;
+    width: 2.5em;
+    transition: 0.4s;
+}
+
+.submitButtonDesign{
+    width: fit-content;
+    border: transparent;
+    background-color: grey;
+    font-weight: bold;
+    color: white;
+}
