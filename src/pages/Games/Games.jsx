@@ -23,8 +23,8 @@ export const Games = () => {
     return (
         <Container>
             <Row>
-                <Col className='d-flex justify-content-center' onClick={(e) => navigate("/games/new-game")}>
-                    <NewRegisterButton name={"Nueva Partida"}/>
+                <Col className='d-flex justify-content-center'>
+                    <NewRegisterButton name={"Nueva Partida"} clickFunction={(e) => navigate("/games/new-game")}/>
                 </Col>
             </Row>
             <Row>
