@@ -19,7 +19,7 @@ export const GameCard = ({dataCard}) => {
 
     const navigate = useNavigate();
 
-    const [ description, setDescription ] = useState(dataCard.description);
+    const [ description, setDescription ] = useState(dataCard?.description);
 
     const [ showMore, setShowMore ] = useState(false);
     const [ showMoreStyle, setShowMoreStyle] = useState("gameCard border border-success rounded my-3");
@@ -56,7 +56,7 @@ export const GameCard = ({dataCard}) => {
             </Row>
             <Row>                    
                 <Col className="d-flex justify-content-end align-items-end">
-                {description.length === 83 ? <InfoButton clickFunction={() => handleShowDescription()} status={showMore}/> : ""}
+                {description?.length === 83 ? <InfoButton clickFunction={() => handleShowDescription()} status={showMore}/> : ""}
                 </Col>
             </Row> 
         </Container>
