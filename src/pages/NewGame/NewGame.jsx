@@ -86,7 +86,7 @@ export const NewGame = () => {
                         <NetxtPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NetxtPrevButton action="Submit" clickFunction={() => {}}/>
+                        <NetxtPrevButton action="Submit" clickFunction={() => createNewGame()}/>
                     </Col>
                 </Row>
                 }

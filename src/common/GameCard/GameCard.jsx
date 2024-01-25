@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 //Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 //components
 import { InfoButton } from '../InfoButton/InfoButton';
@@ -19,14 +19,14 @@ export const GameCard = ({dataCard}) => {
 
     const navigate = useNavigate();
 
-    const [ description, setDescription ] = useState(dataCard?.description);
+    const [ description, setDescription ] = useState(dataCard.description);
 
     const [ showMore, setShowMore ] = useState(false);
     const [ showMoreStyle, setShowMoreStyle] = useState("gameCard border border-success rounded my-3");
 
 
     useEffect(() => {
-        setDescription(descriptionSlicer(description)); 
+        setDescription(descriptionSlicer(dataCard.description)); 
     },[]);
 
     useEffect(() => {
@@ -39,7 +39,7 @@ export const GameCard = ({dataCard}) => {
 
     const handleClickGame = (e) => {
         dispatch(gameInfo({gameInformation: dataCard}));
-        navigate("/game-details");
+        navigate("/games/game-details");
     };
 
     return (
@@ -56,7 +56,7 @@ export const GameCard = ({dataCard}) => {
             </Row>
             <Row>                    
                 <Col className="d-flex justify-content-end align-items-end">
-                {description?.length === 83 ? <InfoButton clickFunction={() => handleShowDescription()} status={showMore}/> : ""}
+                {description.length === 83 ? <InfoButton clickFunction={() => handleShowDescription()} status={showMore}/> : ""}
                 </Col>
             </Row> 
         </Container>
