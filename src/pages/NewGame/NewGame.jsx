@@ -1,41 +1,42 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+//common
+import { NetxtPrevButton } from '../../common/NextPrevButton/NetxtPrevButton';
 //bootstrap
 import { Col, Container, Row  } from 'react-bootstrap'
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 //apicall
 import { createGame } from '../../services/game.apicalls';
-import { useNavigate } from 'react-router-dom';
 
 export const NewGame = () => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const inputPlaceholders = {
         placeholder1: "¿Como vas a llamar a la partida?",
         placeholder2: "¿De que va a tratar esta partida?"
     };
 
-    const [counter, setCounter ] = useState(0);
+    const [formCounter, setFormCounter ] = useState(0);
 
     const [ newGameData, setNewGameData] = useState({
         title: "",
         description: ""
     });
 
-    useEffect(() => {
-        console.log(newGameData);
-    });
-
-    const inputHandler = (e) => {
-        
+    const inputHandler = (e) => {        
         setNewGameData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }));
     };
 
+    const gameFormHandlerPrev = () => {
+        formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/my-games");
+    };
+
     const gameFormHandlerNext = () => {
-        counter < 2 ? setCounter(counter + 1) : setCounter(0);
+        formCounter < 2 ? setFormCounter(formCounter + 1) : setFormCounter(0);
     };
 
     const createNewGame = () => { 
@@ -54,7 +55,7 @@ export const NewGame = () => {
 
     return (
         <Container>
-            {counter === 0 && <TutorialQuestions 
+            {formCounter === 0 && <TutorialQuestions 
                 type="textarea" 
                 text="El primer paso para crear una partida nueva es encontrarle un nombre molón." 
                 placeholder={inputPlaceholders.placeholder1} 
@@ -62,7 +63,7 @@ export const NewGame = () => {
                 changeFunction={(e) => inputHandler(e)}/>
                 }
             
-            {counter === 1 && <TutorialQuestions 
+            {formCounter === 1 && <TutorialQuestions 
                 type="textarea" 
                 text="Para continuar sería recomendable que contarás un pequeño resumen de que va a tratar esta historia" 
                 placeholder={inputPlaceholders.placeholder2} 
@@ -70,18 +71,24 @@ export const NewGame = () => {
                 changeFunction={(e) => inputHandler(e)}/>
                 }
 
-            {counter < 2 ? 
-            <Row>
-                <Col className='text-end mx-3' onClick={() => gameFormHandlerNext()}>
-                    Siguiente
-                </Col>
-            </Row>
-            :
-            <Row>
-                <Col className='text-end mx-3' onClick={() => createNewGame()}>
-                    Terminar
-                </Col>
-            </Row>
+            {formCounter < 2 ? 
+                <Row className='d-flex justify-content-between px-2'>
+                    <Col className='d-flex justify-content-start'>
+                        <NetxtPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
+                    </Col>
+                    <Col className='d-flex justify-content-end'>
+                        <NetxtPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/>
+                    </Col>  
+                </Row>
+                :
+                <Row>
+                    <Col className='d-flex justify-content-start'>
+                        <NetxtPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
+                    </Col>
+                    <Col className='d-flex justify-content-end'>
+                        <NetxtPrevButton action="Submit" clickFunction={() => {}}/>
+                    </Col>
+                </Row>
                 }
         </Container>
         );
