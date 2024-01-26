@@ -1,4 +1,8 @@
 .prevButtonDesign{
+    transform: rotate(45deg);
+}
+
+.prevButtonDesign{
     height: 2em;
     width: 2em;
     border-left: solid 0.3em brown;
@@ -6,17 +10,17 @@
     border-top: transparent;
     border-bottom: solid 0.3em brown;
     background-color: transparent;
-    transition: 0.3s;
-}
-
-.prevButtonDesign{
-    transform: rotate(45deg);
+    transition: 0.5s;
 }
 
 .prevButtonDesign:hover{
     height: 2.5em;
     width: 2.5em;
     transition: 0.4s;
+}
+
+.nextButtonDesign{
+    transform: rotate(45deg);
 }
 
 .nextButtonDesign{
@@ -27,11 +31,7 @@
     border-top: solid 0.3em brown;
     border-bottom: transparent;
     background-color: transparent;
-    transition: 0.3s;
-}
-
-.nextButtonDesign{
-    transform: rotate(45deg);
+    transition: 0.5s;
 }
 
 .nextButtonDesign:hover{
@@ -41,9 +41,59 @@
 }
 
 .submitButtonDesign{
+    height: 2em;
     width: fit-content;
     border: transparent;
     background-color: grey;
     font-weight: bold;
     color: white;
+    border-top-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    transition: 1s;
+}
+
+.submitButtonDesignActive{
+    height: 2em;
+    width: fit-content;
+    border: transparent;
+    background-color: rgb(21, 177, 21);
+    font-weight: bold;
+    color: rgb(243, 243, 243);
+    border-top-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+    transition: 1s;
+}
+.submitButtonDesignActive:hover{
+    transition: 1s;
+    width: fit-content;
+    border: transparent;
+    background-color: rgb(28, 168, 35);
+    font-weight: bold;
+    color: rgb(243, 243, 243);
+    border-top-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+}
+
+.discardButtonDesign{
+    height: 2em;
+    width: 6em;
+    border: transparent;
+    background-color: rgb(230, 12, 51);
+    font-weight: bold;
+    color: rgb(243, 243, 243);
+    border-top-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+    transition: 1s;
+}
+
+.sendButtonDesing{
+    height: 2em;
+    width: 6em;
+    border: transparent;
+    background-color: rgb(21, 177, 21);
+    font-weight: bold;
+    color: rgb(243, 243, 243);
+    border-top-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    transition: 1s;
 }

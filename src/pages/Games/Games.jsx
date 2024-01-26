@@ -29,7 +29,7 @@ export const Games = () => {
             </Row>
             <Row>
                 <Col>
-                    {games.map(data => {return <GameCard key={data.id} dataCard={data}/>})}
+                    {games.map(data => {return <GameCard key={data.id} dataCard={data} showCard={false}/>})}
                 </Col>
             </Row>
         </Container>

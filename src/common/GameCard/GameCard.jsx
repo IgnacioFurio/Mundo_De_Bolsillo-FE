@@ -13,7 +13,7 @@ import { descriptionSlicer } from '../../helpers/GameCard.helper';
 import { gameInfo } from '../../services/game.slice';
 import { useNavigate } from 'react-router-dom';
 
-export const GameCard = ({dataCard}) => {
+export const GameCard = ({ dataCard}) => {
 
     const dispatch = useDispatch();
 
