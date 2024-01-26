@@ -1,4 +1,6 @@
-export const nextPrevButtonDesign = (action) => {
+export const nextPrevButtonDesign = (action, status) => {
+    if (action === "Submit" && status === true) return "submitButtonDesignActive m-3";
+
     switch (action) {
         case "Prev":
                 return "prevButtonDesign m-3";
@@ -9,7 +11,7 @@ export const nextPrevButtonDesign = (action) => {
             break;
         
         case "Submit":
-                return "submitButtonDesign rounded m-3"
+                return "submitButtonDesign m-3"
             break;
     
         default:
