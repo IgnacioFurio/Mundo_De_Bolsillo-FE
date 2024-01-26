@@ -1,0 +1,22 @@
+.deleteButtonDesign{
+    cursor: pointer;
+    height: 2em;
+    width: 6em;
+    border: transparent;
+    background-color: rgb(230, 12, 51);
+    font-weight: bold;
+    color: rgb(243, 243, 243);
+    border-top-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+}
+
+.deleteButtonDesign:hover{
+    height: 2em;
+    width: 6em;
+    border: transparent;
+    background-color: rgb(230, 12, 51);
+    font-weight: bold;
+    color: rgb(243, 243, 243);
+    border-top-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+}
