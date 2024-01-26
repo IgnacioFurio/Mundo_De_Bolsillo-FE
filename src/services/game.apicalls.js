@@ -9,3 +9,10 @@ export const createGame = async (body) => {
     return await axios.post(`${root}/game/post`, body)
 };
 
+export const deleteGame = async (body) => {
+    const data = {
+        game_id: body
+    }
+
+    return await axios.delete(`${root}/game/delete`,{data})
+};
