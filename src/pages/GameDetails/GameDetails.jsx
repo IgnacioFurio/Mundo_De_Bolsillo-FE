@@ -2,28 +2,39 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //redux
 import { gameData } from '../../services/game.slice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 //components
 import { DeleteButton } from '../../common/DeleteButton/DeleteButton';
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
 //css
 import "./GameDetails.css";
+import { deleteGame } from '../../services/game.apicalls';
 
 
 export const GameDetails = () => {
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+
     const dataRdx = useSelector(gameData);
 
     const [ gameInformation, setGameInformation ] = useState(dataRdx.gameInformation);
 
-    useEffect(() => {
-    },[gameInformation]);
+    const deleteGameData = (game_id) => {
+        deleteGame(game_id)
+        .then(result => {
+            navigate("/games/my-games")
+            dispatch(gameInfo({gameInformation: {}}));      
+        })
+        .catch(error => console.log(error));
+    };
 
     return (
         <Container id={gameInformation.id}>
             <Row className='text-center'>
                 <Col>Editar</Col>
-                <Col><DeleteButton gameData={gameInformation}/></Col>
+                <Col><DeleteButton gameData={gameInformation} clickFunction={() => deleteGameData(gameInformation.id)}/></Col>
                 
             </Row>
             <Row>
