@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //redux
-import { gameData } from '../../services/game.slice';
 import { useDispatch, useSelector } from 'react-redux';
+import { gameData } from '../../services/game.slice';
+import { deleteGame } from '../../services/game.apicalls';
 //components
 import { DeleteButton } from '../../common/DeleteButton/DeleteButton';
+import { PageNavigator } from '../../common/PageNavigator/PageNavigator';
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
 //css
 import "./GameDetails.css";
-import { deleteGame } from '../../services/game.apicalls';
 
 
 export const GameDetails = () => {
@@ -18,6 +19,8 @@ export const GameDetails = () => {
     const dispatch = useDispatch();
 
     const dataRdx = useSelector(gameData);
+
+    const prevPages = ["partidas"];
 
     const [ gameInformation, setGameInformation ] = useState(dataRdx.gameInformation);
 
@@ -32,6 +35,9 @@ export const GameDetails = () => {
 
     return (
         <Container id={gameInformation.id}>
+            <Row>
+                {prevPages.map(data => {return <PageNavigator page={data}/>})}
+            </Row>
             <Row className='text-center'>
                 <Col>Editar</Col>
                 <Col><DeleteButton gameData={gameInformation} clickFunction={() => deleteGameData(gameInformation.id)}/></Col>
