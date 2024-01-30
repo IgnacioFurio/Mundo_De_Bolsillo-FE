@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 //redux
-import { useSelector } from 'react-redux';
-import { gameData } from '../../services/game.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { gameData, gameInfo } from '../../services/game.slice';
+//apicall
+import { modifyGame } from '../../services/game.apicalls';
 //common
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
@@ -17,6 +19,8 @@ import { useNavigate } from 'react-router-dom';
 export const ModifyGame = () => {
 
     const navigate = useNavigate();
+
+    const dispatch = useDispatch();
 
     const dataRdx = useSelector(gameData);
 
@@ -42,10 +46,6 @@ export const ModifyGame = () => {
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
-    useEffect(() => {
-        console.log(gameInformation);
-    });
-
     useEffect(() =>{
         gameInformation.title !== "" ? setSubmitStatus(true) : setSubmitStatus(false);
     },[gameInformation.title]);
@@ -64,6 +64,21 @@ export const ModifyGame = () => {
             [e.target.name]: e.target.value
         }));
     };
+
+    const updateGameInformation = () => {
+
+        modifyGame(gameInformation)
+        .then(() => { 
+            dispatch(gameInfo({gameInformation: gameInformation}))
+            navigate('/games/game-details');
+        })
+        .catch(error => {
+            let backendErrorData = {
+                message: error.response.data.message,
+                valid: error.response.succes
+            }
+        });
+    }
 
     return (
         <Container>
@@ -102,7 +117,7 @@ export const ModifyGame = () => {
                         <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton action="Submit" status={submitStatus} clickFunction={() => {}}/>
+                        <NextPrevButton action="Submit" status={submitStatus} clickFunction={() => updateGameInformation()}/>
                     </Col>
                 </Row>
                 }
