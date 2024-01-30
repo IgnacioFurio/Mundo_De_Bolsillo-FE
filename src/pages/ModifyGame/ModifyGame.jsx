@@ -1,77 +1,74 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+//redux
+import { useSelector } from 'react-redux';
+import { gameData } from '../../services/game.slice';
 //common
+import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
+import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
+//bootstrap
+import { Col, Container, Row } from 'react-bootstrap';
 //helper
 import { GameFormQuestions } from '../../helpers/Games.Forms.helper';
-//bootstrap
-import { Col, Container, Row  } from 'react-bootstrap'
-import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
-//apicall
-import { createGame } from '../../services/game.apicalls';
-import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
+//css
+import "./ModifyGame.css";
+import { useNavigate } from 'react-router-dom';
 
-export const NewGame = () => {
+export const ModifyGame = () => {
 
     const navigate = useNavigate();
 
-    const formQuestions = {
-        title: GameFormQuestions.text.new.title,
-        description: GameFormQuestions.text.new.description
-    };
-    
-    const formPlaceholders = {
-        title: GameFormQuestions.placeholder.new.title,
-        description: GameFormQuestions.placeholder.new.description
-    };
+    const dataRdx = useSelector(gameData);
 
     const [formCounter, setFormCounter ] = useState(0);
 
-    const [ newGameData, setNewGameData] = useState({
-        title: "",
-        description: ""
+    const prevPages = ["partidas", dataRdx.gameInformation.title];
+
+    const formQuestions = {
+        title: GameFormQuestions.text.modify.title,
+        description: GameFormQuestions.text.modify.description
+    };
+    
+    const formPlaceholders = {
+        title: GameFormQuestions.placeholder.modify.title,
+        description: GameFormQuestions.placeholder.modify.description
+    };
+
+    const [ gameInformation, setGameInformation] = useState({
+        id: dataRdx.gameInformation.id,
+        title: dataRdx.gameInformation.title,
+        description: dataRdx.gameInformation.description
     });
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
-    const inputHandler = (e) => {        
-        setNewGameData((prevState) => ({
-            ...prevState,
-            [e.target.name]: e.target.value
-        }));
-    };
+    useEffect(() => {
+        console.log(gameInformation);
+    });
 
-    //primeras validaciones a mejorar
     useEffect(() =>{
-        newGameData.title !== "" ? setSubmitStatus(true) : setSubmitStatus(false);
-    },[newGameData.title]);
+        gameInformation.title !== "" ? setSubmitStatus(true) : setSubmitStatus(false);
+    },[gameInformation.title]);
 
     const gameFormHandlerPrev = () => {
-        formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/my-games");
+        formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/game-details");
     };
 
     const gameFormHandlerNext = () => {
         formCounter < 2 ? setFormCounter(formCounter + 1) : setFormCounter(0);
     };
 
-    const createNewGame = () => { 
-
-        createGame(newGameData)
-        .then(() => { 
-            navigate('/games/my-games');
-        })
-        .catch(error => {
-            let backendErrorData = {
-                message: error.response.data.message,
-                valid: error.response.succes
-            }
-        });
-    };     
+    const inputHandler = (e) => {        
+        setGameInformation((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }));
+    };
 
     return (
         <Container>
             {formCounter === 0 && <TutorialQuestions 
-                gameData={newGameData.title}
+                gameData={gameInformation.title}
                 type="textarea" 
                 text={formQuestions.title}
                 placeholder={formPlaceholders.title} 
@@ -80,7 +77,7 @@ export const NewGame = () => {
                 }
             
             {formCounter === 1 && <TutorialQuestions 
-                gameData={newGameData.description}
+                gameData={gameInformation.description}
                 type="textarea" 
                 text={formQuestions.description}
                 placeholder={formPlaceholders.description} 
@@ -88,7 +85,7 @@ export const NewGame = () => {
                 changeFunction={(e) => inputHandler(e)}/>
                 }
 
-            {formCounter === 2 && <ConfirmNewRegister data={newGameData}/>}
+            {formCounter === 2 && <ConfirmNewRegister data={gameInformation}/>}
 
             {formCounter < 2 ? 
                 <Row className='d-flex justify-content-between px-2'>
@@ -105,10 +102,10 @@ export const NewGame = () => {
                         <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton action="Submit" status={submitStatus} clickFunction={() => createNewGame()}/>
+                        <NextPrevButton action="Submit" status={submitStatus} clickFunction={() => {}}/>
                     </Col>
                 </Row>
                 }
         </Container>
-        );
-}
+    )
+};
