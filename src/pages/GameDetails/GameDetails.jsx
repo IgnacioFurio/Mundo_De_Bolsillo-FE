@@ -11,6 +11,7 @@ import { PageNavigator } from '../../common/PageNavigator/PageNavigator';
 import { Container, Row , Col} from 'react-bootstrap';
 //css
 import "./GameDetails.css";
+import { ModifyButton } from '../../common/ModifyButton/ModifyButton';
 
 
 export const GameDetails = () => {
@@ -33,15 +34,14 @@ export const GameDetails = () => {
         .catch(error => console.log(error));
     };
 
+    const handleModifyGame = () => {
+        console.log("hello world");
+    };
+
     return (
         <Container id={gameInformation.id}>
-            <Row>
+            <Row className='m-2'>
                 {prevPages.map(data => {return <PageNavigator page={data}/>})}
-            </Row>
-            <Row className='text-center'>
-                <Col>Editar</Col>
-                <Col><DeleteButton gameData={gameInformation} clickFunction={() => deleteGameData(gameInformation.id)}/></Col>
-                
             </Row>
             <Row>
                 <Col className='gameTitle d-flex justify-content-center mt-3 mx-2 fs-4 fw-bold'>
@@ -52,6 +52,10 @@ export const GameDetails = () => {
                 <Col className='gameDescription text-center mt-3 mx-2'>
                 {gameInformation.description}
                 </Col>
+            </Row>
+            <Row className='text-center my-4'>
+                <Col><ModifyButton clickFunction={() => handleModifyGame()}/></Col>
+                <Col><DeleteButton gameData={gameInformation} clickFunction={() => deleteGameData(gameInformation.id)}/></Col>
             </Row>
         </Container>
     )
