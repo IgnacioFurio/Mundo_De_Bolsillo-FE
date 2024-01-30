@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 //common
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 //helper
+import { validate } from '../../helpers/validations.helper';
 import { GameFormQuestions } from '../../helpers/Games.Forms.helper';
 //bootstrap
 import { Col, Container, Row  } from 'react-bootstrap'
@@ -31,6 +32,16 @@ export const NewGame = () => {
         title: "",
         description: ""
     });
+    
+    const [ validInputField, setValidInputfield] = useState({
+        titleValid: false,
+        descriptionValid: false
+    });
+    
+    const [ errorInputField, setErrorInputfield] = useState({
+        titleError: "",
+        descriptionError: ""
+    });
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
@@ -39,12 +50,33 @@ export const NewGame = () => {
             ...prevState,
             [e.target.name]: e.target.value
         }));
+
+        checkError(e);
     };
 
-    //primeras validaciones a mejorar
+    //Validaciones
     useEffect(() =>{
-        newGameData.title !== "" ? setSubmitStatus(true) : setSubmitStatus(false);
-    },[newGameData.title]);
+        console.log(submitStatus);
+        for(let error in errorInputField){
+            
+            if(errorInputField[error]){
+                
+                setSubmitStatus(false);
+                return;
+            };
+        };
+
+        for(let valid in validInputField){
+            
+            if(validInputField[valid] === false){
+                
+                setSubmitStatus(false);
+                return;
+            };
+        };
+    
+        setSubmitStatus(true);
+    },[newGameData]);
 
     const gameFormHandlerPrev = () => {
         formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/my-games");
@@ -66,7 +98,30 @@ export const NewGame = () => {
                 valid: error.response.succes
             }
         });
-    };     
+    }; 
+    
+    const checkError = (e) => {
+
+        let error = "";
+    
+        let check = validate(
+            e.target.name,
+            e.target.value,
+            e.target.required
+            );
+
+        error = check.message;
+
+        setValidInputfield((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Valid']: check.valid
+        }));
+
+        setErrorInputfield((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Error']: error
+        }));
+    };
 
     return (
         <Container>
@@ -76,7 +131,9 @@ export const NewGame = () => {
                 text={formQuestions.title}
                 placeholder={formPlaceholders.title} 
                 name="title" 
-                changeFunction={(e) => inputHandler(e)}/>
+                required={true}
+                changeFunction={(e) => inputHandler(e)}
+                blurFunction={(e)=>checkError(e)}/>
                 }
             
             {formCounter === 1 && <TutorialQuestions 
@@ -85,7 +142,9 @@ export const NewGame = () => {
                 text={formQuestions.description}
                 placeholder={formPlaceholders.description} 
                 name="description" 
-                changeFunction={(e) => inputHandler(e)}/>
+                required={false}
+                changeFunction={(e) => inputHandler(e)}
+                blurFunction={(e)=>checkError(e)}/>                
                 }
 
             {formCounter === 2 && <ConfirmNewRegister data={newGameData}/>}
@@ -96,7 +155,8 @@ export const NewGame = () => {
                         <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/>
+                    {validInputField.titleValid ? <NextPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
+                        
                     </Col>  
                 </Row>
                 :

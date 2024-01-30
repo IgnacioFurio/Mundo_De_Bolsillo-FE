@@ -40,6 +40,27 @@
     transition: 0.4s;
 }
 
+.waitButtonDesign{
+    height: 2em;
+    width: 2em;
+    border-left: transparent;
+    border-right: solid 0.3em grey;
+    border-top: solid 0.3em grey;
+    border-bottom: transparent;
+    background-color: transparent;
+    transition: 0.5s;
+}
+
+.waitButtonDesign{
+    transform: rotate(45deg);
+}
+
+.waitButtonDesign:hover{
+    height: 2.5em;
+    width: 2.5em;
+    transition: 0.4s;
+}
+
 .submitButtonDesign{
     height: 2em;
     width: fit-content;

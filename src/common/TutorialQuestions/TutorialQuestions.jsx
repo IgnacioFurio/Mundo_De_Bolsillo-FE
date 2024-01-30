@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { Col, Container, Form, Row } from 'react-bootstrap'
 
 
-export const TutorialQuestions = ({ gameData, text, type, placeholder, name, changeFunction}) => {
+export const TutorialQuestions = ({ gameData, text, type, placeholder, name, required, changeFunction, blurFunction}) => {
 
     return (
         <Container>
@@ -18,7 +18,9 @@ export const TutorialQuestions = ({ gameData, text, type, placeholder, name, cha
                     type={type} 
                     placeholder={placeholder}
                     name={name}
+                    required={required}
                     onChange={changeFunction}
+                    onBlur={blurFunction}
                     value={gameData}
                     />
                 </Form.Group>
