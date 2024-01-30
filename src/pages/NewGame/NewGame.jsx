@@ -56,7 +56,6 @@ export const NewGame = () => {
 
     //Validaciones
     useEffect(() =>{
-        console.log(submitStatus);
         for(let error in errorInputField){
             
             if(errorInputField[error]){
@@ -78,10 +77,10 @@ export const NewGame = () => {
         setSubmitStatus(true);
     },[newGameData]);
 
+    //handlers for PrevNext form
     const gameFormHandlerPrev = () => {
         formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/my-games");
     };
-
     const gameFormHandlerNext = () => {
         formCounter < 2 ? setFormCounter(formCounter + 1) : setFormCounter(0);
     };
@@ -156,7 +155,6 @@ export const NewGame = () => {
                     </Col>
                     <Col className='d-flex justify-content-end'>
                     {validInputField.titleValid ? <NextPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
-                        
                     </Col>  
                 </Row>
                 :
@@ -165,7 +163,7 @@ export const NewGame = () => {
                         <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton action="Submit" status={submitStatus} clickFunction={() => createNewGame()}/>
+                        <NextPrevButton action="Submit" clickFunction={() => createNewGame()}/>
                     </Col>
                 </Row>
                 }

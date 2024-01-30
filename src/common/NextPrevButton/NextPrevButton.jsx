@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { nextPrevButtonDesign } from '../../helpers/NextPrevButton.helper';
 //bootstrap
 import Modal from 'react-bootstrap/Modal';
-import { ModalBody } from 'react-bootstrap';
 //css
 import "./NextPrevButton.css";
 
