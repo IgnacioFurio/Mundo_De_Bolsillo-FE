@@ -8,6 +8,7 @@ import { modifyGame } from '../../services/game.apicalls';
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
+import { PageNavigator } from '../../common/PageNavigator/PageNavigator';
 //bootstrap
 import { Col, Container, Row } from 'react-bootstrap';
 //helper
@@ -25,9 +26,7 @@ export const ModifyGame = () => {
     const dataRdx = useSelector(gameData);
 
     const [formCounter, setFormCounter ] = useState(0);
-
-    const prevPages = ["partidas", dataRdx.gameInformation.title];
-
+    
     const formQuestions = {
         title: GameFormQuestions.text.modify.title,
         description: GameFormQuestions.text.modify.description

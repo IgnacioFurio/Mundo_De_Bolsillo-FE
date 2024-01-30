@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 //bootstrap
 import { Col } from 'react-bootstrap';
 //csss
@@ -26,8 +26,6 @@ export const PageNavigator = ({ page }) => {
     };
 
     return (
-        <>
-                <div className='pageNavigatorDesign text-primary-emphasis p-0 m-1' onClick={() => redirect(page)}>{page + " >"}</div>
-        </>
+        <div className='pageNavigatorDesign text-primary-emphasis p-0 m-1' onClick={() => redirect(page)}>{page + " >"}</div>
     )
 };
