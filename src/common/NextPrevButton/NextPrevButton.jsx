@@ -34,10 +34,10 @@ export const NextPrevButton = ({ action, clickFunction, status }) => {
                     <p>Haz click en el botón de "Enviar" si ya te has asegurado de que los datos son correctos.</p>
                 </Modal.Body>
                 <Modal.Footer className='d-flex justify-content-between mx-3'>
-                    <div className="discardButtonDesign text-center p-2" onClick={() => handleClose()}>
+                    <div className="discardButtonDesign text-center p-1" onClick={() => handleClose()}>
                         Volver
                     </div>
-                    <div className='sendButtonDesing text-center p-2' onClick={clickFunction}>
+                    <div className='sendButtonDesing text-center p-1' onClick={clickFunction}>
                         Enviar
                     </div>
                 </Modal.Footer>

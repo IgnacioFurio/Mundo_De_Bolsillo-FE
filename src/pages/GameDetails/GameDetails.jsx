@@ -34,10 +34,6 @@ export const GameDetails = () => {
         .catch(error => console.log(error));
     };
 
-    const handleModifyGame = () => {
-        console.log("hello world");
-    };
-
     return (
         <Container id={gameInformation.id}>
             <Row className='m-2'>
@@ -54,7 +50,7 @@ export const GameDetails = () => {
                 </Col>
             </Row>
             <Row className='text-center my-4'>
-                <Col><ModifyButton clickFunction={() => handleModifyGame()}/></Col>
+                <Col><ModifyButton clickFunction={() => navigate("/games/modify-game")}/></Col>
                 <Col><DeleteButton gameData={gameInformation} clickFunction={() => deleteGameData(gameInformation.id)}/></Col>
             </Row>
         </Container>
