@@ -6,10 +6,6 @@ import "./ConfirmNewRegister.css";
 
 export const ConfirmNewRegister = ({ data }) => {
 
-  useEffect(() => {
-    console.log(data);
-  })
-
   return (
     <>
       <Container className='confirmRegisterDesign'>

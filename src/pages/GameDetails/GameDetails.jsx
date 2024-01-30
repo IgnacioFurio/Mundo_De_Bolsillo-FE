@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { gameData } from '../../services/game.slice';
+import { gameData, gameInfo } from '../../services/game.slice';
 import { deleteGame } from '../../services/game.apicalls';
 //components
 import { DeleteButton } from '../../common/DeleteButton/DeleteButton';

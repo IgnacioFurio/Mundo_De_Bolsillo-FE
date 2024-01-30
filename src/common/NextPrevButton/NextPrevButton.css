@@ -75,6 +75,7 @@
 }
 
 .discardButtonDesign{
+    cursor: pointer;
     height: 2em;
     width: 6em;
     border: transparent;
@@ -87,6 +88,7 @@
 }
 
 .sendButtonDesing{
+    cursor: pointer;
     height: 2em;
     width: 6em;
     border: transparent;
