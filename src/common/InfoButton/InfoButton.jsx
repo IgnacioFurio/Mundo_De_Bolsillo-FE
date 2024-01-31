@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 //Css
 import "./InfoButton.css";
-//assets
-import infoButton from "../../assets/showMoreInfo.png";
 
 export const InfoButton = ({clickFunction, status}) => {
     

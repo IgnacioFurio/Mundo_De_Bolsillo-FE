@@ -1,13 +1,14 @@
 import React from 'react'
-import { Games } from './pages/Games/Games'
 import { Body } from './pages/Body/Body'
+import { Container, Row } from 'react-bootstrap'
+import './App.css'
 
 export const App = () => {
   return (
-    <div>
-      <div>HEADER</div>
+    <>
+      <div >HEADER</div>
       <Body/>
       <div>FOOTER</div>
-    </div>
+    </>
   )
 }

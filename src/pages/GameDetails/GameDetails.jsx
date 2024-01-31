@@ -37,7 +37,7 @@ export const GameDetails = () => {
     return (
         <Container id={gameInformation.id}>
             <Row className='m-2'>
-                {prevPages.map(data => {return <PageNavigator page={data}/>})}
+                {prevPages.map(data => {return <PageNavigator key={data} page={data}/>})}
             </Row>
             <Row>
                 <Col className='gameTitle d-flex justify-content-center mt-3 mx-2 fs-4 fw-bold'>
