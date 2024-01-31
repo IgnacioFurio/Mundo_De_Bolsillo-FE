@@ -12,13 +12,10 @@ export const NextPrevButton = ({ action, clickFunction, status }) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleActivate = (status) => {
-        if (status === true) return setShow(true);
-        return;
-    }
+    const handleActivate = () => setShow(true);
 
     useEffect(() => {   
-        setButtonDesign(nextPrevButtonDesign(action, status));
+        setButtonDesign(nextPrevButtonDesign(action));
     });
 
     return (
