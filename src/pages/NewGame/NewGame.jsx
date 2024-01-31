@@ -16,6 +16,7 @@ export const NewGame = () => {
 
     const navigate = useNavigate();
 
+    //HOOKS
     const formQuestions = {
         title: GameFormQuestions.text.new.title,
         description: GameFormQuestions.text.new.description
@@ -45,6 +46,8 @@ export const NewGame = () => {
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
+    const [ validateInputs, setValidateInputs ] = useState(["validInputs"]);
+
     const inputHandler = (e) => {        
         setNewGameData((prevState) => ({
             ...prevState,
@@ -54,37 +57,43 @@ export const NewGame = () => {
         checkError(e);
     };
 
-    //Validaciones
-    useEffect(() =>{
-        for(let error in errorInputField){
-            
-            if(errorInputField[error]){
-                
+    //VALIDATIONS
+    useEffect(() =>{       
+        for(let error in errorInputField){            
+            if(errorInputField[error]){                
                 setSubmitStatus(false);
                 return;
             };
         };
 
-        for(let valid in validInputField){
-            
-            if(validInputField[valid] === false){
-                
-                setSubmitStatus(false);
-                return;
-            };
-        };
-    
-        setSubmitStatus(true);
+        showNext();
     },[newGameData]);
 
-    //handlers for PrevNext form
+    //HANDLERS
     const gameFormHandlerPrev = () => {
         formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/my-games");
+        setSubmitStatus(false);
     };
     const gameFormHandlerNext = () => {
         formCounter < 2 ? setFormCounter(formCounter + 1) : setFormCounter(0);
+        setSubmitStatus(false);
+    };
+    const showNext  = () => {
+        let keys = Object.keys(validInputField);   
+        let values = Object.values(validInputField)
+
+        for (let i = 0; i < keys.length; i++) {
+            let j = i + 1;
+
+            if(keys[i] === validateInputs[j] && values[formCounter] === true) {
+                return setSubmitStatus(true);
+            };
+        }
+
+        setSubmitStatus(false)
     };
 
+    //APICALL
     const createNewGame = () => { 
 
         createGame(newGameData)
@@ -99,8 +108,8 @@ export const NewGame = () => {
         });
     }; 
     
+    //CHECKS
     const checkError = (e) => {
-
         let error = "";
     
         let check = validate(
@@ -116,10 +125,19 @@ export const NewGame = () => {
             [e.target.name + 'Valid']: check.valid
         }));
 
+        addString(e.target.name + 'Valid')
+        
         setErrorInputfield((prevState) => ({
             ...prevState,
             [e.target.name + 'Error']: error
         }));
+    };
+
+    const addString = (newString) => {
+        for (let i = 1; i <= validateInputs.length; i++) {
+            if (validateInputs[i] === newString) return;            
+        }
+        setValidateInputs([...validateInputs, newString]);                
     };
 
     return (
@@ -154,7 +172,7 @@ export const NewGame = () => {
                         <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                    {validInputField.titleValid ? <NextPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
+                    {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
                     </Col>  
                 </Row>
                 :
