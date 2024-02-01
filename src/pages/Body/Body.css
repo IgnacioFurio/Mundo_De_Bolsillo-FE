@@ -1,5 +1,6 @@
 .bodyDesign{
-    position: absolute;
-    background: url('../../assets/woodenTexture.jpg'); 
-    background-size: 35em;
+    background: url('../../assets/woodenTextureDark2.png'); 
+    background-size: 40em;
+    background-position: center;
+    background-attachment: fixed;
 }
