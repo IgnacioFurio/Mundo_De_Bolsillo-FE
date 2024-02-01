@@ -5,10 +5,10 @@ import './App.css'
 
 export const App = () => {
   return (
-    <>
-      <div >HEADER</div>
-      <Body/>
-      <div>FOOTER</div>
-    </>
+    <div className="appDesign">
+      <div className='headerDesign'>HEADER</div>
+      <Body className="bodyDesign"/>
+      <div className='footerDesign'>FOOTER</div>
+    </div>
   )
 }

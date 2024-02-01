@@ -1,0 +1,13 @@
+.appDesign{
+    background-color: grey;
+}
+.headerDesign{
+    height: 15vh;
+    background-color: black;
+}
+.bodyDesign{
+    min-height: 70vh;
+}
+.footerDesign{
+    height: 15vh;
+}

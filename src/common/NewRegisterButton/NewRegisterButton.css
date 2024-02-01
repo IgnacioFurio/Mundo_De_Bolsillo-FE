@@ -4,13 +4,15 @@
     width: fit-content;
     color: rgb(243, 243, 243);
     background-color: rgb(32, 201, 41);
+    border: outset rgb(38, 235, 48);
     border-top-left-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
     transition: 0.7s;
 }
 .NewRegisterButton:hover{
     transition: 0.7s;
-    box-shadow: 0.4em 0.4em 0.9em; 
+    box-shadow: 0.4em 0.4em 0.9em black; 
     color: rgb(243, 243, 243);
     background-color: rgb(28, 168, 35);
+    border: outset rgb(33, 192, 41);
 }

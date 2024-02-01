@@ -1,8 +1,16 @@
 .gameCard{
+    --paper-dark: #e5c93d;
+    --paper-color: #ffed87;
     cursor: pointer;
     height: 9em;
     transition: 1s;
-    border: solid 0.1em rgb(21, 177, 21);
+    background: linear-gradient(
+        135deg,
+        var(--paper-dark),
+        30%,
+        var(--paper-color)
+    );
+    border: solid 0.15em #d0b637b4;
     border-top-left-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
 }
@@ -12,11 +20,28 @@
 }
 
 .gameCardShow{
+    --paper-dark: #e5c93d;
+    --paper-color: #ffed87;
     cursor: pointer;
     height: fit-content;  
     box-shadow: 0.2em 0.2em 0.6em;
     transition: 1s;
-    border: solid 0.1em rgb(21, 177, 21);
+    background: linear-gradient(
+        135deg,
+        var(--paper-dark),
+        30%,
+        var(--paper-color)
+    );
+    border: solid 0.1em #e5c93d;
     border-top-right-radius: 0.5em;
     border-bottom-left-radius: 0.5em;   
+}
+
+.gameTitle{
+    color: #544d2e;
+    border-bottom: solid 0.15em #c737a397;
+}
+
+.gameDesciption{
+    color: #736B44;
 }
