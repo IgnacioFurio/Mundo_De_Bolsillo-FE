@@ -20,14 +20,14 @@ export const NextPrevButton = ({ action, clickFunction, status }) => {
 
     return (
         <>
-            {action === "Submit" ? <div className='buttonContainer'><button className={buttonDesign} onClick={() => handleActivate(status)}>Finalizar</button></div> : <div className='buttonContainer'><button className={buttonDesign} onClick={clickFunction}></button></div>}
+            {action === "Submit" ? <div className={buttonDesign} onClick={() => handleActivate(status)}>Finalizar</div> : <div className={buttonDesign} onClick={clickFunction}></div>}
             <Modal show={show} onHide={handleClose}>
-                <Modal.Header className='text-center' closeButton>
-                    <Modal.Title>Estamos a un paso de registrar nueva información en nuestra biblioteca.</Modal.Title>
+                <Modal.Header className=' text-center' closeButton>
+                    <Modal.Title></Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='text-center'>
-                    <p>Si no te convence aún estás a tiempo de revisar los datos introducidos haciendo click en el botón de "Volver".</p>
-                    <p>Haz click en el botón de "Enviar" si ya te has asegurado de que los datos son correctos.</p>
+                    <p>Estamos a un paso de registrar nueva información en nuestra biblioteca.</p>
+                    <p>¿Quieres que nuestros especialistas archiven esta información?</p>
                 </Modal.Body>
                 <Modal.Footer className='d-flex justify-content-between mx-3'>
                     <div className="discardButtonDesign text-center p-1" onClick={() => handleClose()}>

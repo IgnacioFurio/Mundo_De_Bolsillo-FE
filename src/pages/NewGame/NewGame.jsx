@@ -169,6 +169,7 @@ export const NewGame = () => {
 
             {formCounter === 2 && <ConfirmNewRegister data={newGameData}/>}
             </Row>
+            
             <Row className='newGameNextPrev d-flex justify-content-center align-items-center'>
             {formCounter < 2 ? 
                 <Row>
