@@ -1,18 +1,26 @@
 .NewRegisterButton{
     cursor: pointer;
-    height: fit-content;
-    width: fit-content;
-    color: rgb(243, 243, 243);
-    background-color: rgb(32, 201, 41);
-    border: outset rgb(38, 235, 48);
-    border-top-left-radius: 0.5em;
-    border-bottom-right-radius: 0.5em;
+    height: 5em;
+    width: 12.3em;
     transition: 0.7s;
+    background-image: url('../../assets/botones.png');
+    background-position: center;
+    background-size: cover;
+    filter: drop-shadow(0em 0em 1em black);
 }
 .NewRegisterButton:hover{
+    height: 5.2em;
+    width: 13em;
     transition: 0.7s;
-    box-shadow: 0.4em 0.4em 0.9em black; 
-    color: rgb(243, 243, 243);
-    background-color: rgb(28, 168, 35);
-    border: outset rgb(33, 192, 41);
+    filter: drop-shadow(0 0 0.75rem #ffa500);
+}
+
+.burnedText{
+    color: white;
+    text-shadow: 0px 0px 5px black, 0px 0px 10px rgb(59, 58, 58); 
+    transition: 0.7s;
+}
+.burnedText:hover{
+    text-shadow: 1px 1px 5px red, 0px 0px 15px orange; 
+    transition: 0.7s;
 }
