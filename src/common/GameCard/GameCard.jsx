@@ -49,7 +49,7 @@ export const GameCard = ({ dataCard }) => {
                     {dataCard.title}
                 </Col>
                 <Col className='px-4 fs-6 text-break col-12' onClick={(e) => handleClickGame(e)}>
-                    {showMore ? dataCard.description : description}
+                    {showMore ? description : description}
                 </Col>
                 <Col className="d-flex justify-content-end align-items-end col-12">
                     {description.length === 83 ? <InfoButton clickFunction={(e) => handleShowDescription(e)} status={showMore}/> : ""}
