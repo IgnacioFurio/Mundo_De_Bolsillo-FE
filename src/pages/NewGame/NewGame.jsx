@@ -11,6 +11,8 @@ import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuesti
 //apicall
 import { createGame } from '../../services/game.apicalls';
 import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
+//css
+import './NewGame.css';
 
 export const NewGame = () => {
 
@@ -141,7 +143,8 @@ export const NewGame = () => {
     };
 
     return (
-        <Container>
+        <Container >            
+            <Row className='newGameTutorial'>
             {formCounter === 0 && <TutorialQuestions 
                 gameData={newGameData.title}
                 type="textarea" 
@@ -151,7 +154,7 @@ export const NewGame = () => {
                 required={true}
                 changeFunction={(e) => inputHandler(e)}
                 blurFunction={(e)=>checkError(e)}/>
-                }
+            }
             
             {formCounter === 1 && <TutorialQuestions 
                 gameData={newGameData.description}
@@ -162,12 +165,13 @@ export const NewGame = () => {
                 required={false}
                 changeFunction={(e) => inputHandler(e)}
                 blurFunction={(e)=>checkError(e)}/>                
-                }
+            }
 
             {formCounter === 2 && <ConfirmNewRegister data={newGameData}/>}
-
+            </Row>
+            <Row className='newGameNextPrev d-flex justify-content-center align-items-center'>
             {formCounter < 2 ? 
-                <Row className='d-flex justify-content-between px-2'>
+                <Row>
                     <Col className='d-flex justify-content-start'>
                         <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
                     </Col>
@@ -185,6 +189,7 @@ export const NewGame = () => {
                     </Col>
                 </Row>
                 }
+            </Row>
         </Container>
         );
 }

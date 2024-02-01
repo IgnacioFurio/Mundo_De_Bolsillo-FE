@@ -20,7 +20,7 @@ export const NextPrevButton = ({ action, clickFunction, status }) => {
 
     return (
         <>
-            {action === "Submit" ? <button className={buttonDesign} onClick={() => handleActivate(status)}>Finalizar</button> : <button className={buttonDesign} onClick={clickFunction}></button>}
+            {action === "Submit" ? <div className='buttonContainer'><button className={buttonDesign} onClick={() => handleActivate(status)}>Finalizar</button></div> : <div className='buttonContainer'><button className={buttonDesign} onClick={clickFunction}></button></div>}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header className='text-center' closeButton>
                     <Modal.Title>Estamos a un paso de registrar nueva información en nuestra biblioteca.</Modal.Title>

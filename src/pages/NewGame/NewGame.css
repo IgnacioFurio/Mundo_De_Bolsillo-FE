@@ -1,0 +1,8 @@
+.newGameNextPrev{
+    position: relative;
+    bottom: 50vh;
+}
+
+.newGameTutorial{
+    min-height: 80vh;
+}

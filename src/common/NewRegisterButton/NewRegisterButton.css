@@ -9,8 +9,6 @@
     filter: drop-shadow(0em 0em 1em black);
 }
 .NewRegisterButton:hover{
-    height: 5.2em;
-    width: 13em;
     transition: 0.7s;
     filter: drop-shadow(0 0 0.75rem #ffa500);
 }
