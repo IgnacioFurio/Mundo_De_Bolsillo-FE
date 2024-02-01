@@ -2,19 +2,19 @@ export const nextPrevButtonDesign = (action) => {
 
     switch (action) {
         case "Prev":
-                return "prevButtonDesign m-3";
+                return "prevButtonDesign  bold";
             break;
 
         case "Next":
-                return "nextButtonDesign m-3"
+                return "nextButtonDesign bold";
             break;
         
         case "Submit":
-                return "submitButtonDesign m-3"
+                return "submitButtonDesign d-flex justify-content-center align-items-center bold";
             break;
 
         case "Wait":
-                return "waitButtonDesign m-3"
+                return "waitButtonDesign ";
             break;
     
         default:

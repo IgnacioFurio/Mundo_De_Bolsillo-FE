@@ -1,4 +1,30 @@
-.inputHeight{
-    height: 6em;
-    width: 100%;
+.textDesign{
+    position: relative;
+    border: transparent;
+    background-color: rgb(255, 245, 177);
+    border-radius: 20px;
+    box-shadow: 0em 0em 1.5em rgb(255, 245, 177);
+}
+.textDesign::before{
+    border: 25px solid rgb(255, 245, 177);
+    content: '';
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+    position: absolute;
+    bottom: -41px;
+    left: calc(30% - 25px);
+    transform: rotate(-15deg);
+    
+}
+
+.inputDesign{
+    box-shadow: 0em 0em 2em rgb(19, 104, 116);
+    position: relative;
+    bottom: -10vh;
+}
+@media(height >= 576px){
+    .inputDesign{
+        bottom: -30vh;
+    }
 }

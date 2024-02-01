@@ -1,17 +1,28 @@
 .confirmRegisterDesign{
+    --paper-dark: #e5c93d;
+    --paper-color: #ffed87;
+    cursor: pointer;
     height: fit-content;  
     box-shadow: 0.2em 0.2em 0.6em;
     transition: 1s;
-    border: solid 0.1em rgb(21, 177, 21);
+    background: linear-gradient(
+        135deg,
+        var(--paper-dark),
+        30%,
+        var(--paper-color)
+    );
+    border: solid 0.1em #e5c93d;
     border-top-right-radius: 0.5em;
-    border-bottom-left-radius: 0.5em;   
+    border-bottom-left-radius: 0.5em;    
 }
 
 .registerTitleDesign{
     min-height: 2em;
-    border-bottom: solid 0.1em rgb(21, 177, 21);
+    color: #544d2e;
+    border-bottom: solid 0.15em #c737a397;
 }
 
 .registerDescriptionDesign{
     min-height: 10em;
+    color: #736B44;
 }

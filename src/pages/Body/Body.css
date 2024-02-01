@@ -1,6 +1,7 @@
 .bodyDesign{
-    background: url('../../assets/woodenTextureDark2.png'); 
-    background-size: 40em;
+    background: url('../../assets/EddieMini.png'); 
+    background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
 }
