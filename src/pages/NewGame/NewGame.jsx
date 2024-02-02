@@ -119,7 +119,7 @@ export const NewGame = () => {
             e.target.value,
             e.target.required
             );
-
+            
         error = check.message;
 
         setValidInputfield((prevState) => ({
