@@ -1,0 +1,14 @@
+.gameDetailsBackground{
+    --paper-dark: #e5c93d;
+    --paper-color: #ffed87;
+    background: linear-gradient(
+        135deg,
+        var(--paper-dark),
+        30%,
+        var(--paper-color)
+    );
+    border: solid 0.1em #e5c93d;
+    border-top-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;  
+    border-radius: 20px;
+}

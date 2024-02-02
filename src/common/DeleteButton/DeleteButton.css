@@ -1,22 +1,17 @@
 .deleteButtonDesign{
+    color: white;
     cursor: pointer;
-    height: 2em;
-    width: 6em;
-    border: transparent;
-    background-color: rgb(230, 12, 51);
-    font-weight: bold;
-    color: rgb(243, 243, 243);
-    border-top-right-radius: 0.5em;
-    border-bottom-left-radius: 0.5em;
+    height: 2.5em;
+    width: 6.2em;
+    transition: 0.7s;
+    background-image: url('../../assets/botonesCancelar.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 0.4em #BF2E2E);
 }
-
-.deleteButtonDesign:hover{
-    height: 2em;
-    width: 6em;
-    border: transparent;
-    background-color: rgb(230, 12, 51);
-    font-weight: bold;
-    color: rgb(243, 243, 243);
-    border-top-right-radius: 0.5em;
-    border-bottom-left-radius: 0.5em;
+.deleteText{
+    color: white;
+    filter: drop-shadow(0 0 0.5rem #e35151, 0 0 0 0.2rem #BF2E2E);
+    height: 1em;
 }
