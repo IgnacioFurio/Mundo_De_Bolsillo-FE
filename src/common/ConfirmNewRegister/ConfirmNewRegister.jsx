@@ -9,11 +9,11 @@ export const ConfirmNewRegister = ({ data }) => {
   return (
     <>
       <Container className='confirmRegisterDesign'>
-        <Row>
-          <Col className='registerTitleDesign d-flex justify-content-center rounded fs-3 bold m-2'>{data.title}</Col>
+        <Row className='d-flex justify-content-center align-items-center'>
+          <Col className='registerTitleDesign rounded text-center fs-3 bold m-2'>{data.title}</Col>
         </Row>
         <Row>
-          <Col className='registerDescriptionDesign d-flex justify-content-center text-center mb-3'>{data.description}</Col>
+          <Col className='registerDescriptionDesign text-center mb-3'>{data.description}</Col>
         </Row>
       </Container>
     </>
