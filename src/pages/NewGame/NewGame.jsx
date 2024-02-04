@@ -58,6 +58,7 @@ export const NewGame = () => {
     };
 
     //VALIDATIONS
+    useEffect(() => {showNext();});
     useEffect(() =>{       
         for(let error in errorInputField){            
             if(errorInputField[error]){                
