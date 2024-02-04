@@ -35,10 +35,10 @@ export const NewGame = () => {
         title: "",
         description: ""
     });
-    
+    //only set false when a field is required
     const [ validInputField, setValidInputfield] = useState({
         titleValid: false,
-        descriptionValid: false
+        descriptionValid: true
     });
     
     const [ errorInputField, setErrorInputfield] = useState({
@@ -47,8 +47,6 @@ export const NewGame = () => {
     });
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
-
-    const [ validateInputs, setValidateInputs ] = useState(["validInputs"]);
 
     const inputHandler = (e) => {        
         setNewGameData((prevState) => ({
@@ -85,9 +83,7 @@ export const NewGame = () => {
         let values = Object.values(validInputField)
 
         for (let i = 0; i < keys.length; i++) {
-            let j = i + 1;
-
-            if(keys[i] === validateInputs[j] && values[formCounter] === true) {
+            if(values[formCounter] === true) {
                 return setSubmitStatus(true);
             };
         }
@@ -126,20 +122,11 @@ export const NewGame = () => {
             ...prevState,
             [e.target.name + 'Valid']: check.valid
         }));
-
-        addString(e.target.name + 'Valid')
         
         setErrorInputfield((prevState) => ({
             ...prevState,
             [e.target.name + 'Error']: error
         }));
-    };
-
-    const addString = (newString) => {
-        for (let i = 1; i <= validateInputs.length; i++) {
-            if (validateInputs[i] === newString) return;            
-        }
-        setValidateInputs([...validateInputs, newString]);                
     };
 
     return (
