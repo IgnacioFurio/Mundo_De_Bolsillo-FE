@@ -1,14 +1,14 @@
 .modifyButtonDesign{
     color: white;
     cursor: pointer;
-    height: 2.5em;
-    width: 6.2em;
+    height: 2.3em;
+    width: 6.1em;
     transition: 0.7s;
     background-image: url('../../assets/botonesEditar.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    filter: drop-shadow(0 0 0.75rem #274550);
+    filter: drop-shadow(0 0 0.75rem #20acde);
 }
 .deleteText{
     color: white;

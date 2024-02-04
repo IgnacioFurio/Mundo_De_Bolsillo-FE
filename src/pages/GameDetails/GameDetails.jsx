@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { gameData, gameInfo } from '../../services/game.slice';
 import { deleteGame } from '../../services/game.apicalls';
 //components
+import { BackButton } from '../../common/BackButton/BackButton';
+import { ModifyButton } from '../../common/ModifyButton/ModifyButton';
 import { DeleteButton } from '../../common/DeleteButton/DeleteButton';
 import { PageNavigator } from '../../common/PageNavigator/PageNavigator';
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
 //css
 import "./GameDetails.css";
-import { ModifyButton } from '../../common/ModifyButton/ModifyButton';
 
 
 export const GameDetails = () => {
@@ -20,8 +21,6 @@ export const GameDetails = () => {
     const dispatch = useDispatch();
 
     const dataRdx = useSelector(gameData);
-
-    const prevPages = ["partidas"];
 
     const [ gameInformation, setGameInformation ] = useState(dataRdx.gameInformation);
 
@@ -37,13 +36,11 @@ export const GameDetails = () => {
     return (
         <Container id={gameInformation.id} className='col-12 col-sm-11 col-md-10 col-lg-8 col-xl-7'>
             <Row className='pt-3 d-flex justify-content-evenly'>
-                <Col className='col-1 my-2'></Col>
-                <Col className='col-5 d-flex justify-content-center my-2'><ModifyButton clickFunction={() => navigate("/games/modify-game")}/></Col>
-                <Col className='col-5 d-flex justify-content-center text-center my-2'><DeleteButton gameData={gameInformation} clickFunction={() => deleteGameData(gameInformation.id)}/></Col>
-                <Col className='col-1 my-2'></Col>
+                <Col className='col-4 d-flex justify-content-center my-2'><BackButton clickFunction={() => navigate("/games/my-games")}/></Col>
+                <Col className='col-4 d-flex justify-content-center my-2'><ModifyButton clickFunction={() => navigate("/games/modify-game")}/></Col>
+                <Col className='col-4 d-flex justify-content-center my-2'><DeleteButton gameData={gameInformation} clickFunction={() => deleteGameData(gameInformation.id)}/></Col>
             </Row>            
             <Row className='gameDetailsBackground mt-3 p-3'>
-                <Col className='col-12 mb-2'>{prevPages.map(data => {return <PageNavigator key={data} page={data}/>})}</Col>            
                 <Col className='gameTitle col-12 d-flex justify-content-center fs-4 fw-bold'>
                     {gameInformation.title}
                 </Col>
