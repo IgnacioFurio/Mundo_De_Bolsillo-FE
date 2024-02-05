@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+//common
+import { WoodenButton } from '../WoodenButton/WoodenButton';
 //helper
 import { nextPrevButtonDesign } from '../../helpers/NextPrevButton.helper';
 //bootstrap
@@ -20,7 +22,7 @@ export const NextPrevButton = ({ action, clickFunction, status }) => {
 
     return (
         <>
-            {action === "Submit" ? <div className={buttonDesign} onClick={() => handleActivate(status)}>Finalizar</div> : <div className={buttonDesign} onClick={clickFunction}></div>}
+            {action === "Submit" ? <WoodenButton  action="submit" clickFunction={() => handleActivate()}>Finalizar</WoodenButton> : <div className={buttonDesign} onClick={clickFunction}></div>}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header className=' text-center' closeButton>
                     <Modal.Title></Modal.Title>
@@ -29,13 +31,9 @@ export const NextPrevButton = ({ action, clickFunction, status }) => {
                     <p>Estamos a un paso de registrar nueva información en nuestra biblioteca.</p>
                     <p>¿Quieres que nuestros especialistas archiven esta información?</p>
                 </Modal.Body>
-                <Modal.Footer className='d-flex justify-content-between mx-3'>
-                    <div className="discardButtonDesign text-center p-1" onClick={() => handleClose()}>
-                        Volver
-                    </div>
-                    <div className='sendButtonDesing text-center p-1' onClick={clickFunction}>
-                        Enviar
-                    </div>
+                <Modal.Footer className='d-flex justify-content-evenly'>
+                    <WoodenButton  action="back" clickFunction={() => setShow(false)}/>
+                    <WoodenButton  action="send" clickFunction={clickFunction}/>
                 </Modal.Footer>
             </Modal>
         </>

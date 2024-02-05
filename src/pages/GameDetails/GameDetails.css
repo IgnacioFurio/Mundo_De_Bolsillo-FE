@@ -1,10 +1,10 @@
 .gameDetailsStone{
-    border-radius: 10%;
+    border-radius: 10px;
     background-image: url('../../assets/stoneTexture.jpg');
-    background-size: contain;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    box-shadow: 4px 4px 15px rgb(0, 0, 5);
+    filter: drop-shadow(2px 2px 15px #171717);
 }
 .gameDetailsBackground{
     --paper-dark: #e5c93d;

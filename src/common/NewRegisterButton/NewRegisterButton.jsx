@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 //bootstrap
-import { Container, Row , Col, Button} from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 //css
 import "./NewRegisterButton.css";
 
