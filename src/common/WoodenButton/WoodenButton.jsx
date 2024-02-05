@@ -23,19 +23,29 @@ export const WoodenButton = ({ action, clickFunction }) => {
 
     const checkButtonDesign = (action) => {
         switch (action) {
+            case "submit":
+                
+                return {text: "Finalizar", classButton: "backButtonDesign", classText: "sendText d-flex justify-content-center align-items-center fw-bold"};
+                break;
+            
+            case "send":
+                
+                return {text: "Enviar", classButton: "sendButtonDesign", classText: "sendText d-flex justify-content-center align-items-center fw-bold"};
+                break;
+
             case "back":
                 
-                return {text: "Volver", classButton: "backButtonDesign d-flex align-items-center justify-content-center pt-1", classText: "backText fw-bold"};
+                return {text: "Volver", classButton: "backButtonDesign", classText: "backText d-flex justify-content-center align-items-center fw-bold"};
                 break;
             
             case "edit":
                 
-                return {text: "Editar", classButton: "modifyButtonDesign d-flex align-items-center justify-content-center pt-1", classText: "modifyText fw-bold"};
+                return {text: "Editar", classButton: "modifyButtonDesign", classText: "modifyText d-flex justify-content-center align-items-center fw-bold"};
                 break;
             
             case "delete":
                 
-                return {text: "Borrar", classButton: "deleteButtonDesign d-flex align-items-center justify-content-center pt-1", classText: "deleteText fw-bold"};
+                return {text: "Borrar", classButton: "deleteButtonDesign", classText: "deleteText d-flex justify-content-center align-items-center fw-bold"};
                 break;
         
             default:
@@ -53,16 +63,12 @@ export const WoodenButton = ({ action, clickFunction }) => {
                         <Modal.Title></Modal.Title>
                     </Modal.Header>
                     <Modal.Body className='text-center'>
-                        <p>Estamos a un paso de registrar nueva información en nuestra biblioteca.</p>
-                        <p>¿Quieres que nuestros especialistas archiven esta información?</p>
+                        <p>Estamos a un paso de borrar información en nuestra biblioteca.</p>
+                        <p>¿Quieres que nuestros especialistas se deshagan de esta información?</p>
                     </Modal.Body>
-                    <Modal.Footer className='d-flex justify-content-between mx-3'>
-                        <div className="discardButtonDesign text-center p-1" onClick={() => handleClose()}>
-                            Volver
-                        </div>
-                        <div className='sendButtonDesing text-center p-1' onClick={clickFunction}>
-                            Enviar
-                        </div>
+                    <Modal.Footer className='d-flex justify-content-evenly'>
+                        <WoodenButton  action="back" clickFunction={() => setShow(false)}/>
+                        <WoodenButton  action="send" clickFunction={clickFunction}/>
                     </Modal.Footer>
                 </Modal>
             </>
