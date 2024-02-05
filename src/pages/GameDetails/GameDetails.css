@@ -1,0 +1,37 @@
+.gameDetailsStone{
+    border-radius: 10px;
+    background-image: url('../../assets/stoneTexture.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(2px 2px 15px #171717);
+}
+.gameDetailsBackground{
+    --paper-dark: #e5c93d;
+    --paper-color: #ffed87;
+    background: linear-gradient(
+        135deg,
+        var(--paper-dark),
+        30%,
+        var(--paper-color)
+    );
+    border: solid 0.1em #e5c93d;
+    border-top-right-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;  
+    border-radius: 20px;
+}
+
+.gamePortraitTitle{
+    background-image: url('../../assets/MarcoRectangularBlanco.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0rem 0.6rem #aaee72);
+}
+
+.gameDetailsTitle{
+    color: rgba(245, 244, 244, 0.838);
+    position: relative;
+    bottom: -10%;
+    text-shadow:  0 0rem 0.1rem #598933;
+}

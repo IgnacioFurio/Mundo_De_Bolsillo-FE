@@ -1,0 +1,106 @@
+.sendButtonDesign{
+    cursor: pointer;
+    height: 2.3em;
+    width: 6.1em;
+    transition: 0.7s;
+    background-image: url('../../assets/botonesAceptar.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 0.25rem #15b115);
+}
+.sendButtonDesign:hover{
+    transition: 0.7s;
+    filter: drop-shadow(0 0 0.75rem #23ff23);
+}
+
+.sendText{
+    color: white;
+    height: 2.3em;
+    transition: 0.7s;
+}
+.sendText:hover{
+    color: #e6ffe6;
+    filter: drop-shadow(0 0 0.25rem #23ff23);
+    transition: 0.7s;
+}
+
+.backButtonDesign{
+    cursor: pointer;
+    height: 2.3em;
+    width: 6.1em;
+    transition: 0.7s;
+    background-image: url('../../assets/botones.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 0.25rem #ffa500);
+}
+.backButtonDesign:hover{
+    transition: 0.7s;
+    filter: drop-shadow(0 0 0.75rem #ffa500);
+}
+.backText{
+    color: white;
+    height: 2.3em;
+    transition: 0.7s;
+}
+.backText:hover{
+    color: #feffe7;
+    filter: drop-shadow(0 0 0.25rem #f1f827);
+    transition: 0.7s;
+}
+
+.modifyButtonDesign{
+    cursor: pointer;
+    height: 2.3em;
+    width: 6.1em;
+    transition: 0.7s;
+    background-image: url('../../assets/botonesEditar.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 0.25rem #20acde);
+}
+.modifyButtonDesign:hover{
+    transition: 0.7s;
+    filter: drop-shadow(0 0 0.75rem #20acde);
+}
+
+.modifyText{
+    color: white;
+    height: 2.3em;
+    transition: 0.7s;
+}
+.modifyText:hover{
+    color: #e6f4fa;
+    filter: drop-shadow(0 0 0.25rem #7ebed5);
+    transition: 0.7s;
+}
+
+.deleteButtonDesign{
+    cursor: pointer;
+    height: 2.3em;
+    width: 6.1em;
+    transition: 0.7s;
+    background-image: url('../../assets/botonesCancelar.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 0.25em #f13030);
+}
+.deleteButtonDesign:hover{
+    transition: 0.7s;
+    filter: drop-shadow(0 0 0.75em #f13030);
+}
+
+.deleteText{
+    color: white;
+    height: 2.3em;
+    transition: 0.7s;
+}
+.deleteText:hover{
+    color: #edd2d2;
+    filter: drop-shadow(0 0 0.25rem #f13030);
+    transition: 0.7s;
+}
