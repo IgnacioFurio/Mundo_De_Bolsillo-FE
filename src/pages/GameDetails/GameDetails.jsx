@@ -5,9 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { gameData, gameInfo } from '../../services/game.slice';
 import { deleteGame } from '../../services/game.apicalls';
 //components
-import { BackButton } from '../../common/BackButton/BackButton';
-import { ModifyButton } from '../../common/ModifyButton/ModifyButton';
-import { DeleteButton } from '../../common/DeleteButton/DeleteButton';
+import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
 //css
@@ -34,10 +32,10 @@ export const GameDetails = () => {
 
     return (
         <Container id={gameInformation.id} className='col-12 col-sm-11 col-md-10 col-lg-8 col-xl-7'>
-            <Row className='pt-3 d-flex justify-content-evenly'>
-                <Col className='col-4 d-flex justify-content-center my-2'><BackButton clickFunction={() => navigate("/games/my-games")}/></Col>
-                <Col className='col-4 d-flex justify-content-center my-2'><ModifyButton clickFunction={() => navigate("/games/modify-game")}/></Col>
-                <Col className='col-4 d-flex justify-content-center my-2'><DeleteButton gameData={gameInformation} clickFunction={() => deleteGameData(gameInformation.id)}/></Col>
+            <Row className='py-2 d-flex justify-content-evenly'>
+                <Col className='col-4 d-flex justify-content-center my-2'><WoodenButton action="back" clickFunction={() => navigate("/games/my-games")}/></Col>
+                <Col className='col-4 d-flex justify-content-center my-2'><WoodenButton action="edit" clickFunction={() => navigate("/games/modify-game")}/></Col>
+                <Col className='col-4 d-flex justify-content-center my-2'><WoodenButton action="delete" clickFunction={() => deleteGameData(gameInformation.id)}/></Col>
             </Row>            
             <Row className='gameDetailsStone pt-1'>
                 <Col className='gamePortraitTitle p-2'>
