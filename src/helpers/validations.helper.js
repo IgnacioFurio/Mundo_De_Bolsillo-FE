@@ -8,7 +8,7 @@ export const validate = ( input, data, required ) => {
                 return {message: "Este campo debe contener entre 3 y 30 caracteres alfanuméricos.", valid: false}
             }
 
-            return {message: "", valid: true}
+            return {message: "Parece que lo tienes, ¿Continuamos?", valid: true}
             break;
         
         case "description":
@@ -19,7 +19,7 @@ export const validate = ( input, data, required ) => {
                 return {message: "Lo sentimos pero solo puedes escribir hasta 500 caracteres.", valid: false}
             }
 
-            return {message: "", valid: true}
+            return {message: "No se si es una locura o una genialidad, pero por ahora es momento de dar un paso más.", valid: true}
             break;
     
         default:
