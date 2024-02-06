@@ -15,6 +15,9 @@
     border-top-right-radius: 0.5em;
     border-bottom-left-radius: 0.5em; 
 }
+.confirmPosition{
+    flex-direction: column;
+}
 
 .registerTitleDesign{
     min-height: 2em;

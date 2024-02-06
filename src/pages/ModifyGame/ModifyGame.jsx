@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { gameData, gameInfo } from '../../services/game.slice';
@@ -15,7 +16,6 @@ import { GameFormQuestions } from '../../helpers/Games.Forms.helper';
 import { validate } from '../../helpers/validations.helper';
 //css
 import "./ModifyGame.css";
-import { useNavigate } from 'react-router-dom';
 
 export const ModifyGame = () => {
 
@@ -149,25 +149,28 @@ export const ModifyGame = () => {
 
             {formCounter === 2 && <ConfirmNewRegister data={gameInformation}/>}
 
+            <Row className='modifyGameNextPrev d-flex justify-content-center align-items-center'>
             {formCounter < 2 ? 
-                <Row className='d-flex justify-content-between px-2'>
+                <>
                     <Col className='d-flex justify-content-start'>
                         <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
                     {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
                     </Col>  
-                </Row>
+                </>
                 :
-                <Row>
+                <>
                     <Col className='d-flex justify-content-start'>
                         <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
                         <NextPrevButton action="Submit" status={submitStatus} clickFunction={() => updateGameInformation()}/>
                     </Col>
-                </Row>
+                </>
                 }
+            </Row>
+            
         </Container>
     )
 };
