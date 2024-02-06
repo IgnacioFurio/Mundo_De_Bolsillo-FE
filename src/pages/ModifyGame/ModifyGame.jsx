@@ -12,6 +12,7 @@ import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRe
 import { Col, Container, Row } from 'react-bootstrap';
 //helper
 import { GameFormQuestions } from '../../helpers/Games.Forms.helper';
+import { validate } from '../../helpers/validations.helper';
 //css
 import "./ModifyGame.css";
 import { useNavigate } from 'react-router-dom';
@@ -42,18 +43,39 @@ export const ModifyGame = () => {
         description: dataRdx.gameInformation.description
     });
 
+    //only set false when a field is required
+    const [ validInputField, setValidInputfield] = useState({
+        titleValid: true,
+        descriptionValid: true
+    });
+    
+    const [ errorInputField, setErrorInputfield] = useState({
+        titleError: "",
+        descriptionError: ""
+    });
+
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
-    useEffect(() =>{
-        gameInformation.title !== "" ? setSubmitStatus(true) : setSubmitStatus(false);
-    },[gameInformation.title]);
+    //VALIDATIONS
+    useEffect(() =>{showNext();
+    },[gameInformation]);
 
+    //HANDLERS
     const gameFormHandlerPrev = () => {
         formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/game-details");
     };
-
     const gameFormHandlerNext = () => {
         formCounter < 2 ? setFormCounter(formCounter + 1) : setFormCounter(0);
+    };
+    const showNext  = () => {
+        let values = Object.values(validInputField)
+
+        if(values[formCounter] === true) {
+            return setSubmitStatus(true);
+        };
+        
+
+        setSubmitStatus(false)
     };
 
     const inputHandler = (e) => {        
@@ -61,8 +83,10 @@ export const ModifyGame = () => {
             ...prevState,
             [e.target.name]: e.target.value
         }));
+        checkError(e);
     };
 
+    //APICALL
     const updateGameInformation = () => {
 
         modifyGame(gameInformation)
@@ -78,12 +102,36 @@ export const ModifyGame = () => {
         });
     }
 
+    //CHECKS
+    const checkError = (e) => {
+        let error = "";
+    
+        let check = validate(
+            e.target.name,
+            e.target.value,
+            e.target.required
+            );
+            
+        error = check.message;
+
+        setValidInputfield((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Valid']: check.valid
+        }));
+        
+        setErrorInputfield((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Error']: error
+        }));
+    };
+
     return (
         <Container>
             {formCounter === 0 && <TutorialQuestions 
                 gameData={gameInformation.title}
                 type="textarea" 
                 text={formQuestions.title}
+                errorText={errorInputField.titleError}
                 placeholder={formPlaceholders.title} 
                 name="title" 
                 changeFunction={(e) => inputHandler(e)}/>
@@ -93,6 +141,7 @@ export const ModifyGame = () => {
                 gameData={gameInformation.description}
                 type="textarea" 
                 text={formQuestions.description}
+                errorText={errorInputField.descriptionError}
                 placeholder={formPlaceholders.description} 
                 name="description" 
                 changeFunction={(e) => inputHandler(e)}/>
@@ -106,7 +155,7 @@ export const ModifyGame = () => {
                         <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/>
+                    {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
                     </Col>  
                 </Row>
                 :

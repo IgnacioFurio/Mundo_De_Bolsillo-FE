@@ -58,17 +58,7 @@ export const NewGame = () => {
     };
 
     //VALIDATIONS
-    useEffect(() => {showNext();});
-    useEffect(() =>{       
-        for(let error in errorInputField){            
-            if(errorInputField[error]){                
-                setSubmitStatus(false);
-                return;
-            };
-        };
-
-        showNext();
-    },[newGameData]);
+    useEffect(() =>{showNext();},[newGameData]);
 
     //HANDLERS
     const gameFormHandlerPrev = () => {
@@ -80,14 +70,11 @@ export const NewGame = () => {
         setSubmitStatus(false);
     };
     const showNext  = () => {
-        let keys = Object.keys(validInputField);   
         let values = Object.values(validInputField)
 
-        for (let i = 0; i < keys.length; i++) {
-            if(values[formCounter] === true) {
-                return setSubmitStatus(true);
-            };
-        }
+        if(values[formCounter] === true) {
+            return setSubmitStatus(true);
+        };
 
         setSubmitStatus(false)
     };
@@ -137,6 +124,7 @@ export const NewGame = () => {
                 gameData={newGameData.title}
                 type="textarea" 
                 text={formQuestions.title}
+                errorText={errorInputField.titleError}
                 placeholder={formPlaceholders.title} 
                 name="title" 
                 required={true}
@@ -148,6 +136,7 @@ export const NewGame = () => {
                 gameData={newGameData.description}
                 type="textarea" 
                 text={formQuestions.description}
+                errorText={errorInputField.descriptionError}
                 placeholder={formPlaceholders.description} 
                 name="description" 
                 required={false}
