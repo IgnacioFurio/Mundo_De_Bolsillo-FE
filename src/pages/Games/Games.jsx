@@ -32,7 +32,7 @@ export const Games = () => {
                         return <>
                                 <Col className='col-1 col-sm-1 col-md-2 col-lg-1'/>
                                 <Col className='col-10 col-sm-10 col-md-8 col-lg-4'>
-                                    <GameCard dataCard={data} showCard={false}/>
+                                    <GameCard dataCard={data}/>
                                 </Col>
                                 <Col className='col-1 col-sm-1 col-md-2 col-lg-1'/>
                             </>

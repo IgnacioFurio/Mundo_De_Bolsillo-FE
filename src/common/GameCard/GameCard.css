@@ -2,7 +2,7 @@
     --paper-dark: #e5c93d;
     --paper-color: #ffed87;
     cursor: pointer;
-    height: 9em;
+    height: 90%;
     transition: 1s;
     background: linear-gradient(
         135deg,
