@@ -1,0 +1,57 @@
+.worldCardDesign{
+    filter: drop-shadow(0 0 0.05rem #071bb6) drop-shadow(0 0 0.2rem #79ffbc);
+}
+
+.leftScroll{
+    height: 7em;
+    background-image: url('../../assets/pergaminoIzquierdo.png');
+    background-size: 2em 7em;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.centerScroll{
+    --paper-dark: #e5c93d ;
+    --paper-color: #ffed87;
+    color: rgb(237, 255, 254);
+    text-shadow: 0 0 0.1rem #071bb6;
+    height: 5em;
+    width: 100%;
+    background: linear-gradient(
+        135deg,
+        var(--paper-dark),
+        30%,
+        var(--paper-color)
+    );
+    border-top: solid 2px black;
+    border-bottom: solid 2px black; 
+    filter: drop-shadow(0 0 0.25rem #20acde);
+    transition: 0.7s;
+}
+.centerScroll:hover{
+    transition: 0.7s;
+    filter: drop-shadow(0 0 0.6rem #79ffbc);
+}
+
+.circleTp{
+    cursor: pointer;
+    height: 85%;
+    background-image: url('../../assets/teleportationCircle.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 0.1rem #071bb6) drop-shadow(0 0 0.5rem #79ffbc);
+    transition: 0.7s;
+}
+.circleTp:hover{
+    transition: 0.7s;
+    filter:drop-shadow(0 0 0.1rem #071bb6) drop-shadow(0 0 0.75rem #79ffbc);
+}
+
+.rightScroll{
+    height: 7em;
+    background-image: url('../../assets/pergaminoDerecho.png');
+    background-size: 2em 7em;
+    background-repeat: no-repeat;
+    background-position: left;
+}

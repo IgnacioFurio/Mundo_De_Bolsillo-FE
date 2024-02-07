@@ -6,6 +6,7 @@ import { NewGame } from '../NewGame/NewGame'
 import { ModifyGame } from '../ModifyGame/ModifyGame'
 import { Container } from 'react-bootstrap'
 import './Body.css';
+import { Worlds } from '../Worlds/Worlds'
 
 export const Body = () => {
     return (
@@ -15,6 +16,7 @@ export const Body = () => {
                 <Route path='/games/game-details' element={<GameDetails/>}/>
                 <Route path='/games/new-game' element={<NewGame/>}/>
                 <Route path='/games/modify-game' element={<ModifyGame/>}/>
+                <Route path='/worlds/my-worlds' element={<Worlds/>}/>
             </Routes>
         </Container>
     )
