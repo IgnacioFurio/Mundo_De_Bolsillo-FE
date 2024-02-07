@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { getAllWorlds } from '../../services/world.apicalls';
 //bootstrap
 import { Col, Container, Row } from 'react-bootstrap';
+//component
 import { NewRegisterButton } from '../../common/NewRegisterButton/NewRegisterButton';
+import { WorldCard } from '../../common/WorldCard/WorldCard';
 
 
 export const Worlds = () => {
@@ -33,11 +35,9 @@ export const Worlds = () => {
             <Row className='d-flex justify-content-center mt-4'>
                     {worlds.map(data => {
                         return <>
-                                <Col className='col-1 col-sm-1 col-md-2 col-lg-1'/>
-                                <Col className='col-10 col-sm-10 col-md-8 col-lg-4'>
-                                    {/* <GameCard key={data.id} dataCard={data}/> */}
+                                <Col className='col-10 col-sm-10 col-md-8 col-lg-4 m-1'>
+                                    <WorldCard key={data.id} dataCard={data}/>
                                 </Col>
-                                <Col className='col-1 col-sm-1 col-md-2 col-lg-1'/>
                             </>
                     })}
             </Row>
