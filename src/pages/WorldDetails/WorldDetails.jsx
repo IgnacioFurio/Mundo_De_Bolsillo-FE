@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+//apicall
+import { deleteWorld } from '../../services/world.apicalls';
 //redux
-import { useSelector } from 'react-redux';
-import { worldData } from '../../services/world.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { worldData, worldInfo } from '../../services/world.slice';
 //components
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 //css
 import './WorldDetails.css'
-import { useNavigate } from 'react-router-dom';
 
 export const WorldDetails = () => {
+
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
@@ -17,12 +21,21 @@ export const WorldDetails = () => {
     
     const [ worldInformation, setWorldInformation ] = useState(dataRdx.worldInformation);
 
+    const deleteWorldData = (world_id) => {
+        deleteWorld(world_id)
+        .then(result => {
+            navigate("/worlds/my-worlds")
+            dispatch(worldInfo({worldInformation: {}}));      
+        })
+        .catch(error => console.log(error));
+    };
+
     return (
         <Container id={worldInformation.id} className='col-12 col-sm-11 col-md-9 col-lg-8 col-xl-7'>
             <Row className='d-flex justify-content-evenly pt-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigate("/worlds/my-worlds")}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => {}}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => {}}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteWorldData(worldInformation.id)}/></Col>
             </Row>            
             <Row className='d-flex justify-content-center align-items-center'>
                 <Col className='detailsStone mt-4 py-2'>
