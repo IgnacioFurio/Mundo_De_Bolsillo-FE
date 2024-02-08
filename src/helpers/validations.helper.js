@@ -1,6 +1,7 @@
 export const validate = ( input, data, required ) => {
     switch (input) {
-        case "title" || "name":
+        case "title":
+        case "name":
             
             if (data === "" && required === true) {
                 return {message: "Es imprescindible darle un nombre para poder seguir." , valid: false}
