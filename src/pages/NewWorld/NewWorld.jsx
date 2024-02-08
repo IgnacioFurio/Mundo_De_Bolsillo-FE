@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 //common
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
+import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
 //helper
 import { WorldFormQuestions } from '../../helpers/WorldForms.helper';
 import { showNext, validate } from '../../helpers/validations.helper';
@@ -43,11 +44,9 @@ export const NewWorld = () => {
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //VALIDATIONS
-    useEffect(() =>{setSubmitStatus(showNext(newWorldData, formCounter));},[newWorldData]);
+    useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter));},[newWorldData]);
 
-    useEffect(() => {
-        console.log(submitStatus);
-    });
+    useEffect(() => {setSubmitStatus(showNext(validInputField, formCounter));});
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -59,11 +58,11 @@ export const NewWorld = () => {
         checkError(e);
     };
 
-    const gameFormHandlerPrev = () => {
-        formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/my-games");
+    const formHandlerPrev = () => {
+        formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/worlds/my-worlds");
         setSubmitStatus(false);
     };
-    const gameFormHandlerNext = () => {
+    const formHandlerNext = () => {
         formCounter < 2 ? setFormCounter(formCounter + 1) : setFormCounter(0);
         setSubmitStatus(false);
     };
@@ -109,24 +108,39 @@ export const NewWorld = () => {
                 changeFunction={(e) => inputHandler(e)}
                 blurFunction={(e)=>checkError(e)}/>
             }
+
+            {formCounter === 1 && <TutorialQuestions 
+                gameData={newWorldData.description}
+                type="textarea" 
+                text={formQuestions.description}
+                errorText={errorInputField.descriptionError}
+                placeholder={formPlaceholders.description} 
+                name="description" 
+                required={false}
+                changeFunction={(e) => inputHandler(e)}
+                blurFunction={(e)=>checkError(e)}/>                
+            }
+
+            {formCounter === 2 && <ConfirmNewRegister data={newWorldData}/>}
             </Row>
+
             <Row className='nextPrev d-flex justify-content-center align-items-center'>
             {formCounter < 2 ? 
                 <>
                     <Col className='d-flex justify-content-start'>
-                        <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
+                        <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                    {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
+                    {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => formHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
                     </Col>  
                 </>
                 :
                 <>
                     <Col className='d-flex justify-content-start'>
-                        <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
+                        <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton gameInfo={newGameData} action="Submit" clickFunction={() => createNewGame()}/>
+                        <NextPrevButton gameInfo={newWorldData} action="Submit" clickFunction={() => createNewGame()}/>
                     </Col>
                 </>
                 }
