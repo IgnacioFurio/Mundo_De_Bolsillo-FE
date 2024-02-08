@@ -1,0 +1,14 @@
+.worldPortraitTitle{
+    background-image: url('../../assets/MarcoMundos.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0rem 0.6rem #20acde);
+}
+
+.worldDetailsTitle{
+    color: #d4d9f9;
+    position: relative;
+    bottom: -10%;
+    text-shadow:  0 0rem 0.1rem #071bb6;
+}

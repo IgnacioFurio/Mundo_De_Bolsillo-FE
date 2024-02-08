@@ -1,12 +1,12 @@
-.gameDetailsStone{
+.detailsStone{
     border-radius: 10px;
-    background-image: url('../../assets/stoneTexture.jpg');
+    background-image: url('../../assets/stoneTexture.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     filter: drop-shadow(2px 2px 15px #171717);
 }
-.gameDetailsBackground{
+.detailsBackground{
     --paper-dark: #e5c93d;
     --paper-color: #ffed87;
     background: linear-gradient(
@@ -16,13 +16,12 @@
         var(--paper-color)
     );
     border: solid 0.1em #e5c93d;
-    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
     border-bottom-left-radius: 0.5em;  
-    border-radius: 20px;
 }
 
 .gamePortraitTitle{
-    background-image: url('../../assets/MarcoRectangularBlanco.png');
+    background-image: url('../../assets/MarcoPartidas.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

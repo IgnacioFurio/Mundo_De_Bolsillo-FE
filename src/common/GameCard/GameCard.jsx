@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 //Redux
 import { useDispatch } from 'react-redux';
-
+import { gameInfo } from '../../services/game.slice';
 //components
 import { InfoButton } from '../InfoButton/InfoButton';
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
 //GameCard helpers
 import { descriptionSlicer } from '../../helpers/GameCard.helper';
-import { gameInfo } from '../../services/game.slice';
-import { useNavigate } from 'react-router-dom';
 //Css
 import './GameCard.css'
 

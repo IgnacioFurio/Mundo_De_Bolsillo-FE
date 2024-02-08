@@ -6,11 +6,13 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 
 import gameSlice from "../services/game.slice";
+import worldSlice from "../services/world.slice";
 
 import thunk from 'redux-thunk';
 
 const reducers = combineReducers({
-    game: gameSlice 
+    game: gameSlice,
+    world: worldSlice
 })
 
 const persistConfig = {
