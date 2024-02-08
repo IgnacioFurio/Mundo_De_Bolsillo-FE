@@ -25,7 +25,7 @@ export const Worlds = () => {
         <Container>
             <Row >
                 <Col className='d-flex justify-content- mt-4'>
-                    <NewRegisterButton name={"Nuevo Mundo"} clickFunction={(e) => navigate("")}/>
+                    <NewRegisterButton name={"Nuevo Mundo"} clickFunction={(e) => navigate("/worlds/new-world")}/>
                 </Col>
             </Row>
             <Row className='d-flex justify-content-center mt-4'>
