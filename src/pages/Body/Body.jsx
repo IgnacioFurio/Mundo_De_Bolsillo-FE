@@ -7,6 +7,7 @@ import { ModifyGame } from '../ModifyGame/ModifyGame'
 import { Container } from 'react-bootstrap'
 import { Worlds } from '../Worlds/Worlds'
 import { WorldDetails } from '../WorldDetails/WorldDetails'
+import { NewWorld } from '../NewWorld/NewWorld'
 import './Body.css';
 
 export const Body = () => {
@@ -19,6 +20,7 @@ export const Body = () => {
                 <Route path='/games/modify-game' element={<ModifyGame/>}/>
                 <Route path='/worlds/my-worlds' element={<Worlds/>}/>
                 <Route path='/worlds/world-details' element={<WorldDetails/>}/>
+                <Route path='/worlds/new-world' element={<NewWorld/>}/>
             </Routes>
         </Container>
     )

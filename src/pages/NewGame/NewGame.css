@@ -1,8 +1,8 @@
-.newGameNextPrev{
+.nextPrev{
     position: relative;
     bottom: 50vh;
 }
 
-.newGameTutorial{
+.tutorialHeight{
     min-height: 85vh;
 }

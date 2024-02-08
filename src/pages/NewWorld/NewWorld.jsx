@@ -1,60 +1,57 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 //common
+import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 //helper
-import { validate } from '../../helpers/validations.helper';
-import { GameFormQuestions } from '../../helpers/Games.Forms.helper';
+import { WorldFormQuestions } from '../../helpers/WorldForms.helper';
+import { showNext, validate } from '../../helpers/validations.helper';
 //bootstrap
-import { Col, Container, Row  } from 'react-bootstrap'
-import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
-//apicall
-import { createGame } from '../../services/game.apicalls';
-import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
-//css
-import './NewGame.css';
+import { Col, Container, Row } from 'react-bootstrap';
 
-export const NewGame = () => {
-
+export const NewWorld = () => {
     const navigate = useNavigate();
 
     //HOOKS
     const formQuestions = {
-        title: GameFormQuestions.text.new.title,
-        description: GameFormQuestions.text.new.description
+        name: WorldFormQuestions.text.new.name,
+        description: WorldFormQuestions.text.new.description
     };
     
     const formPlaceholders = {
-        title: GameFormQuestions.placeholder.new.title,
-        description: GameFormQuestions.placeholder.new.description
+        name: WorldFormQuestions.placeholder.new.name,
+        description: WorldFormQuestions.placeholder.new.description
     };
 
-    const [formCounter, setFormCounter ] = useState(0);
+    const [ formCounter, setFormCounter ] = useState(0);
 
-    const [ newGameData, setNewGameData] = useState({
-        title: "",
+    const [ newWorldData, setNewWorldData] = useState({
+        name: "",
         description: ""
     });
     //only set false when a field is required
     const [ validInputField, setValidInputfield] = useState({
-        titleValid: false,
+        nameValid: false,
         descriptionValid: true
     });
     
     const [ errorInputField, setErrorInputfield] = useState({
-        titleError: "",
+        nameError: "",
         descriptionError: ""
     });
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
-    
     //VALIDATIONS
-    useEffect(() =>{showNext();},[newGameData]);
-    
+    useEffect(() =>{setSubmitStatus(showNext(newWorldData, formCounter));},[newWorldData]);
+
+    useEffect(() => {
+        console.log(submitStatus);
+    });
+
     //HANDLERS
     const inputHandler = (e) => {        
-        setNewGameData((prevState) => ({
+        setNewWorldData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }));
@@ -70,32 +67,11 @@ export const NewGame = () => {
         formCounter < 2 ? setFormCounter(formCounter + 1) : setFormCounter(0);
         setSubmitStatus(false);
     };
-    
-    const showNext  = () => {
-        let values = Object.values(validInputField)
-
-        if(values[formCounter] === true) {
-            return setSubmitStatus(true);
-        };
-
-        setSubmitStatus(false)
-    };
-
+        
     //APICALL
-    const createNewGame = () => { 
-
-        createGame(newGameData)
-        .then(() => { 
-            navigate('/games/my-games');
-        })
-        .catch(error => {
-            let backendErrorData = {
-                message: error.response.data.message,
-                valid: error.response.succes
-            }
-        });
-    }; 
-    
+    const createNewWorld = () => {
+        console.log("hello");
+    };
     //CHECKS
     const checkError = (e) => {
         let error = "";
@@ -120,35 +96,20 @@ export const NewGame = () => {
     };
 
     return (
-        <Container >            
+        <Container>
             <Row className='tutorialHeight'>
             {formCounter === 0 && <TutorialQuestions 
-                gameData={newGameData.title}
+                gameData={newWorldData.name}
                 type="textarea" 
-                text={formQuestions.title}
-                errorText={errorInputField.titleError}
-                placeholder={formPlaceholders.title} 
-                name="title" 
+                text={formQuestions.name}
+                errorText={errorInputField.nameError}
+                placeholder={formPlaceholders.name} 
+                name="name" 
                 required={true}
                 changeFunction={(e) => inputHandler(e)}
                 blurFunction={(e)=>checkError(e)}/>
             }
-            
-            {formCounter === 1 && <TutorialQuestions 
-                gameData={newGameData.description}
-                type="textarea" 
-                text={formQuestions.description}
-                errorText={errorInputField.descriptionError}
-                placeholder={formPlaceholders.description} 
-                name="description" 
-                required={false}
-                changeFunction={(e) => inputHandler(e)}
-                blurFunction={(e)=>checkError(e)}/>                
-            }
-
-            {formCounter === 2 && <ConfirmNewRegister data={newGameData}/>}
             </Row>
-            
             <Row className='nextPrev d-flex justify-content-center align-items-center'>
             {formCounter < 2 ? 
                 <>
@@ -171,5 +132,5 @@ export const NewGame = () => {
                 }
             </Row>
         </Container>
-        );
-}
+    )
+};

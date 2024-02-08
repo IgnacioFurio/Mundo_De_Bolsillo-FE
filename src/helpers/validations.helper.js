@@ -26,3 +26,13 @@ export const validate = ( input, data, required ) => {
             break;
     }
 };
+
+export const showNext  = (object, counter) => {
+    let values = Object.values(object)
+
+    if(values[counter] === true) {
+        return true;
+    };
+
+    return false;
+};
