@@ -99,7 +99,6 @@ export const NewGame = () => {
             );
             
         error = check.message;
-        console.log(check);
 
         setValidInputfield((prevState) => ({
             ...prevState,
