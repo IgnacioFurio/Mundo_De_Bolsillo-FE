@@ -1,8 +1,8 @@
 export const WorldFormQuestions = {
     text: {
         new: {
-            name: "El primer paso para crear una partida nueva es encontrarle un nombre molón.",
-            description: "¿Quieres decir escribir algo acerca de la ambientación de la partida?"
+            name: "Para crear un mundo primero debemos ponerle un nombre poderoso.",
+            description: "Si quieres contar algo destacable acerca de este nuevo mundo, esta es la sección adecuada."
         },
         modify: {
             title: "¿Has encontrado un nombre aún más molón?, recuerda que siempre puedes volver a cambiarlo.",
@@ -11,7 +11,7 @@ export const WorldFormQuestions = {
     },
     placeholder: {
         new: {
-            name: "¿Como vas a llamar a la partida?.",
+            name: "¿Que nombre tendrá el nuevo mundo?.",
             description: "Puedes dejarlo para más adelante."
         },
         modify: {

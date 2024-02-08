@@ -1,6 +1,7 @@
 export const validate = ( input, data, required ) => {
     switch (input) {
         case "title":
+        case "name":
             
             if (data === "" && required === true) {
                 return {message: "Es imprescindible darle un nombre para poder seguir." , valid: false}
@@ -23,13 +24,14 @@ export const validate = ( input, data, required ) => {
             break;
     
         default:
+            return {message: "Algo no ha salido como esperabamos.", valid: false}
             break;
     }
 };
 
 export const showNext  = (object, counter) => {
     let values = Object.values(object)
-
+    
     if(values[counter] === true) {
         return true;
     };

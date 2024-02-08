@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 //common
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 //helper
-import { validate } from '../../helpers/validations.helper';
+import { showNext, validate } from '../../helpers/validations.helper';
 import { GameFormQuestions } from '../../helpers/Games.Forms.helper';
 //bootstrap
 import { Col, Container, Row  } from 'react-bootstrap'
@@ -50,7 +50,9 @@ export const NewGame = () => {
 
     
     //VALIDATIONS
-    useEffect(() =>{showNext();},[newGameData]);
+    useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter));},[newGameData]);
+    
+    useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter));});
     
     //HANDLERS
     const inputHandler = (e) => {        
@@ -62,23 +64,13 @@ export const NewGame = () => {
         checkError(e);
     };
 
-    const gameFormHandlerPrev = () => {
+    const formHandlerPrev = () => {
         formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/my-games");
         setSubmitStatus(false);
     };
-    const gameFormHandlerNext = () => {
+    const formHandlerNext = () => {
         formCounter < 2 ? setFormCounter(formCounter + 1) : setFormCounter(0);
         setSubmitStatus(false);
-    };
-    
-    const showNext  = () => {
-        let values = Object.values(validInputField)
-
-        if(values[formCounter] === true) {
-            return setSubmitStatus(true);
-        };
-
-        setSubmitStatus(false)
     };
 
     //APICALL
@@ -153,16 +145,16 @@ export const NewGame = () => {
             {formCounter < 2 ? 
                 <>
                     <Col className='d-flex justify-content-start'>
-                        <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
+                        <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                    {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
+                    {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => formHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
                     </Col>  
                 </>
                 :
                 <>
                     <Col className='d-flex justify-content-start'>
-                        <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
+                        <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
                         <NextPrevButton gameInfo={newGameData} action="Submit" clickFunction={() => createNewGame()}/>
