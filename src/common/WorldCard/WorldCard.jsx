@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { worldInfo } from '../../services/world.slice';
 //bootstrap
 import { Col, Container, Row } from 'react-bootstrap';
 //css
-import './WorldsCard.css';
-import { useNavigate } from 'react-router-dom';
+import './WorldCard.css';
 
 export const WorldCard = ({ dataCard }) => {
 
