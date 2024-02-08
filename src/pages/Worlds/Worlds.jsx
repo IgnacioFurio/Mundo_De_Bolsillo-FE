@@ -15,11 +15,7 @@ export const Worlds = () => {
 
     const [ worlds, setWorlds ] = useState([]);
 
-    useEffect(()=>{
-        console.log(worlds);
-    })
     useEffect(() => {
-
         getAllWorlds()
         .then(result => {setWorlds(result.data.data);})
         .catch(error => console.log(error));

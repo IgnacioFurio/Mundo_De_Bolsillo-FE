@@ -38,12 +38,12 @@ export const GameDetails = () => {
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteGameData(gameInformation.id)}/></Col>
             </Row>            
             <Row className='d-flex justify-content-center align-items-center'>
-                <Col className='gameDetailsStone my-4 py-2'>
+                <Col className='detailsStone mt-4 py-2'>
                     <div className='gamePortraitTitle p-3'><p className='gameDetailsTitle d-flex justify-content-center col-12 fs-4 fw-bold mb-0'>{gameInformation.title}</p></div>
                 </Col>                    
             </Row>
-            <Row className='gameDetailsBackground'>
-                <Col className='gameDetailsDescription col-12 text-center mb-3 mx-2'>
+            <Row className='detailsBackground mx-1'>
+                <Col className='col-12 text-center mb-3 mx-2'>
                 {gameInformation.description}
                 </Col>
             </Row>
