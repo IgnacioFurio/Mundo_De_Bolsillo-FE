@@ -9,6 +9,7 @@ import { WorldFormQuestions } from '../../helpers/WorldForms.helper';
 import { showNext, validate } from '../../helpers/validations.helper';
 //bootstrap
 import { Col, Container, Row } from 'react-bootstrap';
+import { createWorld } from '../../services/world.apicalls';
 
 export const NewWorld = () => {
     const navigate = useNavigate();
@@ -69,7 +70,16 @@ export const NewWorld = () => {
         
     //APICALL
     const createNewWorld = () => {
-        console.log("hello");
+        createWorld(newWorldData)
+        .then(() => { 
+            navigate('/worlds/my-worlds');
+        })
+        .catch(error => {
+            let backendErrorData = {
+                message: error.response.data.message,
+                valid: error.response.succes
+            }
+        });
     };
     //CHECKS
     const checkError = (e) => {
@@ -140,7 +150,7 @@ export const NewWorld = () => {
                         <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton gameInfo={newWorldData} action="Submit" clickFunction={() => createNewGame()}/>
+                        <NextPrevButton gameInfo={newWorldData} action="Submit" clickFunction={() => createNewWorld()}/>
                     </Col>
                 </>
                 }
