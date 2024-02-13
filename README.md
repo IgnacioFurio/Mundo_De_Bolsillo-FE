@@ -4,29 +4,29 @@ Una aplicación para poder tener organizada la información de tus partidas de r
 
   <summary>Contenido 📝</summary>
   <ol>
-    <li><a href="#objetivo-🎯">Objetivo // Goal 🎯</a></li>
-    <li><a href="#sobre-el-proyecto-🔎">Sobre el proyecto // About this project 🔎</a></li>
+    <li><a href="#objetivo-🎯">Objetivo 🎯</a></li>
+    <li><a href="#sobre-el-proyecto-🔎">Sobre el proyecto  🔎</a></li>
     <li><a href="#deploy-🚀">Deploy 🚀</a></li>
     <li><a href="#stack">Stack</a></li>
-    <li><a href="#instalación-en-local">Instalación en local // Local instalation</a></li>
-    <li><a href="#vistas">Vistas // Views</a></li>
-    <li><a href="#futuras-funcionalidades">Futuras funcionalidades // Future features</a></li>
-    <li><a href="#contribuciones">Contribuciones // Supporting</a></li>
-    <li><a href="#webgrafia">Webgrafia: // Webgraphy:</a></li>
-    <li><a href="#agradecimientos">Agradecimientos // Thanks</a></li>
-    <li><a href="#contacto">Contacto // Contact</a></li>
+    <li><a href="#instalación-en-local">Instalación en local</a></li>
+    <li><a href="#vistas">Vistas</a></li>
+    <li><a href="#futuras-funcionalidades">Futuras funcionalidades </a></li>
+    <li><a href="#contribuciones">Contribuciones</a></li>
+    <li><a href="#webgrafia">Webgrafia: </a></li>
+    <li><a href="#agradecimientos">Agradecimientos</a></li>
+    <li><a href="#contacto">Contacto</a></li>
   </ol>
 </details>
 
 ---
 
-## Objetivo // Goal 🎯
+## Objetivo 🎯
 ---
 En este repositorio encontrarás lo necesario para correr el front-end de la aplicación, pero para poder usarla en todo su esplendor deberás hacerte con el backend correspondiente en <a href="https://github.com/IgnacioFurio/Mundos_De_Bolsillo-BE">Mundos De Bolsillo BE 🎯</a>.
 
 
 ---
-## Sobre el proyecto // About this project 🔎
+## Sobre el proyecto 🔎
 ---
 Como alguien que dirige partidas de rol he notado que durante las sesiones es muy dificil llevar la cuenta de todo lo que ocurre tanto en mesa como fuera de ella, la información fluye en todas las direcciones y muchas veces se pierde. 
 
@@ -60,7 +60,7 @@ Con esta aplicación busco solucionar los problemas que he ido encontrando tanto
  </div>
 
 ---
-## Instalación en local // Local instalation
+## Instalación en local
 ---
 1. Clonar el repositorio // Clone repository
 2. ` $ npm install `
@@ -68,14 +68,23 @@ Con esta aplicación busco solucionar los problemas que he ido encontrando tanto
 4. ...
 
 ---
-## Vistas // Views
+## Vistas
 ---
 
 Seguimos trabajando en la aplicación para poder enseñar algo más en las próximas semanas.
 
+
+<img src= "./src/assets/ReadMe/mundosMobile.jpg"/>
+
+|||
+
+<img src= "./src/assets/ReadMe/partidasMobile.jpg"/>
+
 ---
-## Futuras funcionalidades // Future features
+## Futuras funcionalidades
 ---
+
+⬜ Creación de partidas dónde organizarte la información para cada una de ellas.
 
 ⬜ Creación de mundos ligados a partidas.
 
@@ -90,7 +99,7 @@ Seguimos trabajando en la aplicación para poder enseñar algo más en las próx
 ⬜ Creación de sesiones que recojan las distintas escenas que puede ser que tengan lugar.
 
 ---
-## Contribuciones // Supporting
+## Contribuciones
 ---
 
 Las sugerencias y aportaciones son siempre bienvenidas.
@@ -114,7 +123,7 @@ Puedes hacerlo de dos maneras:
     - Abre una solicitud de Pull Request // Open a Pull Request
 
 ---
-## Webgrafia: // Webgraphy:
+## Webgrafia:
 ---
 
 - Repositorios propios
@@ -124,13 +133,13 @@ Puedes hacerlo de dos maneras:
 - Documentación oficial de las tecnologías usadas // Official techs documentation
 
 ---
-## Agradecimientos: // Thanks:
+## Agradecimientos: 
 ---
 
 De momento gracias por haber llegado hasta aquí, espero que pruebes las aplicación cuando este lista, o por lo menos cuando vaya tomando forma.
 
 
-- **Datata**
+- ***Datata***
   
   Gracias por no perder la fe en mí, y sobretodo por sequir solucionando esas dudas que me han ido saliendo al vuelo.
 
