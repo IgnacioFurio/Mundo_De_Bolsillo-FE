@@ -57,9 +57,7 @@ export const ModifyWorld = () => {
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //VALIDATIONS
-    useEffect(() =>{showNext()
-        console.log(worldInformation);
-    },[worldInformation]);
+    useEffect(() =>{showNext()},[worldInformation]);
 
     //HANDLERS
     const gameFormHandlerPrev = () => {
