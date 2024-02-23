@@ -9,6 +9,10 @@ export const createWorld = async (body) => {
     return await axios.post(`${root}/world/post`, body)
 };
 
+export const modifyWorld = async (body) => {
+    return await axios.put(`${root}/world/put`, body);
+};
+
 export const deleteWorld = async (body) => {
     const data = {
         world_id: body

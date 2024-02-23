@@ -8,6 +8,7 @@ import { Container } from 'react-bootstrap'
 import { Worlds } from '../Worlds/Worlds'
 import { WorldDetails } from '../WorldDetails/WorldDetails'
 import { NewWorld } from '../NewWorld/NewWorld'
+import { ModifyWorld } from '../ModifyWorld/ModifyWorld'
 import './Body.css';
 
 export const Body = () => {
@@ -21,6 +22,7 @@ export const Body = () => {
                 <Route path='/worlds/my-worlds' element={<Worlds/>}/>
                 <Route path='/worlds/world-details' element={<WorldDetails/>}/>
                 <Route path='/worlds/new-world' element={<NewWorld/>}/>
+                <Route path='/worlds/modify-world' element={<ModifyWorld/>}/>
             </Routes>
         </Container>
     )

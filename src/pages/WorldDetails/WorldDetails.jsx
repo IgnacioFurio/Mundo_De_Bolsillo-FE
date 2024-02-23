@@ -29,13 +29,12 @@ export const WorldDetails = () => {
         })
         .catch(error => console.log(error));
     };
-
     
     return (
         <Container id={worldInformation.id} className='col-12 col-sm-11 col-md-9 col-lg-8 col-xl-7'>
             <Row className='d-flex justify-content-evenly pt-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigate("/worlds/my-worlds")}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => {}}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate('/worlds/modify-world')}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteWorldData(worldInformation.id)}/></Col>
             </Row>            
             <Row className='d-flex justify-content-center align-items-center'>
