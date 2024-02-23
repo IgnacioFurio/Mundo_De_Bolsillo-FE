@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { gameData, gameInfo } from '../../services/game.slice';
-import { worldData } from '../../services/world.slice';
+import { worldData, worldInfo } from '../../services/world.slice';
 //apicall
-import { modifyGame } from '../../services/game.apicalls';
+import { modifyWorld } from '../../services/world.apicalls';
 //common
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
@@ -91,6 +90,18 @@ export const ModifyWorld = () => {
     //APICALL
     const updateWorldInformation = () => {
         console.log("update");
+
+        modifyWorld(worldInformation)
+        .then(() => { 
+            dispatch(worldInfo({worldInformation: worldInformation}))
+            navigate('/worlds/world-details');
+        })
+        .catch(error => {
+            let backendErrorData = {
+                message: error.response.data.message,
+                valid: error.response.succes
+            }
+        });
     }
 
     //CHECKS
@@ -124,7 +135,7 @@ export const ModifyWorld = () => {
                 text={formQuestions.name}
                 errorText={errorInputField.nameError}
                 placeholder={formPlaceholders.name} 
-                name="title" 
+                name="name" 
                 changeFunction={(e) => inputHandler(e)}/>
                 }
             
