@@ -3,13 +3,11 @@ import { useNavigate } from 'react-router-dom';
 //Redux
 import { useDispatch } from 'react-redux';
 import { gameInfo } from '../../services/game.slice';
-//components
-import { InfoButton } from '../InfoButton/InfoButton';
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
-//GameCard helpers
-import { descriptionSlicer } from '../../helpers/GameCard.helper';
 //Css
+import toRightArrow from "../../assets/FlechaDrch.png";
+import toLeftArrow from "../../assets/FlechaIzq.png";
 import './GameCard.css'
 
 export const GameCard = ({ dataCard }) => {
@@ -18,43 +16,24 @@ export const GameCard = ({ dataCard }) => {
 
     const navigate = useNavigate();
 
-    const [ description, setDescription ] = useState(dataCard.description);
-
-    const [ showMore, setShowMore ] = useState(false);
-    const [ showMoreStyle, setShowMoreStyle] = useState("gameCard my-3");
-
-
-    useEffect(() => {
-        setDescription(descriptionSlicer(dataCard.description)); 
-    },[]);
-
-    useEffect(() => {
-        showMore ? setShowMoreStyle("gameCardShow my-3") : setShowMoreStyle("gameCard my-3");
-    }, [showMore]);
-
-    const handleShowDescription = () => {
-        showMore ? setShowMore(false) : setShowMore(true);        
-    };
-
-    const handleClickGame = (e) => {
+    const handleClickWorld = (e) => {
         dispatch(gameInfo({gameInformation: dataCard}));
-        navigate("/games/game-details");
+        navigate('/games/game-details');
     };
 
     return (
-        <Container className={showMoreStyle}>
-            <Row>
-                <Col className='gameTitle fs-6 fw-bold' onClick={(e) => handleClickGame(e)}>
-                    {dataCard.title}
+        <Container className='gameCardDesign mt-2' onClick={handleClickWorld}>
+            <Row className='d-flex justify-content-center align-items-center '>
+                <Col className='leftScroll p-0'>
+                    <p className='leftArrow'></p>
                 </Col>
-                <Col className='px-4 fs-6 text-break col-12' onClick={(e) => handleClickGame(e)}>
-                    {showMore ? dataCard.description : description}
+                <Col className='centerScrollGames d-flex align-items-center justify-content-between col-9 p-0'>
+                    <img src={toRightArrow} className='arrows' />
+                    <p className='d-flex justify-content-center align-items-center fs-2 text-center fw-bold my-1 p-0'>{dataCard.title}</p>
+                    <img src={toLeftArrow} className='arrows' />
                 </Col>
-                <Col className="d-flex justify-content-end align-items-center col-12">
-                    {description.length === 83 ? <InfoButton clickFunction={(e) => handleShowDescription(e)} status={showMore}/> : ""}
-                </Col>
+                <Col className='rightScroll p-0'></Col>
             </Row>
-
         </Container>
     )
 };

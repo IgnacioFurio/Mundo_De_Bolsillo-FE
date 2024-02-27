@@ -1,47 +1,59 @@
-.gameCard{
+.gameCardDesign{
+    filter: drop-shadow(0 0 0.05rem #aaee72) drop-shadow(0 0 0.2rem #b2ffa3);
+}
+
+.leftScroll{
+    height: 7em;
+    background-image: url('../../assets/pergaminoIzquierdo.png');
+    background-size: 2em 7em;
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
+.leftArrow{
+    background-image: url('../../assets/FlechaDrch.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.centerScrollGames{
     --paper-dark: #e5c93d ;
     --paper-color: #ffed87;
-    cursor: pointer;
-    height: 90%;
-    transition: 1s;
+    color: #e4f9e0;
+    text-shadow: 0 0 0.2rem #3a5a1f;
+    height: 5em;
+    width: 100%;
     background: linear-gradient(
         135deg,
         var(--paper-dark),
         30%,
         var(--paper-color)
     );
-    border: solid 0.15em #d0b637b4;
-    border-top-left-radius: 0.5em;
-    border-bottom-right-radius: 0.5em;
+    border-top: solid 2px black;
+    border-bottom: solid 2px black; 
+    filter: drop-shadow(0 0 0.05rem #aaee72) drop-shadow(0 0 0.2rem #c2f49a);
+    transition: 0.7s;
 }
-.gameCard:hover{
-    box-shadow: 0.4em 0.4em 0.9em; 
-    transition: 0.5s;
+.centerScroll:hover{
+    transition: 0.7s;
+    filter: drop-shadow(0 0 0.6rem #c2f49a);
 }
 
-.gameCardShow{
-    --paper-dark: #e5c93d;
-    --paper-color: #ffed87;
+.arrows{
     cursor: pointer;
-    height: fit-content;  
-    box-shadow: 0.2em 0.2em 0.6em;
-    transition: 1s;
-    background: linear-gradient(
-        135deg,
-        var(--paper-dark),
-        30%,
-        var(--paper-color)
-    );
-    border: solid 0.1em #e5c93d;
-    border-top-right-radius: 0.5em;
-    border-bottom-left-radius: 0.5em;   
+    height: 6em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 0.1rem #3a5a1f) drop-shadow(0 0 0.75rem #aaee72);
+    transition: 0.7s;
 }
 
-.gameTitle{
-    color: #544d2e;
-    border-bottom: solid 0.15em #c737a397;
-}
-
-.gameDesciption{
-    color: #736B44;
+.rightScroll{
+    height: 7em;
+    background-image: url('../../assets/pergaminoDerecho.png');
+    background-size: 2em 7em;
+    background-repeat: no-repeat;
+    background-position: left;
 }
