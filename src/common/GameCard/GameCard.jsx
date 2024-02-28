@@ -29,7 +29,7 @@ export const GameCard = ({ dataCard }) => {
                 </Col>
                 <Col className='centerScrollGames d-flex align-items-center justify-content-between col-9 p-0'>
                     <img src={toRightArrow} className='arrows' />
-                    <p className='d-flex justify-content-center align-items-center fs-2 text-center fw-bold my-1 p-0'>{dataCard.title}</p>
+                    <p className='d-flex justify-content-center align-items-center fs-4 text-center fw-bold my-1 p-0'>{dataCard.title}</p>
                     <img src={toLeftArrow} className='arrows' />
                 </Col>
                 <Col className='rightScroll p-0'></Col>
