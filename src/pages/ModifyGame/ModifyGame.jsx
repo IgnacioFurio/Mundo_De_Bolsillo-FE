@@ -107,12 +107,6 @@ export const ModifyGame = () => {
     
     const selectHandler = (e) => {    
         let worlds_id = e.target.id
-        // if (worldsToEngage.length > 0) {
-        //     console.log("hello");
-        //     for (let index = 0; index < worldsToEngage.length; index++) {
-        //         console.log(worldsToEngage[index]);
-        //     }
-        // };
 
         for(const key in worldsToEngage) {
             if (key == worlds_id && worldsToEngage[worlds_id] === true) {
@@ -121,7 +115,7 @@ export const ModifyGame = () => {
                     [e.target.id]: false
                 }));
             } else if(key == worlds_id && worldsToEngage[worlds_id] === false) {
-                setWorldsToEngage((prevState) => ({
+                return setWorldsToEngage((prevState) => ({
                     ...prevState, 
                     [e.target.id]: true
                 }));
