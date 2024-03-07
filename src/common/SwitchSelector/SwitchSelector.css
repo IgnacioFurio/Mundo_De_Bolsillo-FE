@@ -1,0 +1,36 @@
+.selectDesign{
+    height: 2em;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.switchDesignOn{
+    cursor: pointer;
+    height: 1em;
+    width: 1.5em;
+    background-color:#7eb1f9;
+    border: solid 1px blue;
+    border-radius: 20px;
+}
+
+.switchDesignOff{
+    cursor: pointer;
+    height: 1em;
+    width: 1.5em;
+    background-color: gainsboro;
+    border: solid 1px grey;
+    border-radius: 20px;
+}
+
+.switchOff{
+    height: 0.8em;
+    width: 0.8em;
+    background-color: grey;
+    border-radius: 20px;
+}
+
+.switchOn{
+    height: 0.8em;
+    width: 0.8em;
+    background-color: blue;
+    border-radius: 20px;}

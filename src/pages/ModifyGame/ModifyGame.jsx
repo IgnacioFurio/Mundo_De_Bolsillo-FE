@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { gameData, gameInfo } from '../../services/game.slice';
 //apicall
 import { modifyGame } from '../../services/game.apicalls';
+import { getAllWorlds } from '../../services/world.apicalls';
 //common
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
+import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
 //bootstrap
 import { Col, Container, Row } from 'react-bootstrap';
 //helper
@@ -16,6 +18,7 @@ import { GameFormQuestions } from '../../helpers/Games.Forms.helper';
 import { validate } from '../../helpers/validations.helper';
 //css
 import "./ModifyGame.css";
+import { createWorldGate } from '../../services/worldgate.apicall';
 
 export const ModifyGame = () => {
 
@@ -25,11 +28,12 @@ export const ModifyGame = () => {
 
     const dataRdx = useSelector(gameData);
 
-    const [formCounter, setFormCounter ] = useState(0);
+    const [ formCounter, setFormCounter ] = useState(0);
     
     const formQuestions = {
         title: GameFormQuestions.text.modify.title,
-        description: GameFormQuestions.text.modify.description
+        description: GameFormQuestions.text.modify.description,
+        worldgate: GameFormQuestions.text.modify.worldgate
     };
     
     const formPlaceholders = {
@@ -37,35 +41,50 @@ export const ModifyGame = () => {
         description: GameFormQuestions.placeholder.modify.description
     };
 
-    const [ gameInformation, setGameInformation] = useState({
+    const [ gameInformation, setGameInformation ] = useState({
         id: dataRdx.gameInformation.id,
         title: dataRdx.gameInformation.title,
         description: dataRdx.gameInformation.description
     });
 
+    const [ worldInformation, setWorldInformation ] = useState({});
+
+    const [ worldsToEngage, setWorldsToEngage ] = useState([])
+
+    const [ worldgateInformation, setWorldgateInformation ] = useState({
+        game_id: dataRdx.gameInformation.id,
+        world_id: ""
+    });
+
     //only set false when a field is required
     const [ validInputField, setValidInputfield] = useState({
         titleValid: true,
-        descriptionValid: true
+        descriptionValid: true,
+        world_idValid: true
     });
     
     const [ errorInputField, setErrorInputfield] = useState({
         titleError: "",
-        descriptionError: ""
+        descriptionError: "",
+        world_idError: ""    
     });
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //VALIDATIONS
-    useEffect(() =>{showNext();
-    },[gameInformation]);
+    useEffect(() => { getWorlds();},[worldsToEngage]);
+    
+    useEffect(() =>{ showNext(); },[ gameInformation ]);
+    
+    useEffect(() =>{showNext(); 
+    },[ worldgateInformation ]);
 
     //HANDLERS
     const gameFormHandlerPrev = () => {
         formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/game-details");
     };
     const gameFormHandlerNext = () => {
-        formCounter < 2 ? setFormCounter(formCounter + 1) : setFormCounter(0);
+        formCounter < 3 ? setFormCounter(formCounter + 1) : setFormCounter(0);
     };
     const showNext  = () => {
         let values = Object.values(validInputField)
@@ -74,7 +93,6 @@ export const ModifyGame = () => {
             return setSubmitStatus(true);
         };
         
-
         setSubmitStatus(false)
     };
 
@@ -83,12 +101,51 @@ export const ModifyGame = () => {
             ...prevState,
             [e.target.name]: e.target.value
         }));
+
         checkError(e);
+    };
+    
+    const selectHandler = (e) => {    
+        let worlds_id = e.target.id
+        // if (worldsToEngage.length > 0) {
+        //     console.log("hello");
+        //     for (let index = 0; index < worldsToEngage.length; index++) {
+        //         console.log(worldsToEngage[index]);
+        //     }
+        // };
+
+        for(const key in worldsToEngage) {
+            if (key == worlds_id && worldsToEngage[worlds_id] === true) {
+                return setWorldsToEngage((prevState) => ({
+                    ...prevState, 
+                    [e.target.id]: false
+                }));
+            } else if(key == worlds_id && worldsToEngage[worlds_id] === false) {
+                setWorldsToEngage((prevState) => ({
+                    ...prevState, 
+                    [e.target.id]: true
+                }));
+            }
+        };
+
+
+        setWorldsToEngage((prevState) => ({
+            ...prevState, 
+            [e.target.id]: true
+        }));
     };
 
     //APICALL
     const updateGameInformation = () => {
-
+        createWorldGate(worldgateInformation)
+        .then(() => {})
+        .catch(error => {
+            let backendErrorData = {
+                message: error.response.data.message,
+                valid: error.response.succes
+            }
+        });
+        
         modifyGame(gameInformation)
         .then(() => { 
             dispatch(gameInfo({gameInformation: gameInformation}))
@@ -100,7 +157,20 @@ export const ModifyGame = () => {
                 valid: error.response.succes
             }
         });
-    }
+    };
+
+    const getWorlds = () => {
+        getAllWorlds()
+        .then((result) => {
+            setWorldInformation(result.data.data);
+        })
+        .catch(error => {
+            let backendErrorData = {
+                message: error.response.data.message,
+                valid: error.response.succes
+            };
+        });
+    };
 
     //CHECKS
     const checkError = (e) => {
@@ -125,6 +195,10 @@ export const ModifyGame = () => {
         }));
     };
 
+    const unsetWorldsToEngage = (e) => {
+
+    };
+
     return (
         <Container>
             {formCounter === 0 && <TutorialQuestions 
@@ -146,11 +220,19 @@ export const ModifyGame = () => {
                 name="description" 
                 changeFunction={(e) => inputHandler(e)}/>
                 }
+            
+            {formCounter === 2 && <TutorialSelector
+                data={worldInformation}
+                text={formQuestions.worldgate}
+                errorText={errorInputField.descriptionError}
+                placeholder={formPlaceholders.description} 
+                clickFunction={(e) => selectHandler(e)}/>
+                }
 
-            {formCounter === 2 && <ConfirmNewRegister data={gameInformation}/>}
+            {formCounter === 3 && <ConfirmNewRegister data={gameInformation}/>}
 
             <Row className='modifyGameNextPrev d-flex justify-content-center align-items-center'>
-            {formCounter < 2 ? 
+            {formCounter < 3 ? 
                 <>
                     <Col className='d-flex justify-content-start'>
                         <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
@@ -169,8 +251,7 @@ export const ModifyGame = () => {
                     </Col>
                 </>
                 }
-            </Row>
-            
+            </Row>            
         </Container>
     )
 };
