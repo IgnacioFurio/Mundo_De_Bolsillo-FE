@@ -6,6 +6,7 @@ import { gameData, gameInfo } from '../../services/game.slice';
 //apicall
 import { modifyGame } from '../../services/game.apicalls';
 import { getAllWorlds } from '../../services/world.apicalls';
+import { createWorldGate, deleteWorldGate } from '../../services/worldgate.apicall';
 //common
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
@@ -18,7 +19,6 @@ import { GameFormQuestions } from '../../helpers/Games.Forms.helper';
 import { validate } from '../../helpers/validations.helper';
 //css
 import "./ModifyGame.css";
-import { createWorldGate } from '../../services/worldgate.apicall';
 
 export const ModifyGame = () => {
 
@@ -148,7 +148,14 @@ export const ModifyGame = () => {
                     }
                 });
             } else if (worldsToEngage[key] === false) {
-                console.log("deleteGate");                
+                deleteWorldGate({game_id: dataRdx.gameInformation.id, world_id: Math.floor(keys[i])})
+                .then(() => {})
+                .catch(error => {
+                    let backendErrorData = {
+                        message: error.response.data.message,
+                        valid: error.response.succes
+                    }
+                });              
             }
         }
         

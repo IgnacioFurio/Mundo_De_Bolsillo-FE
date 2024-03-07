@@ -19,10 +19,11 @@ export const createWorldGate = async (body) => {
 //     return await axios.put(`${root}/world/put`, body);
 // };
 
-// export const deleteWorld = async (body) => {
-//     const data = {
-//         world_id: body
-//     }
+export const deleteWorldGate = async (body) => {
+    const data = {
+        game_id: body.game_id,
+        world_id: body.world_id
+    }
 
-//     return await axios.delete(`${root}/world/delete`,{data})
-// };
+    return await axios.delete(`${root}/worldgate/delete`, {data})
+};
