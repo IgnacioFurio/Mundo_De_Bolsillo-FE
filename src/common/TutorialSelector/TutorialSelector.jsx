@@ -5,7 +5,7 @@ import { Col, Container, Form, Row } from 'react-bootstrap'
 import './TutorialSelector.css';
 import { SwitchSelector } from '../SwitchSelector/SwitchSelector';
 
-export const TutorialSelector = ({ data, text, errorText, clickFunction, blurFunction}) => {    
+export const TutorialSelector = ({ data, text, errorText, clickFunction }) => {    
     const [ dataSelector, setDataSelector ] = useState(data);
 
     return (

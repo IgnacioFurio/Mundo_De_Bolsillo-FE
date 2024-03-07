@@ -49,37 +49,25 @@ export const ModifyGame = () => {
 
     const [ worldInformation, setWorldInformation ] = useState({});
 
-    const [ worldsToEngage, setWorldsToEngage ] = useState([])
-
-    const [ worldgateInformation, setWorldgateInformation ] = useState({
-        game_id: dataRdx.gameInformation.id,
-        world_id: ""
-    });
+    const [ worldsToEngage, setWorldsToEngage ] = useState([]);
 
     //only set false when a field is required
     const [ validInputField, setValidInputfield] = useState({
         titleValid: true,
         descriptionValid: true,
-        world_idValid: true
     });
     
     const [ errorInputField, setErrorInputfield] = useState({
         titleError: "",
         descriptionError: "",
-        world_idError: ""    
     });
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //VALIDATIONS
-    useEffect(() => { getWorlds(); console.log(worldsToEngage);},[worldsToEngage]);
+    useEffect(() => { getWorlds(); },[worldsToEngage]);
     
     useEffect(() =>{ showNext(); },[ gameInformation ]);
-    
-    useEffect(() =>{showNext(); 
-        console.log(worldgateInformation);
-    },[ worldgateInformation ]);
-
     //HANDLERS
     const gameFormHandlerPrev = () => {
         formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/game-details");
@@ -157,8 +145,7 @@ export const ModifyGame = () => {
                     }
                 });              
             }
-        }
-        
+        };        
 
         modifyGame(gameInformation)
         .then(() => { 

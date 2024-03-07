@@ -12,7 +12,6 @@ export const SwitchSelector = ({ value, label, name, type, clickFunction }) => {
     const [ switchStatus, setSwitchStatus ] = useState();
 
     useEffect(() => {
-        // console.log(value);
         if (status === false) {
             setSwitchDesign("switchDesignOff col-2 d-flex justify-content-start align-items-center m-0 p-0")
             setSwitchStatus("switchOff m-0 p-0")

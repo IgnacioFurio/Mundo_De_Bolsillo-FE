@@ -34,9 +34,8 @@ export const GameDetails = () => {
         .catch(error => console.log(error));
     };
 
-    useEffect(() => {
-        //set time out here
-        if (worldGates.length === 0) {
+    useEffect(() => { // Bring worlds linked to the game
+        setTimeout(() => {
             getWorldGatesByGameId(gameInformation.id)
                 .then(result => {
                     let worlds = [];
@@ -46,8 +45,8 @@ export const GameDetails = () => {
                     setWorldGates(worlds);
                 })
                 .catch(error => console.log(error))
-        }
-    }, [worldGates]);
+        }, 1500);
+    }, []);
 
     return (
         <Container id={gameInformation.id} className='col-12 col-sm-11 col-md-9 col-lg-8 col-xl-7'>
