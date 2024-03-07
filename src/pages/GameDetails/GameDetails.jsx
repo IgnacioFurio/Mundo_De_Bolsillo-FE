@@ -35,10 +35,10 @@ export const GameDetails = () => {
     };
 
     useEffect(() => {
+        //set time out here
         if (worldGates.length === 0) {
             getWorldGatesByGameId(gameInformation.id)
                 .then(result => {
-                    console.log(result);
                     let worlds = [];
                     for (let i = 0; i < result.data.data.length; i++) {
                         worlds.push(result.data.data[i].World);

@@ -72,11 +72,12 @@ export const ModifyGame = () => {
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //VALIDATIONS
-    useEffect(() => { getWorlds();},[worldsToEngage]);
+    useEffect(() => { getWorlds(); console.log(worldsToEngage);},[worldsToEngage]);
     
     useEffect(() =>{ showNext(); },[ gameInformation ]);
     
     useEffect(() =>{showNext(); 
+        console.log(worldgateInformation);
     },[ worldgateInformation ]);
 
     //HANDLERS
@@ -86,6 +87,7 @@ export const ModifyGame = () => {
     const gameFormHandlerNext = () => {
         formCounter < 3 ? setFormCounter(formCounter + 1) : setFormCounter(0);
     };
+
     const showNext  = () => {
         let values = Object.values(validInputField)
 
@@ -131,15 +133,26 @@ export const ModifyGame = () => {
 
     //APICALL
     const updateGameInformation = () => {
-        createWorldGate(worldgateInformation)
-        .then(() => {})
-        .catch(error => {
-            let backendErrorData = {
-                message: error.response.data.message,
-                valid: error.response.succes
+        let keys = Object.keys(worldsToEngage)
+
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+
+            if (worldsToEngage[key] === true) {
+                createWorldGate({game_id: dataRdx.gameInformation.id, world_id: Math.floor(keys[i])})
+                .then(() => {})
+                .catch(error => {
+                    let backendErrorData = {
+                        message: error.response.data.message,
+                        valid: error.response.succes
+                    }
+                });
+            } else if (worldsToEngage[key] === false) {
+                console.log("deleteGate");                
             }
-        });
+        }
         
+
         modifyGame(gameInformation)
         .then(() => { 
             dispatch(gameInfo({gameInformation: gameInformation}))
@@ -187,10 +200,6 @@ export const ModifyGame = () => {
             ...prevState,
             [e.target.name + 'Error']: error
         }));
-    };
-
-    const unsetWorldsToEngage = (e) => {
-
     };
 
     return (
