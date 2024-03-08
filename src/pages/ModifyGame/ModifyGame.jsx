@@ -6,7 +6,7 @@ import { gameData, gameInfo } from '../../services/game.slice';
 //apicall
 import { modifyGame } from '../../services/game.apicalls';
 import { getAllWorlds } from '../../services/world.apicalls';
-import { createWorldGate, deleteWorldGate } from '../../services/worldgate.apicall';
+import { createWorldGate, deleteWorldGate, getWorldGatesByGameId } from '../../services/worldgate.apicall';
 //common
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
@@ -49,7 +49,7 @@ export const ModifyGame = () => {
 
     const [ worldInformation, setWorldInformation ] = useState({});
 
-    const [ worldsToEngage, setWorldsToEngage ] = useState([]);
+    const [ worldsToEngage, setWorldsToEngage ] = useState({});
 
     //only set false when a field is required
     const [ validInputField, setValidInputfield] = useState({
@@ -65,9 +65,9 @@ export const ModifyGame = () => {
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //VALIDATIONS
-    useEffect(() => { getWorlds(); },[worldsToEngage]);
+    useEffect(() => { getWorlds(); },[]);
     
-    useEffect(() =>{ showNext(); },[ gameInformation ]);
+    useEffect(() =>{ showNext(); console.log(worldsToEngage); },[ gameInformation ]);
     //HANDLERS
     const gameFormHandlerPrev = () => {
         formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/game-details");
@@ -111,12 +111,6 @@ export const ModifyGame = () => {
                 }));
             }
         };
-
-
-        setWorldsToEngage((prevState) => ({
-            ...prevState, 
-            [e.target.id]: true
-        }));
     };
 
     //APICALL
@@ -161,9 +155,31 @@ export const ModifyGame = () => {
     };
 
     const getWorlds = () => {
+
         getAllWorlds()
         .then((result) => {
-            setWorldInformation(result.data.data);
+            let worlds = result.data.data
+            
+            setWorldInformation(worlds)
+
+            for (let i = 0; i < worlds.length; i++) {
+                setWorldsToEngage((prevState) => ({
+                    ...prevState, 
+                    [worlds[i].id]: false
+                }));                
+            };
+
+            getWorldGatesByGameId(gameInformation.id) //set worldsToEngage 
+            .then(result => {
+                let worlds = result.data.data;
+                for (let i = 0; i < worlds.length; i++) {
+                    setWorldsToEngage((prevState) => ({
+                        ...prevState, 
+                        [worlds[i].World.id]: true
+                    }));
+                };
+            })
+            .catch(error => console.log(error));
         })
         .catch(error => {
             let backendErrorData = {
@@ -220,6 +236,7 @@ export const ModifyGame = () => {
             
             {formCounter === 2 && <TutorialSelector
                 data={worldInformation}
+                dataGates={worldsToEngage}
                 text={formQuestions.worldgate}
                 errorText={errorInputField.descriptionError}
                 placeholder={formPlaceholders.description} 

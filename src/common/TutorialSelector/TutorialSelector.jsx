@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+//component
+import { SwitchSelector } from '../SwitchSelector/SwitchSelector';
 //bootstrap
 import { Col, Container, Form, Row } from 'react-bootstrap'
 //css
 import './TutorialSelector.css';
-import { SwitchSelector } from '../SwitchSelector/SwitchSelector';
 
-export const TutorialSelector = ({ data, text, errorText, clickFunction }) => {    
+export const TutorialSelector = ({ data, dataGates, text, errorText, clickFunction }) => {    
     const [ dataSelector, setDataSelector ] = useState(data);
 
     return (
@@ -25,6 +26,7 @@ export const TutorialSelector = ({ data, text, errorText, clickFunction }) => {
                         label={data.name}
                         name={data.name}
                         clickFunction={clickFunction}
+                        dataGates={dataGates}
                         />})}
                 </Form.Group>
             </Form>            
