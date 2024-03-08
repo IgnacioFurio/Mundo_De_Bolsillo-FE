@@ -10,7 +10,6 @@ export const SwitchSelector = ({ value, dataGates, label, name, type, clickFunct
     const [ switchStatus, setSwitchStatus ] = useState();
 
     useEffect(() => {
-        console.log(dataGates);
         if (dataGates[value] === false) {
             setSwitchDesign("switchDesignOff col-2 d-flex justify-content-start align-items-center m-0 p-0")
             setSwitchStatus("switchOff m-0 p-0")
