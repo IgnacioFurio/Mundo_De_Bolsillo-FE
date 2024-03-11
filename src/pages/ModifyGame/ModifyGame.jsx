@@ -67,7 +67,7 @@ export const ModifyGame = () => {
     //VALIDATIONS
     useEffect(() => { getWorlds(); },[]);
     
-    useEffect(() =>{ showNext(); console.log(worldsToEngage); },[ gameInformation ]);
+    useEffect(() =>{ showNext(); },[ gameInformation ]);
     //HANDLERS
     const gameFormHandlerPrev = () => {
         formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/game-details");

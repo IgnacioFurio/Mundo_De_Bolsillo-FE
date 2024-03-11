@@ -6,31 +6,40 @@
 
 .switchDesignOn{
     cursor: pointer;
-    height: 1em;
-    width: 1.5em;
-    background-color:#7eb1f9;
-    border: solid 1px blue;
+    height: 1.3em;
+    width: 1em;
+    border: outset 2px #1984ac;
     border-radius: 20px;
+    background-image: url("../../assets/Agua.jpg"); 
+    background-size: cover;
+    animation: brillar 2s  infinite;
 }
 
 .switchDesignOff{
     cursor: pointer;
-    height: 1em;
-    width: 1.5em;
-    background-color: gainsboro;
-    border: solid 1px grey;
+    height: 1.3em;
+    width: 1em;
+    border: outset 2px #1984ac;
     border-radius: 20px;
-}
-
-.switchOff{
-    height: 0.8em;
-    width: 0.8em;
-    background-color: grey;
-    border-radius: 20px;
+    background-image: url("../../assets/Portal.png");
+    background-size: cover;
+    filter: grayscale(100%);
 }
 
 .switchOn{
-    height: 0.8em;
-    width: 0.8em;
-    background-color: blue;
-    border-radius: 20px;}
+    background-color: red;
+
+}
+
+@keyframes brillar {
+    0%{
+        filter: drop-shadow(0 0 0.25em #1ca5d7);
+    }
+    50%{
+        filter: drop-shadow(0 0 0.75em #1984ac);
+    }
+    100%{
+        filter: drop-shadow(0 0 0.25em #1984ac);
+
+    }
+}

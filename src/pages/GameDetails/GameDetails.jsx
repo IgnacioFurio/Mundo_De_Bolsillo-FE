@@ -45,7 +45,7 @@ export const GameDetails = () => {
                     setWorldGates(worlds);
                 })
                 .catch(error => console.log(error))
-        }, 1500);
+        }, 500);
     }, []);
 
     return (

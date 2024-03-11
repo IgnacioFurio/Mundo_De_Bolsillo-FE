@@ -11,11 +11,11 @@ export const SwitchSelector = ({ value, dataGates, label, name, type, clickFunct
 
     useEffect(() => {
         if (dataGates[value] === false) {
-            setSwitchDesign("switchDesignOff col-2 d-flex justify-content-start align-items-center m-0 p-0")
+            setSwitchDesign("switchDesignOff col-1 d-flex justify-content-start align-items-center m-0 p-0")
             setSwitchStatus("switchOff m-0 p-0")
         } else if (dataGates[value] === true) {
-            setSwitchDesign("switchDesignOn col-2 d-flex justify-content-end align-items-center m-0 p-0")
-            setSwitchStatus("switchOn m-0 p-0")
+            setSwitchDesign("switchDesignOn col-1 d-flex justify-content-end align-items-center m-0 p-0")
+            setSwitchStatus("switchOn")
         }
     });
 

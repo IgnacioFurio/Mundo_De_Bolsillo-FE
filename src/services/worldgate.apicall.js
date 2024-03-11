@@ -11,7 +11,6 @@ export const getWorldGatesByGameId = async (gameId) => {
 };
 
 export const createWorldGate = async (body) => {
-    console.log(body);
     return await axios.post(`${root}/worldgate/post`, body)
 };
 
