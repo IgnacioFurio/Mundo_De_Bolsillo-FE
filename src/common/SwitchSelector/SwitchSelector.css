@@ -10,7 +10,7 @@
     width: 1em;
     border: outset 2px #1984ac;
     border-radius: 20px;
-    background-image: url("../../assets/Agua.jpg"); 
+    background-image: url("../../assets/Portal.png"); 
     background-size: cover;
     animation: brillar 2s  infinite;
 }
@@ -33,13 +33,12 @@
 
 @keyframes brillar {
     0%{
-        filter: drop-shadow(0 0 0.25em #1ca5d7);
+        filter: drop-shadow(0 0 0.25em #126280);
     }
     50%{
-        filter: drop-shadow(0 0 0.75em #1984ac);
+        filter: drop-shadow(0 0 0.25em #126280) drop-shadow(0 0 0.50em #20acde);
     }
     100%{
-        filter: drop-shadow(0 0 0.25em #1984ac);
-
+        filter: drop-shadow(0 0 0.25em #126280);
     }
 }
