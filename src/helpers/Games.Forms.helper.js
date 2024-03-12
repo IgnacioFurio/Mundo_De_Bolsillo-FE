@@ -6,7 +6,8 @@ export const GameFormQuestions = {
         },
         modify: {
             title: "¿Has encontrado un nombre aún más molón?, recuerda que siempre puedes volver a cambiarlo.",
-            description: "Si hay algo que quieras añadir sobre la partida este es buen momento."
+            description: "Si hay algo que quieras añadir sobre la partida este es buen momento.",
+            worldgate: "Selecciona que portales quieres mantener abiertos y cuales mantener cerrados para esta partida."
         }
     },
     placeholder: {

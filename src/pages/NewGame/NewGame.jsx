@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 //common
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
+import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 //helper
 import { showNext, validate } from '../../helpers/validations.helper';
 import { GameFormQuestions } from '../../helpers/Games.Forms.helper';
 //bootstrap
 import { Col, Container, Row  } from 'react-bootstrap'
-import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 //apicall
 import { createGame } from '../../services/game.apicalls';
 import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
@@ -29,19 +29,19 @@ export const NewGame = () => {
         description: GameFormQuestions.placeholder.new.description
     };
 
-    const [formCounter, setFormCounter ] = useState(0);
+    const [ formCounter, setFormCounter ] = useState(0);
 
-    const [ newGameData, setNewGameData] = useState({
+    const [ newGameData, setNewGameData ] = useState({
         title: "",
         description: ""
     });
-    //only set false when a field is required
-    const [ validInputField, setValidInputfield] = useState({
-        titleValid: false,
+
+    const [ validInputField, setValidInputfield ] = useState({
+        titleValid: false,    //only set false when a field is required
         descriptionValid: true
     });
     
-    const [ errorInputField, setErrorInputfield] = useState({
+    const [ errorInputField, setErrorInputfield ] = useState({
         titleError: "",
         descriptionError: ""
     });
@@ -142,7 +142,7 @@ export const NewGame = () => {
             </Row>
             
             <Row className='nextPrev d-flex justify-content-center align-items-center'>
-            {formCounter < 2 ? 
+            {formCounter < 3 ? 
                 <>
                     <Col className='d-flex justify-content-start'>
                         <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
