@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 //redux
 import { useDispatch, useSelector } from 'react-redux';
 import { gameData, gameInfo } from '../../services/game.slice';
+//apicall
 import { deleteGame } from '../../services/game.apicalls';
+import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 //components
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 //bootstrap
@@ -21,14 +23,30 @@ export const GameDetails = () => {
 
     const [ gameInformation, setGameInformation ] = useState(dataRdx.gameInformation);
 
+    const [ worldGates, setWorldGates ] = useState([]);
+
     const deleteGameData = (game_id) => {
         deleteGame(game_id)
         .then(result => {
-            navigate("/games/my-games")
+            navigate("/games/my-games");
             dispatch(gameInfo({gameInformation: {}}));      
         })
         .catch(error => console.log(error));
     };
+
+    useEffect(() => { // Bring worlds linked to the game
+        setTimeout(() => {
+            getWorldGatesByGameId(gameInformation.id)
+                .then(result => {
+                    let worlds = [];
+                    for (let i = 0; i < result.data.data.length; i++) {
+                        worlds.push(result.data.data[i].World);
+                    };
+                    setWorldGates(worlds);
+                })
+                .catch(error => console.log(error))
+        }, 500);
+    }, []);
 
     return (
         <Container id={gameInformation.id} className='col-12 col-sm-11 col-md-9 col-lg-8 col-xl-7'>
@@ -45,7 +63,9 @@ export const GameDetails = () => {
             <Row className='detailsBackground mx-1'>
                 <Col className='col-12 text-center mb-3 mx-2'>
                 {gameInformation.description}
-                </Col>
+                </Col>   
+                <Col className='col-12 text-center fw-bold'>Mundos enlazados</Col>             
+                {worldGates.map((data) => <Col key={data.id} className='col-6 d-flex justify-content-evenly'>{data.name}</Col>)}
             </Row>
         </Container>
     )

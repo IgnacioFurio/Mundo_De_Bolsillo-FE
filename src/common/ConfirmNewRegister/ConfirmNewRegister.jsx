@@ -12,7 +12,7 @@ export const ConfirmNewRegister = ({ data }) => {
     <> 
       <Container className='confirmRegisterDesign '>
         <Row className='confirmPosition d-flex justify-content-center'>
-          {values[0][0] === "title" ? <Col className='registerTitleDesign text-center fs-3 fw-bold m-0'>{data.title}</Col> : <Col className='registerTitleDesign text-center fs-3 fw-bold m-0'>{data.name}</Col>}
+          {values[0][1] === "title" ? <Col className='registerTitleDesign text-center fs-3 fw-bold m-0'>{data.title}</Col> : <Col className='registerTitleDesign text-center fs-3 fw-bold m-0'>{data.name}</Col>}
           <Col className='registerDescriptionDesign text-center mb-3'>{data.description}</Col>
         </Row>
       </Container>
