@@ -21,7 +21,7 @@ export const SwitchSelector = ({ value, dataGates, label, name, type, clickFunct
 
     return (
         <Container onClick={clickFunction} name={name} type={type}>
-            <Row className="selectDesign my-2 p-1 d-flex justify-content-center align-items-center">
+            <Row className="selectDesign my-3 p-1 d-flex justify-content-center align-items-center">
                 <Col className={switchDesign} id={value} value={value}>
                     <div className={switchStatus} id={value}></div>
                 </Col>
