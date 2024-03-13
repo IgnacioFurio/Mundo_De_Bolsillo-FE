@@ -12,7 +12,7 @@
     border-radius: 20px;
     background-image: url("../../assets/Portal.png"); 
     background-size: cover;
-    animation: brillar 2s  infinite;
+    animation: blueShine 2s  infinite;
 }
 
 .switchDesignOff{
@@ -25,7 +25,7 @@
     filter: grayscale(100%);
 }
 
-@keyframes brillar {
+@keyframes blueShine {
     0%{
         filter: drop-shadow(0 0 0.25em #126280);
     }
