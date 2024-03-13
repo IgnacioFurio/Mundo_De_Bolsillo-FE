@@ -27,15 +27,15 @@ export const Games = () => {
                     <NewRegisterButton name={"Nueva Partida"} clickFunction={(e) => navigate("/games/new-game")}/>
                 </Col>
             </Row>
-            <Row className='d-flex justify-content-center mt-4'>
+            <Row className='mt-4'>
                     {games.map(data => {
-                        return <>
+                        return <Container key={data.id} className='d-flex justify-content-center'>
                                 <Col className='col-1 col-sm-1 col-md-2 col-lg-1'/>
                                 <Col className='col-10 col-sm-10 col-md-8 col-lg-4'>
                                     <GameCard dataCard={data}/>
                                 </Col>
                                 <Col className='col-1 col-sm-1 col-md-2 col-lg-1'/>
-                            </>
+                            </Container>
                     })}
             </Row>
         </Container>
