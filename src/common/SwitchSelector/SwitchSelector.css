@@ -7,8 +7,7 @@
 
 .switchDesignOn{
     cursor: pointer;
-    height: 1.3em;
-    width: 1em;
+    height: 1.5em;
     border: outset 2px #1984ac;
     border-radius: 20px;
     background-image: url("../../assets/Portal.png"); 
@@ -18,18 +17,12 @@
 
 .switchDesignOff{
     cursor: pointer;
-    height: 1.3em;
-    width: 1em;
+    height: 1.5em;
     border: outset 2px #1984ac;
     border-radius: 20px;
     background-image: url("../../assets/Portal.png");
     background-size: cover;
     filter: grayscale(100%);
-}
-
-.switchOn{
-    background-color: red;
-
 }
 
 @keyframes brillar {
