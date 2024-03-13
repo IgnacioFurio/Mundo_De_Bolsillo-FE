@@ -3,7 +3,7 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    filter: drop-shadow(0 0rem 0.6rem #20acde);
+    animation: blueShine 3s infinite;
 }
 
 .worldDetailsTitle{
@@ -11,4 +11,16 @@
     position: relative;
     bottom: -10%;
     text-shadow:  0 0rem 0.1rem #071bb6;
+}
+
+@keyframes blueShine {
+    0%{
+        filter: drop-shadow(0 0 0.25em #20acde);
+    }
+    50%{
+        filter: drop-shadow(0 0 0.60em #20acde);
+    }
+    100%{
+        filter: drop-shadow(0 0 0.25em #20acde);
+    }
 }

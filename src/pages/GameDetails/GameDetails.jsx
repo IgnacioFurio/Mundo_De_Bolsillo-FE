@@ -64,8 +64,8 @@ export const GameDetails = () => {
                 <Col className='col-12 text-center mb-3 mx-2'>{gameInformation.description}</Col> 
                 <Col className='col-12 text-center fw-bold my-2'>Mundos enlazados</Col>             
                 {worldGates.map((data) => 
-                <div className='d-flex justify-content-center col-12 col-sm-6 col-lg-4 my-2'>
-                    <Col key={data.id} style={{width: '1.2em', cursor: 'default'}} className='switchDesignOn col-1 ms-2'></Col>
+                <div key={data.id} className='d-flex justify-content-center col-12 col-sm-6 col-lg-4 my-2'>
+                    <Col style={{width: '1.2em', cursor: 'default'}} className='switchDesignOn col-1 ms-2'></Col>
                     <Col className='col-5 mx-2'>{data.name}</Col>
                 </div>
                 )}
