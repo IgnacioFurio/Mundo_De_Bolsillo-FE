@@ -66,7 +66,7 @@ export const GameDetails = () => {
                 {worldGates.map((data) => 
                 <div key={data.id} className='d-flex justify-content-center col-12 col-sm-6 col-lg-4 my-2'>
                     <Col style={{width: '1.2em', cursor: 'default'}} className='switchDesignOn col-1 ms-2'></Col>
-                    <Col className='col-5 mx-2'>{data.name}</Col>
+                    <Col className='col-3 col-sm-5 col-lg-3 mx-2'>{data.name}</Col>
                 </div>
                 )}
             </Row>
