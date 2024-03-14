@@ -12,6 +12,7 @@ import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { Container, Row , Col} from 'react-bootstrap';
 //css
 import "./GameDetails.css";
+import { Locations } from '../Locations/Locations';
 
 
 export const GameDetails = () => {
@@ -25,6 +26,8 @@ export const GameDetails = () => {
 
     const [ worldGates, setWorldGates ] = useState([]);
 
+    const [ showPlaces, setShowPlaces ] = useState(false);
+
     const deleteGameData = (game_id) => {
         deleteGame(game_id)
         .then(result => {
@@ -34,14 +37,26 @@ export const GameDetails = () => {
         .catch(error => console.log(error));
     };
 
+    //HANDLERS
+    const showPlacesHandler= () => {
+        if (showPlaces === true) {
+            setShowPlaces(false);
+        }else if (showPlaces === false) {
+            setShowPlaces(true);
+        };
+        console.log(showPlaces);
+    };
+
     useEffect(() => { // Bring worlds linked to the game
         setTimeout(() => {
             getWorldGatesByGameId(gameInformation.id)
                 .then(result => {
                     let worlds = [];
+
                     for (let i = 0; i < result.data.data.length; i++) {
                         worlds.push(result.data.data[i].World);
                     };
+                    
                     setWorldGates(worlds);
                 })
                 .catch(error => console.log(error))
@@ -69,6 +84,8 @@ export const GameDetails = () => {
                     <Col className='col-3 col-sm-5 col-lg-3 mx-2'>{data.name}</Col>
                 </div>
                 )}
+                <Col className='col-12 text-center fw-bold my-2' onClick={() => showPlacesHandler()}>Lugares</Col> 
+                {showPlaces ? <Locations/>: <></>}            
             </Row>
         </Container>
     )

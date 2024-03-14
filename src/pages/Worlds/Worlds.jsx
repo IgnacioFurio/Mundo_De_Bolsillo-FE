@@ -7,6 +7,8 @@ import { Col, Container, Row } from 'react-bootstrap';
 //component
 import { NewRegisterButton } from '../../common/NewRegisterButton/NewRegisterButton';
 import { WorldCard } from '../../common/WorldCard/WorldCard';
+import { worldData } from '../../services/world.slice';
+import { useSelector } from 'react-redux';
 
 
 export const Worlds = () => {
@@ -15,28 +17,31 @@ export const Worlds = () => {
 
     const [ worlds, setWorlds ] = useState([]);
 
+    const dataRdx = useSelector(worldData);
+
     useEffect(() => {
+
         getAllWorlds()
         .then(result => {setWorlds(result.data.data);})
         .catch(error => console.log(error));
+
+        console.log(dataRdx);
     },[]);
 
     return (
         <Container>
             <Row >
-                <Col className='d-flex justify-content- mt-4'>
+                <Col className='my-4'>
                     <NewRegisterButton name={"Nuevo Mundo"} clickFunction={(e) => navigate("/worlds/new-world")}/>
                 </Col>
             </Row>
-            <Row className='d-flex justify-content-center mt-4'>
-                    {worlds.map(data => {
-                        return <>
-                                <Col className='col-10 col-sm-10 col-md-8 col-lg-4 m-1'>
-                                    <WorldCard key={data.id} dataCard={data}/>
-                                </Col>
-                            </>
-                    })}
-            </Row>
+            {worlds.map(data => {
+                return <Row className='d-flex justify-content-center mt-1'>
+                        <Col className='col-10 col-sm-10 col-md-8 col-lg-4 m-1'>
+                            <WorldCard key={data.id} dataCard={data}/>
+                        </Col>
+                    </Row>
+            })}
         </Container>
     )
 };
