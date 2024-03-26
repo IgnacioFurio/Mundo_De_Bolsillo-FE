@@ -87,8 +87,6 @@ export const ModifyWorld = () => {
 
     //APICALL
     const updateWorldInformation = () => {
-        console.log("update");
-
         modifyWorld(worldInformation)
         .then(() => { 
             dispatch(worldInfo({worldInformation: worldInformation}))

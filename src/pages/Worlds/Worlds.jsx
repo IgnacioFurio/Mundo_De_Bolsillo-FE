@@ -7,25 +7,17 @@ import { Col, Container, Row } from 'react-bootstrap';
 //component
 import { NewRegisterButton } from '../../common/NewRegisterButton/NewRegisterButton';
 import { WorldCard } from '../../common/WorldCard/WorldCard';
-import { worldData } from '../../services/world.slice';
-import { useSelector } from 'react-redux';
-
 
 export const Worlds = () => {
-
     const navigate = useNavigate();
 
     const [ worlds, setWorlds ] = useState([]);
-
-    const dataRdx = useSelector(worldData);
 
     useEffect(() => {
 
         getAllWorlds()
         .then(result => {setWorlds(result.data.data);})
         .catch(error => console.log(error));
-
-        console.log(dataRdx);
     },[]);
 
     return (
