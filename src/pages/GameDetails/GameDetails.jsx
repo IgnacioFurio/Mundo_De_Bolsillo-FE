@@ -117,20 +117,22 @@ export const GameDetails = () => {
             </Row>
             <Row className='detailsBackground mx-1'>
                 <Col className='col-12 text-center mb-3 mx-2'>{gameInformation.description}</Col> 
-                <Col className='col-12 text-center fw-bold my-2'>Mundos enlazados</Col>             
+                <Col className='col-12 text-center fw-bold my-2'>Mundos enlazados</Col>     
+
                 {worldGates.map((data) => 
                 <div key={data.id} className='d-flex justify-content-center col-12 col-sm-6 col-lg-4 my-2'>
-                    <Col style={{width: '1.2em', cursor: 'default'}} className='switchDesignOn col-1 ms-2'></Col>
-                    <Col className='col-3 col-sm-5 col-lg-3 mx-2'>{data.name}</Col>
+                    <Col style={{width: '1.2em', cursor: 'default'}} className='switchDesignOn col-2 ms-2'></Col>
+                    <Col className='col-4 col-sm-5 col-lg-3 mx-2'>{data.name}</Col>
                 </div>
                 )}
-                <select className='MoreInfoSelector text-center fw-bold' onClick={(e) => InfoHandler(e)}> 
+
+                <select className='MoreInfoSelector text-center fw-bold my-2' onClick={(e) => InfoHandler(e)}> 
                     <option value="">Información sobre:</option>
                     <option value="Localizaciones">Localizaciones</option>
                     <option value="Personajes">Personajes</option>
                 </select>
 
-                {showPlaces.Localizaciones == true ? locations?.map((data) => <LocationCard key={data.id} locationsData={data}/>) : <></>}            
+                {showPlaces.Localizaciones == true ? locations?.map((data) => <LocationCard key={data.id} worldsData={worldGates} locationsData={data}/>) : <></>}            
                 {showPlaces.Personajes == true ? <>Personajes Info</> : <></>}            
             </Row>
         </Container>
