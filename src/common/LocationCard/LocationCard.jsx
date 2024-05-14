@@ -13,7 +13,6 @@ export const LocationCard = ({ locationsData, worldsData }) => {
 
     useEffect(() => {
         setWorld(worldName(locationsData, worldsData));
-        console.log(locationsData);
     });
 
     //HANDLER
