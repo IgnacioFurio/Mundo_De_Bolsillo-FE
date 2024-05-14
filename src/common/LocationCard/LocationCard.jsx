@@ -25,8 +25,8 @@ export const LocationCard = ({ locationsData, worldsData }) => {
 
             if ( worlds[i].id === location.world_id ) {
                 return worlds[i].name
-            }         
-        }
+            }  ;       
+        };
     };
 
     return (

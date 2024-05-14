@@ -84,9 +84,6 @@ export const GameDetails = () => {
     }, [worldGates]);
 
     const InfoHandler = (e) => {
-        console.log(e.target.value);
-        console.log(showPlaces[e.target.value]);
-
         setShowPlaces({
             "": false,
             Localizaciones: false,
@@ -99,8 +96,6 @@ export const GameDetails = () => {
                 [e.target.value]: true
             });
         };
-
-        console.log(showPlaces);
     };
 
     return (
