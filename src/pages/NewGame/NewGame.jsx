@@ -53,7 +53,7 @@ export const NewGame = () => {
     useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter));},[newGameData]);
     
     useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter));});
-    
+
     //HANDLERS
     const inputHandler = (e) => {        
         setNewGameData((prevState) => ({
@@ -142,7 +142,7 @@ export const NewGame = () => {
             </Row>
             
             <Row className='nextPrev d-flex justify-content-center align-items-center'>
-            {formCounter < 3 ? 
+            {formCounter < 2 ? 
                 <>
                     <Col className='d-flex justify-content-start'>
                         <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
