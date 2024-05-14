@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const worldSlice = createSlice({
-    name: 'gaworldme',
+    name: 'world',
     initialState: {
         worldInformation: {}
         },

@@ -7,12 +7,16 @@ import { GameCard } from '../../common/GameCard/GameCard';
 import { NewRegisterButton } from '../../common/NewRegisterButton/NewRegisterButton';
 //bootstrap
 import { Col, Container, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { gameData } from '../../services/game.slice';
 
 export const Games = () => {
 
     const navigate = useNavigate();
 
     const [ games, setGames ] = useState([]);
+
+    const dataRdx = useSelector(gameData);
 
     useEffect(() => {
         getAllgames()
