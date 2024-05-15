@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { gameData, gameInfo } from '../../services/game.slice';
 //apicall
 import { deleteGame } from '../../services/game.apicalls';
-import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
+import { deleteWorldGate, getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 //components
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
@@ -38,12 +38,19 @@ export const GameDetails = () => {
     });
 
     const deleteGameData = (game_id) => {
+
+        for (let i = 0; i < worldGates.length; i++) {
+            deleteWorldGate({game_id: game_id, world_id: worldGates[i].id})
+            .then(() => {})
+            .catch(error => console.log(error.response.data.error))
+        };
+
         deleteGame(game_id)
         .then(result => {
             dispatch(gameInfo({gameInformation: {}}));      
             navigate("/games/my-games");
         })
-        .catch(error => console.log(error));
+        .catch(error => console.log(error.response.data.error));
     };
 
     //HANDLERS
@@ -63,7 +70,7 @@ export const GameDetails = () => {
             
             setWorldGates(worlds);
         })
-        .catch(error => console.log(error))
+        .catch(error => console.log(error.response.data.error))
     }, []);
 
     useEffect(() => {
@@ -80,7 +87,7 @@ export const GameDetails = () => {
 
             setlocations(locations);
         })
-        .catch(error => console.log(error))
+        .catch(error => console.log(error.response.data.error))
     }, [worldGates]);
 
     const InfoHandler = (e) => {
