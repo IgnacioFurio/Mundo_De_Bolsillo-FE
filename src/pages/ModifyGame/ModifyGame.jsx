@@ -131,8 +131,11 @@ export const ModifyGame = () => {
                 });
             } else if (worldsToEngage[key] === false) {
                 deleteWorldGate({game_id: dataRdx.gameInformation.id, world_id: Math.floor(keys[i])})
-                .then(() => {})
+                .then(() => {
+                    console.log("hello");
+                })
                 .catch(error => {
+                    console.log(error);
                     let backendErrorData = {
                         message: error.response.data.message,
                         valid: error.response.succes

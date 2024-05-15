@@ -2,7 +2,8 @@ export const GameFormQuestions = {
     text: {
         new: {
             title: "El primer paso para crear una partida nueva es encontrarle un nombre molón.",
-            description: "¿Quieres decir escribir algo acerca de la ambientación de la partida?"
+            description: "¿Quieres decir escribir algo acerca de la ambientación de la partida?",
+            worldgate: "Es el momento de elegir que mundos quieres usar en la partida, en caso de tener alguno."
         },
         modify: {
             title: "¿Has encontrado un nombre aún más molón?, recuerda que siempre puedes volver a cambiarlo.",

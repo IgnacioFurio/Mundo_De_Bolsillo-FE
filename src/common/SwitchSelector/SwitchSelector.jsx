@@ -16,7 +16,7 @@ export const SwitchSelector = ({ value, dataGates, label, name, type, clickFunct
         } else if (dataGates[value] === true) {
             setSwitchDesign("switchDesignOn col-1 d-flex justify-content-end align-items-center m-0 p-0")
             setSwitchStatus("switchOn")
-        }
+        };
     });
 
     return (

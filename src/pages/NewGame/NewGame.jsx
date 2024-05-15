@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 //common
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
+import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
+import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
 //helper
 import { showNext, validate } from '../../helpers/validations.helper';
 import { GameFormQuestions } from '../../helpers/Games.Forms.helper';
@@ -10,7 +12,8 @@ import { GameFormQuestions } from '../../helpers/Games.Forms.helper';
 import { Col, Container, Row  } from 'react-bootstrap'
 //apicall
 import { createGame } from '../../services/game.apicalls';
-import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
+import { getAllWorlds } from '../../services/world.apicalls';
+import { createWorldGate, deleteWorldGate } from '../../services/worldgate.apicall';
 //css
 import './NewGame.css';
 
@@ -21,7 +24,8 @@ export const NewGame = () => {
     //HOOKS
     const formQuestions = {
         title: GameFormQuestions.text.new.title,
-        description: GameFormQuestions.text.new.description
+        description: GameFormQuestions.text.new.description,
+        worldgate: GameFormQuestions.text.new.worldgate
     };
     
     const formPlaceholders = {
@@ -38,7 +42,8 @@ export const NewGame = () => {
 
     const [ validInputField, setValidInputfield ] = useState({
         titleValid: false,    //only set false when a field is required
-        descriptionValid: true
+        descriptionValid: true,
+        worldgate: true
     });
     
     const [ errorInputField, setErrorInputfield ] = useState({
@@ -48,11 +53,15 @@ export const NewGame = () => {
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
+    const [worldInformation, setWorldInformation ] = useState();
+    const [worldsToEngage, setWorldsToEngage ] = useState();
     
     //VALIDATIONS
+    useEffect(() => {getWorlds()}, []);
+    
     useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter));},[newGameData]);
     
-    useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter));});
+    useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter))});
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -69,24 +78,78 @@ export const NewGame = () => {
         setSubmitStatus(false);
     };
     const formHandlerNext = () => {
-        formCounter < 2 ? setFormCounter(formCounter + 1) : setFormCounter(0);
+        formCounter < 3 ? setFormCounter(formCounter + 1) : setFormCounter(0);
         setSubmitStatus(false);
+    };
+
+    const selectHandler = (e) => {    
+        let worlds_id = e.target.id
+
+        for(const key in worldsToEngage) {
+            if (key == worlds_id && worldsToEngage[worlds_id] === true) {
+                return setWorldsToEngage((prevState) => ({
+                    ...prevState, 
+                    [e.target.id]: false
+                }));
+            } else if(key == worlds_id && worldsToEngage[worlds_id] === false) {
+                return setWorldsToEngage((prevState) => ({
+                    ...prevState, 
+                    [e.target.id]: true
+                }));
+            }
+        };
     };
 
     //APICALL
     const createNewGame = () => { 
 
         createGame(newGameData)
-        .then(() => { 
-            navigate('/games/my-games');
+        .then((result) => { 
+            let gameId = result.data.data.id;
+            let worldsId = Object.keys(worldsToEngage);
+            
+            for (let i = 0; i < worldsId.length; i++) {
+                let worldId = worldsId[i];
+
+                if (worldsToEngage[worldId] === true) {
+                    createWorldGate({game_id: gameId, world_id: worldId })
+                    .then(() => {})
+                    .catch(error => {
+                        console.log(error.response.data.error);
+                    });
+                };
+            }; 
+            
+            setTimeout(() => {
+                navigate('/games/my-games');
+            }, 1000);
+        })
+        .catch(error => {
+            console.log(error.response.data.error);
+        });
+    }; 
+
+    const getWorlds = () => {
+
+        getAllWorlds()
+        .then((result) => {
+            let worlds = result.data.data
+            setWorldInformation(worlds)
+
+            for (let i = 0; i < worlds.length; i++) { /*Keep the worldGate state in a hook */
+                setWorldsToEngage((prevState) => ({
+                    ...prevState, 
+                    [worlds[i].id]: false
+                }));                
+            };
         })
         .catch(error => {
             let backendErrorData = {
                 message: error.response.data.message,
                 valid: error.response.succes
-            }
+            };
         });
-    }; 
+    };
     
     //CHECKS
     const checkError = (e) => {
@@ -138,11 +201,21 @@ export const NewGame = () => {
                 blurFunction={(e)=>checkError(e)}/>                
             }
 
-            {formCounter === 2 && <ConfirmNewRegister data={newGameData}/>}
+            {formCounter === 2 && <TutorialSelector
+                data={worldInformation}
+                dataGates={worldsToEngage}
+                text={formQuestions.worldgate}
+                errorText={errorInputField.descriptionError}
+                placeholder={formPlaceholders.description} 
+                required={false}
+                clickFunction={(e) => selectHandler(e)}/>
+                }
+
+            {formCounter === 3 && <ConfirmNewRegister data={newGameData}/>}
             </Row>
             
             <Row className='nextPrev d-flex justify-content-center align-items-center'>
-            {formCounter < 2 ? 
+            {formCounter < 3 ? 
                 <>
                     <Col className='d-flex justify-content-start'>
                         <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
