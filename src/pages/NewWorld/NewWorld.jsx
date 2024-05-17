@@ -133,9 +133,8 @@ export const NewWorld = () => {
 
             {formCounter === 2 && <ConfirmNewRegister data={newWorldData}/>}
             </Row>
-
             <Row className='nextPrev d-flex justify-content-center align-items-center'>
-            {formCounter < 2 ? 
+            {formCounter < 2 ?  //Sección para los botones de avanzar/retroceder o enviar información en los formularios
                 <>
                     <Col className='d-flex justify-content-start'>
                         <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
