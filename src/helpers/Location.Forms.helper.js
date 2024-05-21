@@ -24,7 +24,7 @@ export const LocationFormQuestions = {
     placeholder: {
         new: {
             name: "¿Cómo llamarás a este lugar?.",
-            world_id: "world_id.",
+            world_id: "¿En que mundo está?",
             description: "description",
             type: "type.",
             government: "government.",

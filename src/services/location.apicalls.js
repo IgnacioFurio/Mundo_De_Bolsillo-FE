@@ -8,3 +8,7 @@ export const getLocationsByWorldId = async (body) => {
 
     return await axios.post(`${root}/location/getall`, data);
 };
+
+export const createLocation = async (body) => {
+    return await axios.post(`${root}/location/post`, body)
+};

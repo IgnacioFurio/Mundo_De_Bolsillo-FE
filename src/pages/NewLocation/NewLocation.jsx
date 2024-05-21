@@ -9,6 +9,10 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { LocationFormQuestions } from '../../helpers/Location.Forms.helper';
 import { showNext, validate } from '../../helpers/validations.helper';
 import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
+import { createLocation } from '../../services/location.apicalls';
+import { SwitchSelector } from '../../common/SwitchSelector/SwitchSelector';
+import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
+import { getAllWorlds } from '../../services/world.apicalls';
 
 
 export const NewLocation = () => {
@@ -50,9 +54,11 @@ export const NewLocation = () => {
         commerce: "",
     });
 
+    const [ worlds, setWorlds ] = useState();
+
     const [ validInputField, setValidInputfield ] = useState({
         nameValid: false,    //seteamos false cuando sea un campo obligatorio
-        world_idValid: true, //cambiar a false cuando tenga hecha las validaciones
+        world_idValid: true, 
         descriptionValid: true,
         typeValid: true,
         governmentValid: true,
@@ -74,6 +80,14 @@ export const NewLocation = () => {
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
+
+    //USEEFFECT
+    useEffect(() => {
+        console.log(newLocationData);
+    }, [newLocationData]);
+    
+    useEffect(() => { getWorlds() }, []);
+
     //HANDLERS
     const inputHandler = (e) => {        
         setNewLocationData((prevState) => ({
@@ -93,10 +107,45 @@ export const NewLocation = () => {
         setSubmitStatus(false);
     };
 
+    const selectHandler = (e) => {
+        setNewLocationData((prevState) => ({
+            ...prevState,
+            world_id: parseInt(e.target.id)
+        }));
+    };
+
     //VALIDATIONS
     useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter));},[newLocationData]);
 
     useEffect(() => {setSubmitStatus(showNext(validInputField, formCounter));});
+
+    //APICALL
+    const createNewLocation = () => {
+        createLocation(newLocationData)
+        .then(() => { 
+            // navigate('/worlds/my-worlds');
+            console.log(`${newLocationData.name}`);
+        })
+        .catch(error => {
+            let backendErrorData = {
+                message: error.response.data.message,
+                valid: error.response.succes
+            }
+        });
+    };
+
+    const getWorlds = () => {
+        getAllWorlds()
+        .then((result) => {
+            setWorlds(result.data.data);
+        })
+        .catch(error => {
+            let backendErrorData = {
+                message: error.response.data.message,
+                valid: error.response.succes
+            }
+        })
+    };
 
     //CHECKS
     const checkError = (e) => {
@@ -136,16 +185,15 @@ export const NewLocation = () => {
                 blurFunction={(e)=>checkError(e)}/>
             }
             
-            {formCounter === 1 && <TutorialQuestions 
-                gameData={newLocationData.world_id}
-                type="textarea" 
+            {formCounter === 1 && <TutorialSelector 
+                newLocationData={newLocationData}
+                worldsData={worlds}
+                type="DropDown" 
                 text={formQuestions.world_id}
                 errorText={errorInputField.world_idError}
                 placeholder={formPlaceholders.world_id} 
-                name="world_id" 
                 required={true}
-                changeFunction={(e) => inputHandler(e)}
-                blurFunction={(e)=>checkError(e)}/>
+                clickFunction={(e) => selectHandler(e)}/>
             }
             
             {formCounter === 2 && <TutorialQuestions 
@@ -239,7 +287,7 @@ export const NewLocation = () => {
                         <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton gameInfo={newLocationData} action="Submit" clickFunction={() => console.log(newLocationData)}/>
+                        <NextPrevButton gameInfo={newLocationData} action="Submit" clickFunction={() => createNewLocation()}/>
                     </Col>
                 </>
                 }
