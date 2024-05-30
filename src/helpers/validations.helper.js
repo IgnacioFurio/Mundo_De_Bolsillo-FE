@@ -22,6 +22,17 @@ export const validate = ( input, data, required ) => {
 
             return {message: "No se si es una locura o una genialidad, pero por ahora es momento de dar un paso más.", valid: true}
             break;
+        
+        case "type":
+            
+            if (data === "" && required === true) {
+                return {message: "Necesitamos más información para seguir con el proceso." , valid: false}
+            } else if (!/^[\p{L}\p{N}\s\p{P}]{0,30}$/u.test(data)) {
+                return {message: "¿Usar mas de 30 letras para etiquetar un luegar no es excesivo?.", valid: false}
+            }
+
+            return {message: "Mucho mejor, podemos seguir con el proceso.", valid: true}
+            break;
     
         default:
             return {message: "Algo no ha salido como esperabamos.", valid: false}
