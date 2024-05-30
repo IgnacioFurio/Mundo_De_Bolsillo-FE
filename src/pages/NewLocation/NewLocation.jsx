@@ -58,7 +58,7 @@ export const NewLocation = () => {
 
     const [ validInputField, setValidInputfield ] = useState({
         nameValid: false,    //seteamos false cuando sea un campo obligatorio
-        world_idValid: true, 
+        world_idValid: false, 
         descriptionValid: true,
         typeValid: true,
         governmentValid: true,
@@ -82,11 +82,7 @@ export const NewLocation = () => {
 
 
     //USEEFFECT
-    useEffect(() => {
-        console.log(newLocationData);
-    }, [newLocationData]);
-    
-    useEffect(() => { getWorlds() }, []);
+    useEffect(() => { getWorlds() }, []); //apicall for my worlds
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -110,8 +106,15 @@ export const NewLocation = () => {
     const selectHandler = (e) => {
         setNewLocationData((prevState) => ({
             ...prevState,
-            world_id: parseInt(e.target.id)
+            world_id: parseInt(e.target.id) 
         }));
+
+        if (!isNaN(newLocationData.world_id)) {
+            setValidInputfield((prevState) => ({
+                ...prevState,
+                world_idValid: true
+            }));
+        };
     };
 
     //VALIDATIONS
@@ -123,8 +126,7 @@ export const NewLocation = () => {
     const createNewLocation = () => {
         createLocation(newLocationData)
         .then(() => { 
-            // navigate('/worlds/my-worlds');
-            console.log(`${newLocationData.name}`);
+            navigate('/locations/my-locations');
         })
         .catch(error => {
             let backendErrorData = {
