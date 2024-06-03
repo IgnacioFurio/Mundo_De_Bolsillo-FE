@@ -8,6 +8,7 @@
     --paper-dark: #e5c93d ;
     --paper-color: #ffed87;
     color:black;
+    box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5);
     background: linear-gradient(
         135deg,
         var(--paper-dark),
@@ -31,7 +32,7 @@
 
 .downScroll{
     cursor: pointer;
-    color: #230b71a3;
+    color: white;
     height: 3em;
     background-image: url('../../assets/pergaminoAbajo.png');
     background-size: 100% 3em;
@@ -40,6 +41,17 @@
     text-shadow:
     0 0 2em #0b2b71,
     0 0 0.3em #243ab4;
+}
+
+.prevButtonDesign{
+    height: 2em;
+    width: 2em;
+    border-left: solid 0.3em brown;
+    border-right: transparent;
+    border-top: transparent;
+    border-bottom: solid 0.3em brown;
+    background-color: transparent;
+    transition: 0.5s;
 }
 
 .borderDataCard{

@@ -95,7 +95,7 @@ export const NewLocation = () => {
     };
 
     const formHandlerPrev = () => {
-        formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/locations/my-locations");
+        formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/game-details");
         setSubmitStatus(false);
     };
     const formHandlerNext = () => {
@@ -126,7 +126,7 @@ export const NewLocation = () => {
     const createNewLocation = () => {
         createLocation(newLocationData)
         .then(() => { 
-            navigate('/locations/my-locations');
+            navigate('/games/game-details');
         })
         .catch(error => {
             let backendErrorData = {

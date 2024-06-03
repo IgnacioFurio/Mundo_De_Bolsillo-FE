@@ -16,7 +16,7 @@ export const NextPrevButton = ({ action, clickFunction, status }) => {
     const handleClose = () => setShow(false);
     const handleActivate = () => setShow(true);
 
-    useEffect(() => {   
+    useEffect(() => { 
         setButtonDesign(nextPrevButtonDesign(action));
     });
 

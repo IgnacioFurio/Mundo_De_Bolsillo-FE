@@ -9,7 +9,7 @@ import { deleteWorldGate, getWorldGatesByGameId } from '../../services/worldgate
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 //components
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
-import { LocationCard } from '../../common/LocationCard/LocationCard';
+import { Locations } from '../../common/Locations/Locations';
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
 //helper
@@ -36,22 +36,6 @@ export const GameDetails = () => {
         Localizaciones: false,
         Personajes: false
     });
-
-    const deleteGameData = (game_id) => {
-
-        for (let i = 0; i < worldGates.length; i++) {
-            deleteWorldGate({game_id: game_id, world_id: worldGates[i].id})
-            .then(() => {})
-            .catch(error => console.log(error.response.data.error))
-        };
-
-        deleteGame(game_id)
-        .then(result => {
-            dispatch(gameInfo({gameInformation: {}}));      
-            navigate("/games/my-games");
-        })
-        .catch(error => console.log(error.response.data.error));
-    };
 
     //HANDLERS
     const navigateBack = () => {
@@ -88,7 +72,25 @@ export const GameDetails = () => {
             setlocations(locations);
         })
         .catch(error => console.log(error.response.data.error))
+        console.log(worldGates);
     }, [worldGates]);
+
+    // FUNCTIONS
+    const deleteGameData = (game_id) => {
+
+        for (let i = 0; i < worldGates.length; i++) {
+            deleteWorldGate({game_id: game_id, world_id: worldGates[i].id})
+            .then(() => {})
+            .catch(error => console.log(error.response.data.error))
+        };
+
+        deleteGame(game_id)
+        .then(result => {
+            dispatch(gameInfo({gameInformation: {}}));      
+            navigate("/games/my-games");
+        })
+        .catch(error => console.log(error.response.data.error));
+    };
 
     const InfoHandler = (e) => {
         setShowPlaces({
@@ -106,7 +108,7 @@ export const GameDetails = () => {
     };
 
     return (
-        <Container id={gameInformation.id} className='col-12 col-sm-11 col-md-9 col-lg-8 col-xl-7'>
+        <Container id={gameInformation.id} className='col-12 col-sm-10 col-md-9 col-lg-8 col-xl-7'>
             <Row className='d-flex justify-content-evenly pt-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack("/games/my-games")}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/games/modify-game")}/></Col>
@@ -134,7 +136,7 @@ export const GameDetails = () => {
                     <option value="Personajes">Personajes</option>
                 </select>
 
-                {showPlaces.Localizaciones == true ? locations?.map((data) => <LocationCard key={data.id} worldsData={worldGates} locationsData={data}/>) : <></>}            
+                {showPlaces.Localizaciones == true ? <Locations worldGates={worldGates}/> : <></>}            
                 {showPlaces.Personajes == true ? <>Personajes Info</> : <></>}            
             </Row>
         </Container>
