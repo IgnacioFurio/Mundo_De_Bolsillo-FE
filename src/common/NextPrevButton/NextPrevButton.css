@@ -1,7 +1,7 @@
 .prevButtonDesign{
     transform: rotate(45deg);
 }
-
+/*falta cambiar las flechas por las iamgenes correspondientes*/
 .prevButtonDesign{
     height: 2em;
     width: 2em;
@@ -21,6 +21,25 @@
 
 .nextButtonDesign{
     transform: rotate(45deg);
+}
+
+/*falta la animacion*/
+.downButtonDesign{
+    height: fit-content;
+    background-image: url('../../assets/FlechaAbajo.png');
+    background-size: 5em 1.5em;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-bottom: 1.5em;
+}
+/*falta la animacion*/
+.upButtonDesign{
+    height: fit-content;
+    background-image: url('../../assets/FlechaArriba.png');
+    background-size: 5em 1.5em;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-bottom: 1.5em;
 }
 
 .nextButtonDesign{

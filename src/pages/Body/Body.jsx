@@ -9,7 +9,6 @@ import { Worlds } from '../Worlds/Worlds'
 import { WorldDetails } from '../WorldDetails/WorldDetails'
 import { NewWorld } from '../NewWorld/NewWorld'
 import { ModifyWorld } from '../ModifyWorld/ModifyWorld'
-import { Locations } from '../Locations/Locations'
 import { NewLocation } from '../NewLocation/NewLocation'
 import './Body.css';
 
@@ -25,7 +24,6 @@ export const Body = () => {
                 <Route path='/worlds/world-details' element={<WorldDetails/>}/>
                 <Route path='/worlds/new-world' element={<NewWorld/>}/>
                 <Route path='/worlds/modify-world' element={<ModifyWorld/>}/>
-                <Route path='/locations/my-locations' element={<Locations/>}/>
                 <Route path='/locations/new-location' element={<NewLocation/>}/>
             </Routes>
         </Container>
