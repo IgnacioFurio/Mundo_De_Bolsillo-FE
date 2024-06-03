@@ -19,11 +19,11 @@
     transition: 0.4s;
 }
 
+/*falta cambiar las flechas por las iamgenes correspondientes*/
 .nextButtonDesign{
     transform: rotate(45deg);
 }
 
-/*falta la animacion*/
 .downButtonDesign{
     height: fit-content;
     background-image: url('../../assets/FlechaAbajo.png');
@@ -31,8 +31,9 @@
     background-repeat: no-repeat;
     background-position: center;
     padding-bottom: 1.5em;
+    animation: redShineArrow 2s infinite;
 }
-/*falta la animacion*/
+
 .upButtonDesign{
     height: fit-content;
     background-image: url('../../assets/FlechaArriba.png');
@@ -40,6 +41,7 @@
     background-repeat: no-repeat;
     background-position: center;
     padding-bottom: 1.5em;
+    animation: redShineArrow 2s infinite;
 }
 
 .nextButtonDesign{
@@ -78,5 +80,20 @@
     height: 2.5em;
     width: 2.5em;
     transition: 0.4s;
+}
+
+@keyframes redShineArrow {
+    0%{
+        filter: drop-shadow(0 0 0.15rem #460808);
+        filter: drop-shadow(0 0 0.3rem #a91414);
+    }
+    30%{
+        filter: drop-shadow(0 0 0.1rem #510202);
+        filter: drop-shadow(0 0 0.2rem #f71d1d);
+    }
+    100%{
+        filter: drop-shadow(0 0 0.15rem #460808);
+        filter: drop-shadow(0 0 0.3rem #a91414);
+    }
 }
 
