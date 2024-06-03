@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 //components
 import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 //bootstrap
@@ -8,6 +9,8 @@ import flechaAbajo from '../../assets/FlechaAbajo.png'
 import "./LocationCard.css"
 
 export const LocationCard = ({ locationsData, worldsData }) => {
+
+    const navigate = useNavigate();
 
     const [ locations, setLocations ] = useState(locationsData.name)
 
@@ -33,10 +36,15 @@ export const LocationCard = ({ locationsData, worldsData }) => {
         };
     };
 
+    //FUNCTIONS
+    const locationDetails = () => {
+        navigate("/games/game-details/location/location-details");
+    };
+
     return (
         <Container className='locationCardDesign col-12 mt-3'>
-            <Row className='upperScroll d-flex justify-content-center align-items-center pt-2'>
-                <Col className='col-9 text-center fs-4 fw-bold eb-garamond-font ps-3'>{locations.toUpperCase()}</Col>
+            <Row className='upperScroll d-flex justify-content-center align-items-center pt-2' onClick={() => locationDetails()}>
+                <Col className='col-9 text-center fs-4 fw-bold eb-garamond-font ps-3'>{locations.toUpperCase()} </Col>
             </Row>
             {showMore === true ? <Container className='centerScrollLocations col-10'>
                     <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2'>                            
