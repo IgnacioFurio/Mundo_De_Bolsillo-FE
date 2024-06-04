@@ -15,12 +15,9 @@ export const Locations = ({worldGates}) => {
 
 
     useEffect(() => {
-        
-        console.log(worldGates);
         getLocationsByWorldId(extractWorldId(worldGates.sort(function(a,b) {return a - b})))
         .then(result => {
             let arr = result.data.data;
-            console.log(arr);
             let locations = [];
 
             for (let i = 0; i < arr.length; i++) {
@@ -36,7 +33,6 @@ export const Locations = ({worldGates}) => {
         getAllWorlds()
         .then(result => {setWorlds(result.data.data);})
         .catch(error => console.log(error));
-        console.log(locations);
     },[]);
 
     return (
