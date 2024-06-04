@@ -100,20 +100,20 @@
     background-position: center;
 }
 
-@keyframes blueShineText {
-    0%{
-        text-shadow:
-            0 0 1em #230b71,
-            0 0 0.2em #4a28b7;
+    @keyframes blueShineText {
+        0%{
+            text-shadow:
+                0 0 1em #230b71,
+                0 0 0.2em #4a28b7;
+        }
+        50%{
+            text-shadow:
+                0 0 1em #0b2b71,
+                0 0 0.4em #243ab4;
+        }
+        100%{
+            text-shadow:
+                0 0 1em #230b71,
+                0 0 0.2em #4a28b7;
+        }
     }
-    50%{
-        text-shadow:
-            0 0 1em #0b2b71,
-            0 0 0.4em #243ab4;
-    }
-    100%{
-        text-shadow:
-            0 0 1em #230b71,
-            0 0 0.2em #4a28b7;
-    }
-}

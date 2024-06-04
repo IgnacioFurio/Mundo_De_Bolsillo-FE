@@ -44,7 +44,7 @@ export const Locations = ({worldGates}) => {
             </Row>
             <Row className='d-flex justify-content-center mt-1'>
             {locations.map(data => {
-                return <Col key={data.id} className='col-11 col-sm-10 col-md-8 col-lg-5 m-1'>                        
+                return <Col key={data.id} className='col-11 col-sm-11 col-md-8 m-1'>                        
                             <LocationCard locationsData={data} worldsData={worlds}/>
                         </Col>
             })}

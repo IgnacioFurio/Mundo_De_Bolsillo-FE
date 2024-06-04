@@ -21,7 +21,7 @@ export const LocationCard = ({ locationsData, worldsData }) => {
 
     const [ showMore, setShowMore ] = useState(false);
 
-    useEffect(() => {setWorld(worldName(locationsData, worldsData))}, []);
+    useEffect(() => { setWorld(worldName(locationsData, worldsData))}, []);
 
     //HANDLER
     const showMoreHandler = () => {
