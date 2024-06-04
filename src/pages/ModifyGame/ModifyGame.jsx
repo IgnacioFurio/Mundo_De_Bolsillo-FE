@@ -65,7 +65,9 @@ export const ModifyGame = () => {
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //VALIDATIONS
-    useEffect(() => { getWorlds(); },[]);
+    useEffect(() => { 
+        console.log(worldsToEngage);
+        getWorlds(); },[]);
     
     useEffect(() =>{ showNext(); },[ gameInformation ]);
     //HANDLERS
@@ -238,7 +240,8 @@ export const ModifyGame = () => {
                 }
             
             {formCounter === 2 && <TutorialSelector
-                data={worldInformation}
+                worldsData={worldInformation}
+                type={"switchSelector"}
                 dataGates={worldsToEngage}
                 text={formQuestions.worldgate}
                 errorText={errorInputField.descriptionError}
