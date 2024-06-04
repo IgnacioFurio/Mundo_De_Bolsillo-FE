@@ -72,7 +72,6 @@ export const GameDetails = () => {
             setlocations(locations);
         })
         .catch(error => console.log(error.response.data.error))
-        console.log(worldGates);
     }, [worldGates]);
 
     // FUNCTIONS
@@ -108,7 +107,7 @@ export const GameDetails = () => {
     };
 
     return (
-        <Container id={gameInformation.id} className='col-12 col-sm-10 col-md-9 col-lg-8 col-xl-7'>
+        <Container id={gameInformation?.id} className='col-12 col-sm-10 col-md-9 col-lg-8 col-xl-7'>
             <Row className='d-flex justify-content-evenly pt-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack("/games/my-games")}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/games/modify-game")}/></Col>
@@ -124,10 +123,10 @@ export const GameDetails = () => {
                 <Col className='col-12 text-center fw-bold my-2'>Mundos enlazados</Col>     
 
                 {worldGates.map((data) => 
-                <div key={data.id} className='d-flex justify-content-center col-12 col-sm-6 col-lg-4 my-2'>
+                <Container key={data.id} className='d-flex justify-content-center col-12 col-sm-6 col-lg-4 my-2'>
                     <Col style={{width: '1.2em', cursor: 'default'}} className='switchDesignOn col-2 ms-2'></Col>
                     <Col className='col-4 col-sm-5 col-lg-3 mx-2'>{data.name}</Col>
-                </div>
+                </Container>
                 )}
 
                 <select className='MoreInfoSelector text-center fw-bold my-2' onClick={(e) => InfoHandler(e)}> 

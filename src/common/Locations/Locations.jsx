@@ -15,12 +15,9 @@ export const Locations = ({worldGates}) => {
 
 
     useEffect(() => {
-        
-        console.log(worldGates);
         getLocationsByWorldId(extractWorldId(worldGates.sort(function(a,b) {return a - b})))
         .then(result => {
             let arr = result.data.data;
-            console.log(arr);
             let locations = [];
 
             for (let i = 0; i < arr.length; i++) {
@@ -36,7 +33,6 @@ export const Locations = ({worldGates}) => {
         getAllWorlds()
         .then(result => {setWorlds(result.data.data);})
         .catch(error => console.log(error));
-        console.log(locations);
     },[]);
 
     return (
@@ -48,7 +44,7 @@ export const Locations = ({worldGates}) => {
             </Row>
             <Row className='d-flex justify-content-center mt-1'>
             {locations.map(data => {
-                return <Col key={data.id} className='col-11 col-sm-10 col-md-8 col-lg-5 m-1'>                        
+                return <Col key={data.id} className='col-11 col-sm-11 col-md-8 m-1'>                        
                             <LocationCard locationsData={data} worldsData={worlds}/>
                         </Col>
             })}

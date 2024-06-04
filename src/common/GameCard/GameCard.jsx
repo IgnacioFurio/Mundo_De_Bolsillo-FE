@@ -22,7 +22,7 @@ export const GameCard = ({ dataCard }) => {
     };
 
     return (
-        <Container className='gameCardDesign mt-2' onClick={handleClickWorld}>
+        <Container className='gameCardDesign mt-2' onClick={(e) => handleClickWorld(e)}>
             <Row className='d-flex justify-content-center align-items-center '>
                 <Col className='leftScroll p-0'>
                     <p className='leftArrow'></p>

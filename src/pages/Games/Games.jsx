@@ -27,7 +27,7 @@ export const Games = () => {
     return (
         <Container>
             <Row >
-                <Col className='d-flex justify-content- mt-4'>
+                <Col className='mt-4'>
                     <NewRegisterButton name={"Nueva Partida"} clickFunction={(e) => navigate("/games/new-game")}/>
                 </Col>
             </Row>
