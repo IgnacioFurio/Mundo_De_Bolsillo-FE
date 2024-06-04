@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { NewRegisterButton } from '../NewRegisterButton/NewRegisterButton';
 import { LocationCard } from '../LocationCard/LocationCard';
-import { getAllLocations, getLocationsByWorldId } from '../../services/location.apicalls';
+import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getAllWorlds } from '../../services/world.apicalls';
 import { extractWorldId } from '../../helpers/GameDetails.helper';
 
@@ -11,11 +11,12 @@ export const Locations = ({worldGates}) => {
     const navigate = useNavigate();
 
     const [ locations, setLocations ] = useState([]);
-    const [ worlds, setWorlds ] = useState(worldGates);
+
+    const [ worlds, setWorlds ] = useState();
 
 
     useEffect(() => {
-        getLocationsByWorldId(extractWorldId(worldGates.sort(function(a,b) {return a - b})))
+        getLocationsByWorldId(extractWorldId(worldGates))
         .then(result => {
             let arr = result.data.data;
             let locations = [];
@@ -25,7 +26,6 @@ export const Locations = ({worldGates}) => {
                         locations.push(arr[i][j]);                        
                     }
             };
-
             setLocations(locations);
         })
         .catch(error => console.log(error.response.data.error))

@@ -51,8 +51,7 @@ export const GameDetails = () => {
             for (let i = 0; i < result.data.data.length; i++) {
                 worlds.push(result.data.data[i].World);
             };
-            
-            setWorldGates(worlds);
+            setWorldGates(worlds.sort((a,b) => a.id - b.id));
         })
         .catch(error => console.log(error.response.data.error))
     }, []);
