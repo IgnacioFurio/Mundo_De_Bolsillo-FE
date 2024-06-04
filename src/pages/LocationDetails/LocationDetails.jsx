@@ -29,7 +29,6 @@ export const LocationDetails = () => {
     },[]);
     
     useEffect(() => {
-        console.log(worlds);
         setWorldName(extractWorldName(locationRdx.locationInformation, worlds))
     },[worlds]);
 
@@ -81,7 +80,7 @@ export const LocationDetails = () => {
                     <Col className='col-10'>{worldName}</Col>
                 </Row>
             </Container> 
-            <Row className='downScroll d-flex justify-content-center align-items-center' onClick={() => showMoreHandler()}>
+            <Row className='downScroll d-flex justify-content-center align-items-center'>
                 <Col className='col-12 text-center fw-bold'>{locationRdx.locationInformation.type}</Col>
             </Row>
         </Container>
