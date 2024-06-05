@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { locationData } from '../../services/location.slice';
 import { LocationFormQuestions } from '../../helpers/Location.Forms.helper';
 import { getAllWorlds } from '../../services/world.apicalls';
+import { Col, Container, Row } from 'react-bootstrap';
+import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
+import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
+import { validate } from '../../helpers/validations.helper';
 
 export const ModifyLocation = () => {
     const navigate = useNavigate();
@@ -80,7 +84,17 @@ export const ModifyLocation = () => {
         console.log(worldInformation);
     }, [worldInformation]);
 
+    //HANDLER
+    const inputHandler = (e) => { 
+        setLocationInformation((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }));
 
+        checkError(e);
+    };
+
+    //FUNCTIONS
     const getWorlds = () => {
 
         getAllWorlds()
@@ -92,7 +106,61 @@ export const ModifyLocation = () => {
         .catch(error => console.log(error));
     };
 
+    //CHECKS
+    const checkError = (e) => {
+        let error = "";
+    
+        let check = validate(
+            e.target.name,
+            e.target.value,
+            e.target.required
+            );
+            
+        error = check.message;
+
+        setValidInputfield((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Valid']: check.valid
+        }));
+        
+        setErrorInputfield((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Error']: error
+        }));
+    };
     return (
-        <div className='text-warning'>ModifyLocation</div>
+        <Container>
+            {formCounter === 0 && <TutorialQuestions 
+                gameData={locationInformation.name}
+                type="textarea" 
+                text={formQuestions.name}
+                errorText={errorInputField.nameError}
+                placeholder={formPlaceholders.name} 
+                name="name" 
+                changeFunction={(e) => inputHandler(e)}/>
+                }
+
+            <Row className='modifyGameNextPrev d-flex justify-content-center align-items-center'>
+            {formCounter < 3 ? 
+                <>
+                    <Col className='d-flex justify-content-start'>
+                        <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
+                    </Col>
+                    <Col className='d-flex justify-content-end'>
+                    {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
+                    </Col>  
+                </>
+                :
+                <>
+                    <Col className='d-flex justify-content-start'>
+                        <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
+                    </Col>
+                    <Col className='d-flex justify-content-end'>
+                        <NextPrevButton action="Submit" status={submitStatus} clickFunction={() => updateGameInformation()}/>
+                    </Col>
+                </>
+                }
+            </Row>
+        </Container>
     )
 };
