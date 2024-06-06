@@ -55,7 +55,8 @@ export const validate = ( input, data, required ) => {
             }
 
             return {message: "La guardia se ha quedado tranquila ante tú explicación, puedes continuar.", valid: true}
-            break;            
+            break; 
+                       
         case "commerce":
             
             if (!/^[\p{L}\p{N}\s\p{P}]{0,100}$/u.test(data)) {
