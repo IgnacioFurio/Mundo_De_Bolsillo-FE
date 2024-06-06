@@ -60,6 +60,8 @@ export const ModifyLocation = () => {
 
     const [ worldInformation, setWorldInformation ] = useState({});
 
+    const [ worldsToEngage, setWorldsToEngage ] = useState();
+
     //only set false when a field is required
     const [ validInputField, setValidInputfield] = useState({
         nameValid: true,
@@ -90,12 +92,11 @@ export const ModifyLocation = () => {
     useEffect(() => { }, [worldInformation]);
     
     useEffect(() => {
-        console.log(formCounter);
+        console.log(locationInformation);
     }, [locationInformation]);
 
     //VALIDATION
     useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); }, [locationInformation]);
-    // useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); });
 
     //HANDLER
     const FormHandlerPrev = () => {
@@ -114,6 +115,20 @@ export const ModifyLocation = () => {
         checkError(e);
     };
 
+    const selectHandler = (e) => {
+        setLocationInformation((prevState) => ({
+            ...prevState,
+            world_id: parseInt(e.target.id) 
+        }));
+
+        if (!isNaN(locationInformation.world_id)) {
+            setValidInputfield((prevState) => ({
+                ...prevState,
+                world_idValid: true
+            }));
+        };
+    };
+
     //APICALL
     const getWorlds = () => {
 
@@ -127,6 +142,33 @@ export const ModifyLocation = () => {
     };
 
     const updateLocationInformation = () => {
+        let keys = Object.keys(worldsToEngage)
+
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+
+            if (worldsToEngage[key] === true) {
+                createWorldGate({game_id: dataRdx.gameInformation.id, world_id: Math.floor(keys[i])})
+                .then(() => {})
+                .catch(error => {
+                    let backendErrorData = {
+                        message: error.response.data.message,
+                        valid: error.response.succes
+                    }
+                });
+            } else if (worldsToEngage[key] === false) {
+                deleteWorldGate({game_id: dataRdx.gameInformation.id, world_id: Math.floor(keys[i])})
+                .then(() => {})
+                .catch(error => {
+                    console.log(error);
+                    let backendErrorData = {
+                        message: error.response.data.message,
+                        valid: error.response.succes
+                    }
+                });              
+            }
+        };    
+
         console.log("updateLocationInformation");
         modifyLocation(locationInformation)
         .then(() => {
