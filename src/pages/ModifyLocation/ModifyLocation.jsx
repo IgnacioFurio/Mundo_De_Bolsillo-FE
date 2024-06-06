@@ -97,6 +97,7 @@ export const ModifyLocation = () => {
 
     //VALIDATION
     useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); }, [locationInformation]);
+    useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); });
 
     //HANDLER
     const FormHandlerPrev = () => {
@@ -141,35 +142,7 @@ export const ModifyLocation = () => {
         .catch(error => console.log(error));
     };
 
-    const updateLocationInformation = () => {
-        let keys = Object.keys(worldsToEngage)
-
-        for (let i = 0; i < keys.length; i++) {
-            const key = keys[i];
-
-            if (worldsToEngage[key] === true) {
-                createWorldGate({game_id: dataRdx.gameInformation.id, world_id: Math.floor(keys[i])})
-                .then(() => {})
-                .catch(error => {
-                    let backendErrorData = {
-                        message: error.response.data.message,
-                        valid: error.response.succes
-                    }
-                });
-            } else if (worldsToEngage[key] === false) {
-                deleteWorldGate({game_id: dataRdx.gameInformation.id, world_id: Math.floor(keys[i])})
-                .then(() => {})
-                .catch(error => {
-                    console.log(error);
-                    let backendErrorData = {
-                        message: error.response.data.message,
-                        valid: error.response.succes
-                    }
-                });              
-            }
-        };    
-
-        console.log("updateLocationInformation");
+    const updateLocationInformation = () => {    
         modifyLocation(locationInformation)
         .then(() => {
             dispatch(locationInfo({locationInformation: {}}));
