@@ -6,12 +6,14 @@ import { locationData, locationInfo } from '../../services/location.slice';
 import { useNavigate } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
-import { LocationCard } from '../../common/LocationCard/LocationCard';
+//apicall
 import { getAllWorlds } from '../../services/world.apicalls';
-
+import { deleteLocation } from '../../services/location.apicalls';
+//css
 import "./LocationDetails.css"
 
 export const LocationDetails = () => {
+    //HOOKS
     const navigate = useNavigate();
 
     const dispatch = useDispatch();
@@ -22,16 +24,16 @@ export const LocationDetails = () => {
 
     const [ worldName, setWorldName ] = useState();
 
+    //USEEFFECT
     useEffect(() => {
         getAllWorlds()
         .then(result =>  { setWorlds(result.data.data)})
         .catch(error => console.log(error));
     },[]);
     
-    useEffect(() => {
-        setWorldName(extractWorldName(locationRdx.locationInformation, worlds))
-    },[worlds]);
-
+    useEffect(() => { setWorldName(extractWorldName(locationRdx.locationInformation, worlds))},[worlds]);
+    
+    //FUNCTIONS
     const navigateBack = (e) => {
         dispatch(locationInfo({locationInformation: {}}));
         navigate("/games/game-details");
@@ -48,12 +50,22 @@ export const LocationDetails = () => {
         };
     };
 
+    //APICALLS
+    const deleteLocationData = (locationId) => {
+        deleteLocation(locationId)
+        .then(result => {
+            dispatch(locationInfo({locationInformation: {}}));
+            navigateBack();
+        })
+        .catch((error) => {console.log(error);})
+    };
+
     return (
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
             <Row className='d-flex justify-content-evenly py-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack("/games/game-details")}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/locations/modify-location")}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => {}}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteLocationData(locationRdx.locationInformation.id)}/></Col>
             </Row> 
             <Row className='upperScroll d-flex justify-content-center align-items-center pt-2' >
                 <Col className='col-9 text-center fs-4 fw-bold eb-garamond-font ps-3'>{locationRdx.locationInformation.name.toUpperCase()} </Col>

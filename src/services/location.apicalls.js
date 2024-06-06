@@ -20,3 +20,11 @@ export const createLocation = async (body) => {
 export const modifyLocation = async (body) => {
     return await axios.put(`${root}/location/put`, body);
 };
+
+export const deleteLocation = async (body) => {
+    const data = {
+        id: body
+    }
+
+    return await axios.delete(`${root}/location/delete`,{data})
+};
