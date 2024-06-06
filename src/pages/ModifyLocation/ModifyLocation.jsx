@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { locationData } from '../../services/location.slice';
-import { LocationFormQuestions } from '../../helpers/Location.Forms.helper';
+//apicall
 import { getAllWorlds } from '../../services/world.apicalls';
+//common
 import { Col, Container, Row } from 'react-bootstrap';
+import { LocationFormQuestions } from '../../helpers/Location.Forms.helper';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
-import { showNext, validate } from '../../helpers/validations.helper';
 import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
+import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
+//helpers
+import { showNext, validate } from '../../helpers/validations.helper';
+
 
 export const ModifyLocation = () => {
     const navigate = useNavigate();
@@ -61,6 +66,7 @@ export const ModifyLocation = () => {
         descriptionValid: true,
         typeValid: true,
         governmentValid: true,
+        populationValid: true,
         defensesValid: true,
         commerceValid: true,
     });
@@ -71,6 +77,7 @@ export const ModifyLocation = () => {
         descriptionError: "",
         typeError: "",
         governmentError: "",
+        populationError: "",
         defensesError: "",
         commerceError: "",
     });
@@ -82,12 +89,16 @@ export const ModifyLocation = () => {
     }, []);
     
     useEffect(() => {
-        console.log(locationInformation);
+        // console.log(submitStatus);
     }, [worldInformation]);
+    
+    useEffect(() => {
+        console.log(formCounter);
+    }, [locationInformation]);
 
     //VALIDATION
     useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); }, [locationInformation]);
-    useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); });
+    // useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); });
 
     //HANDLER
     const FormHandlerPrev = () => {
