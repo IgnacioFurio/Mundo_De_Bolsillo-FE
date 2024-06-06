@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { locationData } from '../../services/location.slice';
+import { locationData, locationInfo } from '../../services/location.slice';
 //apicall
 import { getAllWorlds } from '../../services/world.apicalls';
 //common
@@ -13,6 +13,7 @@ import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector
 import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
 //helpers
 import { showNext, validate } from '../../helpers/validations.helper';
+import { modifyLocation } from '../../services/location.apicalls';
 
 
 export const ModifyLocation = () => {
@@ -84,13 +85,9 @@ export const ModifyLocation = () => {
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
-    useEffect(() => {
-        getWorlds();
-    }, []);
+    useEffect(() => { getWorlds(); }, []);
     
-    useEffect(() => {
-        // console.log(submitStatus);
-    }, [worldInformation]);
+    useEffect(() => { }, [worldInformation]);
     
     useEffect(() => {
         console.log(formCounter);
@@ -117,7 +114,7 @@ export const ModifyLocation = () => {
         checkError(e);
     };
 
-    //FUNCTIONS
+    //APICALL
     const getWorlds = () => {
 
         getAllWorlds()
@@ -127,6 +124,17 @@ export const ModifyLocation = () => {
             setWorldInformation(worlds)
         })
         .catch(error => console.log(error));
+    };
+
+    const updateLocationInformation = () => {
+        console.log("updateLocationInformation");
+        modifyLocation(locationInformation)
+        .then(() => {
+            dispatch(locationInfo({locationInformation: {}}));
+            navigate("/games/game-details");
+        })
+        .catch((error) => {console.log(error);})
+        
     };
 
     //CHECKS
@@ -266,7 +274,7 @@ export const ModifyLocation = () => {
                         <NextPrevButton action="Prev" clickFunction={() => FormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton action="Submit" status={submitStatus} clickFunction={() => updateGameInformation()}/>
+                        <NextPrevButton action="Submit" status={submitStatus} clickFunction={() => updateLocationInformation()}/>
                     </Col>
                 </>
                 }
