@@ -10,7 +10,6 @@ import { LocationFormQuestions } from '../../helpers/Location.Forms.helper';
 import { showNext, validate } from '../../helpers/validations.helper';
 import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
 import { createLocation } from '../../services/location.apicalls';
-import { SwitchSelector } from '../../common/SwitchSelector/SwitchSelector';
 import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
 import { getAllWorlds } from '../../services/world.apicalls';
 

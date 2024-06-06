@@ -7,7 +7,8 @@ import { getAllWorlds } from '../../services/world.apicalls';
 import { Col, Container, Row } from 'react-bootstrap';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
-import { validate } from '../../helpers/validations.helper';
+import { showNext, validate } from '../../helpers/validations.helper';
+import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
 
 export const ModifyLocation = () => {
     const navigate = useNavigate();
@@ -81,26 +82,19 @@ export const ModifyLocation = () => {
     }, []);
     
     useEffect(() => {
-        console.log(validInputField);
-        showNext();
+        console.log(locationInformation);
     }, [worldInformation]);
 
+    //VALIDATION
+    useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); }, [locationInformation]);
+    useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); });
+
     //HANDLER
-    const gameFormHandlerPrev = () => {
+    const FormHandlerPrev = () => {
         formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/game-details");
     };
-    const gameFormHandlerNext = () => {
+    const FormHandlerNext = () => {
         formCounter < 8 ? setFormCounter(formCounter + 1) : setFormCounter(0);
-    };
-
-    const showNext  = () => {
-        let values = Object.values(validInputField)
-
-        if(values[formCounter] === true) {
-            return setSubmitStatus(true);
-        };
-        
-        setSubmitStatus(false)
     };
 
     const inputHandler = (e) => { 
@@ -148,6 +142,7 @@ export const ModifyLocation = () => {
     };
     return (
         <Container>
+            <Row>
             {formCounter === 0 && <TutorialQuestions 
                 gameData={locationInformation.name}
                 type="textarea" 
@@ -157,21 +152,107 @@ export const ModifyLocation = () => {
                 name="name" 
                 changeFunction={(e) => inputHandler(e)}/>
                 }
+            
+            {formCounter === 1 && <TutorialSelector 
+                newLocationData={locationInformation}
+                worldsData={worldInformation}
+                type="DropDown" 
+                text={formQuestions.world_id}
+                errorText={errorInputField.world_idError}
+                placeholder={formPlaceholders.world_id} 
+                required={true}
+                clickFunction={(e) => selectHandler(e)}/>
+            }
+
+            {formCounter === 2 && <TutorialQuestions 
+                gameData={locationInformation.description}
+                type="textarea" 
+                text={formQuestions.description}
+                errorText={errorInputField.descriptionError}
+                placeholder={formPlaceholders.description} 
+                name="description" 
+                required={false}
+                changeFunction={(e) => inputHandler(e)}
+                blurFunction={(e)=>checkError(e)}/>
+            }
+
+            {formCounter === 3 && <TutorialQuestions 
+                gameData={locationInformation.type}
+                type="textarea" 
+                text={formQuestions.type}
+                errorText={errorInputField.typeError}
+                placeholder={formPlaceholders.type} 
+                name="type" 
+                required={false}
+                changeFunction={(e) => inputHandler(e)}
+                blurFunction={(e)=>checkError(e)}/>
+            }
+            
+            {formCounter === 4 && <TutorialQuestions 
+                gameData={locationInformation.government}
+                type="textarea" 
+                text={formQuestions.government}
+                errorText={errorInputField.governmentError}
+                placeholder={formPlaceholders.government} 
+                name="government" 
+                required={false}
+                changeFunction={(e) => inputHandler(e)}
+                blurFunction={(e)=>checkError(e)}/>
+            }
+            
+            {formCounter === 5 && <TutorialQuestions 
+                gameData={locationInformation.population}
+                type="textarea" 
+                text={formQuestions.population}
+                errorText={errorInputField.populationError}
+                placeholder={formPlaceholders.population} 
+                name="population" 
+                required={false}
+                changeFunction={(e) => inputHandler(e)}
+                blurFunction={(e)=>checkError(e)}/>
+            }
+            
+            {formCounter === 6 && <TutorialQuestions 
+                gameData={locationInformation.defenses}
+                type="textarea" 
+                text={formQuestions.defenses}
+                errorText={errorInputField.defensesError}
+                placeholder={formPlaceholders.defenses} 
+                name="defenses" 
+                required={false}
+                changeFunction={(e) => inputHandler(e)}
+                blurFunction={(e)=>checkError(e)}/>
+            }
+            
+            {formCounter === 7 && <TutorialQuestions 
+                gameData={locationInformation.commerce}
+                type="textarea" 
+                text={formQuestions.commerce}
+                errorText={errorInputField.commerceError}
+                placeholder={formPlaceholders.commerce} 
+                name="commerce" 
+                required={false}
+                changeFunction={(e) => inputHandler(e)}
+                blurFunction={(e)=>checkError(e)}/>
+            }        
+
+            {formCounter === 8 && <ConfirmNewRegister data={locationInformation}/>}
+            </Row>  
 
             <Row className='modifyGameNextPrev d-flex justify-content-center align-items-center'>
-            {formCounter < 3 ? 
+            {formCounter < 8 ? 
                 <>
                     <Col className='d-flex justify-content-start'>
-                        <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
+                        <NextPrevButton action="Prev" clickFunction={() => FormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                    {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => gameFormHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
+                    {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => FormHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
                     </Col>  
                 </>
                 :
                 <>
                     <Col className='d-flex justify-content-start'>
-                        <NextPrevButton action="Prev" clickFunction={() => gameFormHandlerPrev()}/>
+                        <NextPrevButton action="Prev" clickFunction={() => FormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
                         <NextPrevButton action="Submit" status={submitStatus} clickFunction={() => updateGameInformation()}/>
