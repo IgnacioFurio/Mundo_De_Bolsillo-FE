@@ -55,8 +55,8 @@ export const ModifyLocation = () => {
 
     //only set false when a field is required
     const [ validInputField, setValidInputfield] = useState({
-        nameValid: false,
-        world_idValid: false,
+        nameValid: true,
+        world_idValid: true,
         descriptionValid: true,
         typeValid: true,
         governmentValid: true,
@@ -81,10 +81,28 @@ export const ModifyLocation = () => {
     }, []);
     
     useEffect(() => {
-        console.log(worldInformation);
+        console.log(validInputField);
+        showNext();
     }, [worldInformation]);
 
     //HANDLER
+    const gameFormHandlerPrev = () => {
+        formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/game-details");
+    };
+    const gameFormHandlerNext = () => {
+        formCounter < 8 ? setFormCounter(formCounter + 1) : setFormCounter(0);
+    };
+
+    const showNext  = () => {
+        let values = Object.values(validInputField)
+
+        if(values[formCounter] === true) {
+            return setSubmitStatus(true);
+        };
+        
+        setSubmitStatus(false)
+    };
+
     const inputHandler = (e) => { 
         setLocationInformation((prevState) => ({
             ...prevState,
