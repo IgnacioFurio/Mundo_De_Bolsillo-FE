@@ -1,32 +1,39 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-//componentes
-import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
-import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
-//bootstrap
-import { Col, Container, Row } from 'react-bootstrap';
-//helpers
-import { LocationFormQuestions } from '../../helpers/Location.Forms.helper';
-import { showNext, validate } from '../../helpers/validations.helper';
-import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
-import { createLocation } from '../../services/location.apicalls';
-import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
+import { useDispatch, useSelector } from 'react-redux';
+import { locationData, locationInfo } from '../../services/location.slice';
+//apicall
 import { getAllWorlds } from '../../services/world.apicalls';
+//common
+import { Col, Container, Row } from 'react-bootstrap';
+import { LocationFormQuestions } from '../../helpers/Location.Forms.helper';
+import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
+import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
+import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
+import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
+//helpers
+import { showNext, validate } from '../../helpers/validations.helper';
+import { modifyLocation } from '../../services/location.apicalls';
 
 
-export const NewLocation = () => {
+export const ModifyLocation = () => {
     const navigate = useNavigate();
 
-    //HOOKS
+    const dispatch = useDispatch();
+
+    const dataRdx = useSelector(locationData);
+
+    const [ formCounter, setFormCounter ] = useState(0);
+    
     const formQuestions = {
-        name: LocationFormQuestions.text.new.name,
-        world_id: LocationFormQuestions.text.new.world_id,
-        description: LocationFormQuestions.text.new.description,
-        type: LocationFormQuestions.text.new.type,
-        government: LocationFormQuestions.text.new.government,
-        population: LocationFormQuestions.text.new.population,
-        defenses: LocationFormQuestions.text.new.defenses,
-        commerce: LocationFormQuestions.text.new.commerce,
+        name: LocationFormQuestions.text.modify.name,
+        world_id: LocationFormQuestions.text.modify.world_id,
+        description: LocationFormQuestions.text.modify.description,
+        type: LocationFormQuestions.text.modify.type,
+        government: LocationFormQuestions.text.modify.government,
+        population: LocationFormQuestions.text.modify.population,
+        defenses: LocationFormQuestions.text.modify.defenses,
+        commerce: LocationFormQuestions.text.modify.commerce,
     };
     
     const formPlaceholders = {
@@ -40,33 +47,34 @@ export const NewLocation = () => {
         commerce: LocationFormQuestions.placeholder.new.commerce,
     };
 
-    const [ formCounter, setFormCounter ] = useState(0);
-
-    const [ newLocationData, setNewLocationData ] = useState({
-        name: "",
-        world_id: "",
-        description: "",
-        type: "",
-        government: "",
-        population: "",
-        defenses: "",
-        commerce: "",
+    const [ locationInformation, setLocationInformation ] = useState({
+        id: dataRdx.locationInformation.id,
+        name: dataRdx.locationInformation.name,
+        world_id: dataRdx.locationInformation.world_id,
+        description: dataRdx.locationInformation.description,
+        type: dataRdx.locationInformation.type,
+        government: dataRdx.locationInformation.government,
+        defenses: dataRdx.locationInformation.defenses,
+        commerce: dataRdx.locationInformation.commerce,
     });
 
-    const [ worlds, setWorlds ] = useState();
+    const [ worldInformation, setWorldInformation ] = useState({});
 
-    const [ validInputField, setValidInputfield ] = useState({
-        nameValid: false,    //seteamos false cuando sea un campo obligatorio
-        world_idValid: false, 
+    const [ worldsToEngage, setWorldsToEngage ] = useState();
+
+    //only set false when a field is required
+    const [ validInputField, setValidInputfield] = useState({
+        nameValid: true,
+        world_idValid: true,
         descriptionValid: true,
         typeValid: true,
         governmentValid: true,
         populationValid: true,
-        defensesesValid: true,
+        defensesValid: true,
         commerceValid: true,
     });
     
-    const [ errorInputField, setErrorInputfield ] = useState({
+    const [ errorInputField, setErrorInputfield] = useState({
         nameError: "",
         world_idError: "",
         descriptionError: "",
@@ -79,13 +87,28 @@ export const NewLocation = () => {
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
+    useEffect(() => { getWorlds(); }, []);
+    
+    useEffect(() => { }, [worldInformation]);
+    
+    useEffect(() => {
+        console.log(locationInformation);
+    }, [locationInformation]);
 
-    //USEEFFECT
-    useEffect(() => { getWorlds() }, []); //apicall for my worlds
+    //VALIDATION
+    useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); }, [locationInformation]);
+    useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); });
 
-    //HANDLERS
-    const inputHandler = (e) => {        
-        setNewLocationData((prevState) => ({
+    //HANDLER
+    const FormHandlerPrev = () => {
+        formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/game-details");
+    };
+    const FormHandlerNext = () => {
+        formCounter < 8 ? setFormCounter(formCounter + 1) : setFormCounter(0);
+    };
+
+    const inputHandler = (e) => { 
+        setLocationInformation((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }));
@@ -93,22 +116,13 @@ export const NewLocation = () => {
         checkError(e);
     };
 
-    const formHandlerPrev = () => {
-        formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/game-details");
-        setSubmitStatus(false);
-    };
-    const formHandlerNext = () => {
-        formCounter < 8 ? setFormCounter(formCounter + 1) : setFormCounter(0);
-        setSubmitStatus(false);
-    };
-
     const selectHandler = (e) => {
-        setNewLocationData((prevState) => ({
+        setLocationInformation((prevState) => ({
             ...prevState,
             world_id: parseInt(e.target.id) 
         }));
 
-        if (!isNaN(newLocationData.world_id)) {
+        if (!isNaN(locationInformation.world_id)) {
             setValidInputfield((prevState) => ({
                 ...prevState,
                 world_idValid: true
@@ -116,36 +130,26 @@ export const NewLocation = () => {
         };
     };
 
-    //VALIDATIONS
-    useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter));},[newLocationData]);
-
-    useEffect(() => {setSubmitStatus(showNext(validInputField, formCounter));});
-
     //APICALL
-    const createNewLocation = () => {
-        createLocation(newLocationData)
-        .then(() => { 
-            navigate('/games/game-details');
-        })
-        .catch(error => {
-            let backendErrorData = {
-                message: error.response.data.message,
-                valid: error.response.succes
-            }
-        });
-    };
-
     const getWorlds = () => {
+
         getAllWorlds()
         .then((result) => {
-            setWorlds(result.data.data);
+            let worlds = result.data.data
+            
+            setWorldInformation(worlds)
         })
-        .catch(error => {
-            let backendErrorData = {
-                message: error.response.data.message,
-                valid: error.response.succes
-            }
+        .catch(error => console.log(error));
+    };
+
+    const updateLocationInformation = () => {    
+        modifyLocation(locationInformation)
+        .then(() => {
+            dispatch(locationInfo({locationInformation: {}}));
+            navigate("/games/game-details");
         })
+        .catch((error) => {console.log(error);})
+        
     };
 
     //CHECKS
@@ -170,25 +174,22 @@ export const NewLocation = () => {
             [e.target.name + 'Error']: error
         }));
     };
-
     return (
         <Container>
-            <Row className='tutorialHeight'>
+            <Row>
             {formCounter === 0 && <TutorialQuestions 
-                gameData={newLocationData.name}
+                gameData={locationInformation.name}
                 type="textarea" 
                 text={formQuestions.name}
                 errorText={errorInputField.nameError}
                 placeholder={formPlaceholders.name} 
                 name="name" 
-                required={true}
-                changeFunction={(e) => inputHandler(e)}
-                blurFunction={(e)=>checkError(e)}/>
-            }
+                changeFunction={(e) => inputHandler(e)}/>
+                }
             
             {formCounter === 1 && <TutorialSelector 
-                newLocationData={newLocationData}
-                worldsData={worlds}
+                newLocationData={locationInformation}
+                worldsData={worldInformation}
                 type="DropDown" 
                 text={formQuestions.world_id}
                 errorText={errorInputField.world_idError}
@@ -196,9 +197,9 @@ export const NewLocation = () => {
                 required={true}
                 clickFunction={(e) => selectHandler(e)}/>
             }
-            
+
             {formCounter === 2 && <TutorialQuestions 
-                gameData={newLocationData.description}
+                gameData={locationInformation.description}
                 type="textarea" 
                 text={formQuestions.description}
                 errorText={errorInputField.descriptionError}
@@ -208,9 +209,9 @@ export const NewLocation = () => {
                 changeFunction={(e) => inputHandler(e)}
                 blurFunction={(e)=>checkError(e)}/>
             }
-            
+
             {formCounter === 3 && <TutorialQuestions 
-                gameData={newLocationData.type}
+                gameData={locationInformation.type}
                 type="textarea" 
                 text={formQuestions.type}
                 errorText={errorInputField.typeError}
@@ -222,7 +223,7 @@ export const NewLocation = () => {
             }
             
             {formCounter === 4 && <TutorialQuestions 
-                gameData={newLocationData.government}
+                gameData={locationInformation.government}
                 type="textarea" 
                 text={formQuestions.government}
                 errorText={errorInputField.governmentError}
@@ -234,7 +235,7 @@ export const NewLocation = () => {
             }
             
             {formCounter === 5 && <TutorialQuestions 
-                gameData={newLocationData.population}
+                gameData={locationInformation.population}
                 type="textarea" 
                 text={formQuestions.population}
                 errorText={errorInputField.populationError}
@@ -246,7 +247,7 @@ export const NewLocation = () => {
             }
             
             {formCounter === 6 && <TutorialQuestions 
-                gameData={newLocationData.defenses}
+                gameData={locationInformation.defenses}
                 type="textarea" 
                 text={formQuestions.defenses}
                 errorText={errorInputField.defensesError}
@@ -258,7 +259,7 @@ export const NewLocation = () => {
             }
             
             {formCounter === 7 && <TutorialQuestions 
-                gameData={newLocationData.commerce}
+                gameData={locationInformation.commerce}
                 type="textarea" 
                 text={formQuestions.commerce}
                 errorText={errorInputField.commerceError}
@@ -267,28 +268,28 @@ export const NewLocation = () => {
                 required={false}
                 changeFunction={(e) => inputHandler(e)}
                 blurFunction={(e)=>checkError(e)}/>
-            }
+            }        
 
-            {formCounter === 8 && <ConfirmNewRegister data={newLocationData}/>}
-            </Row>
+            {formCounter === 8 && <ConfirmNewRegister data={locationInformation}/>}
+            </Row>  
 
-            <Row className='nextPrev d-flex justify-content-center align-items-center'>
-            {formCounter < 8 ?  //Sección para los botones de avanzar/retroceder o enviar información en los formularios
+            <Row className='modifyGameNextPrev d-flex justify-content-center align-items-center'>
+            {formCounter < 8 ? 
                 <>
                     <Col className='d-flex justify-content-start'>
-                        <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
+                        <NextPrevButton action="Prev" clickFunction={() => FormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                    {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => formHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
+                    {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => FormHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
                     </Col>  
                 </>
                 :
                 <>
                     <Col className='d-flex justify-content-start'>
-                        <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
+                        <NextPrevButton action="Prev" clickFunction={() => FormHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton gameInfo={newLocationData} action="Submit" clickFunction={() => createNewLocation()}/>
+                        <NextPrevButton action="Submit" status={submitStatus} clickFunction={() => updateLocationInformation()}/>
                     </Col>
                 </>
                 }

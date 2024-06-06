@@ -52,7 +52,7 @@ export const LocationDetails = () => {
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
             <Row className='d-flex justify-content-evenly py-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack("/games/game-details")}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => {}}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/locations/modify-location")}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => {}}/></Col>
             </Row> 
             <Row className='upperScroll d-flex justify-content-center align-items-center pt-2' >

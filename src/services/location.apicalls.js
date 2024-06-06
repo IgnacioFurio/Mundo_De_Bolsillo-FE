@@ -16,3 +16,7 @@ export const getLocationsByWorldId = async (body) => {
 export const createLocation = async (body) => {
     return await axios.post(`${root}/location/post`, body)
 };
+
+export const modifyLocation = async (body) => {
+    return await axios.put(`${root}/location/put`, body);
+};
