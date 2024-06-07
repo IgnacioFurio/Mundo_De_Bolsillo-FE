@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 //apicall
-import { getAllWorlds } from '../../services/world.apicalls';
 import { deleteLocation } from '../../services/location.apicalls';
 //css
 import "./LocationDetails.css"
@@ -19,35 +18,11 @@ export const LocationDetails = () => {
     const dispatch = useDispatch();
 
     const locationRdx = useSelector(locationData);
-
-    const [ worlds, setWorlds ] = useState();
-
-    const [ worldName, setWorldName ] = useState();
-
-    //USEEFFECT
-    useEffect(() => {
-        getAllWorlds()
-        .then(result =>  { setWorlds(result.data.data)})
-        .catch(error => console.log(error));
-    },[]);
-    
-    useEffect(() => { setWorldName(extractWorldName(locationRdx.locationInformation, worlds))},[worlds]);
     
     //FUNCTIONS
     const navigateBack = (e) => {
         dispatch(locationInfo({locationInformation: {}}));
         navigate("/games/game-details");
-    };
-
-    //FUNCTIONS
-    const extractWorldName = ( location, allWorlds ) => {
-        if (allWorlds !== undefined) {
-            for (let i = 0; i < allWorlds.length; i++) {
-                if ( allWorlds[i].id === location.world_id ) {
-                    return worlds[i].name
-                };       
-            }
-        };
     };
 
     //APICALLS
@@ -89,7 +64,7 @@ export const LocationDetails = () => {
                 </Row>
                 <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>
                     <Col className='worldIcon col-1 fw-bold text-center'></Col>
-                    <Col className='col-10'>{worldName}</Col>
+                    <Col className='col-10'>{locationRdx.locationInformation.World.name}</Col>
                 </Row>
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>

@@ -9,7 +9,7 @@ import {  Container, Row, Col } from 'react-bootstrap';
 import "./LocationCard.css"
 import { locationInfo, locationData } from '../../services/location.slice';
 
-export const LocationCard = ({ locationsData, worldsData }) => {
+export const LocationCard = ({ locationsData }) => {
 
     const navigate = useNavigate();
 
@@ -17,25 +17,11 @@ export const LocationCard = ({ locationsData, worldsData }) => {
 
     const [ locations, setLocations ] = useState(locationsData.name)
 
-    const [ world, setWorld ] = useState();
-
     const [ showMore, setShowMore ] = useState(false);
-
-    useEffect(() => { setWorld(worldName(locationsData, worldsData))}, []);
 
     //HANDLER
     const showMoreHandler = () => {
         showMore === true ? setShowMore(false) : setShowMore(true);
-    };
-
-    //FUNCTIONS
-    const worldName = ( location, worlds ) => {
-        for (let i = 0; i < worlds.length; i++) {
-
-            if ( worlds[i].id === location.world_id ) {
-                return worlds[i].name
-            }  ;       
-        };
     };
 
     const locationDetails = (e) => {
@@ -67,7 +53,7 @@ export const LocationCard = ({ locationsData, worldsData }) => {
                     </Row>
                     <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>
                         <Col className='worldIcon col-1 fw-bold text-center'></Col>
-                        <Col className='col-10'>{world}</Col>
+                        <Col className='col-10'>{locationsData.World.name}</Col>
                     </Row>
                 </Container>: <></>
             }
