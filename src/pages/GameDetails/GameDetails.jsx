@@ -10,6 +10,7 @@ import { getLocationsByWorldId } from '../../services/location.apicalls';
 //components
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { Locations } from '../../common/Locations/Locations';
+import { Characters } from '../../common/Characters/Characters';
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
 //helper
@@ -135,7 +136,7 @@ export const GameDetails = () => {
                 </select>
 
                 {showPlaces.Localizaciones == true ? <Locations worldGates={worldGates}/> : <></>}            
-                {showPlaces.Personajes == true ? <>Personajes Info</> : <></>}            
+                {showPlaces.Personajes == true ? <Characters worldGates={worldGates}/> : <></>}            
             </Row>
         </Container>
     )
