@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { NewRegisterButton } from '../NewRegisterButton/NewRegisterButton';
 import { getAllWorlds } from '../../services/world.apicalls';
 import { extractWorldId } from '../../helpers/GameDetails.helper';
+import { getCharactersByWorldId } from '../../services/character.apicalls';
 
-export const Characters = () => {
+
+export const Characters = ({ worldGates }) => {
     const navigate = useNavigate();
 
     const [ characters, setCharacters ] = useState([]);
@@ -14,24 +16,26 @@ export const Characters = () => {
 
 
     useEffect(() => {
-        // getLocationsByWorldId(extractWorldId(worldGates))
-        // .then(result => {
-        //     let arr = result.data.data;
-        //     let locations = [];
+        getCharactersByWorldId(extractWorldId(worldGates))
+        .then(result => {
+            let arr = result.data.data;
+            let characters = [];
 
-        //     for (let i = 0; i < arr.length; i++) {
-        //             for (let j = 0; j < arr[i].length; j++) {
-        //                 locations.push(arr[i][j]);                        
-        //             }
-        //     };
-        //     setLocations(locations);
-        // })
-        // .catch(error => console.log(error.response.data.error))
+            for (let i = 0; i < arr.length; i++) {
+                    for (let j = 0; j < arr[i].length; j++) {
+                        characters.push(arr[i][j]);                        
+                    }
+            };
+            setCharacters(characters);
+        })
+        .catch(error => console.log(error.response.data.error))
 
         getAllWorlds()
         .then(result => {setWorlds(result.data.data);})
         .catch(error => console.log(error));
     },[]);
+
+    useEffect(() => console.log(characters));
     
     return (
         <Container>
