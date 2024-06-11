@@ -1,0 +1,24 @@
+.characterName{
+    height: 6em;
+}
+.characterPicture{
+    height: 5em;
+    width: 5em;
+    background-image: url('../../assets/tokenNPC.png');
+    background-size: 3.7em 3.7em;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 0.1rem #0202028f);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fromLocationIcon{
+    height: 3em;
+    width: 3em;
+    background-image: url('../../assets/government.png');
+    background-size: 1em 1em;
+    background-repeat: no-repeat;
+    background-position: left;
+}
