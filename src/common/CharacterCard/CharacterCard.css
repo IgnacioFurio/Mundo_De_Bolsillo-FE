@@ -1,6 +1,15 @@
+.fileDesign{
+    background-color: rgb(121, 78, 28);
+}
+
 .characterName{
     height: 6em;
 }
+
+.characterCardToken{
+    background-color: rgb(169, 99, 14);
+}
+
 .characterPicture{
     height: 5em;
     width: 5em;
@@ -14,11 +23,28 @@
     align-items: center;
 }
 
+.characterCardLocation{
+    background-color: rgb(175, 109, 29);
+}
+
 .fromLocationIcon{
     height: 3em;
-    width: 3em;
-    background-image: url('../../assets/government.png');
-    background-size: 1em 1em;
+    width: 2em;
+    background-image: url('../../assets/fromLocation.png');
+    background-size: 1.2em 1.2em;
     background-repeat: no-repeat;
     background-position: left;
+}
+
+.lastLocationKnownIcon{
+    height: 3em;
+    width: 2em;
+    background-image: url('../../assets/lastLocationKnown.png');
+    background-size: 1.3em 1.3em;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.characterCardDescription{
+    background-color: rgb(235, 214, 129);
 }

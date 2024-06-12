@@ -35,26 +35,28 @@ export const CharacterCard = ({ characterData, worldsData }) => {
     }, []);
 
     return (
-        <Container className='border border-dark rounded'>
+        <Container className='fileDesign border border-dark rounded'>
             <Row>
-                <Col className='col-5'>
+                <Col className='fw-bold text-center text-white'>{character.name}</Col>
+            </Row>
+            <Row className='border border-dark rounded-top'>
+                <Col className='characterCardToken col-5'>
                     <Container className='characterPicture'>
                         <div>{character.name}</div>
                     </Container>
-                    <Container className='fw-bold text-center'>{character.name}</Container>
                 </Col>
-                <Col className='col-7'>
+                <Col className='characterCardLocation col-7 p-0'>
                     <Container className='d-flex align-items-center'>
-                        <div className='fromLocationIcon'></div>
-                        <div className='text-center fw-bold'>{character.fromLocation.name}</div>
+                        <div className='col-3 fromLocationIcon'></div>
+                        <div className='col-9 text-start fw-bold'>{character.fromLocation.name}</div>
                     </Container>
                     <Container className='d-flex align-items-center'>
-                        <div className='fromLocationIcon'></div>
-                        <div className='text-center fw-bold'>{character.lastLocationKnown.name}</div>
+                        <div className='col-3 lastLocationKnownIcon'></div>
+                        <div className='col-9 text-start fw-bold'>{character.lastLocationKnown.name}</div>
                     </Container>
                 </Col>
             </Row>
-            <Row>
+            <Row className='characterCardDescription border border-0 rounded-bottom pb-2'>
                 <Col className="text-center pt-3 fs-6">{character.description}</Col>
             </Row>
         </Container>
