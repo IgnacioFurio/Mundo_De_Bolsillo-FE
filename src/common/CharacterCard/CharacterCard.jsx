@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import "./CharacterCard.css";
 
 export const CharacterCard = ({ characterData, worldsData }) => {
@@ -26,38 +27,45 @@ export const CharacterCard = ({ characterData, worldsData }) => {
         showMore === true ? setShowMore(false) : setShowMore(true);
     };
 
-    const characterDetails = (e) => {
+    const characterDetailsHandler = (e) => {
         // dispatch(locationInfo({locationInformation: locationsData}));
-        navigate("/games/game-details/location/location-details");
+        // navigate("/games/game-details/character/character-details");
     }
+
+    const locationDetailsHandler = (e, location) => {
+        console.log(location);
+    };
+
     useEffect(() =>{ 
-        console.log(characterData);
+        // console.log(character.fromLocation.id);
     }, []);
 
     return (
-        <Container className='fileDesign border border-dark rounded'>
-            <Row>
-                <Col className='fw-bold text-center text-white'>{character.name}</Col>
-            </Row>
-            <Row className='border border-dark rounded-top'>
-                <Col className='characterCardToken col-5'>
-                    <Container className='characterPicture'>
-                        <div>{character.name}</div>
-                    </Container>
-                </Col>
-                <Col className='characterCardLocation col-7 p-0'>
-                    <Container className='d-flex align-items-center'>
-                        <div className='col-3 fromLocationIcon'></div>
-                        <div className='col-9 text-start fw-bold'>{character.fromLocation.name}</div>
-                    </Container>
-                    <Container className='d-flex align-items-center'>
-                        <div className='col-3 lastLocationKnownIcon'></div>
-                        <div className='col-9 text-start fw-bold'>{character.lastLocationKnown.name}</div>
-                    </Container>
+        <Container className='my-2'>
+            <Row className='upperScroll'>
+                <Col className='characterPicture'>
+                    <div>{character.name}</div>
                 </Col>
             </Row>
-            <Row className='characterCardDescription border border-0 rounded-bottom pb-2'>
-                <Col className="text-center pt-3 fs-6">{character.description}</Col>
+            {showMore === true ? <Container className='centerScrollLocations col-10 '>
+                    <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2'>                            
+                        <Col className='text-center'>{character.description}</Col>
+                    </Row>
+                    <Row title={character.fromLocation.id} className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2' onClick={(e) => locationDetailsHandler(e, character.fromLocation)}>                            
+                        <Col className='fromLocationIcon col-2 fw-bold text-center'/>
+                        <Col className='col-9'>{character.fromLocation.name}</Col>
+                    </Row>
+                    <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2' onClick={(e) => locationDetailsHandler(e, character.lastLocationKnown)}>                            
+                        <Col className='lastLocationKnownIcon col-2 fw-bold text-center'></Col>
+                        <Col className='col-9'>{character.lastLocationKnown.name}</Col>
+                    </Row>
+                </Container>: <></>
+            }
+            <Row className='downScroll' onClick={(e) => showMoreHandler(e)}>
+                <Col className='col-12 fw-bold text-center text-white'>{character.name}</Col>
+                <Col>
+                    {showMore === false ? <NextPrevButton action="Down"/> : <NextPrevButton action="Up"/>}
+                </Col>
             </Row>
         </Container>
     );
