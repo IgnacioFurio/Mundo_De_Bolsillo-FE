@@ -1,0 +1,56 @@
+.characterName{
+    height: 6em;
+}
+
+
+.characterPicture{
+    height: 5em;
+    width: 5em;
+    background-image: url('../../assets/tokenNPC.png');
+    background-size: 3.7em 3.7em;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 0.1rem #0202028f);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.centerScrollCharacter{
+    --paper-dark: #e5c93d ;
+    --paper-color: #ffed87;
+    color:black;
+    box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5);
+    background: linear-gradient(
+        135deg,
+        var(--paper-dark),
+        50%,
+        var(--paper-color)
+    );
+}
+
+.characterCardLocation{
+    background-color: rgb(175, 109, 29);
+}
+
+.fromLocationIcon{
+    height: 3em;
+    width: 2em;
+    background-image: url('../../assets/fromLocation.png');
+    background-size: 1.2em 1.2em;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.lastLocationKnownIcon{
+    height: 3em;
+    width: 2em;
+    background-image: url('../../assets/lastLocationKnown.png');
+    background-size: 1.3em 1.3em;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.characterCardDescription{
+    background-color: rgb(235, 214, 129);
+}
