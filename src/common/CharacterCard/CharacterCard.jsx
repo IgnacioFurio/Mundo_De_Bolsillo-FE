@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+//redux
+import { useDispatch } from 'react-redux';
+//bootstrap
+import { Col, Container, Row } from 'react-bootstrap';
+//common
 import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import "./CharacterCard.css";
 
-export const CharacterCard = ({ characterData, worldsData }) => {
+export const CharacterCard = ({ characterData }) => {
     
     const navigate = useNavigate();
 
@@ -17,8 +20,6 @@ export const CharacterCard = ({ characterData, worldsData }) => {
         fromLocation: characterData.fromLocation,
         lastLocationKnown: characterData.lastLocationKnown
     })
-
-    const [ fromLocation, setFromLocation ] = useState(characterData.fromLocation);
 
     const [ showMore, setShowMore ] = useState(false);
 
@@ -41,21 +42,25 @@ export const CharacterCard = ({ characterData, worldsData }) => {
     }, []);
 
     return (
-        <Container className='my-2'>
+        <Container>
             <Row className='upperScroll'>
                 <Col className='characterPicture'>
                     <div>{character.name}</div>
                 </Col>
             </Row>
-            {showMore === true ? <Container className='centerScrollLocations col-10 '>
+            {showMore === true ? <Container className='centerScrollLocations col-10'>
                     <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2'>                            
                         <Col className='text-center'>{character.description}</Col>
                     </Row>
-                    <Row title={character.fromLocation.id} className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2' onClick={(e) => locationDetailsHandler(e, character.fromLocation)}>                            
+                    <Row 
+                    className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2' 
+                    onClick={(e) => locationDetailsHandler(e, character.fromLocation)}>                            
                         <Col className='fromLocationIcon col-2 fw-bold text-center'/>
                         <Col className='col-9'>{character.fromLocation.name}</Col>
                     </Row>
-                    <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2' onClick={(e) => locationDetailsHandler(e, character.lastLocationKnown)}>                            
+                    <Row 
+                    className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2' 
+                    onClick={(e) => locationDetailsHandler(e, character.lastLocationKnown)}>                            
                         <Col className='lastLocationKnownIcon col-2 fw-bold text-center'></Col>
                         <Col className='col-9'>{character.lastLocationKnown.name}</Col>
                     </Row>
