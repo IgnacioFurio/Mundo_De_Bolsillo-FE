@@ -40,7 +40,7 @@ export const Characters = ({ worldGates }) => {
         <Container>
             <Row>
                 <Col className='my-4'>
-                    <NewRegisterButton name={"Añadir Personaje"} clickFunction={(e) => navigate("")}/>
+                    <NewRegisterButton name={"Añadir Personaje"} clickFunction={(e) => navigate("/characters/new-character")}/>
                 </Col>
             </Row>
             <Row className='d-flex justify-content-center mt-1'>
