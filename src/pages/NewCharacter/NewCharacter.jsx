@@ -64,12 +64,11 @@ export const NewCharacter = () => {
         setSubmitStatus(false);
     };
     const formHandlerNext = () => {
-        formCounter < 8 ? setFormCounter(formCounter + 1) : setFormCounter(0);
+        formCounter < 5 ? setFormCounter(formCounter + 1) : setFormCounter(0);
         setSubmitStatus(false);
     };
 
     const selectHandler = (e) => {
-        console.log(formCounter);
         let attribute;
 
         formCounter == 1 ? 
@@ -179,12 +178,24 @@ export const NewCharacter = () => {
                 required={false}
                 clickFunction={(e) => selectHandler(e)}/>
             }
+
+            {formCounter === 4 && <TutorialQuestions 
+                gameData={newCharacterData.description}
+                type="textarea" 
+                text={formQuestions.description}
+                errorText={errorInputField.descriptionError}
+                placeholder={formPlaceholders.description} 
+                name="description" 
+                required={false}
+                changeFunction={(e) => inputHandler(e)}
+                blurFunction={(e)=>checkError(e)}/>
+            }
             
-            {formCounter === 8 && <ConfirmNewRegister data={newCharacterData}/>}
+            {formCounter === 5 && <ConfirmNewRegister data={newCharacterData}/>}
             </Row>
 
             <Row className='nextPrev d-flex justify-content-center align-items-center'>
-            {formCounter < 8 ?  //Sección para los botones de avanzar/retroceder o enviar información en los formularios
+            {formCounter < 5 ?  //Sección para los botones de avanzar/retroceder o enviar información en los formularios
                 <>
                     <Col className='d-flex justify-content-start'>
                         <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
@@ -199,7 +210,7 @@ export const NewCharacter = () => {
                         <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton gameInfo={newLocationData} action="Submit" clickFunction={() => createNewLocation()}/>
+                        <NextPrevButton gameInfo={newCharacterData} action="Submit" clickFunction={() => createNewLocation()}/>
                     </Col>
                 </>
                 }
