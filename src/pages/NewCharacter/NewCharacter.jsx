@@ -29,7 +29,7 @@ export const NewCharacter = () => {
     const [ validInputField, setValidInputfield] = useState({
         nameValid: false,  //seteamos false cuando sea un campo obligatorio
         descriptionValid: true,
-        world_idValid: true,
+        world_idValid: false,
         from_location_idValid: true,
         last_location_known_idValid: true,
     });
@@ -69,15 +69,24 @@ export const NewCharacter = () => {
     };
 
     const selectHandler = (e) => {
+        console.log(formCounter);
+        let attribute;
+
+        formCounter == 1 ? 
+        attribute = "world_id" : 
+        formCounter == 2 ? 
+        attribute = "from_location_id" : 
+        attribute = "last_location_known_id";        
+
         setNewCharacterData((prevState) => ({
             ...prevState,
-            world_id: parseInt(e.target.id) 
+            [attribute]: parseInt(e.target.id) 
         }));
 
         if (!isNaN(newCharacterData.world_id)) {
             setValidInputfield((prevState) => ({
                 ...prevState,
-                world_idValid: true
+                [attribute + "Valid"]: true
             }));
         };
     };
@@ -139,12 +148,35 @@ export const NewCharacter = () => {
             
             {formCounter === 1 && <TutorialSelector 
                 newData={newCharacterData}
+                name="world_id"
                 worldsData={worlds}
                 type="DropDown" 
                 text={formQuestions.world_id}
                 errorText={errorInputField.world_idError}
                 placeholder={formPlaceholders.world_id} 
                 required={true}
+                clickFunction={(e) => selectHandler(e)}/>
+            }
+            
+            {formCounter === 2 && <TutorialSelector 
+                newData={newCharacterData}
+                worldsData={worlds}
+                type="DropDown" 
+                text={formQuestions.from_location_id}
+                errorText={errorInputField.from_location_idError}
+                placeholder={formPlaceholders.from_location_id} 
+                required={false}
+                clickFunction={(e) => selectHandler(e)}/>
+            }
+            
+            {formCounter === 3 && <TutorialSelector 
+                newData={newCharacterData}
+                worldsData={worlds}
+                type="DropDown" 
+                text={formQuestions.last_location_known_id}
+                errorText={errorInputField.last_location_known_idError}
+                placeholder={formPlaceholders.last_location_known_id} 
+                required={false}
                 clickFunction={(e) => selectHandler(e)}/>
             }
             
