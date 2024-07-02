@@ -7,7 +7,7 @@ import { Col, Container, Form, Row } from 'react-bootstrap'
 //css
 import './TutorialSelector.css';
 
-export const TutorialSelector = ({ newLocationData, worldsData, type, dataGates, text, errorText, placeholder, clickFunction }) => {    
+export const TutorialSelector = ({ newData, worldsData, type, dataGates, text, errorText, placeholder, clickFunction }) => {    
     const [ dataSelector, setDataSelector ] = useState(worldsData);
 
     return (
@@ -34,7 +34,7 @@ export const TutorialSelector = ({ newLocationData, worldsData, type, dataGates,
                             <></>}
                     {type === "DropDown" ? 
                         <DropDown
-                            newLocationData={newLocationData}
+                            newData={newData}
                             worldsData={dataSelector}
                             placeholder={placeholder}
                             clickFunction={clickFunction}

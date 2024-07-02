@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Dropdown, DropdownButton } from 'react-bootstrap'
 
-export const DropDown = ({ newLocationData, worldsData, placeholder, clickFunction}) => {
+export const DropDown = ({ newData, worldsData, placeholder, clickFunction}) => {
     const [ dropData, SetDropData ] = useState(worldsData);
 
     const [ selectedData, setSelectedData ] = useState(placeholder);
 
     useEffect(() => {
-        if (newLocationData.world_id !== "") {
+        if (newData.world_id !== "") {
             for (let i = 0; i < dropData.length; i++) {
-                if (dropData[i].id === newLocationData.world_id) setSelectedData(dropData[i].name);
+                if (dropData[i].id === newData.world_id) setSelectedData(dropData[i].name);
             };
         };
     });
