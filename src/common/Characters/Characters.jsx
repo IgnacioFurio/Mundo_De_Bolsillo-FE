@@ -34,6 +34,7 @@ export const Characters = ({ worldGates }) => {
         getAllWorlds()
         .then(result => {setWorlds(result.data.data);})
         .catch(error => console.log(error));
+        console.log(characters);
     },[]);
     
     return (
