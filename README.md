@@ -37,17 +37,17 @@ Con esta aplicación busco solucionar los problemas que he ido encontrando tanto
 <li>Crear escenas que recojan los elementos de la partida y sus sucesos.</li>
 <li>Crear la sesión añadiendo la escenas necesarias.</li>
 <li>Al señalar que la sesión ha finalizado poder comprobar que cosas se han visto en la mesa, o cuales se han quedado en el tintero.</li>
-<li>Una vez revisada la sesión por la persona que dirige la partida poder dejar registrada esa sesión para que cualquier participante pueda consultarla siempre que lo necesite.</li>
+<li>Almacenar el registro de esa sesión para que cualquier participante pueda consultarla siempre que lo necesite.</li>
 
 
   ---
-## Deploy 🚀
+<!-- ## Deploy 🚀
 ---
 <div align="center">
     🚀🚀🚀<a href=""><strong> Todavía sin deploy</strong></a>🚀🚀🚀
 </div>
 
----
+--- -->
 ## Stack
 ---
 <div align="center">
@@ -64,8 +64,10 @@ Con esta aplicación busco solucionar los problemas que he ido encontrando tanto
 ---
 1. Clonar el repositorio // Clone repository
 2. ` $ npm install `
-3. ``` $ npm run dev ```
-4. ...
+3. ` $ npm run dev `
+4. Una vez en la página principal crear la primera partida.
+5. Ahora es el momento de poblar esa partida para hacerla sentir viva, recomiendo seguir el siguiente orden; localizaciónes, personajes, secretos y misiones.
+6. Hacer las consultas que consideres necesarias.
 
 ---
 ## Vistas
@@ -84,11 +86,11 @@ Seguimos trabajando en la aplicación para poder enseñar algo más en las próx
 ## Futuras funcionalidades
 ---
 
-⬜ Creación de partidas dónde organizarte la información para cada una de ellas.
+⬛ Creación de partidas dónde organizarte la información para cada una de ellas.
 
-⬜ Creación de mundos ligados a partidas.
+⬛ Creación de mundos ligados a partidas.
 
-⬜ Creación de personajes y lugares ligados a los mundos.
+⬛ Creación de personajes y lugares ligados a los mundos.
 
 ⬜ Creación de secretos/pistas y misiones ligados tanto a personajes como a lugares.
 
@@ -128,7 +130,7 @@ Puedes hacerlo de dos maneras:
 
 - Repositorios propios
 
-  <a href="https://github.com/IgnacioFurio" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white" target="_blank"></a>
+  <a href="https://github.com/IgnacioFurio" target="_blank"><img src="https://img.shields.io/badge/Ignacio-24292F?style=for-the-badge&logo=github&logoColor=white" target="_blank"></a>
 - Documentacion de librerias externas // External libraries official documentation
 - Documentación oficial de las tecnologías usadas // Official techs documentation
 
@@ -143,7 +145,7 @@ De momento gracias por haber llegado hasta aquí, espero que pruebes las aplicac
   
   Gracias por no perder la fe en mí, y sobretodo por sequir solucionando esas dudas que me han ido saliendo al vuelo.
 
-  <a href="https://github.com/datata" target="_blank"><img src="https://img.shields.io/badge/github-24292F?style=for-the-badge&logo=github&logoColor=white" target="_blank"></a> 
+  <a href="https://github.com/datata" target="_blank"><img src="https://img.shields.io/badge/datata-24292F?style=for-the-badge&logo=github&logoColor=white" target="_blank"></a> 
 
 
 
