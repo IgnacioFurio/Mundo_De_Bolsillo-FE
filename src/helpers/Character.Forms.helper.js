@@ -17,12 +17,18 @@ export const CharacterFormQuestions = {
     },
     placeholder: {
         new: {
-            title: "¿Como vas a llamar a la partida?.",
-            description: "Puedes dejarlo para más adelante."
+            name: "¿Cúal es su nombre?",
+            description: "¿Que podrías destacar?.",
+            world_id: "Selecciona un mundo.",
+            from_location_id: "¿Dónde vive?.",
+            last_location_known_id: "Selecciona una.",
         },
         modify: {
-            title: "¿Cómo llamarás a la partida al final?",
-            description: "No tengas vergüenza y cuenta algo."
+            name: "¿Cúal es su nombre?",
+            description: "¿Que podrías destacar?.",
+            world_id: "Selecciona un mundo.",
+            from_location_id: "¿Dónde vive?.",
+            last_location_known_id: "Selecciona una.",
         }
     }
 };

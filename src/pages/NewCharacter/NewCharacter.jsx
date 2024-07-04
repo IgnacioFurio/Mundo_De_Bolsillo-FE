@@ -21,7 +21,14 @@ export const NewCharacter = () => {
         last_location_known_id: CharacterFormQuestions.text.new.last_location_known_id,
     };
 
-    const formPlaceholders = {};
+    const formPlaceholders = {
+        name: CharacterFormQuestions.placeholder.new.name,
+        description: CharacterFormQuestions.placeholder.new.description,
+        world_id: CharacterFormQuestions.placeholder.new.world_id,
+        from_location_id: CharacterFormQuestions.placeholder.new.from_location_id,
+        last_location_known_id: CharacterFormQuestions.placeholder.new.last_location_known_id,
+    };
+
     const [ formCounter, setFormCounter ] = useState(0);
 
     const [ newCharacterData, setNewCharacterData] = useState({
