@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Dropdown, DropdownButton } from 'react-bootstrap'
 
-export const DropDown = ({ newData, worldsData, placeholder, clickFunction}) => {
+export const DropDown = ({ newData, attribute, worldsData, placeholder, clickFunction}) => {
     const [ dropData, SetDropData ] = useState(worldsData);
+
+    const [ data, setData ] = useState(newData);
+
+    const [ attributeCheck, setAttributeCheck ] = useState(attribute);
 
     const [ selectedData, setSelectedData ] = useState(placeholder);
 
     useEffect(() => {
-        if (newData.world_id !== "") {
-            for (let i = 0; i < dropData.length; i++) {
-                if (dropData[i].id === newData.world_id) setSelectedData(dropData[i].name);
+        for (const key in data) {
+            if (key == attributeCheck && data[key] != "") {
+                for (let i = 0; i < dropData.length; i++) {
+                    if (dropData[i].id === data[key]) setSelectedData(dropData[i].name);
+                };
             };
         };
-    });
+        
+    },[data]);
+
+    useEffect(() => { 
+        console.log(selectedData);
+        setData(newData) });
 
     return (
         <Container className='col-12 d-flex justify-content-center align-items-center'>

@@ -7,12 +7,20 @@ import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 import { showNext, validate } from '../../helpers/validations.helper';
 import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
 import { getAllWorlds } from '../../services/world.apicalls';
+import { CharacterFormQuestions } from '../../helpers/Character.Forms.helper';
 
 export const NewCharacter = () => {
     const navigate = useNavigate();
 
     //HOOKS
-    const formQuestions = {};
+    const formQuestions = {
+        name: CharacterFormQuestions.text.new.name,
+        description: CharacterFormQuestions.text.new.description,
+        world_id: CharacterFormQuestions.text.new.world_id,
+        from_location_id: CharacterFormQuestions.text.new.from_location_id,
+        last_location_known_id: CharacterFormQuestions.text.new.last_location_known_id,
+    };
+
     const formPlaceholders = {};
     const [ formCounter, setFormCounter ] = useState(0);
 
@@ -46,8 +54,6 @@ export const NewCharacter = () => {
     
     //USEEFFECT
     useEffect(() => { getWorlds() }, []); //apicall for my worlds
-
-    useEffect(() => { console.log(newCharacterData); }, [newCharacterData]); 
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -92,6 +98,7 @@ export const NewCharacter = () => {
 
     //VALIDATIONS
     useEffect(() =>{ setSubmitStatus(showNext(validInputField, formCounter));},[newCharacterData]);
+    useEffect(() =>{ console.log(newCharacterData);;},[newCharacterData]);
 
     //APICALLS
     const getWorlds = () => {
@@ -147,8 +154,8 @@ export const NewCharacter = () => {
             
             {formCounter === 1 && <TutorialSelector 
                 newData={newCharacterData}
-                name="world_id"
-                worldsData={worlds}
+                attribute={"world_id"}
+                worldsData={worlds} 
                 type="DropDown" 
                 text={formQuestions.world_id}
                 errorText={errorInputField.world_idError}
@@ -159,7 +166,8 @@ export const NewCharacter = () => {
             
             {formCounter === 2 && <TutorialSelector 
                 newData={newCharacterData}
-                worldsData={worlds}
+                attribute={"from_location_id"}
+                worldsData={worlds} //hemos de pasarle Localizaciones
                 type="DropDown" 
                 text={formQuestions.from_location_id}
                 errorText={errorInputField.from_location_idError}
@@ -170,7 +178,8 @@ export const NewCharacter = () => {
             
             {formCounter === 3 && <TutorialSelector 
                 newData={newCharacterData}
-                worldsData={worlds}
+                attribute={"last_location_known_id"}
+                worldsData={worlds} //hemos de pasarle Localizaciones
                 type="DropDown" 
                 text={formQuestions.last_location_known_id}
                 errorText={errorInputField.last_location_known_idError}
