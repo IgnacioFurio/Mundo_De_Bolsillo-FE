@@ -188,7 +188,7 @@ export const NewLocation = () => {
             
             {formCounter === 1 && <TutorialSelector 
                 newData={newLocationData}
-                worldsData={worlds}
+                dropDownData={worlds}
                 type="DropDown" 
                 text={formQuestions.world_id}
                 errorText={errorInputField.world_idError}

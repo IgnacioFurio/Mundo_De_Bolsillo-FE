@@ -8,6 +8,7 @@ import { showNext, validate } from '../../helpers/validations.helper';
 import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
 import { getAllWorlds } from '../../services/world.apicalls';
 import { CharacterFormQuestions } from '../../helpers/Character.Forms.helper';
+import { getAllLocations } from '../../services/location.apicalls';
 
 export const NewCharacter = () => {
     const navigate = useNavigate();
@@ -40,6 +41,7 @@ export const NewCharacter = () => {
     });
 
     const [ worlds, setWorlds ] = useState();
+    const [ locations, setLocations ] = useState();
     
     const [ validInputField, setValidInputfield] = useState({
         nameValid: false,  //seteamos false cuando sea un campo obligatorio
@@ -60,7 +62,10 @@ export const NewCharacter = () => {
     const [ submitStatus, setSubmitStatus ] = useState(false);
     
     //USEEFFECT
-    useEffect(() => { getWorlds() }, []); //apicall for my worlds
+    useEffect(() => { 
+        getWorlds();
+        getLocations();
+    }, []); 
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -105,13 +110,25 @@ export const NewCharacter = () => {
 
     //VALIDATIONS
     useEffect(() =>{ setSubmitStatus(showNext(validInputField, formCounter));},[newCharacterData]);
-    useEffect(() =>{ console.log(newCharacterData);;},[newCharacterData]);
 
     //APICALLS
     const getWorlds = () => {
         getAllWorlds()
         .then((result) => {
             setWorlds(result.data.data);
+        })
+        .catch(error => {
+            let backendErrorData = {
+                message: error.response.data.message,
+                valid: error.response.succes
+            }
+        })
+    };
+
+    const getLocations = () => {
+        getAllLocations()
+        .then((result) => {
+            setLocations(result.data.data);
         })
         .catch(error => {
             let backendErrorData = {
@@ -162,7 +179,7 @@ export const NewCharacter = () => {
             {formCounter === 1 && <TutorialSelector 
                 newData={newCharacterData}
                 attribute={"world_id"}
-                worldsData={worlds} 
+                toSelectData={worlds} 
                 type="DropDown" 
                 text={formQuestions.world_id}
                 errorText={errorInputField.world_idError}
@@ -174,7 +191,7 @@ export const NewCharacter = () => {
             {formCounter === 2 && <TutorialSelector 
                 newData={newCharacterData}
                 attribute={"from_location_id"}
-                worldsData={worlds} //hemos de pasarle Localizaciones
+                toSelectData={locations} 
                 type="DropDown" 
                 text={formQuestions.from_location_id}
                 errorText={errorInputField.from_location_idError}
@@ -186,7 +203,7 @@ export const NewCharacter = () => {
             {formCounter === 3 && <TutorialSelector 
                 newData={newCharacterData}
                 attribute={"last_location_known_id"}
-                worldsData={worlds} //hemos de pasarle Localizaciones
+                toSelectData={locations}
                 type="DropDown" 
                 text={formQuestions.last_location_known_id}
                 errorText={errorInputField.last_location_known_idError}
