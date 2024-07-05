@@ -9,6 +9,7 @@ import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector
 import { getAllWorlds } from '../../services/world.apicalls';
 import { CharacterFormQuestions } from '../../helpers/Character.Forms.helper';
 import { getAllLocations } from '../../services/location.apicalls';
+import { createCharacter } from '../../services/character.apicalls';
 
 export const NewCharacter = () => {
     const navigate = useNavigate();
@@ -137,6 +138,19 @@ export const NewCharacter = () => {
             }
         })
     };
+    
+    const createNewCharacter = () => {
+        createCharacter(newCharacterData)
+        .then(() => { 
+            navigate('/games/game-details');
+        })
+        .catch(error => {
+            let backendErrorData = {
+                message: error.response.data.message,
+                valid: error.response.succes
+            }
+        })
+    };
 
     //CHECKS
     const checkError = (e) => {
@@ -243,7 +257,7 @@ export const NewCharacter = () => {
                         <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton gameInfo={newCharacterData} action="Submit" clickFunction={() => createNewLocation()}/>
+                        <NextPrevButton gameInfo={newCharacterData} action="Submit" clickFunction={() => createNewCharacter()}/>
                     </Col>
                 </>
                 }

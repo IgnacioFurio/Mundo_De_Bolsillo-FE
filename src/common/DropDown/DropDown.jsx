@@ -34,7 +34,7 @@ export const DropDown = ({ newData, attribute, dropDownData, placeholder, clickF
         
     },[data]);
 
-    useEffect(() => { setData(newData) }, [newData]);
+    useEffect(() => { setData(newData) }, [ newData ]);
 
     return (
         <Container className='col-12 d-flex justify-content-center align-items-center'>
