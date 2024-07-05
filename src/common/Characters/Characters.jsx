@@ -34,13 +34,14 @@ export const Characters = ({ worldGates }) => {
         getAllWorlds()
         .then(result => {setWorlds(result.data.data);})
         .catch(error => console.log(error));
+        console.log(characters);
     },[]);
     
     return (
         <Container>
             <Row>
                 <Col className='my-4'>
-                    <NewRegisterButton name={"Añadir Personaje"} clickFunction={(e) => navigate("")}/>
+                    <NewRegisterButton name={"Añadir Personaje"} clickFunction={(e) => navigate("/characters/new-character")}/>
                 </Col>
             </Row>
             <Row className='d-flex justify-content-center mt-1'>

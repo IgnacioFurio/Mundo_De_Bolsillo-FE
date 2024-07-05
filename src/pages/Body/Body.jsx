@@ -13,6 +13,7 @@ import { NewLocation } from '../NewLocation/NewLocation'
 import { ModifyLocation } from '../ModifyLocation/MOdifyLocation'
 import { LocationDetails } from '../LocationDetails/LocationDetails'
 import './Body.css';
+import { NewCharacter } from '../NewCharacter/NewCharacter'
 
 export const Body = () => {
     return (
@@ -29,6 +30,7 @@ export const Body = () => {
                 <Route path='/locations/new-location' element={<NewLocation/>}/>
                 <Route path='/locations/modify-location' element={<ModifyLocation/>}/>
                 <Route path='/games/game-details/location/location-details' element={<LocationDetails/>}/>
+                <Route path='/characters/new-character' element={<NewCharacter/>}/>
             </Routes>
         </Container>
     )
