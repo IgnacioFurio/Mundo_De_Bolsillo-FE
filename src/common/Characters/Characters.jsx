@@ -15,7 +15,6 @@ export const Characters = ({ worldGates }) => {
 
     const [ worlds, setWorlds ] = useState();
 
-
     useEffect(() => {
         getCharactersByWorldId(extractWorldId(worldGates))
         .then(result => {
@@ -34,9 +33,8 @@ export const Characters = ({ worldGates }) => {
         getAllWorlds()
         .then(result => {setWorlds(result.data.data);})
         .catch(error => console.log(error));
-        console.log(characters);
     },[]);
-    
+
     return (
         <Container>
             <Row>

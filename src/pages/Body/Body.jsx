@@ -14,6 +14,7 @@ import { ModifyLocation } from '../ModifyLocation/MOdifyLocation'
 import { LocationDetails } from '../LocationDetails/LocationDetails'
 import './Body.css';
 import { NewCharacter } from '../NewCharacter/NewCharacter'
+import { CharacterDetails } from '../CharacterDetails/CharacterDetails'
 
 export const Body = () => {
     return (
@@ -31,6 +32,7 @@ export const Body = () => {
                 <Route path='/locations/modify-location' element={<ModifyLocation/>}/>
                 <Route path='/games/game-details/location/location-details' element={<LocationDetails/>}/>
                 <Route path='/characters/new-character' element={<NewCharacter/>}/>
+                <Route path='/games/game-details/character/character-details' element={<CharacterDetails/>}/>
             </Routes>
         </Container>
     )
