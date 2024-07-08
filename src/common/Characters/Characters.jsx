@@ -35,12 +35,6 @@ export const Characters = ({ worldGates }) => {
         .then(result => {setWorlds(result.data.data);})
         .catch(error => console.log(error));
     },[]);
-    
-    //FUNCTIONS
-    const characterDetails = () => {
-        console.log("hi");
-        navigate("/games/game-details/character/character-details");
-    };
 
     return (
         <Container>
@@ -52,7 +46,7 @@ export const Characters = ({ worldGates }) => {
             <Row className='d-flex justify-content-center mt-1'>
             {characters.map(data => {
                 return <Col key={data.id} className='col-11 col-sm-10 col-md-8 col-lg-5 m-2'>   
-                            <CharacterCard characterData={data} worldsData={worlds} clickFunction={() => characterDetails()}/>
+                            <CharacterCard characterData={data} worldsData={worlds}/>
                         </Col>
             })}
             </Row>

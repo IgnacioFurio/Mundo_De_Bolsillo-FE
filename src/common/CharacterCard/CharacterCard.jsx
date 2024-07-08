@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 //redux
 import { useDispatch } from 'react-redux';
+import { characterInfo } from '../../services/character.slice';
 //bootstrap
 import { Col, Container, Row } from 'react-bootstrap';
 //common
 import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import "./CharacterCard.css";
 
-export const CharacterCard = ({ characterData, clickFunction }) => {
+export const CharacterCard = ({ characterData }) => {
     
     const navigate = useNavigate();
 
@@ -29,21 +30,17 @@ export const CharacterCard = ({ characterData, clickFunction }) => {
     };
 
     const characterDetailsHandler = (e) => {
-        // dispatch(locationInfo({locationInformation: locationsData}));
-        // navigate("/games/game-details/character/character-details");
+        dispatch(characterInfo({characterInformation: characterData}));
+        navigate("/games/game-details/character/character-details");
     }
 
     const locationDetailsHandler = (e, location) => {
         console.log(location);
     };
 
-    useEffect(() =>{ 
-        // console.log(character.fromLocation.id);
-    }, []);
-
     return (
         <Container>
-            <Row className='upperScroll' onClick={clickFunction}>
+            <Row className='upperScroll' onClick={() => characterDetailsHandler()}>
                 <Col className='characterPicture'>
                     <div>{character.name}</div>
                 </Col>
