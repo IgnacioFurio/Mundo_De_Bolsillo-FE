@@ -25,8 +25,8 @@ const navigateBack = () => {
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("")}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => {}}/></Col>
             </Row> 
-            <Row className='upperScroll d-flex justify-content-center align-items-center pt-2' >
-                <Col className='characterPicture text-center fw-bold eb-garamond-font'>{characterRdx.characterInformation.name.toUpperCase()} </Col>
+            <Row className='upperScroll d-flex justify-content-center align-items-center' >
+                <Col className='characterPicture fw-bold eb-garamond-font'>{characterRdx.characterInformation.name.toUpperCase()} </Col>
             </Row>
             <Container className='centerScrollLocations col-10'>
                 <Row className='borderDataCard align-items-center py-1 px-2'>                            
