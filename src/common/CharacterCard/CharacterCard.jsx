@@ -8,7 +8,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import "./CharacterCard.css";
 
-export const CharacterCard = ({ characterData }) => {
+export const CharacterCard = ({ characterData, clickFunction }) => {
     
     const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ export const CharacterCard = ({ characterData }) => {
 
     return (
         <Container>
-            <Row className='upperScroll'>
+            <Row className='upperScroll' onClick={clickFunction}>
                 <Col className='characterPicture'>
                     <div>{character.name}</div>
                 </Col>
