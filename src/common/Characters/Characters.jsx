@@ -15,7 +15,6 @@ export const Characters = ({ worldGates }) => {
 
     const [ worlds, setWorlds ] = useState();
 
-
     useEffect(() => {
         getCharactersByWorldId(extractWorldId(worldGates))
         .then(result => {
