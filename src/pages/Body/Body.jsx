@@ -34,7 +34,7 @@ export const Body = () => {
                 <Route path='/games/game-details/locations/location-details' element={<LocationDetails/>}/>
                 <Route path='/characters/new-character' element={<NewCharacter/>}/>
                 <Route path='/games/game-details/characters/character-details' element={<CharacterDetails/>}/>
-                <Route path='/character/smodify-character' element={<ModifyCharacter/>}/>
+                <Route path='/characters/modify-character' element={<ModifyCharacter/>}/>
             </Routes>
         </Container>
     )

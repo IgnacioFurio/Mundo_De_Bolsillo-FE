@@ -16,7 +16,6 @@ export const CharacterDetails = () => {
 
     //APICALL
     const deleteCharacterData = () => {
-        console.log(characterRdx.characterInformation.id);
         deleteCharacter(characterRdx.characterInformation.id)
         .then(result => {
             dispatch(characterInfo({characterInformation: {}}));
@@ -35,7 +34,7 @@ export const CharacterDetails = () => {
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
             <Row className='d-flex justify-content-evenly py-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack()}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("")}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/characters/modify-character")}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteCharacterData()}/></Col>
             </Row> 
             <Row className='upperScroll d-flex justify-content-center align-items-center' >

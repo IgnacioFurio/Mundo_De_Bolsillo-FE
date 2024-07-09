@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { CharacterFormQuestions } from '../../helpers/Character.Forms.helper';
+import { useNavigate } from 'react-router-dom';
+import { characterData } from '../../services/character.slice';
+import { useSelector } from 'react-redux';
 
 export const ModifyCharacter = () => {
     const navigate = useNavigate();
+
+    const characterRdx = useSelector(characterData);
+
+    useEffect(() => {console.log(modifyCharacterData);});
 
     //HOOKS
     const formQuestions = {
@@ -22,12 +30,12 @@ export const ModifyCharacter = () => {
 
     const [ formCounter, setFormCounter ] = useState(0);
 
-    const [ newCharacterData, setNewCharacterData] = useState({
-        name: "",
-        description: "",
-        world_id: "",
-        from_location_id: "",
-        last_location_known_id: "",
+    const [ modifyCharacterData, setModifyCharacterData] = useState({
+        name: characterRdx.characterInformation.name,
+        description: characterRdx.characterInformation.description,
+        world_id: characterRdx.characterInformation.world_id,
+        from_location_id: characterRdx.characterInformation.from_location_id,
+        last_location_known_id: characterRdx.characterInformation.last_location_known_id,
     });
 
     const [ worlds, setWorlds ] = useState();
@@ -51,6 +59,6 @@ export const ModifyCharacter = () => {
     
     const [ submitStatus, setSubmitStatus ] = useState(false);
     return (
-        <div>ModifyCharacter</div>
+        <h1>ModifyCharacter</h1>
     )
 };
