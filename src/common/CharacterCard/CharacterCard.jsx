@@ -31,7 +31,7 @@ export const CharacterCard = ({ characterData }) => {
 
     const characterDetailsHandler = (e) => {
         dispatch(characterInfo({characterInformation: characterData}));
-        navigate("/games/game-details/character/character-details");
+        navigate("/games/game-details/characters/character-details");
     }
 
     const locationDetailsHandler = (e, location) => {
