@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 //redux
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { characterData, characterInfo } from '../../services/character.slice';
 //apicall
 import { getAllWorlds } from '../../services/world.apicalls';
 import { getAllLocations } from '../../services/location.apicalls';
+import { modifyCharacter } from '../../services/character.apicalls';
 //helper
 import { showNext, validate } from '../../helpers/validations.helper';
 //common
@@ -14,13 +15,15 @@ import { CharacterFormQuestions } from '../../helpers/Character.Forms.helper';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
+import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
+
 
 export const ModifyCharacter = () => {
     const navigate = useNavigate();
 
-    const characterRdx = useSelector(characterData);
+    const dispatch = useDispatch();
 
-    useEffect(() => {console.log(modifyCharacterData);}, []);
+    const characterRdx = useSelector(characterData);
 
     //HOOKS
     const formQuestions = {
@@ -42,6 +45,7 @@ export const ModifyCharacter = () => {
     const [ formCounter, setFormCounter ] = useState(0);
 
     const [ modifyCharacterData, setModifyCharacterData] = useState({
+        id: characterRdx.characterInformation.id,
         name: characterRdx.characterInformation.name,
         description: characterRdx.characterInformation.description,
         world_id: characterRdx.characterInformation.world_id,
@@ -121,6 +125,14 @@ export const ModifyCharacter = () => {
     useEffect(() =>{ setSubmitStatus(showNext(validInputField, formCounter));},[modifyCharacterData]);
 
     //APICALLS
+    const updateCharacterInformation = () => {    
+        modifyCharacter(modifyCharacterData)
+        .then(() => {
+            dispatch(characterInfo({characterInformation: {}}));
+            navigate("/games/game-details");
+        })
+        .catch((error) => {console.log(error);})
+    };
 
     const getWorlds = () => {
         getAllWorlds()
@@ -253,7 +265,7 @@ export const ModifyCharacter = () => {
                         <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
                     </Col>
                     <Col className='d-flex justify-content-end'>
-                        <NextPrevButton gameInfo={modifyCharacterData} action="Submit" clickFunction={() => {}}/>
+                        <NextPrevButton gameInfo={modifyCharacterData} action="Submit" clickFunction={() => updateCharacterInformation()}/>
                     </Col>
                 </>
                 }

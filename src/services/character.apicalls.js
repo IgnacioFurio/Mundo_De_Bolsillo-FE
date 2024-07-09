@@ -13,6 +13,10 @@ export const createCharacter = async (body) => {
     return await axios.post(`${root}/character/post`, body);
 };
 
+export const modifyCharacter = async (body) => {
+    return await axios.put(`${root}/character/put`, body);
+};
+
 export const deleteCharacter = async (body) => {
     const data = {
         character_id: body
