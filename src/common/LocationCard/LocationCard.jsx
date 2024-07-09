@@ -26,7 +26,7 @@ export const LocationCard = ({ locationsData }) => {
 
     const locationDetails = (e) => {
         dispatch(locationInfo({locationInformation: locationsData}));
-        navigate("/games/game-details/location/location-details");
+        navigate("/games/game-details/locations/location-details");
     };
 
     return (
