@@ -39,23 +39,23 @@ export const CharacterDetails = () => {
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteCharacterData()}/></Col>
             </Row> 
             <Row className='upperScroll d-flex justify-content-center align-items-center' >
-                <Col className='characterPicture fw-bold eb-garamond-font'>{characterRdx.characterInformation.name.toUpperCase()} </Col>
+                <Col className='characterPicture fw-bold eb-garamond-font'>{characterRdx?.characterInformation?.name?.toUpperCase()} </Col>
             </Row>
             <Container className='centerScrollLocations col-10'>
                 <Row className='borderDataCard align-items-center py-1 px-2'>                            
-                    <Col className='text-center'>{characterRdx.characterInformation.description}</Col>
+                    <Col className='text-center'>{characterRdx?.characterInformation?.description}</Col>
                 </Row> 
                 <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>                            
                     <Col className='fromLocationIcon col-1 fw-bold'></Col>
-                    <Col className='col-10'> {characterRdx.characterInformation.fromLocation.name}</Col>
+                    <Col className='col-10'> {characterRdx?.characterInformation?.fromLocation?.name}</Col>
                 </Row>
                 <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>
                     <Col className='lastLocationKnownIcon col-1 fw-bold'></Col>
-                    <Col className='col-10'> {characterRdx.characterInformation.lastLocationKnown.name}</Col>
+                    <Col className='col-10'> {characterRdx?.characterInformation?.lastLocationKnown?.name}</Col>
                 </Row>
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>
-                <Col className='col-12 text-center fw-bold'>{characterRdx.characterInformation.name}</Col>
+                <Col className='col-12 text-center fw-bold'>{characterRdx?.characterInformation?.name}</Col>
             </Row>
         </Container>
     );
