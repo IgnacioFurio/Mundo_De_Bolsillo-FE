@@ -4,6 +4,7 @@ import { characterData, characterInfo } from '../../services/character.slice';
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useNavigate } from 'react-router-dom';
+import { deleteCharacter } from '../../services/character.apicalls';
 
 export const CharacterDetails = () => {
     //HOOKS
@@ -13,17 +14,29 @@ export const CharacterDetails = () => {
 
     const characterRdx = useSelector(characterData);
 
-const navigateBack = () => {
-    dispatch(characterInfo({characterInformation: {}}));
-    navigate("/games/game-details")
-}; 
+    //APICALL
+    const deleteCharacterData = () => {
+        console.log(characterRdx.characterInformation.id);
+        deleteCharacter(characterRdx.characterInformation.id)
+        .then(result => {
+            dispatch(characterInfo({characterInformation: {}}));
+            navigateBack();
+        })
+        .catch((error) => {console.log(error);})
+    };
+
+    //FUNCTION
+    const navigateBack = () => {
+        dispatch(characterInfo({characterInformation: {}}));
+        navigate("/games/game-details")
+    }; 
 
     return (
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
             <Row className='d-flex justify-content-evenly py-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack()}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("")}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => {}}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteCharacterData()}/></Col>
             </Row> 
             <Row className='upperScroll d-flex justify-content-center align-items-center' >
                 <Col className='characterPicture fw-bold eb-garamond-font'>{characterRdx.characterInformation.name.toUpperCase()} </Col>
