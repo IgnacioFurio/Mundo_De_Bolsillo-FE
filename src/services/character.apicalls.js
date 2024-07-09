@@ -12,3 +12,11 @@ export const getCharactersByWorldId = async (body) => {
 export const createCharacter = async (body) => {
     return await axios.post(`${root}/character/post`, body);
 };
+
+export const deleteCharacter = async (body) => {
+    const data = {
+        character_id: body
+    }
+
+    return await axios.delete(`${root}/character/delete`,{data})
+};
