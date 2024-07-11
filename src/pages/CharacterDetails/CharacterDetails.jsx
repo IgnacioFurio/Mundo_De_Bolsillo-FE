@@ -17,6 +17,11 @@ export const CharacterDetails = () => {
 
     const [ aboutCharacter, setAboutCharacter ] = useState(characterRdx?.characterInformation.aboutCharacter);
 
+    const [ showMoreData, setShowMoreData ] = useState({
+        "": false,
+        Secretos: false
+    });
+
     useEffect(() => {console.log(aboutCharacter);});
     //APICALL
     const deleteCharacterData = () => {
@@ -33,6 +38,20 @@ export const CharacterDetails = () => {
         dispatch(characterInfo({characterInformation: {}}));
         navigate("/games/game-details")
     }; 
+
+    const InfoHandler = (e) => {
+        setShowMoreData({
+            "": false,
+            Secretos: false,
+        });
+
+        if (showMoreData[e.target.value] == false) {
+            setShowMoreData({
+                ...showMoreData,
+                [e.target.value]: true
+            });
+        };
+    };
 
     return (
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
@@ -56,9 +75,14 @@ export const CharacterDetails = () => {
                     <Col className='lastLocationKnownIcon col-1 fw-bold'></Col>
                     <Col className='col-10'> {characterRdx?.characterInformation?.lastLocationKnown?.name}</Col>
                 </Row>
-                {aboutCharacter.map((data) => {
-                    return <KnowledgeCard aboutCharacterData={data} />
-                })}
+                <Row className='borderDataCard'>
+                    <select className='MoreInfoSelector text-center fw-bold my-2' onClick={(e) => InfoHandler(e)}> 
+                        <option value="">Información sobre:</option>
+                        <option value="Secretos">Rumores/Secretos</option>
+                    </select>
+                </Row>
+                {showMoreData.Secretos == true ? aboutCharacter.map((data) => { return <KnowledgeCard key={data.id} value={"Secretos"} aboutCharacterData={data} /> }): <></>}
+                
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>
                 <Col className='col-12 text-center fw-bold'>{characterRdx?.characterInformation?.name}</Col>
