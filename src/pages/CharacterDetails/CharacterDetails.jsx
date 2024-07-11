@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { characterData, characterInfo } from '../../services/character.slice';
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useNavigate } from 'react-router-dom';
 import { deleteCharacter } from '../../services/character.apicalls';
+import { KnowledgeCard } from '../../common/KnowledgeCard/KnowledgeCard';
 
 export const CharacterDetails = () => {
     //HOOKS
@@ -14,6 +15,9 @@ export const CharacterDetails = () => {
 
     const characterRdx = useSelector(characterData);
 
+    const [ aboutCharacter, setAboutCharacter ] = useState(characterRdx?.characterInformation.aboutCharacter);
+
+    useEffect(() => {console.log(aboutCharacter);});
     //APICALL
     const deleteCharacterData = () => {
         deleteCharacter(characterRdx.characterInformation.id)
@@ -52,6 +56,9 @@ export const CharacterDetails = () => {
                     <Col className='lastLocationKnownIcon col-1 fw-bold'></Col>
                     <Col className='col-10'> {characterRdx?.characterInformation?.lastLocationKnown?.name}</Col>
                 </Row>
+                {aboutCharacter.map((data) => {
+                    return <KnowledgeCard aboutCharacterData={data} />
+                })}
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>
                 <Col className='col-12 text-center fw-bold'>{characterRdx?.characterInformation?.name}</Col>
