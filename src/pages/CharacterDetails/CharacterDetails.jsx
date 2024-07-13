@@ -22,7 +22,8 @@ export const CharacterDetails = () => {
         Secretos: false
     });
 
-    useEffect(() => {console.log(aboutCharacter);});
+    useEffect(() => {console.log();});
+    
     //APICALL
     const deleteCharacterData = () => {
         deleteCharacter(characterRdx.characterInformation.id)
