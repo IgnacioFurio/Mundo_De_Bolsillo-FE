@@ -10,10 +10,7 @@ export const KnowledgeCard = ({ aboutCharacterData }) => {
 
     const [ showMoreData, setShowMoreData ] = useState(false);
 
-    useEffect(() => {
-        setSecret(aboutCharacterData);
-        console.log(secret?.veracity);
-    }, [secret]);
+    useEffect(() => { setSecret(aboutCharacterData); }, [secret]);
 
     //HANDLER
     const showMoreHandler = () => {
@@ -33,19 +30,19 @@ export const KnowledgeCard = ({ aboutCharacterData }) => {
                 <Container className='centerScrollLocations col-11 mt-1'>
                     <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                         <Col className='characterIcon col-2 fw-bold text-center'></Col>
-                        <Col className='col-10'>{secret?.about_character_id || "??"}</Col>
+                        <Col className='col-10'>{secret?.aboutCharacter?.name || "??"}</Col>
                     </Row>
                     <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                         <Col className='heardFromCharacterIcon col-2 fw-bold text-center'></Col>
-                        <Col className='col-10'>{secret?.heard_from_character_id || "??"}</Col>
+                        <Col className='col-10'>{secret?.heardFromCharacter?.name || "??"}</Col>
                     </Row>
                     <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                         <Col className='locationIcon col-2 fw-bold text-center'></Col>
-                        <Col className='col-10'>{secret?.about_location_id || "??"}</Col>
+                        <Col className='col-10'>{secret?.aboutLocation?.name || "??"}</Col>
                     </Row>
                     <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                         <Col className='heardOnLocationIcon col-2 fw-bold text-center'></Col>
-                        <Col className='col-10'>{secret?.about_location_id || "??"}</Col>
+                        <Col className='col-10'>{secret?.heardOnLocation?.name || "??"}</Col>
                     </Row>
                 </Container>
                 : 

@@ -6,6 +6,7 @@ import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useNavigate } from 'react-router-dom';
 import { deleteCharacter } from '../../services/character.apicalls';
 import { KnowledgeCard } from '../../common/KnowledgeCard/KnowledgeCard';
+import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
 
 export const CharacterDetails = () => {
     //HOOKS
@@ -15,16 +16,24 @@ export const CharacterDetails = () => {
 
     const characterRdx = useSelector(characterData);
 
-    const [ aboutCharacter, setAboutCharacter ] = useState(characterRdx?.characterInformation.aboutCharacter);
+    const [ aboutCharacter, setAboutCharacter ] = useState();
 
     const [ showMoreData, setShowMoreData ] = useState({
         "": false,
         Secretos: false
     });
 
-    useEffect(() => {console.log();});
+    //USEEFFECT
+    useEffect(() => { getKnowledgeAboutCharacter();
+    }, [showMoreData]);
     
     //APICALL
+    const getKnowledgeAboutCharacter = () => {
+        getKnowledgeByCharacterId(characterRdx?.characterInformation?.id)
+        .then((result) => { setAboutCharacter(result.data.data); })
+        .catch((error) => { console.log(error); })
+    };
+
     const deleteCharacterData = () => {
         deleteCharacter(characterRdx.characterInformation.id)
         .then(result => {
@@ -82,6 +91,7 @@ export const CharacterDetails = () => {
                         <option value="Secretos">Rumores/Secretos</option>
                     </select>
                 </Row>
+                
                 {showMoreData.Secretos == true ? aboutCharacter.map((data) => { return <KnowledgeCard key={data.id} value={"Secretos"} aboutCharacterData={data} /> }): <></>}
                 
             </Container> 
