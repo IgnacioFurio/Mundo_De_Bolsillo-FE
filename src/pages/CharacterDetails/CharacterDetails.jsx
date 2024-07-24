@@ -76,7 +76,7 @@ export const CharacterDetails = () => {
                     <Col className='lastLocationKnownIcon col-1 fw-bold'></Col>
                     <Col className='col-10'> {characterRdx?.characterInformation?.lastLocationKnown?.name}</Col>
                 </Row>
-                <Row className='borderDataCard'>
+                <Row className='borderDataCard mb-2'>
                     <select className='MoreInfoSelector text-center fw-bold my-2' onClick={(e) => InfoHandler(e)}> 
                         <option value="">Información sobre:</option>
                         <option value="Secretos">Rumores/Secretos</option>

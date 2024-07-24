@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
+import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
+import "./KnowledgeCard.css";
 
 export const KnowledgeCard = ({ aboutCharacterData }) => {
 
@@ -10,6 +12,7 @@ export const KnowledgeCard = ({ aboutCharacterData }) => {
 
     useEffect(() => {
         setSecret(aboutCharacterData);
+        console.log(secret.veracity);
     }, [secret]);
 
     //HANDLER
@@ -18,12 +21,48 @@ export const KnowledgeCard = ({ aboutCharacterData }) => {
     };
 
     return (
-        <Container>
-            <Row className='border border-dark rounded-3 text-center mt-2 py-1'>
-                <Col className='col-12 border-bottom border-black fw-bold py-1'>{secret?.title}</Col>
+        <>
+        <Container className='border border-black rounded my-2'>
+            <Row className='text-center'>
+                <Col className='bannerRibbon col-12 fw-bold pt-2'>
+                    {secret?.title}
+                </Col>
+            </Row>
+            <Row className='text-start'>                    
+                {showMoreData === true ? 
+                <Container className='centerScrollLocations col-11'>
+                    <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                        <Col className='characterIcon col-2 fw-bold text-center'></Col>
+                        <Col className='col-10'>{secret?.about_character_id || "??"}</Col>
+                    </Row>
+                    <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                        <Col className='heardFromCharacterIcon col-2 fw-bold text-center'></Col>
+                        <Col className='col-10'>{secret?.heard_from_character_id || "??"}</Col>
+                    </Row>
+                    <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                        <Col className='locationIcon col-2 fw-bold text-center'></Col>
+                        <Col className='col-10'>{secret?.about_location_id || "??"}</Col>
+                    </Row>
+                    <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                        <Col className='heardOnLocationIcon col-2 fw-bold text-center'></Col>
+                        <Col className='col-10'>{secret?.about_location_id || "??"}</Col>
+                    </Row>
+                </Container>
+                : 
+                (<></>)}
+            </Row>
+            <Row className='text-center my-1'>
                 <Col className='col-12 mb-1'>{secret?.description}</Col>
-                <Col onClick={() => showMoreHandler()}>{showMoreData === false ? "Más" : "Menos"}</Col>
+                    
+            </Row>
+            <Row>
+                <Col className='col-4'></Col>
+                <Col className='col-4' onClick={() => showMoreHandler()}>
+                    {showMoreData === false ? <NextPrevButton action="Down"/> : <NextPrevButton action="Up"/>}
+                </Col>
+                <Col className='col-4'></Col>
             </Row>
         </Container>
+        </>
     )
 };
