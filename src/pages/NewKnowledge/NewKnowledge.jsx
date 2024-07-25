@@ -5,11 +5,15 @@ import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useSelector } from 'react-redux';
 import { gameData } from '../../services/game.slice';
+import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 
 export const NewKnowledge = () => {
     const gameRdx = useSelector(gameData);
 
     const [ worlds, setWorlds ] = useState([]);
+
+    const [ locations, setLocations ] = useState();
+    const [ characters, setCharacters ] = useState();
 
     //HOOKS
     const [ placeholder, setPlaceholder ] = useState({
@@ -56,12 +60,11 @@ export const NewKnowledge = () => {
 
     //USEEFFECT
     useEffect(() => { 
-        console.log(gameRdx.gameInformation.id);
-
+        getWorldsData();
     }, []);
 
     // useEffect(() => { console.log(newKnowledgeData); }, [newKnowledgeData]);
-    // useEffect(() => { console.log(submitStatus); }, [submitStatus]);
+    useEffect(() => {  }, [locations]);
     useEffect(() => { setSubmitStatus(checkSubmitStatus()); }, [validInputField]);
 
     //HANDLERS
@@ -72,6 +75,33 @@ export const NewKnowledge = () => {
         }));
 
         checkError(e);
+    };
+
+    //APICALLS
+    const getWorldsData = () => {
+        getWorldGatesByGameId(gameRdx.gameInformation.id)
+        .then((result) => {
+            let data = result.data.data;
+            let locationArr = [];
+            let characterArr = [];
+
+            for (let i = 0; i < data.length; i++) {
+                let locationsData = data[i].World.Locations;
+                let characterData = data[i].World.Characters;
+
+                for (let l = 0; l < locationsData.length; l++) {      
+                    locationArr.push(locationsData[l]);                
+                };
+                
+                for (let c = 0; c < characterData.length; c++) {      
+                    characterArr.push(characterData[c]);                
+                };
+            };
+
+            setLocations(locationArr);
+            setCharacters(characterArr);
+        })
+        .catch((error) => {console.log(error);})
     };
 
     //CHECKS
