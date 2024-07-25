@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { characterData, characterInfo } from '../../services/character.slice';
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useNavigate } from 'react-router-dom';
 import { deleteCharacter } from '../../services/character.apicalls';
+import { KnowledgeCard } from '../../common/KnowledgeCard/KnowledgeCard';
+import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
 
 export const CharacterDetails = () => {
     //HOOKS
@@ -14,7 +16,24 @@ export const CharacterDetails = () => {
 
     const characterRdx = useSelector(characterData);
 
+    const [ aboutCharacter, setAboutCharacter ] = useState();
+
+    const [ showMoreData, setShowMoreData ] = useState({
+        "": false,
+        Secretos: false
+    });
+
+    //USEEFFECT
+    useEffect(() => { getKnowledgeAboutCharacter();
+    }, [showMoreData]);
+    
     //APICALL
+    const getKnowledgeAboutCharacter = () => {
+        getKnowledgeByCharacterId(characterRdx?.characterInformation?.id)
+        .then((result) => { setAboutCharacter(result.data.data); })
+        .catch((error) => { console.log(error); })
+    };
+
     const deleteCharacterData = () => {
         deleteCharacter(characterRdx.characterInformation.id)
         .then(result => {
@@ -29,6 +48,20 @@ export const CharacterDetails = () => {
         dispatch(characterInfo({characterInformation: {}}));
         navigate("/games/game-details")
     }; 
+
+    const InfoHandler = (e) => {
+        setShowMoreData({
+            "": false,
+            Secretos: false,
+        });
+
+        if (showMoreData[e.target.value] == false) {
+            setShowMoreData({
+                ...showMoreData,
+                [e.target.value]: true
+            });
+        };
+    };
 
     return (
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
@@ -52,6 +85,15 @@ export const CharacterDetails = () => {
                     <Col className='lastLocationKnownIcon col-1 fw-bold'></Col>
                     <Col className='col-10'> {characterRdx?.characterInformation?.lastLocationKnown?.name}</Col>
                 </Row>
+                <Row className='borderDataCard my-2'>
+                    <select className='MoreInfoSelector text-center fw-bold' onClick={(e) => InfoHandler(e)}> 
+                        <option value="">Información sobre:</option>
+                        <option value="Secretos">Rumores/Secretos</option>
+                    </select>
+                </Row>
+                
+                {showMoreData.Secretos == true ? aboutCharacter.map((data) => { return <KnowledgeCard key={data.id} value={"Secretos"} aboutCharacterData={data} /> }): <></>}
+                
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>
                 <Col className='col-12 text-center fw-bold'>{characterRdx?.characterInformation?.name}</Col>

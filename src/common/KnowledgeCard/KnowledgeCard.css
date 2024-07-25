@@ -1,0 +1,47 @@
+.bannerRibbon{
+    cursor: pointer;
+    color: purple;
+    text-shadow: 1px 1px 2px white;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    height: 4em;
+    background-image: url('../../assets/bannerRibbon.png');
+    background-size: 100% 4em;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    filter: drop-shadow(0 0 3px black);
+    z-index: 1;
+}
+
+.characterIcon{
+    height: 2em;
+    background-image: url('../../assets/Character.png');
+    background-size: 1.3em 1.3em;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.heardFromCharacterIcon{
+    height: 2em;
+    background-image: url('../../assets/heardFromCharacter.png');
+    background-size: 1.5em 1.5em;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.locationIcon{
+    height: 2em;
+    background-image: url('../../assets/location.png');
+    background-size: 1.4em 1.4em;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.heardOnLocationIcon{
+    height: 2em;
+    background-image: url('../../assets/heardOnLocation.png');
+    background-size: 1.4em 1.4em;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
