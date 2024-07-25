@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { deleteCharacter } from '../../services/character.apicalls';
 import { KnowledgeCard } from '../../common/KnowledgeCard/KnowledgeCard';
 import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
+import { Knowledge } from '../../common/Knowledge/Knowledge';
 
 export const CharacterDetails = () => {
     //HOOKS
@@ -92,7 +93,7 @@ export const CharacterDetails = () => {
                     </select>
                 </Row>
                 
-                {showMoreData.Secretos == true ? aboutCharacter.map((data) => { return <KnowledgeCard key={data.id} value={"Secretos"} aboutCharacterData={data} /> }): <></>}
+                {showMoreData.Secretos == true ? <Knowledge value={"Secretos"} aboutCharacterData={aboutCharacter} /> : <></>}
                 
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>
