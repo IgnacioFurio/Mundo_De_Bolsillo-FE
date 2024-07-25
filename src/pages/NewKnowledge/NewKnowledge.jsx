@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Dropdown, Row } from 'react-bootstrap';
 import { validate } from '../../helpers/validations.helper';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
+import { DropDown } from '../../common/DropDown/DropDown';
 import { useSelector } from 'react-redux';
 import { gameData } from '../../services/game.slice';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
+import { getLocationsByWorldId } from '../../services/location.apicalls';
+import { getCharactersByWorldId } from '../../services/character.apicalls';
 
 export const NewKnowledge = () => {
     const gameRdx = useSelector(gameData);
 
     const [ worlds, setWorlds ] = useState([]);
 
-    const [ locations, setLocations ] = useState();
-    const [ characters, setCharacters ] = useState();
+    const [ locations, setLocations ] = useState([]);
+    const [ characters, setCharacters ] = useState([]);
 
     //HOOKS
     const [ placeholder, setPlaceholder ] = useState({
@@ -59,15 +62,24 @@ export const NewKnowledge = () => {
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //USEEFFECT
-    useEffect(() => { 
-        getWorldsData();
-    }, []);
+    //primer renderizado de los componentes
+    useEffect(() => { getWorldsData(); }, []);
 
-    // useEffect(() => { console.log(newKnowledgeData); }, [newKnowledgeData]);
-    useEffect(() => {  }, [locations]);
+    //mundos
+    useEffect(() => { 
+        getLocationsData(); 
+        getCharactersData();
+    }, [worlds]);
+
+    //personajes y localizaciones
+    useEffect(() => {console.log(locations);},[locations]); 
+    useEffect(() => {console.log(characters);},[characters]);
+
+    //validaciones
     useEffect(() => { setSubmitStatus(checkSubmitStatus()); }, [validInputField]);
 
     //HANDLERS
+    //handler para los inputs del formulario
     const inputHandler = (e) => {  
         setNewKnowledgeData((prevState) => ({
             ...prevState,
@@ -76,34 +88,60 @@ export const NewKnowledge = () => {
 
         checkError(e);
     };
+    //handler para el dropdown del formulario
 
     //APICALLS
+    //apicall que trae los mundos segun el id de la partida
     const getWorldsData = () => {
-        getWorldGatesByGameId(gameRdx.gameInformation.id)
+        getWorldGatesByGameId(gameRdx.gameInformation.id)//leemos el id de la partida en redux
         .then((result) => {
             let data = result.data.data;
-            let locationArr = [];
-            let characterArr = [];
-
-            for (let i = 0; i < data.length; i++) {
-                let locationsData = data[i].World.Locations;
-                let characterData = data[i].World.Characters;
-
-                for (let l = 0; l < locationsData.length; l++) {      
-                    locationArr.push(locationsData[l]);                
-                };
-                
-                for (let c = 0; c < characterData.length; c++) {      
-                    characterArr.push(characterData[c]);                
-                };
+            let worlds = []; //array dónde guardaremos los id de los mundos
+            
+            for (let i = 0; i < data.length; i++) { //reccorremos los datos
+                const world = data[i].World;        //extraemos los mundos y sus id
+                worlds.push(world.id);              //enviamos los id al array de worlds
             };
 
-            setLocations(locationArr);
-            setCharacters(characterArr);
+            setWorlds(worlds); //seteamos los mundos en su hook
         })
-        .catch((error) => {console.log(error);})
+        .catch((error) => {console.log(error);});
     };
 
+    //apicall que trae todas las localizaciones segun el world_id
+    const getLocationsData = () => {
+        getLocationsByWorldId(worlds)//traemos las localizaciones usando el array de los id de los mundos
+        .then((result) => {
+            let arr = result.data.data;
+            let locations = [];
+
+            for (let i = 0; i < arr.length; i++) {
+                    for (let j = 0; j < arr[i].length; j++) {
+                        locations.push(arr[i][j]);                        
+                    }
+            };
+
+            setLocations(locations);//seteamos las localizaciones en su hook
+        })
+        .catch((error) => {console.log(error)});
+    };
+    //apicall que trae todos los personajes segun el world_id
+    const getCharactersData = () => {
+        getCharactersByWorldId(worlds)//traemos los personajes usando el array de los id de los mundos
+        .then((result) => {
+            let arr = result.data.data;
+            let characters = [];
+
+            for (let i = 0; i < arr.length; i++) {
+                    for (let j = 0; j < arr[i].length; j++) {
+                        characters.push(arr[i][j]);                        
+                    }
+            };
+
+            setCharacters(characters);//seteamos los personajes en su hook
+        })
+        .catch((error) => {console.log(error)});
+    };
     //CHECKS
     const checkError = (e) => {
         let error = "";
@@ -148,19 +186,67 @@ export const NewKnowledge = () => {
             </Row>
             <Row className='borderDataCard centerScrollLocations d-flex border border-black justify-content-start align-items-center py-1 mx-2'>                            
                 <Col className='characterIcon col-2 fw-bold text-center'></Col>
-                <input className='rounded col-9'></input>
+                <select className='col-9 rounded'>
+                    {characters.map((data) => { 
+                        return  <option
+                                key={data.id}
+                                value={data.id}
+                                label={data.name}
+                                name={"about_character_id"}
+                                onClick={() => {}}
+                                >
+                                    {data.name}
+                                </option>
+                    })}
+                </select>
             </Row>
             <Row className='borderDataCard centerScrollLocations d-flex border border-black justify-content-start align-items-center py-1 mx-2'>                            
                 <Col className='heardFromCharacterIcon col-2 fw-bold text-center'></Col>
-                <input className='rounded col-9'></input>
+                <select className='col-9 rounded'>
+                    {characters.map((data) => { 
+                        return  <option
+                                key={data.id}
+                                value={data.id}
+                                label={data.name}
+                                name={"about_character_id"}
+                                onClick={() => {}}
+                                >
+                                    {data.name}
+                                </option>
+                    })}
+                </select>
             </Row>
             <Row className='borderDataCard centerScrollLocations d-flex border border-black justify-content-start align-items-center py-1 mx-2'>                            
                 <Col className='locationIcon col-2 fw-bold text-center'></Col>
-                <input className='rounded col-9'></input>
+                <select className='col-9 rounded'>
+                    {locations.map((data) => { 
+                        return  <option
+                                key={data.id}
+                                value={data.id}
+                                label={data.name}
+                                name={"about_character_id"}
+                                onClick={() => {}}
+                                >
+                                    {data.name}
+                                </option>
+                    })}
+                </select>
             </Row>
             <Row className='borderDataCard centerScrollLocations d-flex border border-black justify-content-start align-items-center py-1 mx-2'>                            
                 <Col className='heardOnLocationIcon col-2 fw-bold text-center'></Col>
-                <input className='rounded col-9'></input>
+                <select className='col-9 rounded'>
+                    {locations.map((data) => { 
+                        return  <option
+                                key={data.id}
+                                value={data.id}
+                                label={data.name}
+                                name={"about_character_id"}
+                                onClick={() => {}}
+                                >
+                                    {data.name}
+                                </option>
+                    })}
+                </select>
             </Row>
             <Row className='text-center my-2'>
                 <Col className='col-1'/>
