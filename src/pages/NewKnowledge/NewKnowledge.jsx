@@ -76,7 +76,10 @@ export const NewKnowledge = () => {
     useEffect(() => {console.log(characters);},[characters]);
 
     //validaciones
-    useEffect(() => { setSubmitStatus(checkSubmitStatus()); }, [validInputField]);
+    useEffect(() => { 
+        setSubmitStatus(checkSubmitStatus());
+        console.log(newKnowledgeData);
+    }, [validInputField]);
 
     //HANDLERS
     //handler para los inputs del formulario
@@ -88,14 +91,22 @@ export const NewKnowledge = () => {
 
         checkError(e);
     };
+    
     //handler para el dropdown del formulario
+    const dropdownHandler = (e) => {
+        setNewKnowledgeData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }));
 
+        checkError(e);
+    };
     //APICALLS
     //apicall que trae los mundos segun el id de la partida
     const getWorldsData = () => {
         getWorldGatesByGameId(gameRdx.gameInformation.id)//leemos el id de la partida en redux
         .then((result) => {
-            let data = result.data.data;
+            let data = result?.data?.data;
             let worlds = []; //array dónde guardaremos los id de los mundos
             
             for (let i = 0; i < data.length; i++) { //reccorremos los datos
@@ -112,7 +123,7 @@ export const NewKnowledge = () => {
     const getLocationsData = () => {
         getLocationsByWorldId(worlds)//traemos las localizaciones usando el array de los id de los mundos
         .then((result) => {
-            let arr = result.data.data;
+            let arr = result?.data?.data;
             let locations = [];
 
             for (let i = 0; i < arr.length; i++) {
@@ -125,11 +136,12 @@ export const NewKnowledge = () => {
         })
         .catch((error) => {console.log(error)});
     };
+
     //apicall que trae todos los personajes segun el world_id
     const getCharactersData = () => {
         getCharactersByWorldId(worlds)//traemos los personajes usando el array de los id de los mundos
         .then((result) => {
-            let arr = result.data.data;
+            let arr = result?.data?.data;
             let characters = [];
 
             for (let i = 0; i < arr.length; i++) {
@@ -142,6 +154,7 @@ export const NewKnowledge = () => {
         })
         .catch((error) => {console.log(error)});
     };
+
     //CHECKS
     const checkError = (e) => {
         let error = "";
@@ -181,66 +194,74 @@ export const NewKnowledge = () => {
                         className='col-9 text-center rounded'
                         name="title"
                         required={true}
+                        placeholder={"Título"}
                         onChange={(e) => inputHandler(e)}/>
                 </Col>
             </Row>
             <Row className='borderDataCard centerScrollLocations d-flex border border-black justify-content-start align-items-center py-1 mx-2'>                            
                 <Col className='characterIcon col-2 fw-bold text-center'></Col>
-                <select className='col-9 rounded'>
+                <select className='col-9 rounded' 
+                        name={"about_character_id"} 
+                        onChange={(e) => dropdownHandler(e)}
+                        >
+                    <option value={null} label={"¿Sobre que personaje?"}/>
                     {characters.map((data) => { 
                         return  <option
                                 key={data.id}
                                 value={data.id}
                                 label={data.name}
-                                name={"about_character_id"}
-                                onClick={() => {}}
-                                >
-                                    {data.name}
-                                </option>
+                                />
                     })}
                 </select>
+
             </Row>
             <Row className='borderDataCard centerScrollLocations d-flex border border-black justify-content-start align-items-center py-1 mx-2'>                            
                 <Col className='heardFromCharacterIcon col-2 fw-bold text-center'></Col>
-                <select className='col-9 rounded'>
+                <select className='col-9 rounded' 
+                        name={"heard_from_character_id"} 
+                        onChange={(e) => dropdownHandler(e)}
+                        >
+                    <option value={null} label={"¿Escuchado de quien?"}/>
                     {characters.map((data) => { 
                         return  <option
                                 key={data.id}
                                 value={data.id}
                                 label={data.name}
-                                name={"about_character_id"}
-                                onClick={() => {}}
-                                >
-                                    {data.name}
-                                </option>
+                                />
                     })}
                 </select>
+
             </Row>
             <Row className='borderDataCard centerScrollLocations d-flex border border-black justify-content-start align-items-center py-1 mx-2'>                            
                 <Col className='locationIcon col-2 fw-bold text-center'></Col>
-                <select className='col-9 rounded'>
+                <select className='col-9 rounded'
+                    name={"about_location_id"} 
+                    onChange={(e) => dropdownHandler(e)}
+                    >
+                    <option value={null} label={"¿Sobre que lugar?"}/>
                     {locations.map((data) => { 
                         return  <option
                                 key={data.id}
                                 value={data.id}
                                 label={data.name}
-                                name={"about_character_id"}
-                                onClick={() => {}}
-                                >
-                                    {data.name}
-                                </option>
-                    })}
+                                />
+                    })};
                 </select>
+
             </Row>
             <Row className='borderDataCard centerScrollLocations d-flex border border-black justify-content-start align-items-center py-1 mx-2'>                            
                 <Col className='heardOnLocationIcon col-2 fw-bold text-center'></Col>
-                <select className='col-9 rounded'>
+                <select className='col-9 rounded'
+                    name={"heard_on_location_id"} 
+                    onChange={(e) => dropdownHandler(e)}
+                    >
+                    <option value={null} label={"¿Escuchado dónde?"}/>
                     {locations.map((data) => { 
                         return  <option
                                 key={data.id}
                                 value={data.id}
                                 label={data.name}
-                                name={"about_character_id"}
+                                name={"heard_on_location_id"}
                                 onClick={() => {}}
                                 >
                                     {data.name}
@@ -254,6 +275,7 @@ export const NewKnowledge = () => {
                     className='col-10 text-center rounded'
                     name="description"
                     required={false}
+                    placeholder={"Descripción"}
                     onChange={(e) => inputHandler(e)}/>
                 <Col className='col-1'/>
             </Row>
