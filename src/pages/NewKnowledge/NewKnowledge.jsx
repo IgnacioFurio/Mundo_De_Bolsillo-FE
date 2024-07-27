@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Dropdown, Row } from 'react-bootstrap';
 import { validate } from '../../helpers/validations.helper';
-import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
-import { DropDown } from '../../common/DropDown/DropDown';
 import { useSelector } from 'react-redux';
 import { gameData } from '../../services/game.slice';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
+import { createKnowledge } from '../../services/knowledge.apicalls';
+import { SubmitButton } from '../../common/SubmitButton/SubmitButton';
 
 export const NewKnowledge = () => {
     const gameRdx = useSelector(gameData);
@@ -32,11 +32,11 @@ export const NewKnowledge = () => {
     const [ newKnowledgeData, setNewKnowledgeData ] = useState({
         title: "",
         description: "",
-        about_character_id: "",
-        heard_from_character_id: "",
-        about_location_id: "",
-        heard_on_location_id: "",
-        veracity: "",
+        about_character_id: null ,
+        heard_from_character_id: null,
+        about_location_id: null,
+        heard_on_location_id: null,
+        veracity: true,
     });
     
     const [ validInputField, setValidInputField ] = useState({
@@ -96,11 +96,12 @@ export const NewKnowledge = () => {
     const dropdownHandler = (e) => {
         setNewKnowledgeData((prevState) => ({
             ...prevState,
-            [e.target.name]: e.target.value
+            [e.target.name]: parseInt(e.target.value)
         }));
 
         checkError(e);
     };
+
     //APICALLS
     //apicall que trae los mundos segun el id de la partida
     const getWorldsData = () => {
@@ -155,6 +156,16 @@ export const NewKnowledge = () => {
         .catch((error) => {console.log(error)});
     };
 
+    //apicall que crea una nueva pieza de conocimiento
+    const createNewKnowledge = () => {
+        createKnowledge(newKnowledgeData)
+        .then((result) => {
+            console.log("crear nueva conocimiento");
+            console.log(result.data.data);
+        })
+        .catch((error) => {console.log(error);})
+    };
+
     //CHECKS
     const checkError = (e) => {
         let error = "";
@@ -201,7 +212,7 @@ export const NewKnowledge = () => {
             <Row className='borderDataCard centerScrollLocations d-flex border border-black justify-content-start align-items-center py-1 mx-2'>                            
                 <Col className='characterIcon col-2 fw-bold text-center'></Col>
                 <select className='col-9 rounded' 
-                        name={"about_character_id"} 
+                        name={"about_character_id"}
                         onChange={(e) => dropdownHandler(e)}
                         >
                     <option value={null} label={"¿Sobre que personaje?"}/>
@@ -279,9 +290,9 @@ export const NewKnowledge = () => {
                     onChange={(e) => inputHandler(e)}/>
                 <Col className='col-1'/>
             </Row>
-            <Row className='d-flex justify-content-center  my-2'>
-                <Col className='col-4'>
-                    <WoodenButton action="send" clickFunction={() => {}}/>
+            <Row className='d-flex justify-content-center py-2'>
+                <Col className='col-4 p-0'>
+                    <SubmitButton clickFunction={() => createKnowledge}/>
                 </Col>
             </Row>
         </Container>
