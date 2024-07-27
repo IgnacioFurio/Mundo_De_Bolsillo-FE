@@ -9,6 +9,7 @@ import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
 import { createKnowledge } from '../../services/knowledge.apicalls';
 import { SubmitButton } from '../../common/SubmitButton/SubmitButton';
+import "./NewKnowledge.css"
 
 export const NewKnowledge = () => {
     const gameRdx = useSelector(gameData);
@@ -202,7 +203,7 @@ export const NewKnowledge = () => {
             <Row className='text-center'>
                 <Col className='bannerRibbon fw-bold d-flex justify-content-center align-items-center pb-3'>
                     <input 
-                        className='col-9 text-center rounded'
+                        className='col-9 knowledgeTitle fw-bold text-center rounded'
                         name="title"
                         required={true}
                         placeholder={"Título"}
