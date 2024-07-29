@@ -10,8 +10,10 @@ import { getCharactersByWorldId } from '../../services/character.apicalls';
 import { createKnowledge } from '../../services/knowledge.apicalls';
 import { SubmitButton } from '../../common/SubmitButton/SubmitButton';
 import "./NewKnowledge.css"
+import { useNavigate } from 'react-router-dom';
 
 export const NewKnowledge = () => {
+    const navigate = useNavigate();
     const gameRdx = useSelector(gameData);
 
     const [ worlds, setWorlds ] = useState([]);
@@ -163,6 +165,7 @@ export const NewKnowledge = () => {
         .then((result) => {
             console.log("crear nueva conocimiento");
             console.log(result.data.data);
+            navigate("/games/game-details")
         })
         .catch((error) => {console.log(error);})
     };
@@ -194,13 +197,12 @@ export const NewKnowledge = () => {
         for (const key in validInputField) {
             if (validInputField[key] === false) { return false };
         };
-
         return true;
     };
 
     return (
-        <Container className='detailsBackground border border-black rounded pt-3'>
-            <Row className='text-center'>
+        <Container className='detailsBackground border border-black rounded py-2'>
+            <Row className='text-center py-1'>
                 <Col className='bannerRibbon fw-bold d-flex justify-content-center align-items-center pb-3'>
                     <input 
                         className='col-9 knowledgeTitle fw-bold text-center rounded'
@@ -283,17 +285,22 @@ export const NewKnowledge = () => {
             </Row>
             <Row className='text-center my-2'>
                 <Col className='col-1'/>
-                <input 
+                <textarea 
                     className='col-10 text-center rounded'
                     name="description"
                     required={false}
+                    type='textarea'
                     placeholder={"Descripción"}
-                    onChange={(e) => inputHandler(e)}/>
+                    onChange={(e) => inputHandler(e)}
+                    style={{height: 8 + "em"}}/>
                 <Col className='col-1'/>
             </Row>
-            <Row className='d-flex justify-content-center py-2'>
+            <Row className='d-flex justify-content-evenly py-1'>
+                <Col className='col-4 d-flex justify-content-center'>
+                    <WoodenButton action="back" clickFunction={() => navigate("/games/game-details")}/>
+                </Col>
                 <Col className='col-4 p-0'>
-                    <SubmitButton clickFunction={() => createKnowledge}/>
+                    <SubmitButton clickFunction={() => createNewKnowledge()}/>
                 </Col>
             </Row>
         </Container>
