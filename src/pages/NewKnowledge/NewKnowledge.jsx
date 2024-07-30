@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Dropdown, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+//helpers
 import { validate } from '../../helpers/validations.helper';
-import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
+//redux
 import { useSelector } from 'react-redux';
 import { gameData } from '../../services/game.slice';
+//apicalls
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
 import { createKnowledge } from '../../services/knowledge.apicalls';
-import { SubmitButton } from '../../common/SubmitButton/SubmitButton';
+//style
+import { Col, Container, Row } from 'react-bootstrap';
+import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import "./NewKnowledge.css"
-import { useNavigate } from 'react-router-dom';
 
 export const NewKnowledge = () => {
     const navigate = useNavigate();
@@ -81,7 +84,7 @@ export const NewKnowledge = () => {
     //validaciones
     useEffect(() => { 
         setSubmitStatus(checkSubmitStatus());
-        console.log(newKnowledgeData);
+        console.log(validInputField);
     }, [validInputField]);
 
     //HANDLERS
@@ -161,13 +164,13 @@ export const NewKnowledge = () => {
 
     //apicall que crea una nueva pieza de conocimiento
     const createNewKnowledge = () => {
-        createKnowledge(newKnowledgeData)
-        .then((result) => {
-            console.log("crear nueva conocimiento");
-            console.log(result.data.data);
-            navigate("/games/game-details")
-        })
-        .catch((error) => {console.log(error);})
+        if (submitStatus === true) {
+            createKnowledge(newKnowledgeData)
+            .then((result) => {
+                navigate("/games/game-details")
+            })
+            .catch((error) => {console.log(error);})            
+        };
     };
 
     //CHECKS
@@ -297,10 +300,10 @@ export const NewKnowledge = () => {
             </Row>
             <Row className='d-flex justify-content-evenly py-1'>
                 <Col className='col-4 d-flex justify-content-center'>
-                    <WoodenButton action="back" clickFunction={() => navigate("/games/game-details")}/>
+                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
                 </Col>
                 <Col className='col-4 p-0'>
-                    <SubmitButton clickFunction={() => createNewKnowledge()}/>
+                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewKnowledge()}/>
                 </Col>
             </Row>
         </Container>

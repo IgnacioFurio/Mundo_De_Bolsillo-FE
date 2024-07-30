@@ -1,5 +1,4 @@
 .sendButtonDesign{
-    cursor: pointer;
     height: 2.3em;
     width: 6.1em;
     transition: 0.7s;
@@ -8,7 +7,10 @@
     background-size: cover;
     background-repeat: no-repeat;
     filter: drop-shadow(0 0 0.25rem #15b115);
+    animation: activateButton 0.5s;
+    filter: grayscale(0%);
 }
+
 .sendButtonDesign:hover{
     transition: 0.7s;
     filter: drop-shadow(0 0 0.75rem #23ff23);
@@ -103,4 +105,33 @@
     color: #edd2d2;
     filter: drop-shadow(0 0 0.25rem #f13030);
     transition: 0.7s;
+}
+
+.disabledButton{
+    cursor: pointer;
+    animation: disableButton 0.5s;
+    filter: grayscale(80%);
+}
+
+.disabledText{
+    animation: disableButton 0.5s;
+    filter: grayscale(80%);
+}
+
+@keyframes disableButton {
+    0%{
+        filter: grayscale(0%);
+    }
+    100%{
+        filter: grayscale(80%);
+    }
+}
+
+@keyframes activateButton {
+    0%{
+        filter: grayscale(80%);
+    }
+    100%{
+        filter: grayscale(0%);
+    }
 }
