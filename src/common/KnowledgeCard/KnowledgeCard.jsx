@@ -21,7 +21,7 @@ export const KnowledgeCard = ({ aboutCharacterData }) => {
         <>
         <Container className='border border-black rounded mt-3'>
             <Row className='text-center'>
-                <Col className='bannerRibbon fw-bold'>
+                <Col className='bannerRibbon fw-bold py-2'>
                     {secret?.title}
                 </Col>
             </Row>
