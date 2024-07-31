@@ -66,6 +66,18 @@ export const validate = ( input, data, required ) => {
             return {message: "Sube al barco que zarpamos al próximo puerto.", valid: true}
             break;            
         
+        case "about_character_id":
+        case "heard_from_character_id":
+        case "about_location_id":
+        case "heard_on_location_id":
+            
+            if (data === NaN && required === true) {
+                return {message: "Algo nos impide continuar, por favor inténtalo de nuevo más tarde.", valid: false}
+            }
+
+            return {message: "Sube al barco que zarpamos al próximo puerto.", valid: true}
+            break;            
+        
         default:
             return {message: "Algo no ha salido como esperabamos.", valid: false}
             break;
