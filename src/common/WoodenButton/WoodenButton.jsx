@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 //bootstrap
-import { Modal } from 'react-bootstrap';
+import { Container, Modal } from 'react-bootstrap';
 //css
 import './WoodenButton.css';
 
-export const WoodenButton = ({ action, clickFunction }) => {
+export const WoodenButton = ({ activateButton, action, clickFunction }) => {
 
     const [ buttonDesign, setButtonDesign ] = useState({
         text: "",
@@ -12,20 +12,42 @@ export const WoodenButton = ({ action, clickFunction }) => {
         classText: ""
     });
 
-    const [show, setShow] = useState(false);
+    const [ show, setShow ] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleActivate = () => setShow(true);
 
-    useEffect(() => {
-        setButtonDesign(checkButtonDesign(action));
-    },[]);
+    //USEEFFECT
+    //damos el primer aspecto al botón según la acción que va a realizar
+    useEffect(() => { setButtonDesign(checkButtonDesign(action)); },[]);
+    
+    //activamos y desactivamos el aspecto del botón
+    useEffect(() => { activateButtonHandler(); }, [activateButton]);
 
+    //HANDLER
+    //handler para activar y desactivar el botón de submit tras las validaciones
+    const activateButtonHandler = ( ) => {
+        if (activateButton === false && action === "submit") { 
+            setButtonDesign(checkButtonDesign(action)); //chequeamos el diseño del botón según la acción
+
+        } else if (activateButton === true && action === "submit") {
+            let button = {
+                text: "Finalizar",
+                classButton: "sendButtonDesign",
+                classText: "sendText d-flex justify-content-center align-items-center fw-bold"
+            };
+
+            setButtonDesign(button);
+        };
+    };
+
+    //FUNCTION
+    //chequeamos el tipo de botón que queremos y le damos estilo
     const checkButtonDesign = (action) => {
         switch (action) {
             case "submit":
                 
-                return {text: "Finalizar", classButton: "backButtonDesign", classText: "sendText d-flex justify-content-center align-items-center fw-bold"};
+                return {text: "Finalizar", classButton: "sendButtonDesign disabledButton", classText: "sendText disabledText d-flex justify-content-center align-items-center fw-bold"};
                 break;
             
             case "send":
@@ -54,25 +76,54 @@ export const WoodenButton = ({ action, clickFunction }) => {
     };
 
     return (
-        <>
-            {action !== "delete" ? <div className={buttonDesign.classButton} onClick={clickFunction}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>: 
-            <>
-                <div className={buttonDesign.classButton} onClick={() => handleActivate()}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Header className=' text-center' closeButton>
-                        <Modal.Title></Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className='text-center'>
-                        <p>Estamos a un paso de borrar información en nuestra biblioteca.</p>
-                        <p>¿Quieres que nuestros especialistas se deshagan de esta información?</p>
-                    </Modal.Body>
-                    <Modal.Footer className='d-flex justify-content-evenly'>
-                        <WoodenButton  action="back" clickFunction={() => setShow(false)}/>
-                        <WoodenButton  action="send" clickFunction={clickFunction}/>
-                    </Modal.Footer>
-                </Modal>
-            </>
-            }
-        </>
+        <Container>
+            {action === "delete" ? (
+                <>
+                    <div className={buttonDesign.classButton} onClick={() => handleActivate()}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
+                    <Modal show={show} onHide={handleClose}>
+                        <Modal.Header className=' text-center' closeButton>
+                            <Modal.Title></Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className='text-center'>
+                            <p>Estamos a un paso de borrar la información de nuestra biblioteca.</p>
+                            <p>¿Quieres que nuestros especialistas se deshagan de esta información?</p>
+                        </Modal.Body>
+                        <Modal.Footer className='d-flex justify-content-evenly'>
+                            <div>
+                                <WoodenButton  action="back" clickFunction={() => setShow(false)}/>
+                            </div>
+                            <div>
+                                <WoodenButton  action="send" clickFunction={clickFunction}/>
+                            </div>
+                        </Modal.Footer>
+                    </Modal>
+                </>
+            ) : (
+                action === "submit" ? (
+                    <Container>
+                        <div className={buttonDesign.classButton} onClick={() => handleActivate()}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
+                        <Modal show={show} onHide={handleClose}>
+                            <Modal.Header className=' text-center' closeButton>
+                                <Modal.Title></Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body className='text-center'>
+                                <p>Estamos a un paso de registrar la información en nuestra biblioteca.</p>
+                                <p>¿Quieres que nuestros especialistas archiven esta información?</p>
+                            </Modal.Body>
+                            <Modal.Footer className='d-flex justify-content-evenly'>
+                                <div>
+                                    <WoodenButton  action="back" clickFunction={() => setShow(false)}/>
+                                </div>
+                                <div>
+                                    <WoodenButton  action="send" clickFunction={clickFunction}/>
+                                </div>
+                            </Modal.Footer>
+                        </Modal>
+                    </Container>
+                ): (
+                    <div className={buttonDesign.classButton} onClick={clickFunction}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
+                )
+            )}
+        </Container>
     )
 };

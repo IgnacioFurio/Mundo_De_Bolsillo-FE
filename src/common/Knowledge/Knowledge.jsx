@@ -15,7 +15,7 @@ export const Knowledge = ({ aboutCharacterData }) => {
     <Container className='py-2'>
             <Row>
                 <Col className='my-4'>
-                    <NewRegisterButton name={"Nuevo Rumor/Secreto"} clickFunction={(e) => navigate("")}/>
+                    <NewRegisterButton name={"Nuevo Rumor/Secreto"} clickFunction={(e) => navigate("/knowledge/new-knowledge")}/>
                 </Col>
             </Row>
             <Row className='d-flex justify-content-center'>

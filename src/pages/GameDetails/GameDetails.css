@@ -6,6 +6,7 @@
     background-repeat: no-repeat;
     filter: drop-shadow(2px 2px 15px #171717);
 }
+
 .detailsBackground{
     --paper-dark: #e5c93d;
     --paper-color: #ffed87;

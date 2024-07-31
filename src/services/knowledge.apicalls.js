@@ -7,3 +7,7 @@ export const getKnowledgeByCharacterId = async (body) => {
     };
     return await axios.post(`${root}/knowledge/get-by-character`, data);
 };
+
+export const createKnowledge = async (body) => {
+    return await axios.post(`${root}/knowledge/post`, body)
+};
