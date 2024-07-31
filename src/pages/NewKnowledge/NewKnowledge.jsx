@@ -77,15 +77,8 @@ export const NewKnowledge = () => {
         getCharactersData();
     }, [worlds]);
 
-    //personajes y localizaciones
-    useEffect(() => {console.log(locations);},[locations]); 
-    useEffect(() => {console.log(characters);},[characters]);
-
     //validaciones
-    useEffect(() => { 
-        setSubmitStatus(checkSubmitStatus());
-        console.log(validInputField);
-    }, [validInputField]);
+    useEffect(() => { setSubmitStatus(checkSubmitStatus()); }, [validInputField]);
 
     //HANDLERS
     //handler para los inputs del formulario
