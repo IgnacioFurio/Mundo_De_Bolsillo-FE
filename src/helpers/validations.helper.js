@@ -75,7 +75,7 @@ export const validate = ( input, data, required ) => {
                 return {message: "Algo nos impide continuar, por favor inténtalo de nuevo más tarde.", valid: false}
             }
 
-            return {message: "Sube al barco que zarpamos al próximo puerto.", valid: true}
+            return {message: "Hemos cazado el dato que necesitabamos, proseguimos adelante.", valid: true}
             break;            
         
         default:
