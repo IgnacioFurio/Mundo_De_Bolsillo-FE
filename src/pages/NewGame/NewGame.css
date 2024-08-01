@@ -1,8 +1,11 @@
-.nextPrev{
+.gameDetailsTitleInput{
+    color: rgba(245, 244, 244, 0.838);
     position: relative;
-    bottom: 50vh;
+    bottom: -10%;
+    text-shadow:  0 0rem 0.1rem #598933;
+    background-color: transparent;
 }
 
-.tutorialHeight{
-    min-height: 85vh;
+.gameDetailsTitleInput::placeholder{
+    color: rgba(245, 244, 244, 0.838);
 }

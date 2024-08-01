@@ -10,6 +10,8 @@ export const SwitchSelector = ({ value, dataGates, label, name, type, clickFunct
     const [ switchStatus, setSwitchStatus ] = useState();
 
     useEffect(() => {
+        console.log(dataGates[value]);
+
         if (dataGates[value] === false) {
             setSwitchDesign("switchDesignOff col-1 d-flex justify-content-start align-items-center m-0 p-0")
             setSwitchStatus("switchOff m-0 p-0")
@@ -20,10 +22,10 @@ export const SwitchSelector = ({ value, dataGates, label, name, type, clickFunct
     });
 
     return (
-        <Container onClick={clickFunction} name={name} type={type}>
-            <Row className="selectDesign my-3 p-1 d-flex justify-content-center align-items-center">
+        <Container onClick={clickFunction} id={value} name={name} type={type}>
+            <Row className="selectDesign my-2 p-1 d-flex justify-content-center align-items-center">
                 <Col className={switchDesign} style={{width: '1.2em'}} id={value} value={value}></Col>
-                <Col className='col-10' id={value} value={value}>{label}</Col>
+                <Col className='col-10 text-secondary-emphasis' id={value} value={value}>{label}</Col>
             </Row>
         </Container>
     );
