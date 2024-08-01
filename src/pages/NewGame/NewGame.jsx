@@ -17,6 +17,7 @@ import { createWorldGate, deleteWorldGate } from '../../services/worldgate.apica
 //css
 import './NewGame.css';
 import { SwitchSelector } from '../../common/SwitchSelector/SwitchSelector';
+import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 
 export const NewGame = () => {
 
@@ -215,7 +216,13 @@ export const NewGame = () => {
                                 name={data.name} 
                                 clickFunction={(e) => selectHandler(e)} />    
                         })
-                )}           
+                )}        
+                <Col className='col-6 p-3'>
+                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
+                </Col>
+                <Col className='col-6 py-3'>
+                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewKnowledge()}/>
+                </Col>
             </Row>
         </Container>
         );
