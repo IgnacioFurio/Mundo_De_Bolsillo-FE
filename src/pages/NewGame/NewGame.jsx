@@ -208,7 +208,7 @@ export const NewGame = () => {
                 { !worldInformation ? (
                         <></>
                     ) : (
-                        <Col className='col-12'>
+                        <>
                         {worldInformation.map((data) => 
                             {return <SwitchSelector
                                 value={data.id}
@@ -217,9 +217,9 @@ export const NewGame = () => {
                                 name={data.name} 
                                 clickFunction={(e) => selectHandler(e)} />    
                             })}
-                        </Col>
-                )} 
-                <Col className='d-flex justify-content-evenly py-3'>
+                        </>
+                        )} 
+                <Col className='col-12 d-flex justify-content-evenly py-3'>
                     <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
                     <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewKnowledge()}/>
                 </Col>

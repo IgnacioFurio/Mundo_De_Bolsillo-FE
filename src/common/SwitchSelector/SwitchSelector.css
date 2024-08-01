@@ -19,7 +19,8 @@
     border: outset 2px #1984ac;
     border-radius: 20px;
     background-image: url("../../assets/Portal.png");
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     filter: grayscale(100%);
 }
 
