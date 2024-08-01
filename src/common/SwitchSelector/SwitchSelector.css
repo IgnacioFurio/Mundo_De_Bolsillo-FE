@@ -1,7 +1,5 @@
 .selectDesign{
     height: 2em;
-    background-color: white;
-    border-radius: 7px;
     filter: drop-shadow(0 0 0.25em #1984ac);
 }
 
@@ -21,7 +19,8 @@
     border: outset 2px #1984ac;
     border-radius: 20px;
     background-image: url("../../assets/Portal.png");
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     filter: grayscale(100%);
 }
 

@@ -16,6 +16,8 @@ import { getAllWorlds } from '../../services/world.apicalls';
 import { createWorldGate, deleteWorldGate } from '../../services/worldgate.apicall';
 //css
 import './NewGame.css';
+import { SwitchSelector } from '../../common/SwitchSelector/SwitchSelector';
+import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 
 export const NewGame = () => {
 
@@ -57,11 +59,14 @@ export const NewGame = () => {
     const [worldsToEngage, setWorldsToEngage ] = useState();
     
     //VALIDATIONS
-    useEffect(() => {getWorlds()}, []);
+    useEffect(() => { getWorlds() }, []);
     
-    useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter));},[newGameData]);
+    useEffect(() =>{ setSubmitStatus(showNext(validInputField, formCounter)); },[newGameData]);
     
-    useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter))});
+    useEffect(() =>{ 
+        console.log(newGameData);
+        console.log(worldsToEngage);
+        setSubmitStatus(showNext(validInputField, formCounter)) });
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -71,15 +76,6 @@ export const NewGame = () => {
         }));
 
         checkError(e);
-    };
-
-    const formHandlerPrev = () => {
-        formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/my-games");
-        setSubmitStatus(false);
-    };
-    const formHandlerNext = () => {
-        formCounter < 3 ? setFormCounter(formCounter + 1) : setFormCounter(0);
-        setSubmitStatus(false);
     };
 
     const selectHandler = (e) => {    
@@ -113,10 +109,12 @@ export const NewGame = () => {
 
                 if (worldsToEngage[worldId] === true) {
                     createWorldGate({game_id: gameId, world_id: worldId })
-                    .then(() => {})
-                    .catch(error => {
-                        console.log(error.response.data.error);
-                    });
+                    .then(() => {
+                        setTimeout(() => {
+                            navigate("/games/my-games")
+                        }, 1000)
+                    })
+                    .catch(error => { console.log(error.response.data.error); });
                 };
             }; 
             
@@ -124,9 +122,7 @@ export const NewGame = () => {
                 navigate('/games/my-games');
             }, 1000);
         })
-        .catch(error => {
-            console.log(error.response.data.error);
-        });
+        .catch(error => { console.log(error.response.data.error); });
     }; 
 
     const getWorlds = () => {
@@ -175,65 +171,51 @@ export const NewGame = () => {
     };
 
     return (
-        <Container >            
-            <Row className='tutorialHeight'>
-            {formCounter === 0 && <TutorialQuestions 
-                gameData={newGameData.title}
-                type="textarea" 
-                text={formQuestions.title}
-                errorText={errorInputField.titleError}
-                placeholder={formPlaceholders.title} 
-                name="title" 
-                required={true}
-                changeFunction={(e) => inputHandler(e)}
-                blurFunction={(e)=>checkError(e)}/>
-            }
-            
-            {formCounter === 1 && <TutorialQuestions 
-                gameData={newGameData.description}
-                type="textarea" 
-                text={formQuestions.description}
-                errorText={errorInputField.descriptionError}
-                placeholder={formPlaceholders.description} 
-                name="description" 
-                required={false}
-                changeFunction={(e) => inputHandler(e)}
-                blurFunction={(e)=>checkError(e)}/>                
-            }
-
-            {formCounter === 2 && <TutorialSelector
-                data={worldInformation}
-                dataGates={worldsToEngage}
-                text={formQuestions.worldgate}
-                errorText={errorInputField.descriptionError}
-                placeholder={formPlaceholders.description} 
-                required={false}
-                clickFunction={(e) => selectHandler(e)}/>
-                }
-
-            {formCounter === 3 && <ConfirmNewRegister data={newGameData}/>}
+        <Container className='col-12 col-sm-10 col-md-9 col-lg-8 col-xl-7'>          
+            <Row className='d-flex justify-content-center align-items-center'>
+                <Col className='detailsStone mt-4 py-2'>
+                    <div className='gamePortraitTitle d-flex justify-content-center p-3'>
+                        <input 
+                            className='col-9 gameDetailsTitleInput fs-4 fw-bold text-center rounded'
+                            name="title"
+                            required={true}
+                            placeholder={"Título"}
+                            onChange={(e) => inputHandler(e)}/>
+                    </div>
+                </Col>                    
             </Row>
-            
-            <Row className='nextPrev d-flex justify-content-center align-items-center'>
-            {formCounter < 3 ? 
-                <>
-                    <Col className='d-flex justify-content-start'>
-                        <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
-                    </Col>
-                    <Col className='d-flex justify-content-end'>
-                    {submitStatus === true ? <NextPrevButton action="Next" clickFunction={() => formHandlerNext()}/> : <NextPrevButton action="Wait" clickFunction={() => {}}/>}
-                    </Col>  
-                </>
-                :
-                <>
-                    <Col className='d-flex justify-content-start'>
-                        <NextPrevButton action="Prev" clickFunction={() => formHandlerPrev()}/>
-                    </Col>
-                    <Col className='d-flex justify-content-end'>
-                        <NextPrevButton gameInfo={newGameData} action="Submit" clickFunction={() => createNewGame()}/>
-                    </Col>
-                </>
-                }
+            <Row className='detailsBackground mx-1'>
+                <Col className='col-1'/>
+                    <textarea 
+                        className='col-10 text-center rounded mt-2'
+                        name="description"
+                        required={false}
+                        type='textarea'
+                        placeholder={"Descripción"}
+                        onChange={(e) => inputHandler(e)}
+                        style={{height: 5 + "em"}}/>
+                <Col className='col-1'/>                
+                <Col className='col-12 text-center fw-bold mt-3'>Mundos enlazados</Col>     
+                
+                { !worldInformation ? (
+                        <></>
+                    ) : (
+                        <>
+                        {worldInformation.map((data) => 
+                            {return <SwitchSelector
+                                key={data.id}
+                                value={data.id}
+                                dataGates={worldsToEngage} 
+                                label={data.name} 
+                                name={data.name} 
+                                clickFunction={(e) => selectHandler(e)} />    
+                            })}
+                        </>
+                        )} 
+                <Col className='col-12 d-flex justify-content-evenly py-3'>
+                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
+                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewGame()}/>
+                </Col>
             </Row>
         </Container>
         );

@@ -14,17 +14,18 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
 
     const [ show, setShow ] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleActivate = () => setShow(true);
-
     //USEEFFECT
     //damos el primer aspecto al botón según la acción que va a realizar
     useEffect(() => { setButtonDesign(checkButtonDesign(action)); },[]);
     
     //activamos y desactivamos el aspecto del botón
     useEffect(() => { activateButtonHandler(); }, [activateButton]);
-
+    
     //HANDLER
+    //handler para el modal
+    const handleClose = () => setShow(false);
+    const handleActivate = () => { if (activateButton === true) setShow(true); };
+    
     //handler para activar y desactivar el botón de submit tras las validaciones
     const activateButtonHandler = ( ) => {
         if (activateButton === false && action === "submit") { 
@@ -76,7 +77,7 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
     };
 
     return (
-        <Container>
+        <Container className='d-flex justify-content-center align-items-center p-0'>
             {action === "delete" ? (
                 <>
                     <div className={buttonDesign.classButton} onClick={() => handleActivate()}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
@@ -100,9 +101,9 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
                 </>
             ) : (
                 action === "submit" ? (
-                    <Container>
+                    <>
                         <div className={buttonDesign.classButton} onClick={() => handleActivate()}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
-                        <Modal show={show} onHide={handleClose}>
+                        <Modal show={show} onHide={() => handleClose()}>
                             <Modal.Header className=' text-center' closeButton>
                                 <Modal.Title></Modal.Title>
                             </Modal.Header>
@@ -119,7 +120,7 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
                                 </div>
                             </Modal.Footer>
                         </Modal>
-                    </Container>
+                    </>
                 ): (
                     <div className={buttonDesign.classButton} onClick={clickFunction}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
                 )
