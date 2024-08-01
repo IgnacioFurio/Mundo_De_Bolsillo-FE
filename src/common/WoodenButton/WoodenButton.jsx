@@ -14,17 +14,18 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
 
     const [ show, setShow ] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleActivate = () => setShow(true);
-
     //USEEFFECT
     //damos el primer aspecto al botón según la acción que va a realizar
     useEffect(() => { setButtonDesign(checkButtonDesign(action)); },[]);
     
     //activamos y desactivamos el aspecto del botón
     useEffect(() => { activateButtonHandler(); }, [activateButton]);
-
+    
     //HANDLER
+    //handler para el modal
+    const handleClose = () => setShow(false);
+    const handleActivate = () => { if (activateButton === true) setShow(true); };
+    
     //handler para activar y desactivar el botón de submit tras las validaciones
     const activateButtonHandler = ( ) => {
         if (activateButton === false && action === "submit") { 
@@ -102,7 +103,7 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
                 action === "submit" ? (
                     <>
                         <div className={buttonDesign.classButton} onClick={() => handleActivate()}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
-                        <Modal show={show} onHide={handleClose}>
+                        <Modal show={show} onHide={() => handleClose()}>
                             <Modal.Header className=' text-center' closeButton>
                                 <Modal.Title></Modal.Title>
                             </Modal.Header>

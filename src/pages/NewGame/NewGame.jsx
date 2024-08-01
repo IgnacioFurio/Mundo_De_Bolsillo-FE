@@ -64,6 +64,7 @@ export const NewGame = () => {
     useEffect(() =>{ setSubmitStatus(showNext(validInputField, formCounter)); },[newGameData]);
     
     useEffect(() =>{ 
+        console.log(newGameData);
         console.log(worldsToEngage);
         setSubmitStatus(showNext(validInputField, formCounter)) });
 
@@ -75,15 +76,6 @@ export const NewGame = () => {
         }));
 
         checkError(e);
-    };
-
-    const formHandlerPrev = () => {
-        formCounter > 0 ? setFormCounter(formCounter - 1) : navigate("/games/my-games");
-        setSubmitStatus(false);
-    };
-    const formHandlerNext = () => {
-        formCounter < 3 ? setFormCounter(formCounter + 1) : setFormCounter(0);
-        setSubmitStatus(false);
     };
 
     const selectHandler = (e) => {    
@@ -117,10 +109,12 @@ export const NewGame = () => {
 
                 if (worldsToEngage[worldId] === true) {
                     createWorldGate({game_id: gameId, world_id: worldId })
-                    .then(() => {})
-                    .catch(error => {
-                        console.log(error.response.data.error);
-                    });
+                    .then(() => {
+                        setTimeout(() => {
+                            navigate("/games/my-games")
+                        }, 1000)
+                    })
+                    .catch(error => { console.log(error.response.data.error); });
                 };
             }; 
             
@@ -128,9 +122,7 @@ export const NewGame = () => {
                 navigate('/games/my-games');
             }, 1000);
         })
-        .catch(error => {
-            console.log(error.response.data.error);
-        });
+        .catch(error => { console.log(error.response.data.error); });
     }; 
 
     const getWorlds = () => {
@@ -211,6 +203,7 @@ export const NewGame = () => {
                         <>
                         {worldInformation.map((data) => 
                             {return <SwitchSelector
+                                key={data.id}
                                 value={data.id}
                                 dataGates={worldsToEngage} 
                                 label={data.name} 
@@ -221,7 +214,7 @@ export const NewGame = () => {
                         )} 
                 <Col className='col-12 d-flex justify-content-evenly py-3'>
                     <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
-                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewKnowledge()}/>
+                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewGame()}/>
                 </Col>
             </Row>
         </Container>
