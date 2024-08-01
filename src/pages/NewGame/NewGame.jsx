@@ -208,19 +208,19 @@ export const NewGame = () => {
                 { !worldInformation ? (
                         <></>
                     ) : (
-                        worldInformation.map((data) => 
+                        <Col className='col-12'>
+                        {worldInformation.map((data) => 
                             {return <SwitchSelector
                                 value={data.id}
                                 dataGates={worldsToEngage} 
                                 label={data.name} 
                                 name={data.name} 
                                 clickFunction={(e) => selectHandler(e)} />    
-                        })
-                )}        
-                <Col className='col-6 p-3'>
+                            })}
+                        </Col>
+                )} 
+                <Col className='d-flex justify-content-evenly py-3'>
                     <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
-                </Col>
-                <Col className='col-6 py-3'>
                     <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewKnowledge()}/>
                 </Col>
             </Row>

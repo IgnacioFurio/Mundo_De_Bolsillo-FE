@@ -76,7 +76,7 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
     };
 
     return (
-        <Container>
+        <Container className='d-flex justify-content-center align-items-center p-0'>
             {action === "delete" ? (
                 <>
                     <div className={buttonDesign.classButton} onClick={() => handleActivate()}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
@@ -100,7 +100,7 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
                 </>
             ) : (
                 action === "submit" ? (
-                    <Container>
+                    <>
                         <div className={buttonDesign.classButton} onClick={() => handleActivate()}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
                         <Modal show={show} onHide={handleClose}>
                             <Modal.Header className=' text-center' closeButton>
@@ -119,7 +119,7 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
                                 </div>
                             </Modal.Footer>
                         </Modal>
-                    </Container>
+                    </>
                 ): (
                     <div className={buttonDesign.classButton} onClick={clickFunction}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
                 )
