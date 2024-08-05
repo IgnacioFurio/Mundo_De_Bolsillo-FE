@@ -69,8 +69,9 @@ export const ModifyGame = () => {
     //VALIDATIONS
     useEffect(() => { getWorlds(); },[]);
     useEffect(() => { 
-        checkValid(validInputField);  
-        console.log(submitStatus); },[gameInformation]);
+        setSubmitStatus(checkValid(validInputField));  
+        console.log(submitStatus); 
+    },[gameInformation]);
     
     //HANDLERS
     const inputHandler = (e) => {        
@@ -119,7 +120,8 @@ export const ModifyGame = () => {
             } else if (worldsToEngage[key] === false) {
                 deleteWorldGate({game_id: dataRdx.gameInformation.id, world_id: Math.floor(keys[i])})
                 .then(() => {
-                    console.log("hello");
+                    dispatch(gameInfo({gameInformation: {}}))
+                    navigate('/games/my-games');
                 })
                 .catch(error => {
                     console.log(error);
