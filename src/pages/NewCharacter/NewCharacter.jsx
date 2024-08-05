@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuestions';
 import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
 import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
-import { showNext, validate } from '../../helpers/validations.helper';
+import { checkValid, validate } from '../../helpers/validations.helper';
 import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
 import { getAllWorlds } from '../../services/world.apicalls';
 import { CharacterFormQuestions } from '../../helpers/Character.Forms.helper';
@@ -110,7 +110,7 @@ export const NewCharacter = () => {
     };
 
     //VALIDATIONS
-    useEffect(() =>{ setSubmitStatus(showNext(validInputField, formCounter));},[newCharacterData]);
+    useEffect(() =>{ setSubmitStatus(checkValid(validInputField));},[newCharacterData]);
 
     //APICALLS
     const getWorlds = () => {

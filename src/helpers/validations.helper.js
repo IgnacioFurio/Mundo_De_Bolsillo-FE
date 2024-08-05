@@ -84,12 +84,14 @@ export const validate = ( input, data, required ) => {
     }
 };
 
-export const showNext  = (object, counter) => {
-    let values = Object.values(object)
-    
-    if(values[counter] === true) {
-        return true;
+export const checkValid  = (object) => {
+    let result = true;
+
+    for (const key in object) {
+        if (object[key] === false) {
+            result =  false
+        };
     };
 
-    return false;
+    return result;
 };

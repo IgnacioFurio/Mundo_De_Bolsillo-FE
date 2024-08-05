@@ -7,7 +7,7 @@ import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 import { Col, Container, Row } from 'react-bootstrap';
 //helpers
 import { LocationFormQuestions } from '../../helpers/Location.Forms.helper';
-import { showNext, validate } from '../../helpers/validations.helper';
+import { checkValid, validate } from '../../helpers/validations.helper';
 import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
 import { createLocation } from '../../services/location.apicalls';
 import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
@@ -117,9 +117,9 @@ export const NewLocation = () => {
     };
 
     //VALIDATIONS
-    useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter));},[newLocationData]);
+    useEffect(() =>{setSubmitStatus(checkValid(validInputField));},[newLocationData]);
 
-    useEffect(() => {setSubmitStatus(showNext(validInputField, formCounter));});
+    useEffect(() => {setSubmitStatus(checkValid(validInputField));});
 
     //APICALL
     const createNewLocation = () => {

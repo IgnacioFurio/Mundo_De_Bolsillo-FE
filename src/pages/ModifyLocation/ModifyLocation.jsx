@@ -12,7 +12,7 @@ import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuesti
 import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
 import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
 //helpers
-import { showNext, validate } from '../../helpers/validations.helper';
+import { checkValid, validate } from '../../helpers/validations.helper';
 import { modifyLocation } from '../../services/location.apicalls';
 
 
@@ -96,8 +96,8 @@ export const ModifyLocation = () => {
     }, [locationInformation]);
 
     //VALIDATION
-    useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); }, [locationInformation]);
-    useEffect(() => { setSubmitStatus(showNext(validInputField, formCounter)); });
+    useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [locationInformation]);
+    useEffect(() => { setSubmitStatus(checkValid(validInputField)); });
 
     //HANDLER
     const FormHandlerPrev = () => {
