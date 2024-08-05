@@ -68,10 +68,7 @@ export const ModifyGame = () => {
 
     //VALIDATIONS
     useEffect(() => { getWorlds(); },[]);
-    useEffect(() => { 
-        setSubmitStatus(checkValid(validInputField));  
-        console.log(submitStatus); 
-    },[gameInformation]);
+    useEffect(() => { setSubmitStatus(checkValid(validInputField)); },[gameInformation]);
     
     //HANDLERS
     const inputHandler = (e) => {        
@@ -119,10 +116,7 @@ export const ModifyGame = () => {
                 });
             } else if (worldsToEngage[key] === false) {
                 deleteWorldGate({game_id: dataRdx.gameInformation.id, world_id: Math.floor(keys[i])})
-                .then(() => {
-                    dispatch(gameInfo({gameInformation: {}}))
-                    navigate('/games/my-games');
-                })
+                .then(() => {})
                 .catch(error => {
                     console.log(error);
                     let backendErrorData = {
@@ -212,7 +206,7 @@ export const ModifyGame = () => {
                             className='col-9 gameDetailsTitleInput fs-4 fw-bold text-center rounded'
                             name="title"
                             required={true}
-                            placeholder={gameInformation.title}
+                            placeholder={dataRdx.gameInformation.title}
                             onChange={(e) => inputHandler(e)}/>
                     </div>
                 </Col>                    
@@ -224,7 +218,7 @@ export const ModifyGame = () => {
                         name="description"
                         required={false}
                         type='textarea'
-                        placeholder={gameInformation.description}
+                        placeholder={dataRdx.gameInformation.description}
                         onChange={(e) => inputHandler(e)}
                         style={{height: 5 + "em"}}/>
                 <Col className='col-1'/>                
