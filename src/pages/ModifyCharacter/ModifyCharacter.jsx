@@ -8,7 +8,7 @@ import { getAllWorlds } from '../../services/world.apicalls';
 import { getAllLocations } from '../../services/location.apicalls';
 import { modifyCharacter } from '../../services/character.apicalls';
 //helper
-import { showNext, validate } from '../../helpers/validations.helper';
+import { checkValid, validate } from '../../helpers/validations.helper';
 //common
 import { Col, Container, Row } from 'react-bootstrap';
 import { CharacterFormQuestions } from '../../helpers/Character.Forms.helper';
@@ -122,7 +122,7 @@ export const ModifyCharacter = () => {
     };
 
     //VALIDATIONS
-    useEffect(() =>{ setSubmitStatus(showNext(validInputField, formCounter));},[modifyCharacterData]);
+    useEffect(() =>{ setSubmitStatus(checkValid(validInputField));},[modifyCharacterData]);
 
     //APICALLS
     const updateCharacterInformation = () => {    

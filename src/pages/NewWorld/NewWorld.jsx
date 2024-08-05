@@ -6,7 +6,7 @@ import { NextPrevButton } from '../../common/NextPrevButton/NextPrevButton';
 import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
 //helper
 import { WorldFormQuestions } from '../../helpers/WorldForms.helper';
-import { showNext, validate } from '../../helpers/validations.helper';
+import { checkValid, validate } from '../../helpers/validations.helper';
 //bootstrap
 import { Col, Container, Row } from 'react-bootstrap';
 import { createWorld } from '../../services/world.apicalls';
@@ -45,9 +45,9 @@ export const NewWorld = () => {
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //VALIDATIONS
-    useEffect(() =>{setSubmitStatus(showNext(validInputField, formCounter));},[newWorldData]);
+    useEffect(() =>{setSubmitStatus(checkValid(validInputField, formCounter));},[newWorldData]);
 
-    useEffect(() => {setSubmitStatus(showNext(validInputField, formCounter));});
+    useEffect(() => {setSubmitStatus(checkValid(validInputField, formCounter));});
 
     //HANDLERS
     const inputHandler = (e) => {        

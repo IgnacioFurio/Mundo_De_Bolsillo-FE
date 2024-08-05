@@ -57,7 +57,7 @@ export const ModifyWorld = () => {
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //VALIDATIONS
-    useEffect(() =>{showNext()},[worldInformation]);
+    useEffect(() =>{checkValid(validInputField)},[worldInformation]);
 
     //HANDLERS
     const gameFormHandlerPrev = () => {
@@ -66,7 +66,7 @@ export const ModifyWorld = () => {
     const gameFormHandlerNext = () => {
         formCounter < 2 ? setFormCounter(formCounter + 1) : setFormCounter(0);
     };
-    const showNext  = () => {
+    const checkValid  = () => {
         let values = Object.values(validInputField)
 
         if(values[formCounter] === true) {

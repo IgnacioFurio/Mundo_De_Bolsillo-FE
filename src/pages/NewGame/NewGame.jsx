@@ -6,7 +6,7 @@ import { TutorialQuestions } from '../../common/TutorialQuestions/TutorialQuesti
 import { TutorialSelector } from '../../common/TutorialSelector/TutorialSelector';
 import { ConfirmNewRegister } from '../../common/confirmNewRegister/confirmNewRegister';
 //helper
-import { showNext, validate } from '../../helpers/validations.helper';
+import { checkValid, validate } from '../../helpers/validations.helper';
 import { GameFormQuestions } from '../../helpers/Games.Forms.helper';
 //bootstrap
 import { Col, Container, Row  } from 'react-bootstrap'
@@ -61,12 +61,12 @@ export const NewGame = () => {
     //VALIDATIONS
     useEffect(() => { getWorlds() }, []);
     
-    useEffect(() =>{ setSubmitStatus(showNext(validInputField, formCounter)); },[newGameData]);
+    useEffect(() =>{ setSubmitStatus(checkValid(validInputField)); },[newGameData]);
     
     useEffect(() =>{ 
         console.log(newGameData);
         console.log(worldsToEngage);
-        setSubmitStatus(showNext(validInputField, formCounter)) });
+        setSubmitStatus(checkValid(validInputField)) });
 
     //HANDLERS
     const inputHandler = (e) => {        
