@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react'
+import { knowledgeData, knowledgeInfo } from '../../services/knowledge.slice';
+import { useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row } from 'react-bootstrap';
 import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import "./KnowledgeCard.css";
+import { useNavigate } from 'react-router-dom';
 
 export const KnowledgeCard = ({ aboutCharacterData }) => {
+    const dispatch = useDispatch();
+
+    const navigate = useNavigate();
+
+    const knowledgeRdx = useSelector(knowledgeData);
 
     //HOOKS
     const [ secret, setSecret ] = useState();
@@ -11,6 +19,7 @@ export const KnowledgeCard = ({ aboutCharacterData }) => {
     const [ showMoreData, setShowMoreData ] = useState(false);
 
     useEffect(() => { setSecret(aboutCharacterData); }, [secret]);
+    useEffect(() => { console.log(knowledgeRdx); }, [knowledgeRdx]);
 
     //HANDLER
     const showMoreHandler = () => {
@@ -19,8 +28,8 @@ export const KnowledgeCard = ({ aboutCharacterData }) => {
 
     const knowledgeHandler = (e) => {
         console.log("knowledge details");
-        // dispatch(gameInfo({gameInformation: dataCard}));
-        // navigate('/knowledge/knowledge-details');
+        dispatch(knowledgeInfo({ knowledgeInformation: aboutCharacterData }));
+        navigate('/knowledge/knowledge-details');
     };
 
     return (
