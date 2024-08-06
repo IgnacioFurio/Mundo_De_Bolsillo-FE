@@ -17,7 +17,6 @@ export const KnowledgeDetails = () => {
 
     //USEEFFECT
     useEffect(() => { setSecret(knowledgeRdx.knowledgeInformation); },[]);
-    useEffect(() => { console.log(secret); },[knowledgeRdx]);
 
     //HANDLERS
     const navigateBack = () => {
@@ -33,7 +32,7 @@ export const KnowledgeDetails = () => {
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => {}}/></Col>
         </Row>
         <Container className='centerScrollLocations border border-black rounded mt-3 pt-1'>
-            <Row className='text-center'>
+            <Row className='KnowledgeCardShadow text-center'>
                 <Col className='bannerRibbon fw-bold py-2'>
                     {secret?.title}
                 </Col>
