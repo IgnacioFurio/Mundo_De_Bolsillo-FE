@@ -17,9 +17,14 @@ export const KnowledgeCard = ({ aboutCharacterData }) => {
         showMoreData === false ? setShowMoreData(true) : setShowMoreData(false);
     };
 
+    const knowledgeHandler = (e) => {
+        console.log("knowledge details");
+        // dispatch(gameInfo({gameInformation: dataCard}));
+        // navigate('/knowledge/knowledge-details');
+    };
+
     return (
-        <>
-        <Container className='border border-black rounded mt-3'>
+        <Container className='border border-black rounded mt-3' onClick={(e) => knowledgeHandler(e)}>
             <Row className='text-center'>
                 <Col className='bannerRibbon fw-bold py-2'>
                     {secret?.title}
@@ -60,6 +65,5 @@ export const KnowledgeCard = ({ aboutCharacterData }) => {
                 <Col className='col-4'></Col>
             </Row>
         </Container>
-        </>
     )
 };
