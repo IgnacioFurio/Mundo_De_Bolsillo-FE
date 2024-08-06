@@ -18,7 +18,7 @@ export const GameCard = ({ dataCard }) => {
 
     const handleClickWorld = (e) => {
         dispatch(gameInfo({gameInformation: dataCard}));
-        navigate('/games/game-details');
+        navigate('/games/game-details');    
     };
 
     return (
