@@ -18,8 +18,8 @@ export const KnowledgeCard = ({ aboutCharacterData }) => {
 
     const [ showMoreData, setShowMoreData ] = useState(false);
 
+    //USEEFFECT
     useEffect(() => { setSecret(aboutCharacterData); }, [secret]);
-    useEffect(() => { console.log(knowledgeRdx); }, [knowledgeRdx]);
 
     //HANDLER
     const showMoreHandler = () => {
@@ -27,20 +27,20 @@ export const KnowledgeCard = ({ aboutCharacterData }) => {
     };
 
     const knowledgeHandler = (e) => {
-        console.log("knowledge details");
         dispatch(knowledgeInfo({ knowledgeInformation: aboutCharacterData }));
         navigate('/knowledge/knowledge-details');
     };
 
     return (
-        <Container className='border border-black rounded mt-3' onClick={(e) => knowledgeHandler(e)}>
-            <Row className='text-center'>
+        <Container className='mt-3'>
+            <Row className='KnowledgeCardShadow text-center' onClick={(e) => knowledgeHandler(e)}>
                 <Col className='bannerRibbon fw-bold py-2'>
                     {secret?.title}
                 </Col>
             </Row>
             <Row className='text-start'>                    
                 {showMoreData === true ? 
+                <>
                 <Container className='centerScrollLocations col-11 mt-1'>
                     <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                         <Col className='characterIcon col-2 fw-bold text-center'></Col>
@@ -59,16 +59,18 @@ export const KnowledgeCard = ({ aboutCharacterData }) => {
                         <Col className='col-10'>{secret?.heardOnLocation?.name || "??"}</Col>
                     </Row>
                 </Container>
+                <Container>
+                    <Row className='text-center my-1'>
+                        <Col className='col-12 mb-1'>{secret?.description}</Col>                            
+                    </Row>
+                </Container>
+                </>
                 : 
                 (<></>)}
             </Row>
-            <Row className='text-center my-1'>
-                <Col className='col-12 mb-1'>{secret?.description}</Col>
-                    
-            </Row>
             <Row>
                 <Col className='col-4'></Col>
-                <Col className='col-4' onClick={() => showMoreHandler()}>
+                <Col className='col-4 KnowledgeCardShadow' onClick={() => showMoreHandler()}>
                     {showMoreData === false ? <NextPrevButton action="Down"/> : <NextPrevButton action="Up"/>}
                 </Col>
                 <Col className='col-4'></Col>
