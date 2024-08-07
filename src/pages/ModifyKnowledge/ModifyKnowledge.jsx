@@ -7,7 +7,7 @@ import { gameData } from '../../services/game.slice';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
-import { createKnowledge, modifyKnowledge } from '../../services/knowledge.apicalls';
+import {  modifyKnowledge } from '../../services/knowledge.apicalls';
 import { validate } from '../../helpers/validations.helper';
 import { knowledgeData } from '../../services/knowledge.slice';
 

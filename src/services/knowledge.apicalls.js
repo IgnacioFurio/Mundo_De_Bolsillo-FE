@@ -15,3 +15,11 @@ export const createKnowledge = async (body) => {
 export const modifyKnowledge = async (body) => {
     return await axios.put(`${root}/knowledge/put`, body);
 };
+
+export const deleteKnowledge = async (body) => {
+    const data = {
+        id: body
+    }
+
+    return await axios.delete(`${root}/knowledge/delete`,{data})
+};

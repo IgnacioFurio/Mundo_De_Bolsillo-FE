@@ -16,7 +16,9 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
 
     //USEEFFECT
     //damos el primer aspecto al botón según la acción que va a realizar
-    useEffect(() => { setButtonDesign(checkButtonDesign(action)); },[]);
+    useEffect(() => { 
+        console.log(activateButton);
+        setButtonDesign(checkButtonDesign(action)); },[]);
     
     //activamos y desactivamos el aspecto del botón
     useEffect(() => { activateButtonHandler(); }, [activateButton]);
@@ -24,7 +26,14 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
     //HANDLER
     //handler para el modal
     const handleClose = () => setShow(false);
-    const handleActivate = () => { if (activateButton === true) setShow(true); };
+    const handleActivate = () => { 
+        if(action === "submit") {
+            if (activateButton === true) setShow(true); 
+        } else {
+            setShow(true)
+        };
+
+    };
     
     //handler para activar y desactivar el botón de submit tras las validaciones
     const activateButtonHandler = ( ) => {

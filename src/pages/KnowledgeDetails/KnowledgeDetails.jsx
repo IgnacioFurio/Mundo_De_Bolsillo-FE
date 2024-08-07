@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { knowledgeData, knowledgeInfo } from '../../services/knowledge.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row } from 'react-bootstrap';
+import { deleteKnowledge } from '../../services/knowledge.apicalls';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 
 export const KnowledgeDetails = () => {
@@ -24,12 +25,23 @@ export const KnowledgeDetails = () => {
         navigate("/games/game-details");
     };
 
+    //FUNCITONS
+    //borrar conocimiento
+    const deleteKnowledgeInfo = () => {
+        deleteKnowledge(secret?.id)
+        .then(() => {
+            dispatch(knowledgeInfo({knowledgeInformation: {}}));
+            navigate("/games/game-details")
+        })
+        .catch((error) => {console.log(error);}) 
+    };
+
     return (
         <Container>
         <Row className='d-flex justify-content-evenly pt-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack("/games/my-games")}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/knowledge/modify-knowledge")}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => {}}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteKnowledgeInfo()}/></Col>
         </Row>
         <Container className='centerScrollLocations border border-black rounded mt-3 pt-1'>
             <Row className='KnowledgeCardShadow text-center'>
