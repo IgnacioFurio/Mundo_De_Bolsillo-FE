@@ -7,7 +7,7 @@ import { gameData } from '../../services/game.slice';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
-import { createKnowledge } from '../../services/knowledge.apicalls';
+import { createKnowledge, modifyKnowledge } from '../../services/knowledge.apicalls';
 import { validate } from '../../helpers/validations.helper';
 import { knowledgeData } from '../../services/knowledge.slice';
 
@@ -34,13 +34,14 @@ export const ModifyKnowledge = () => {
     });
 
     const [ modifyKnowledgeData, setModifyKnowledgeData ] = useState({
-        title: knowledgeRdx.knowledgeInformation.title,
-        description: knowledgeRdx.knowledgeInformation.description,
-        about_character_id: knowledgeRdx.knowledgeInformation.about_character_id ,
-        heard_from_character_id: knowledgeRdx.knowledgeInformation.heard_from_character_id,
-        about_location_id: knowledgeRdx.knowledgeInformation.about_location_id,
-        heard_on_location_id: knowledgeRdx.knowledgeInformation.heard_on_location_id,
-        veracity: knowledgeRdx.knowledgeInformation.veracity,
+        id: knowledgeRdx?.knowledgeInformation?.id,
+        title: knowledgeRdx?.knowledgeInformation?.title,
+        description: knowledgeRdx?.knowledgeInformation?.description,
+        about_character_id: knowledgeRdx?.knowledgeInformation?.about_character_id ,
+        heard_from_character_id: knowledgeRdx?.knowledgeInformation?.heard_from_character_id,
+        about_location_id: knowledgeRdx?.knowledgeInformation?.about_location_id,
+        heard_on_location_id: knowledgeRdx?.knowledgeInformation?.heard_on_location_id,
+        veracity: knowledgeRdx?.knowledgeInformation?.veracity,
     });
     
     const [ validInputField, setValidInputField ] = useState({
@@ -67,11 +68,7 @@ export const ModifyKnowledge = () => {
 
     //USEEFFECT
     //primer renderizado de los componentes
-    useEffect(() => { getWorldsData(); 
-        console.log(modifyKnowledgeData);
-    }, []);
-
-    useEffect(() => {console.log(modifyKnowledgeData);},[modifyKnowledgeData]);
+    useEffect(() => { getWorldsData(); }, []);
 
     //mundos
     useEffect(() => { 
@@ -157,14 +154,14 @@ export const ModifyKnowledge = () => {
         .catch((error) => {console.log(error)});
     };
 
-    //apicall que modificarça una nueva pieza de conocimiento
-    const modifyKnowledge = () => {
+    //apicall que modificara una nueva pieza de conocimiento
+    const modifyKnowledgeInfo = () => {
         if (submitStatus === true) {
-            // createKnowledge(modifyKnowledgeData)
-            // .then((result) => {
-            //     navigate("/games/game-details")
-            // })
-            // .catch((error) => {console.log(error);})            
+            modifyKnowledge(modifyKnowledgeData)
+            .then((result) => {
+                navigate("/games/game-details")
+            })
+            .catch((error) => {console.log(error);})            
         };
     };
 
@@ -206,7 +203,7 @@ export const ModifyKnowledge = () => {
                         className='col-9 knowledgeTitle fw-bold text-center rounded'
                         name="title"
                         required={true}
-                        placeholder={knowledgeRdx.knowledgeInformation.title}
+                        placeholder={knowledgeRdx?.knowledgeInformation?.title}
                         onChange={(e) => inputHandler(e)}/>
                 </Col>
             </Row>
@@ -218,7 +215,7 @@ export const ModifyKnowledge = () => {
                         >
                     <option 
                         value={knowledgeRdx.knowledgeInformation.id} 
-                        label={`Acerca de: ${knowledgeRdx.knowledgeInformation.aboutCharacter.name}`}
+                        label={`Acerca de: ${knowledgeRdx?.knowledgeInformation?.aboutCharacter?.name || "??"}`}
                         />
                     <option value={null} label={"??"}/>
                     {characters.map((data) => { 
@@ -238,8 +235,8 @@ export const ModifyKnowledge = () => {
                         onChange={(e) => dropdownHandler(e)}
                         >
                     <option 
-                        value={knowledgeRdx.knowledgeInformation.heardFromCharacter.id} 
-                        label={`Escuchado de: ${knowledgeRdx.knowledgeInformation.heardFromCharacter.name}`}
+                        value={knowledgeRdx?.knowledgeInformation?.heardFromCharacter?.id} 
+                        label={`Escuchado de: ${knowledgeRdx?.knowledgeInformation?.heardFromCharacter?.name || "??"}`}
                         />
                     <option value={null} label={"??"}/>
                     {characters.map((data) => { 
@@ -250,8 +247,8 @@ export const ModifyKnowledge = () => {
                                 />
                     })}
                 </select>
-
             </Row>
+
             <Row className='borderDataCard centerScrollLocations d-flex border border-black justify-content-start align-items-center py-1 mx-2'>                            
                 <Col className='locationIcon col-2 fw-bold text-center'></Col>
                 <select className='col-9 rounded'
@@ -259,8 +256,8 @@ export const ModifyKnowledge = () => {
                     onChange={(e) => dropdownHandler(e)}
                     >
                     <option 
-                        value={knowledgeRdx.knowledgeInformation.aboutLocation.id} 
-                        label={`Sobre: ${knowledgeRdx.knowledgeInformation.aboutLocation.name}`}
+                        value={knowledgeRdx?.knowledgeInformation?.aboutLocation?.id} 
+                        label={`Sobre: ${knowledgeRdx?.knowledgeInformation?.aboutLocation?.name || "??"}`}
                         />
                     <option value={null} label={"??"}/>
                     {locations.map((data) => { 
@@ -271,8 +268,8 @@ export const ModifyKnowledge = () => {
                                 />
                     })};
                 </select>
-
             </Row>
+
             <Row className='borderDataCard centerScrollLocations d-flex border border-black justify-content-start align-items-center py-1 mx-2'>                            
                 <Col className='heardOnLocationIcon col-2 fw-bold text-center'></Col>
                 <select className='col-9 rounded'
@@ -280,8 +277,8 @@ export const ModifyKnowledge = () => {
                     onChange={(e) => dropdownHandler(e)}
                     >
                     <option 
-                        value={knowledgeRdx.knowledgeInformation.heardOnLocation.id} 
-                        label={`Escuchado en: ${knowledgeRdx.knowledgeInformation.heardOnLocation.name}`}
+                        value={knowledgeRdx?.knowledgeInformation?.heardOnLocation?.id} 
+                        label={`Escuchado en: ${knowledgeRdx?.knowledgeInformation?.heardOnLocation?.name || "??"}`}
                         />
                     <option value={null} label={"??"}/>
                     {locations.map((data) => { 
@@ -297,6 +294,7 @@ export const ModifyKnowledge = () => {
                     })}
                 </select>
             </Row>
+
             <Row className='text-center my-2'>
                 <Col className='col-1'/>
                 <textarea 
@@ -304,17 +302,19 @@ export const ModifyKnowledge = () => {
                     name="description"
                     required={false}
                     type='textarea'
-                    placeholder={knowledgeRdx.knowledgeInformation.description}
+                    placeholder={knowledgeRdx?.knowledgeInformation?.description}
                     onChange={(e) => inputHandler(e)}
-                    style={{height: 8 + "em"}}/>
+                    style={{height: 8 + "em"}}
+                    />
                 <Col className='col-1'/>
             </Row>
+
             <Row className='d-flex justify-content-evenly py-1'>
                 <Col className='col-4 d-flex justify-content-center'>
                     <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/knowledge/knowledge-details")}/>
                 </Col>
                 <Col className='col-4 p-0'>
-                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => modifyKnowledge()}/>
+                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => modifyKnowledgeInfo()}/>
                 </Col>
             </Row>
         </Container>

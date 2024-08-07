@@ -11,3 +11,7 @@ export const getKnowledgeByCharacterId = async (body) => {
 export const createKnowledge = async (body) => {
     return await axios.post(`${root}/knowledge/post`, body)
 };
+
+export const modifyKnowledge = async (body) => {
+    return await axios.put(`${root}/knowledge/put`, body);
+};
