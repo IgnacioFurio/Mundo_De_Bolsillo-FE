@@ -9,10 +9,13 @@ import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
 import { createKnowledge } from '../../services/knowledge.apicalls';
 import { validate } from '../../helpers/validations.helper';
+import { knowledgeData } from '../../services/knowledge.slice';
 
 export const ModifyKnowledge = () => {
     const navigate = useNavigate();
     const gameRdx = useSelector(gameData);
+    
+    const knowledgeRdx = useSelector(knowledgeData);
 
     const [ worlds, setWorlds ] = useState([]);
 
@@ -30,14 +33,14 @@ export const ModifyKnowledge = () => {
         veracity: "",
     });
 
-    const [ newKnowledgeData, setNewKnowledgeData ] = useState({
-        title: "",
-        description: "",
-        about_character_id: null ,
-        heard_from_character_id: null,
-        about_location_id: null,
-        heard_on_location_id: null,
-        veracity: true,
+    const [ modifyKnowledgeData, setModifyKnowledgeData ] = useState({
+        title: knowledgeRdx.knowledgeInformation.title,
+        description: knowledgeRdx.knowledgeInformation.description,
+        about_character_id: knowledgeRdx.knowledgeInformation.about_character_id ,
+        heard_from_character_id: knowledgeRdx.knowledgeInformation.heard_from_character_id,
+        about_location_id: knowledgeRdx.knowledgeInformation.about_location_id,
+        heard_on_location_id: knowledgeRdx.knowledgeInformation.heard_on_location_id,
+        veracity: knowledgeRdx.knowledgeInformation.veracity,
     });
     
     const [ validInputField, setValidInputField ] = useState({
@@ -64,7 +67,11 @@ export const ModifyKnowledge = () => {
 
     //USEEFFECT
     //primer renderizado de los componentes
-    useEffect(() => { getWorldsData(); }, []);
+    useEffect(() => { getWorldsData(); 
+        console.log(modifyKnowledgeData);
+    }, []);
+
+    useEffect(() => {console.log(modifyKnowledgeData);},[modifyKnowledgeData]);
 
     //mundos
     useEffect(() => { 
@@ -78,7 +85,7 @@ export const ModifyKnowledge = () => {
     //HANDLERS
     //handler para los inputs del formulario
     const inputHandler = (e) => {  
-        setNewKnowledgeData((prevState) => ({
+        setModifyKnowledgeData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }));
@@ -88,7 +95,7 @@ export const ModifyKnowledge = () => {
     
     //handler para el dropdown del formulario
     const dropdownHandler = (e) => {
-        setNewKnowledgeData((prevState) => ({
+        setModifyKnowledgeData((prevState) => ({
             ...prevState,
             [e.target.name]: parseInt(e.target.value)
         }));
@@ -153,7 +160,7 @@ export const ModifyKnowledge = () => {
     //apicall que modificarça una nueva pieza de conocimiento
     const modifyKnowledge = () => {
         if (submitStatus === true) {
-            // createKnowledge(newKnowledgeData)
+            // createKnowledge(modifyKnowledgeData)
             // .then((result) => {
             //     navigate("/games/game-details")
             // })
@@ -199,7 +206,7 @@ export const ModifyKnowledge = () => {
                         className='col-9 knowledgeTitle fw-bold text-center rounded'
                         name="title"
                         required={true}
-                        placeholder={"Título"}
+                        placeholder={knowledgeRdx.knowledgeInformation.title}
                         onChange={(e) => inputHandler(e)}/>
                 </Col>
             </Row>
@@ -209,12 +216,16 @@ export const ModifyKnowledge = () => {
                         name={"about_character_id"}
                         onChange={(e) => dropdownHandler(e)}
                         >
-                    <option value={null} label={"¿Sobre que personaje?"}/>
+                    <option 
+                        value={knowledgeRdx.knowledgeInformation.id} 
+                        label={`Acerca de: ${knowledgeRdx.knowledgeInformation.aboutCharacter.name}`}
+                        />
+                    <option value={null} label={"??"}/>
                     {characters.map((data) => { 
                         return  <option
-                                key={data.id}
-                                value={data.id}
-                                label={data.name}
+                                    key={data.id}
+                                    value={data.id}
+                                    label={data.name}
                                 />
                     })}
                 </select>
@@ -226,7 +237,11 @@ export const ModifyKnowledge = () => {
                         name={"heard_from_character_id"} 
                         onChange={(e) => dropdownHandler(e)}
                         >
-                    <option value={null} label={"¿Escuchado de quien?"}/>
+                    <option 
+                        value={knowledgeRdx.knowledgeInformation.heardFromCharacter.id} 
+                        label={`Escuchado de: ${knowledgeRdx.knowledgeInformation.heardFromCharacter.name}`}
+                        />
+                    <option value={null} label={"??"}/>
                     {characters.map((data) => { 
                         return  <option
                                 key={data.id}
@@ -243,7 +258,11 @@ export const ModifyKnowledge = () => {
                     name={"about_location_id"} 
                     onChange={(e) => dropdownHandler(e)}
                     >
-                    <option value={null} label={"¿Sobre que lugar?"}/>
+                    <option 
+                        value={knowledgeRdx.knowledgeInformation.aboutLocation.id} 
+                        label={`Sobre: ${knowledgeRdx.knowledgeInformation.aboutLocation.name}`}
+                        />
+                    <option value={null} label={"??"}/>
                     {locations.map((data) => { 
                         return  <option
                                 key={data.id}
@@ -260,7 +279,11 @@ export const ModifyKnowledge = () => {
                     name={"heard_on_location_id"} 
                     onChange={(e) => dropdownHandler(e)}
                     >
-                    <option value={null} label={"¿Escuchado dónde?"}/>
+                    <option 
+                        value={knowledgeRdx.knowledgeInformation.heardOnLocation.id} 
+                        label={`Escuchado en: ${knowledgeRdx.knowledgeInformation.heardOnLocation.name}`}
+                        />
+                    <option value={null} label={"??"}/>
                     {locations.map((data) => { 
                         return  <option
                                 key={data.id}
@@ -281,17 +304,17 @@ export const ModifyKnowledge = () => {
                     name="description"
                     required={false}
                     type='textarea'
-                    placeholder={"Descripción"}
+                    placeholder={knowledgeRdx.knowledgeInformation.description}
                     onChange={(e) => inputHandler(e)}
                     style={{height: 8 + "em"}}/>
                 <Col className='col-1'/>
             </Row>
             <Row className='d-flex justify-content-evenly py-1'>
                 <Col className='col-4 d-flex justify-content-center'>
-                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
+                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/knowledge/knowledge-details")}/>
                 </Col>
                 <Col className='col-4 p-0'>
-                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewKnowledge()}/>
+                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => modifyKnowledge()}/>
                 </Col>
             </Row>
         </Container>
