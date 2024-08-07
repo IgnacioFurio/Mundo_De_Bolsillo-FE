@@ -24,7 +24,14 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
     //HANDLER
     //handler para el modal
     const handleClose = () => setShow(false);
-    const handleActivate = () => { if (activateButton === true) setShow(true); };
+    const handleActivate = () => { 
+        if(action === "submit") {
+            if (activateButton === true) setShow(true); 
+        } else {
+            setShow(true)
+        };
+
+    };
     
     //handler para activar y desactivar el botón de submit tras las validaciones
     const activateButtonHandler = ( ) => {
