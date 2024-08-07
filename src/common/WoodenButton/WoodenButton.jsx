@@ -16,9 +16,7 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
 
     //USEEFFECT
     //damos el primer aspecto al botón según la acción que va a realizar
-    useEffect(() => { 
-        console.log(activateButton);
-        setButtonDesign(checkButtonDesign(action)); },[]);
+    useEffect(() => { setButtonDesign(checkButtonDesign(action)); },[]);
     
     //activamos y desactivamos el aspecto del botón
     useEffect(() => { activateButtonHandler(); }, [activateButton]);
