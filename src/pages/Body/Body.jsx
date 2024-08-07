@@ -18,6 +18,7 @@ import { CharacterDetails } from '../CharacterDetails/CharacterDetails'
 import { ModifyCharacter } from '../ModifyCharacter/ModifyCharacter'
 import { NewKnowledge } from '../NewKnowledge/NewKnowledge'
 import { KnowledgeDetails } from '../KnowledgeDetails/KnowledgeDetails'
+import { ModifyKnowledge } from '../ModifyKnowledge/ModifyKnowledge'
 
 export const Body = () => {
     return (
@@ -39,6 +40,7 @@ export const Body = () => {
                 <Route path='/characters/modify-character' element={<ModifyCharacter/>}/>
                 <Route path='/knowledge/new-knowledge' element={<NewKnowledge/>}/>
                 <Route path='/knowledge/knowledge-details' element={<KnowledgeDetails/>}/>
+                <Route path='/knowledge/modify-knowledge' element={<ModifyKnowledge/>}/>
             </Routes>
         </Container>
     )
