@@ -213,7 +213,7 @@ export const NewGame = () => {
                         </>
                         )} 
                 <Col className='col-12 d-flex justify-content-evenly py-3'>
-                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
+                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/my-games")}/>
                     <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewGame()}/>
                 </Col>
             </Row>
