@@ -8,6 +8,7 @@ import { deleteCharacter } from '../../services/character.apicalls';
 import { KnowledgeCard } from '../../common/KnowledgeCard/KnowledgeCard';
 import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
 import { Knowledge } from '../../common/Knowledge/Knowledge';
+import { Quest } from '../../common/Quest/Quest';
 
 export const CharacterDetails = () => {
     //HOOKS
@@ -21,12 +22,12 @@ export const CharacterDetails = () => {
 
     const [ showMoreData, setShowMoreData ] = useState({
         "": false,
-        Secretos: false
+        Secretos: false,
+        Misiones: false,
     });
 
     //USEEFFECT
-    useEffect(() => { getKnowledgeAboutCharacter();
-    }, [showMoreData]);
+    useEffect(() => { getKnowledgeAboutCharacter(); }, [showMoreData]);
     
     //APICALL
     const getKnowledgeAboutCharacter = () => {
@@ -54,6 +55,7 @@ export const CharacterDetails = () => {
         setShowMoreData({
             "": false,
             Secretos: false,
+            Misiones: false,
         });
 
         if (showMoreData[e.target.value] == false) {
@@ -90,10 +92,12 @@ export const CharacterDetails = () => {
                     <select className='MoreInfoSelector text-center fw-bold' onClick={(e) => InfoHandler(e)}> 
                         <option value="">Información sobre:</option>
                         <option value="Secretos">Rumores/Secretos</option>
+                        <option value="Misiones">Misiones</option>
                     </select>
                 </Row>
                 
                 {showMoreData.Secretos == true ? <Knowledge value={"Secretos"} aboutCharacterData={aboutCharacter} /> : <></>}
+                {showMoreData.Misiones == true ? <Quest value={"Misiones"} /> : <></>}
                 
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>
