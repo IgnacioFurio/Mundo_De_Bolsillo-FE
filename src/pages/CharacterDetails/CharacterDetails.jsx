@@ -19,6 +19,8 @@ export const CharacterDetails = () => {
     const characterRdx = useSelector(characterData);
 
     const [ aboutCharacter, setAboutCharacter ] = useState();
+    
+    const [ aboutQuest, setAboutQuest ] = useState();
 
     const [ showMoreData, setShowMoreData ] = useState({
         "": false,
@@ -27,10 +29,10 @@ export const CharacterDetails = () => {
     });
 
     //USEEFFECT
-    useEffect(() => { getKnowledgeAboutCharacter(); }, [showMoreData]);
+    useEffect(() => { gatherDataFromCharacter(); }, [showMoreData]);
     
     //APICALL
-    const getKnowledgeAboutCharacter = () => {
+    const gatherDataFromCharacter = () => {
         getKnowledgeByCharacterId(characterRdx?.characterInformation?.id)
         .then((result) => { setAboutCharacter(result.data.data); })
         .catch((error) => { console.log(error); })
@@ -97,7 +99,7 @@ export const CharacterDetails = () => {
                 </Row>
                 
                 {showMoreData.Secretos == true ? <Knowledge value={"Secretos"} aboutCharacterData={aboutCharacter} /> : <></>}
-                {showMoreData.Misiones == true ? <Quest value={"Misiones"} /> : <></>}
+                {showMoreData.Misiones == true ? <Quest value={"Misiones"} aboutQuestData={aboutQuest}/> : <></>}
                 
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>

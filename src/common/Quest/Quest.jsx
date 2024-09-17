@@ -3,15 +3,16 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { NewRegisterButton } from '../NewRegisterButton/NewRegisterButton';
 
-export const Quest = () => {
+export const Quest = ({ aboutQuestData }) => {
     const navigate = useNavigate();
 
     const [ quest, setQuest ] = useState([]);
 
     const [ worlds, setWorlds ] = useState();
 
-
-    useEffect(() => {    },[]);
+    useEffect(() => { 
+        console.log(aboutQuestData);
+    },[]);
 
     return (
         <Container>

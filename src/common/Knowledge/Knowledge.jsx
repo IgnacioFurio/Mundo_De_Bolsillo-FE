@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { NewRegisterButton } from '../NewRegisterButton/NewRegisterButton'
 import { KnowledgeCard } from '../KnowledgeCard/KnowledgeCard'
-import "./Knowledge.css";
 import { useNavigate } from 'react-router-dom';
+import "./Knowledge.css";
 
 export const Knowledge = ({ aboutCharacterData }) => {
 
