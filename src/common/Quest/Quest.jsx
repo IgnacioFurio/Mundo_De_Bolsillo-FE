@@ -6,12 +6,12 @@ import { NewRegisterButton } from '../NewRegisterButton/NewRegisterButton';
 export const Quest = ({ aboutQuestData }) => {
     const navigate = useNavigate();
 
-    const [ quest, setQuest ] = useState([]);
+    const [ quest, setQuest ] = useState(aboutQuestData);
 
     const [ worlds, setWorlds ] = useState();
 
     useEffect(() => { 
-        console.log(aboutQuestData);
+        console.log(quest);
     },[]);
 
     return (
@@ -23,7 +23,7 @@ export const Quest = ({ aboutQuestData }) => {
             </Row>
             <Row className='d-flex justify-content-center mt-1'>
             {quest.map(data => {
-                return <div>{data.name}</div>
+                return <div key={data.id}>{data.quest.name}</div>
             })}
             </Row>
         </Container>

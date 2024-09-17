@@ -9,6 +9,7 @@ import { KnowledgeCard } from '../../common/KnowledgeCard/KnowledgeCard';
 import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
 import { Knowledge } from '../../common/Knowledge/Knowledge';
 import { Quest } from '../../common/Quest/Quest';
+import { getQuestByCharacterId } from '../../services/quest.apicall';
 
 export const CharacterDetails = () => {
     //HOOKS
@@ -21,6 +22,8 @@ export const CharacterDetails = () => {
     const [ aboutCharacter, setAboutCharacter ] = useState();
     
     const [ aboutQuest, setAboutQuest ] = useState();
+
+    const [ questList, setQuestList ] = useState();
 
     const [ showMoreData, setShowMoreData ] = useState({
         "": false,
@@ -35,6 +38,10 @@ export const CharacterDetails = () => {
     const gatherDataFromCharacter = () => {
         getKnowledgeByCharacterId(characterRdx?.characterInformation?.id)
         .then((result) => { setAboutCharacter(result.data.data); })
+        .catch((error) => { console.log(error); })
+
+        getQuestByCharacterId(characterRdx?.characterInformation?.id)
+        .then((result) => { setAboutQuest(result.data.data);})
         .catch((error) => { console.log(error); })
     };
 
