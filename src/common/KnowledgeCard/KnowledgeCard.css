@@ -13,7 +13,6 @@
 }
 
 .KnowledgeCardShadow{
-    /* filter: drop-shadow(0 0 5px purple); */
     animation: purpleShine 3s infinite;
 }
 
