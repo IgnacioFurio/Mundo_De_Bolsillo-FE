@@ -8,12 +8,6 @@ export const Quest = ({ aboutQuestData }) => {
 
     const [ quest, setQuest ] = useState(aboutQuestData);
 
-    const [ worlds, setWorlds ] = useState();
-
-    useEffect(() => { 
-        console.log(quest);
-    },[]);
-
     return (
         <Container>
             <Row>
