@@ -8,6 +8,8 @@ import { deleteCharacter } from '../../services/character.apicalls';
 import { KnowledgeCard } from '../../common/KnowledgeCard/KnowledgeCard';
 import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
 import { Knowledge } from '../../common/Knowledge/Knowledge';
+import { Quest } from '../../common/Quest/Quest';
+import { getQuestByCharacterId } from '../../services/quest.apicall';
 
 export const CharacterDetails = () => {
     //HOOKS
@@ -18,20 +20,28 @@ export const CharacterDetails = () => {
     const characterRdx = useSelector(characterData);
 
     const [ aboutCharacter, setAboutCharacter ] = useState();
+    
+    const [ aboutQuest, setAboutQuest ] = useState();
+
+    const [ questList, setQuestList ] = useState();
 
     const [ showMoreData, setShowMoreData ] = useState({
         "": false,
-        Secretos: false
+        Secretos: false,
+        Misiones: false,
     });
 
     //USEEFFECT
-    useEffect(() => { getKnowledgeAboutCharacter();
-    }, [showMoreData]);
+    useEffect(() => { gatherDataFromCharacter(); }, [showMoreData]);
     
     //APICALL
-    const getKnowledgeAboutCharacter = () => {
+    const gatherDataFromCharacter = () => {
         getKnowledgeByCharacterId(characterRdx?.characterInformation?.id)
         .then((result) => { setAboutCharacter(result.data.data); })
+        .catch((error) => { console.log(error); })
+
+        getQuestByCharacterId(characterRdx?.characterInformation?.id)
+        .then((result) => { setAboutQuest(result.data.data);})
         .catch((error) => { console.log(error); })
     };
 
@@ -54,6 +64,7 @@ export const CharacterDetails = () => {
         setShowMoreData({
             "": false,
             Secretos: false,
+            Misiones: false,
         });
 
         if (showMoreData[e.target.value] == false) {
@@ -90,10 +101,12 @@ export const CharacterDetails = () => {
                     <select className='MoreInfoSelector text-center fw-bold' onClick={(e) => InfoHandler(e)}> 
                         <option value="">Información sobre:</option>
                         <option value="Secretos">Rumores/Secretos</option>
+                        <option value="Misiones">Misiones</option>
                     </select>
                 </Row>
                 
                 {showMoreData.Secretos == true ? <Knowledge value={"Secretos"} aboutCharacterData={aboutCharacter} /> : <></>}
+                {showMoreData.Misiones == true ? <Quest value={"Misiones"} aboutQuestData={aboutQuest}/> : <></>}
                 
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>
