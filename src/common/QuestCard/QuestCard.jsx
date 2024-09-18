@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import "./QuestCard.css"
+import { questData, questInfo } from '../../services/quest.slice';
 
 export const QuestCard = ({ characterQuestData }) => {
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
+
+    const  questRdx = useSelector(questData);
 
     //HOOKS
     const [ quest, setQuest ] = useState();
@@ -24,6 +27,8 @@ export const QuestCard = ({ characterQuestData }) => {
 
     useEffect(() => { questStatusHandler(quest);}, [quest]);
 
+    useEffect(() => {console.log(questRdx); });
+
     //HANDLER
     const showMoreHandler = () => {
         showMoreData === false ? setShowMoreData(true) : setShowMoreData(false);
@@ -35,14 +40,14 @@ export const QuestCard = ({ characterQuestData }) => {
     };
 
     // CREAR SLICER PARA LAS MISIONES
-    // const knowledgeHandler = (e) => {
-    //     dispatch(knowledgeInfo({ knowledgeInformation: aboutCharacterData }));
-    //     navigate('/knowledge/knowledge-details');
-    // };
+    const questHandler = (e) => {
+        dispatch(questInfo({ questInformation: quest }));
+        // navigate('/knowledge/knowledge-details');
+    };
 
     return (
         <Container className='mt-3'>
-            <Row className={questCardDesign} onClick={() => {}}>
+            <Row className={questCardDesign} onClick={() => questHandler()}>
                 <Col className={titleCardDesign}>
                     {quest?.quest?.name}
                 </Col>

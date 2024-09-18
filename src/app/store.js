@@ -10,6 +10,7 @@ import worldSlice from "../services/world.slice";
 import locationSlice from "../services/location.slice";
 import characterSlice from "../services/character.slice";
 import knowledgeSlice from "../services/knowledge.slice";
+import questSlice from "../services/quest.slice";
 
 import thunk from 'redux-thunk';
 
@@ -18,7 +19,8 @@ const reducers = combineReducers({
     world: worldSlice,
     location: locationSlice,
     character: characterSlice,
-    knowledge: knowledgeSlice
+    knowledge: knowledgeSlice,
+    quest: questSlice
 })
 
 const persistConfig = {
