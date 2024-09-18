@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { knowledgeData, knowledgeInfo } from '../../services/knowledge.slice';
+import { knowledgeInfo } from '../../services/knowledge.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row } from 'react-bootstrap';
 import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
-import "./KnowledgeCard.css";
 import { useNavigate } from 'react-router-dom';
+import "./KnowledgeCard.css";
 
 export const KnowledgeCard = ({ aboutCharacterData }) => {
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
-
-    const knowledgeRdx = useSelector(knowledgeData);
 
     //HOOKS
     const [ secret, setSecret ] = useState();

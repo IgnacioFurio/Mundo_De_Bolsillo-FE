@@ -10,8 +10,6 @@ export const QuestCard = ({ characterQuestData }) => {
 
     const navigate = useNavigate();
 
-    // const knowledgeRdx = useSelector(knowledgeData);
-
     //HOOKS
     const [ quest, setQuest ] = useState();
 
@@ -22,13 +20,9 @@ export const QuestCard = ({ characterQuestData }) => {
     const [ titleCardDesign, setTitleCardDesign ] = useState();
 
     //USEEFFECT
-    useEffect(() => { 
-        setQuest(characterQuestData)
-        }, []);
+    useEffect(() => { setQuest(characterQuestData); }, []);
 
-    useEffect(() => {
-        questStatusHandler(quest);
-    }, [quest]);
+    useEffect(() => { questStatusHandler(quest);}, [quest]);
 
     //HANDLER
     const showMoreHandler = () => {
