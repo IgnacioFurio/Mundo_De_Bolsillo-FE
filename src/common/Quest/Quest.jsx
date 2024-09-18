@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { NewRegisterButton } from '../NewRegisterButton/NewRegisterButton';
+import { QuestCard } from '../QuestCard/QuestCard';
 
 export const Quest = ({ aboutQuestData }) => {
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ export const Quest = ({ aboutQuestData }) => {
             </Row>
             <Row className='d-flex justify-content-center mt-1'>
             {quest.map(data => {
-                return <div key={data.id}>{data.quest.name}</div>
+                return <QuestCard key={data.id} characterQuestData={data}>{data.quest.name}</QuestCard>
             })}
             </Row>
         </Container>
