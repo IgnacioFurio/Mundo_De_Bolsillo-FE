@@ -13,12 +13,7 @@ export const QuestDetails = () => {
 
     const navigate = useNavigate();
 
-    const [ quest, setQuest ] = useState();
-
-    //USEEFFECT
-    useEffect(() => { setQuest(questRdx.questInformation); },[]);
-
-    useEffect(() => { console.log(quest);  },[quest]);
+    const [ quest, setQuest ] = useState(questRdx.questInformation);
 
     //HANDLERS
     const navigateBack = () => {
@@ -54,15 +49,15 @@ export const QuestDetails = () => {
                     <Container className='centerScrollLocations col-11 mt-1'>
                         <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                             <Col className='heardFromCharacterIcon col-2 fw-bold text-center'></Col>
-                            <Col className='col-10'>{quest?.delievered_by_character_id || "??"}</Col>
+                            <Col className='col-10'>{quest?.delieveredByCharacter?.name || "??"}</Col>
                         </Row>
                         <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                             <Col className='heardOnLocationIcon col-2 fw-bold text-center'></Col>
-                            <Col className='col-10'>{quest?.got_in_location_id || "??"}</Col>
+                            <Col className='col-10'>{quest?.gotInLocation?.name || "??"}</Col>
                         </Row>
                         <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                             <Col className='locationIcon col-2 fw-bold text-center'></Col>
-                            <Col className='col-10'>{quest?.happens_in_location_id || "??"}</Col>
+                            <Col className='col-10'>{quest?.happensInLocation?.name || "??"}</Col>
                         </Row>
                     </Container>
                 </Row>
