@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { questData, questInfo } from '../../services/quest.slice';
+import { questInfo } from '../../services/quest.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
-import { characterData } from '../../services/character.slice';
+import { deleteQuest } from '../../services/quest.apicall';
 
 export const QuestDetails = () => {
     const questRdx = useSelector((state) => state.quest);
@@ -22,22 +22,21 @@ export const QuestDetails = () => {
     };
 
     //FUNCITONS
-    //borrar mision
-    // const deleteQuestInfo = () => {
-    //     deletequest(quest?.id)
-    //     .then(() => {
-    //         dispatch(questInfo({questInformation: {}}));
-    //         navigate("/games/game-details")
-    //     })
-    //     .catch((error) => {console.log(error);}) 
-    // };
+    const deleteQuestInfo = () => {
+        deleteQuest(quest?.id)
+        .then(() => {
+            dispatch(questInfo({questInformation: {}}));
+            navigate("/characters/character-details");
+        })
+        .catch((error) => {console.log(error);}) 
+    };
 
     return (
         <Container>
             <Row className='d-flex justify-content-evenly pt-3'>
                     <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack("/games/my-games")}/></Col>
                     <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/quest/modify-quest")}/></Col>
-                    <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deletequestInfo()}/></Col>
+                    <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteQuestInfo()}/></Col>
             </Row>
             <Container className='centerScrollLocations border border-black rounded mt-3 pt-1'>
                 <Row className='questCardShadow text-center'>

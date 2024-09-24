@@ -17,10 +17,10 @@ export const getQuestByCharacterId = async (body) => {
 //     return await axios.put(`${root}/location/put`, body);
 // };
 
-// export const deleteLocation = async (body) => {
-//     const data = {
-//         id: body
-//     }
+export const deleteQuest = async (body) => {
+    const data = {
+        quest_id: body
+    }
 
-//     return await axios.delete(`${root}/location/delete`,{data})
-// };
+    return await axios.delete(`${root}/quest/delete`,{data})
+};
