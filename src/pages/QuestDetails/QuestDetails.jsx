@@ -7,7 +7,7 @@ import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { deleteQuest } from '../../services/quest.apicall';
 
 export const QuestDetails = () => {
-    const questRdx = useSelector((state) => state.quest);
+    const questRdx = useSelector((state) => state.quest)
 
     const dispatch = useDispatch();
 
