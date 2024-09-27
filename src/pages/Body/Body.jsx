@@ -21,6 +21,7 @@ import { KnowledgeDetails } from '../KnowledgeDetails/KnowledgeDetails'
 import { ModifyKnowledge } from '../ModifyKnowledge/ModifyKnowledge'
 import { Quest } from '../../common/Quest/Quest'
 import { QuestDetails } from '../QuestDetails/QuestDetails'
+import { NewQuest } from '../NewQuest/NewQuest'
 
 export const Body = () => {
     return (
@@ -44,6 +45,7 @@ export const Body = () => {
                 <Route path='/knowledge/knowledge-details' element={<KnowledgeDetails/>}/>
                 <Route path='/knowledge/modify-knowledge' element={<ModifyKnowledge/>}/>
                 <Route path='/quests/my-quests' element={<Quest/>}/>
+                <Route path='/quests/new-quest' element={<NewQuest/>}/>
                 <Route path='/quests/quest-details' element={<QuestDetails/>}/>
             </Routes>
         </Container>

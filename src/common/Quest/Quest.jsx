@@ -13,7 +13,7 @@ export const Quest = ({ aboutQuestData }) => {
         <Container>
             <Row>
                 <Col className='my-4'>
-                    <NewRegisterButton name={"Nueva Misión"} clickFunction={(e) => navigate("")}/>
+                    <NewRegisterButton name={"Nueva Misión"} clickFunction={(e) => navigate("/quests/new-quest")}/>
                 </Col>
             </Row>
             <Row className='d-flex justify-content-center mt-1'>
