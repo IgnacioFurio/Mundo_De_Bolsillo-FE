@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 //helper
+import { useSelector } from 'react-redux';
 import { validate } from '../../helpers/validations.helper';
-import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
-import { useDispatch, useSelector } from 'react-redux';
 import { gameData } from '../../services/game.slice';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
+import { Col, Container, Row } from 'react-bootstrap';
 
 export const NewQuest = () => {
 
@@ -58,7 +58,7 @@ export const NewQuest = () => {
         getLocationsData();
     },[ worlds ]);
 
-    useEffect(() => {console.log(newQuestData); }, [newQuestData]);
+    useEffect(() => { setSubmitStatus(checkSubmitStatus()); }, [validInputField]);
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -80,8 +80,65 @@ export const NewQuest = () => {
         checkError(e);
     };
     
+    
+    //APICALLS
+    //apicall que trae los mundos segun el id de la partida
+    const getWorldsData = () => {
+        getWorldGatesByGameId(gameRdx.gameInformation.id)//leemos el id de la partida en redux
+        .then((result) => {
+            let data = result?.data?.data;
+            let worlds = []; //array dónde guardaremos los id de los mundos
+            
+            for (let i = 0; i < data.length; i++) { //reccorremos los datos
+                const world = data[i].World;        //extraemos los mundos y sus id
+                worlds.push(world.id);              //enviamos los id al array de worlds
+            };
+            
+            setWorlds(worlds); //seteamos los mundos en su hook
+        })
+        .catch((error) => {console.log(error);});
+    };
+    
+    //apicall que trae todas las localizaciones segun el world_id
+    const getLocationsData = () => {
+        getLocationsByWorldId(worlds)//traemos las localizaciones usando el array de los id de los mundos
+        .then((result) => {
+            let arr = result?.data?.data;
+            let locations = [];
+            
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = 0; j < arr[i].length; j++) {
+                    locations.push(arr[i][j]);                        
+                }
+            };
+            
+            setLocations(locations);//seteamos las localizaciones en su hook
+        })
+        .catch((error) => {console.log(error)});
+    };
+    
+    //apicall que trae todos los personajes segun el world_id
+    const getCharactersData = () => {
+        getCharactersByWorldId(worlds)//traemos los personajes usando el array de los id de los mundos
+        .then((result) => {            
+            let arr = result?.data?.data;
+            let characters = [];
+            
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = 0; j < arr[i].length; j++) {
+                    characters.push(arr[i][j]);                        
+                }
+            };
+            
+            setCharacters(characters);//seteamos los personajes en su hook
+        })
+        .catch((error) => {console.log(error)});
+    };
+    
     //CHECKS
     const checkError = (e) => {
+        console.log(e);
+        
         let error = "";
     
         let check = validate(
@@ -103,58 +160,11 @@ export const NewQuest = () => {
         }));
     };
 
-    //APICALLS
-    //apicall que trae los mundos segun el id de la partida
-    const getWorldsData = () => {
-        getWorldGatesByGameId(gameRdx.gameInformation.id)//leemos el id de la partida en redux
-        .then((result) => {
-            let data = result?.data?.data;
-            let worlds = []; //array dónde guardaremos los id de los mundos
-            
-            for (let i = 0; i < data.length; i++) { //reccorremos los datos
-                const world = data[i].World;        //extraemos los mundos y sus id
-                worlds.push(world.id);              //enviamos los id al array de worlds
-            };
-
-            setWorlds(worlds); //seteamos los mundos en su hook
-        })
-        .catch((error) => {console.log(error);});
-    };
-
-    //apicall que trae todas las localizaciones segun el world_id
-    const getLocationsData = () => {
-        getLocationsByWorldId(worlds)//traemos las localizaciones usando el array de los id de los mundos
-        .then((result) => {
-            let arr = result?.data?.data;
-            let locations = [];
-
-            for (let i = 0; i < arr.length; i++) {
-                    for (let j = 0; j < arr[i].length; j++) {
-                        locations.push(arr[i][j]);                        
-                    }
-            };
-
-            setLocations(locations);//seteamos las localizaciones en su hook
-        })
-        .catch((error) => {console.log(error)});
-    };
-
-    //apicall que trae todos los personajes segun el world_id
-    const getCharactersData = () => {
-        getCharactersByWorldId(worlds)//traemos los personajes usando el array de los id de los mundos
-        .then((result) => {            
-            let arr = result?.data?.data;
-            let characters = [];
-
-            for (let i = 0; i < arr.length; i++) {
-                    for (let j = 0; j < arr[i].length; j++) {
-                        characters.push(arr[i][j]);                        
-                    }
-            };
-
-            setCharacters(characters);//seteamos los personajes en su hook
-        })
-        .catch((error) => {console.log(error)});
+    const checkSubmitStatus = () => {
+        for (const key in validInputField) {
+            if (validInputField[key] === false) { return false };
+        };
+        return true;
     };
 
     return (
@@ -256,14 +266,15 @@ export const NewQuest = () => {
                     <input 
                         className='col-11 text-center rounded'
                         name="goal"
-                        required={true}
+                        required={false}
                         placeholder={"¿De que se trata la misión?"}
-                        onChange={(e) => inputHandler(e)}/>
+                        onChange={(e) => inputHandler(e)}
+                        style={{height: 8 + "em"}}/>
                 </Col>
             </Row>
             <Row>
                 <Col className='col-12 d-flex justify-content-evenly py-3'>
-                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/my-games")}/>
+                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
                     <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewGame()}/>
                 </Col>
             </Row>
