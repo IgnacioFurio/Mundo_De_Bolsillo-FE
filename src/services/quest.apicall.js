@@ -9,9 +9,9 @@ export const getQuestByCharacterId = async (body) => {
     return await axios.post(`${root}/quest/get-by-character`, data);
 };
 
-// export const createLocation = async (body) => {
-//     return await axios.post(`${root}/location/post`, body)
-// };
+export const createQuest = async (body) => {
+    return await axios.post(`${root}/quest/post`, body)
+};
 
 // export const modifyLocation = async (body) => {
 //     return await axios.put(`${root}/location/put`, body);

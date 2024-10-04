@@ -9,6 +9,7 @@ import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { Col, Container, Row } from 'react-bootstrap';
+import { createQuest } from '../../services/quest.apicall';
 
 export const NewQuest = () => {
 
@@ -19,14 +20,14 @@ export const NewQuest = () => {
     const [ newQuestData, setNewQuestData ] = useState({
         name: "",
         goal: "",
-        delievered_by_character_id: "",
-        got_in_location_id: "",
-        happens_in_location_id: "",
-        status: true
+        delievered_by_character_id: null,
+        got_in_location_id: null,
+        happens_in_location_id: null,
+        status: true /*Predefinimos el estado de la misión como activa*/
     });
 
     const [ validInputField, setValidInputfield ] = useState({
-        nameValid: false,    //only set false when a field is required
+        nameValid: false,    /*Establecemos como falso los valores que son obligatorios */
         goalValid: true,
         delievered_by_character_idValid: true,
         got_in_location_idValid: true,
@@ -45,17 +46,18 @@ export const NewQuest = () => {
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
-    const [ worlds, setWorlds ] = useState();
-    const [ characters, setCharacters ] = useState();
-    const [ locations, setLocations ] = useState();
-
+    const [ worlds, setWorlds ] = useState([]);
+    const [ characters, setCharacters ] = useState([]);
+    const [ locations, setLocations ] = useState([]);
     
     //VALIDATIONS
     useEffect(() => { getWorldsData(); },[]);
     
-    useEffect(() => {
-        getCharactersData();
-        getLocationsData();
+    useEffect(() => {       
+        if (Array.isArray(worlds)) {
+            getCharactersData();
+            getLocationsData();
+        };
     },[ worlds ]);
 
     useEffect(() => { setSubmitStatus(checkSubmitStatus()); }, [validInputField]);
@@ -104,7 +106,7 @@ export const NewQuest = () => {
         getLocationsByWorldId(worlds)//traemos las localizaciones usando el array de los id de los mundos
         .then((result) => {
             let arr = result?.data?.data;
-            let locations = [];
+            let locations = [];            
             
             for (let i = 0; i < arr.length; i++) {
                 for (let j = 0; j < arr[i].length; j++) {
@@ -134,11 +136,18 @@ export const NewQuest = () => {
         })
         .catch((error) => {console.log(error)});
     };
-    
+
+    //apicall para registrar la nueva misión
+    const createNewQuest = () => {
+        createQuest(newQuestData)
+        .then((result) => {
+            navigate("/games/game-details");
+        })
+        .catch((error) => console.log(error))
+    };
+
     //CHECKS
-    const checkError = (e) => {
-        console.log(e);
-        
+    const checkError = (e) => {     
         let error = "";
     
         let check = validate(
@@ -198,8 +207,6 @@ export const NewQuest = () => {
                                             key={data.id}
                                             value={data.id}
                                             label={data.name}
-                                            name={"title"}
-                                            onClick={() => {}}
                                             >
                                                 {data.name}
                                             </option>
@@ -216,7 +223,7 @@ export const NewQuest = () => {
                                 onChange={(e) => dropdownHandler(e)}
                                 >
                                 <option value={null} label={"Escuchado en..."}/>
-                                {!characters ? ( 
+                                {!locations ? ( 
                                         <></>
                                     ) : (
                                     locations.map((data) => { 
@@ -224,8 +231,6 @@ export const NewQuest = () => {
                                             key={data.id}
                                             value={data.id}
                                             label={data.name}
-                                            name={"title"}
-                                            onClick={() => {}}
                                             >
                                                 {data.name}
                                             </option>
@@ -242,7 +247,7 @@ export const NewQuest = () => {
                                 onChange={(e) => dropdownHandler(e)}
                                 >
                                 <option value={null} label={"Ocurre en..."}/>
-                                {!characters ? ( 
+                                {!locations ? ( 
                                         <></>
                                     ) : (
                                     locations.map((data) => { 
@@ -250,8 +255,6 @@ export const NewQuest = () => {
                                             key={data.id}
                                             value={data.id}
                                             label={data.name}
-                                            name={"title"}
-                                            onClick={() => {}}
                                             >
                                                 {data.name}
                                             </option>
@@ -263,7 +266,7 @@ export const NewQuest = () => {
             </Row>
             <Row className='text-center my-1'>
                 <Col className='col-12 mt-1 '> 
-                    <input 
+                    <textarea 
                         className='col-11 text-center rounded'
                         name="goal"
                         required={false}
@@ -275,7 +278,7 @@ export const NewQuest = () => {
             <Row>
                 <Col className='col-12 d-flex justify-content-evenly py-3'>
                     <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
-                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewGame()}/>
+                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewQuest()}/>
                 </Col>
             </Row>
         </Container>
