@@ -49,6 +49,9 @@ export const NewQuest = () => {
     const [ worlds, setWorlds ] = useState([]);
     const [ characters, setCharacters ] = useState([]);
     const [ locations, setLocations ] = useState([]);
+
+    const [ searchInput, setSearchInput ] = useState("");
+    const [ searchResult, setSearchResult ] = useState([]);
     
     //VALIDATIONS
     useEffect(() => { getWorldsData(); },[]);
@@ -71,7 +74,23 @@ export const NewQuest = () => {
 
         checkError(e);
     };
-    
+
+    //handler y funcion para el componente barra buscadora
+    const shearchBarHandler = (e) => {
+        setSearchInput(e.target.value);
+        filter(searchInput, characters);
+    };
+
+    const filter = ( input, data ) => {
+        let result = data.filter((element) => {            
+            if (element.name.toString().toLowerCase().includes(input.toLowerCase()) ) {
+                return element;
+            }
+        });
+        
+        setSearchResult(result)
+    };
+
     //handler para el dropdown del formulario
     const dropdownHandler = (e) => {       
         setNewQuestData((prevState) => ({
@@ -263,6 +282,41 @@ export const NewQuest = () => {
                         </Col>
                     </Row>
                 </Container>
+            </Row>
+            {/* BARRA BUSCADORA*/}
+            <Row>
+                <Col className='col-12 fs-4 fw-bold text-center mt-2'>Personajes en la misión</Col>
+                <Col className='d-flex justify-content-center py-2'>
+                        <input 
+                            className='col-9 rounded ps-3'
+                            name="searchBar"
+                            required={true}
+                            placeholder={"Nombre del personaje"}
+                            onChange={(e) => shearchBarHandler(e)}/>
+                </Col>
+            </Row>
+            <Row>
+                    {searchInput !== "" ? 
+                        (
+                            searchResult.map((data) => {
+                                return <Col className="col-4 form-check form-switch ms-4">
+                                    <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                                    <label className="form-check-label" for="flexSwitchCheckDefault">{data.name}</label>
+                                </Col>
+                            })
+                        ) : (
+                            characters.length > 0 ? 
+                                (
+                                    characters.map((data) => {
+                                        return <Col className="col-4 form-check form-switch ms-4">
+                                            <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                                            <label className="form-check-label" for="flexSwitchCheckDefault">{data.name}</label>
+                                        </Col>
+                                    })
+                                ) : (
+                                    <></>
+                                )
+                        )}
             </Row>
             <Row className='text-center my-1'>
                 <Col className='col-12 mt-1 '> 
