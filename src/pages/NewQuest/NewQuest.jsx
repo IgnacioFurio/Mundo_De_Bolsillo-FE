@@ -63,6 +63,8 @@ export const NewQuest = () => {
         };
     },[ worlds ]);
 
+    useEffect(() => { filter(searchInput, characters); },[ searchInput ]);
+
     useEffect(() => { setSubmitStatus(checkSubmitStatus()); }, [validInputField]);
 
     //HANDLERS
@@ -78,11 +80,10 @@ export const NewQuest = () => {
     //handler y funcion para el componente barra buscadora
     const shearchBarHandler = (e) => {
         setSearchInput(e.target.value);
-        filter(searchInput, characters);
     };
 
     const filter = ( input, data ) => {
-        let result = data.filter((element) => {            
+        let result = data.filter((element) => {                        
             if (element.name.toString().toLowerCase().includes(input.toLowerCase()) ) {
                 return element;
             }
@@ -215,7 +216,7 @@ export const NewQuest = () => {
                             <select 
                                 className='col-12 rounded'
                                 name={"delievered_by_character_id"} 
-                                onChange={(e) => dropdownHandler(e)}
+                                // onChange={(e) => dropdownHandler(e)}
                                 >
                                 <option value={null} label={"Contado por..."}/>
                                 {!characters ? ( 
@@ -299,18 +300,18 @@ export const NewQuest = () => {
                     {searchInput !== "" ? 
                         (
                             searchResult.map((data) => {
-                                return <Col className="col-4 form-check form-switch ms-4">
+                                return <Col key={data.id} className="col-4 form-check form-switch ms-4">
                                     <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                                    <label className="form-check-label" for="flexSwitchCheckDefault">{data.name}</label>
+                                    <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{data.name}</label>
                                 </Col>
                             })
                         ) : (
                             characters.length > 0 ? 
                                 (
                                     characters.map((data) => {
-                                        return <Col className="col-4 form-check form-switch ms-4">
+                                        return <Col key={data.id} className="col-4 form-check form-switch ms-4" >
                                             <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                                            <label className="form-check-label" for="flexSwitchCheckDefault">{data.name}</label>
+                                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{data.name}</label>
                                         </Col>
                                     })
                                 ) : (
