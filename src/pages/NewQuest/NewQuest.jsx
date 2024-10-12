@@ -67,6 +67,9 @@ export const NewQuest = () => {
 
     useEffect(() => { setSubmitStatus(checkSubmitStatus()); }, [validInputField]);
 
+    // TESTING ZONE ////////////////////////////////
+    useEffect(() => {  });
+
     //HANDLERS
     const inputHandler = (e) => {        
         setNewQuestData((prevState) => ({
@@ -78,9 +81,7 @@ export const NewQuest = () => {
     };
 
     //handler y funcion para el componente barra buscadora
-    const shearchBarHandler = (e) => {
-        setSearchInput(e.target.value);
-    };
+    const shearchBarHandler = (e) => { setSearchInput(e.target.value); };
 
     const filter = ( input, data ) => {
         let result = data.filter((element) => {                        
@@ -216,7 +217,7 @@ export const NewQuest = () => {
                             <select 
                                 className='col-12 rounded'
                                 name={"delievered_by_character_id"} 
-                                // onChange={(e) => dropdownHandler(e)}
+                                onChange={(e) => dropdownHandler(e)}
                                 >
                                 <option value={null} label={"Contado por..."}/>
                                 {!characters ? ( 
@@ -263,7 +264,7 @@ export const NewQuest = () => {
                         <Col className='col-10'> 
                         <select 
                                 className='col-12 rounded'
-                                name={"delievered_by_character_id"} 
+                                name={"happens_in_location_id"} 
                                 onChange={(e) => dropdownHandler(e)}
                                 >
                                 <option value={null} label={"Ocurre en..."}/>

@@ -70,6 +70,9 @@ export const validate = ( input, data, required ) => {
         case "heard_from_character_id":
         case "about_location_id":
         case "heard_on_location_id":
+        case "delievered_by_character_id":
+        case "got_in_location_id":
+        case "happens_in_location_id":
             
             if (data === NaN && required === true) {
                 return {message: "Algo nos impide continuar, por favor inténtalo de nuevo más tarde.", valid: false}
