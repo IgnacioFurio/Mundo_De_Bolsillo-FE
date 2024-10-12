@@ -286,7 +286,7 @@ export const NewQuest = () => {
             </Row>
             {/* BARRA BUSCADORA*/}
             <Row>
-                <Col className='col-12 fs-4 fw-bold text-center mt-2'>Personajes en la misión</Col>
+                <Col className='col-12 fs-5 fw-bold text-center mt-2'>Personajes en la misión</Col>
                 <Col className='d-flex justify-content-center py-2'>
                         <input 
                             className='col-9 rounded ps-3'
