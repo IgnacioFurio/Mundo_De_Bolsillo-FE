@@ -44,6 +44,8 @@ export const NewQuest = () => {
         status: ""
     });
 
+    const [ charactersInQuest, setCharactersInQuest ] = useState([])
+
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     const [ worlds, setWorlds ] = useState([]);
@@ -63,12 +65,15 @@ export const NewQuest = () => {
         };
     },[ worlds ]);
 
-    useEffect(() => { filter(searchInput, characters); },[ searchInput ]);
+    useEffect(() => { 
+        console.log(charactersInQuest);
+        
+        filter(searchInput, characters); },[ searchInput ]);
 
     useEffect(() => { setSubmitStatus(checkSubmitStatus()); }, [validInputField]);
 
     // TESTING ZONE ////////////////////////////////
-    useEffect(() => {  });
+    // useEffect(() => { console.log();  });
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -103,6 +108,23 @@ export const NewQuest = () => {
         checkError(e);
     };
     
+    //handler para el checkbox
+    const checkBoxHandler = (e) => {
+        let charactersArr = [];
+        charactersArr = charactersInQuest
+        
+        for (let i = 0; i < charactersArr.length; i++) {           
+            if (charactersArr[i] == e.target.value) {
+                charactersArr.splice(i, 1);
+                setCharactersInQuest(charactersArr);
+                return;
+            };           
+        };        
+        charactersArr.push(parseInt(e.target.value));
+        
+        setCharactersInQuest(charactersArr)
+        return 
+    };
     
     //APICALLS
     //apicall que trae los mundos segun el id de la partida
@@ -301,8 +323,8 @@ export const NewQuest = () => {
                     {searchInput !== "" ? 
                         (
                             searchResult.map((data) => {
-                                return <Col key={data.id} className="col-4 form-check form-switch ms-4">
-                                    <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                                return <Col key={data.id} className="col-4 form-check form-switch ms-4" onChange={(e) => checkBoxHandler(e)}>
+                                    <input className="form-check-input" value={data.id} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
                                     <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{data.name}</label>
                                 </Col>
                             })
@@ -310,8 +332,8 @@ export const NewQuest = () => {
                             characters.length > 0 ? 
                                 (
                                     characters.map((data) => {
-                                        return <Col key={data.id} className="col-4 form-check form-switch ms-4" >
-                                            <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                                        return <Col key={data.id} className="col-4 form-check form-switch ms-4" onChange={(e) => checkBoxHandler(e)}>
+                                            <input className="form-check-input" value={data.id} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
                                             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{data.name}</label>
                                         </Col>
                                     })
