@@ -23,6 +23,7 @@ export const NewQuest = () => {
         delievered_by_character_id: null,
         got_in_location_id: null,
         happens_in_location_id: null,
+        characters_id: [],
         status: true /*Predefinimos el estado de la misión como activa*/
     });
 
@@ -44,8 +45,6 @@ export const NewQuest = () => {
         status: ""
     });
 
-    const [ charactersInQuest, setCharactersInQuest ] = useState([])
-
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     const [ worlds, setWorlds ] = useState([]);
@@ -65,15 +64,15 @@ export const NewQuest = () => {
         };
     },[ worlds ]);
 
-    useEffect(() => { 
-        console.log(charactersInQuest);
-        
-        filter(searchInput, characters); },[ searchInput ]);
+    useEffect(() => { filter(searchInput, characters); },[ searchInput ]);
 
     useEffect(() => { setSubmitStatus(checkSubmitStatus()); }, [validInputField]);
 
     // TESTING ZONE ////////////////////////////////
-    // useEffect(() => { console.log();  });
+    useEffect(() => { 
+        console.log(newQuestData);
+      }, [newQuestData]);
+
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -111,18 +110,25 @@ export const NewQuest = () => {
     //handler para el checkbox
     const checkBoxHandler = (e) => {
         let charactersArr = [];
-        charactersArr = charactersInQuest
+        charactersArr = newQuestData.characters_id
         
         for (let i = 0; i < charactersArr.length; i++) {           
             if (charactersArr[i] == e.target.value) {
                 charactersArr.splice(i, 1);
-                setCharactersInQuest(charactersArr);
+
+                setNewQuestData((prevState) => ({
+                    ...prevState,
+                    characters_id: charactersArr
+                }));
                 return;
             };           
         };        
         charactersArr.push(parseInt(e.target.value));
         
-        setCharactersInQuest(charactersArr)
+        setNewQuestData((prevState) => ({
+            ...prevState,
+            characters_id: charactersArr
+        }));
         return 
     };
     
