@@ -10,6 +10,7 @@ import { getCharactersByWorldId } from '../../services/character.apicalls';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { Col, Container, Row } from 'react-bootstrap';
 import { createQuest } from '../../services/quest.apicall';
+import { SearchBar } from '../../common/SearchBar/SearchBar';
 
 export const NewQuest = () => {
 
@@ -71,7 +72,7 @@ export const NewQuest = () => {
     // TESTING ZONE ////////////////////////////////
     useEffect(() => { 
         console.log(newQuestData);
-      }, [newQuestData]);
+    }, [newQuestData]);
 
 
     //HANDLERS
@@ -314,17 +315,8 @@ export const NewQuest = () => {
                 </Container>
             </Row>
             {/* BARRA BUSCADORA*/}
-            <Row>
-                <Col className='col-12 fs-5 fw-bold text-center mt-2'>Personajes en la misión</Col>
-                <Col className='d-flex justify-content-center py-2'>
-                        <input 
-                            className='col-9 rounded ps-3'
-                            name="searchBar"
-                            required={true}
-                            placeholder={"Nombre del personaje"}
-                            onChange={(e) => shearchBarHandler(e)}/>
-                </Col>
-            </Row>
+            <Col className='col-12 fs-5 fw-bold text-center mt-2'>Personajes en la misión</Col>
+            <SearchBar className="col-9 rounded ps-3" onChangeFunction={(e) => shearchBarHandler(e)}/>
             <Row>
                     {searchInput !== "" ? 
                         (
