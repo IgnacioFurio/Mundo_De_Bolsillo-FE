@@ -50,6 +50,7 @@ export const NewQuest = () => {
 
     const [ worlds, setWorlds ] = useState([]);
     const [ characters, setCharacters ] = useState([]);
+    const [ charactersQuest, setCharactersQuest ] = useState([]);
     const [ locations, setLocations ] = useState([]);
 
     const [ searchInput, setSearchInput ] = useState("");
@@ -71,8 +72,23 @@ export const NewQuest = () => {
 
     // TESTING ZONE ////////////////////////////////
     useEffect(() => { 
-        console.log(newQuestData);
+        setCharactersQuest(() => {
+            let charactersArr = [];
+            
+            for (let i = 0; i < characters.length; i++) {
+                for (let j = 0; j < newQuestData.characters_id.length; j++) {
+                    if (characters[i].id === newQuestData.characters_id[j]) {
+                        charactersArr.push(characters[i].name); 
+                    };
+                }
+            };
+            
+            return charactersArr;
+        });
+
     }, [newQuestData]);
+
+    // useEffect(() => { console.log(charactersQuest);  }, [charactersQuest])
 
 
     //HANDLERS
@@ -133,6 +149,7 @@ export const NewQuest = () => {
         return 
     };
     
+    const charactersInQuest = () => {};
     //APICALLS
     //apicall que trae los mundos segun el id de la partida
     const getWorldsData = () => {
@@ -315,30 +332,35 @@ export const NewQuest = () => {
                 </Container>
             </Row>
             {/* BARRA BUSCADORA*/}
-            <Col className='col-12 fs-5 fw-bold text-center mt-2'>Personajes en la misión</Col>
+            <Row>
+                <Col className='col-12 fs-5 fw-bold text-center mt-2'>Personajes en misión</Col>
+                <Col className='col-12 text-center'>
+                    {charactersQuest.join(", ")}
+                </Col>                
+            </Row>
             <SearchBar className="col-9 rounded ps-3" onChangeFunction={(e) => shearchBarHandler(e)}/>
             <Row>
-                    {searchInput !== "" ? 
-                        (
-                            searchResult.map((data) => {
-                                return <Col key={data.id} className="col-4 form-check form-switch ms-4" onChange={(e) => checkBoxHandler(e)}>
-                                    <input className="form-check-input" value={data.id} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                                    <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{data.name}</label>
-                                </Col>
-                            })
-                        ) : (
-                            characters.length > 0 ? 
-                                (
-                                    characters.map((data) => {
-                                        return <Col key={data.id} className="col-4 form-check form-switch ms-4" onChange={(e) => checkBoxHandler(e)}>
-                                            <input className="form-check-input" value={data.id} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{data.name}</label>
-                                        </Col>
-                                    })
-                                ) : (
-                                    <></>
-                                )
-                        )}
+                {searchInput !== "" ? 
+                    (
+                        searchResult.map((data) => {
+                            return <Col key={data.id} className="col-4 form-check form-switch ms-4" onChange={(e) => checkBoxHandler(e)}>
+                                <input className="form-check-input" value={data.id} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{data.name}</label>
+                            </Col>
+                        })
+                    ) : (
+                        characters.length > 0 ? 
+                            (
+                                characters.map((data) => {
+                                    return <Col key={data.id} className="col-4 form-check form-switch ms-4" onChange={(e) => checkBoxHandler(e)}>
+                                        <input className="form-check-input" value={data.id} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                                        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{data.name}</label>
+                                    </Col>
+                                })
+                            ) : (
+                                <></>
+                            )
+                    )}
             </Row>
             <Row className='text-center my-1'>
                 <Col className='col-12 mt-1 '> 
