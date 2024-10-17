@@ -6,13 +6,9 @@ export const CheckBox = ({ checkedData, value, label, className, onChangeFunctio
 
     const [ status, setStatus ] = useState(false);
 
-    useEffect(() => {
-        setData(checkedData);       
-    }, []);
+    useEffect(() => { setData(checkedData); }, []);
     
-    useEffect(() => { 
-        setStatus(checkHandler(data));        
-    }, [ data ]);
+    useEffect(() => { setStatus(checkHandler(data)); }, [ data ]);
     
     const checkHandler = (data) => {  
         let result = false;
