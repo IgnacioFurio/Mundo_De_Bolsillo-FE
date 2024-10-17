@@ -13,8 +13,11 @@ export const validate = ( input, data, required ) => {
             break;
         
         case "description":
+        case "goal":
             
             if (!/^[\p{L}\p{N}\s\p{P}]{0,500}$/u.test(data)) {
+                console.log(!/^[\p{L}\p{N}\s\p{P}]{0,500}$/u.test(data));
+                
                 return {message: "Lo sentimos pero solo puedes escribir hasta 500 caracteres.", valid: false}
             }
 

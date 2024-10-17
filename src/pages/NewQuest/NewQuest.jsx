@@ -35,6 +35,7 @@ export const NewQuest = () => {
         delievered_by_character_idValid: true,
         got_in_location_idValid: true,
         happens_in_location_idValid: true,
+        characters_idValid: true,
         statusValid: true
     });
     
@@ -44,6 +45,7 @@ export const NewQuest = () => {
         delievered_by_character_idError: "",
         got_in_location_idError: "",
         happens_in_location_idError: "",
+        characters_idError: "",
         status: ""
     });
 
@@ -86,7 +88,7 @@ export const NewQuest = () => {
             
             return charactersArr;
         });
-        
+
     }, [newQuestData]);
 
     // useEffect(() => { console.log(newQuestData.characters_id);  }, [charactersQuest])
