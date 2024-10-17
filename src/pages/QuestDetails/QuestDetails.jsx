@@ -15,6 +15,9 @@ export const QuestDetails = () => {
 
     const [ quest, setQuest ] = useState(questRdx.questInformation);
 
+    useEffect(() => {console.log(quest);
+    }, []);
+
     //HANDLERS
     const navigateBack = () => {
         dispatch(questInfo({questInformation: {}}));      
@@ -60,7 +63,14 @@ export const QuestDetails = () => {
                         </Row>
                     </Container>
                 </Row>
+                <Row>
+                    <Col className='col-12 fw-bold text-center mt-2'>Personajes en misión</Col>
+                    <Col className='col-12 text-center'>
+                        {/* {charactersQuest.join(", ")} */}
+                    </Col>                
+                </Row>
                 <Row className='text-center my-1'>
+                    <Col className='col-12 fw-bold text-center mt-2'>Objetivos:</Col>
                     <Col className='col-12 mb-1'>{quest?.goal}</Col>
                 </Row>
             </Container>
