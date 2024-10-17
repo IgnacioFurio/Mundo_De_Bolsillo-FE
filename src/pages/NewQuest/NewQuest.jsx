@@ -11,6 +11,7 @@ import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { Col, Container, Row } from 'react-bootstrap';
 import { createQuest } from '../../services/quest.apicall';
 import { SearchBar } from '../../common/SearchBar/SearchBar';
+import { CheckBox } from '../../common/CheckBox/CheckBox';
 
 export const NewQuest = () => {
 
@@ -85,10 +86,10 @@ export const NewQuest = () => {
             
             return charactersArr;
         });
-
+        
     }, [newQuestData]);
 
-    // useEffect(() => { console.log(charactersQuest);  }, [charactersQuest])
+    // useEffect(() => { console.log(newQuestData.characters_id);  }, [charactersQuest])
 
 
     //HANDLERS
@@ -149,7 +150,6 @@ export const NewQuest = () => {
         return 
     };
     
-    const charactersInQuest = () => {};
     //APICALLS
     //apicall que trae los mundos segun el id de la partida
     const getWorldsData = () => {
@@ -343,19 +343,13 @@ export const NewQuest = () => {
                 {searchInput !== "" ? 
                     (
                         searchResult.map((data) => {
-                            return <Col key={data.id} className="col-4 form-check form-switch ms-4" onChange={(e) => checkBoxHandler(e)}>
-                                <input className="form-check-input" value={data.id} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{data.name}</label>
-                            </Col>
+                            return <CheckBox key={data.id} checkedData={newQuestData.characters_id} value={data.id} label={data.name} className="col-4 form-check form-switch ms-4" onChangeFunction={(e) => checkBoxHandler(e)}/>
                         })
                     ) : (
                         characters.length > 0 ? 
                             (
                                 characters.map((data) => {
-                                    return <Col key={data.id} className="col-4 form-check form-switch ms-4" onChange={(e) => checkBoxHandler(e)}>
-                                        <input className="form-check-input" value={data.id} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                                        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{data.name}</label>
-                                    </Col>
+                                    return <CheckBox key={data.id} checkedData={newQuestData?.characters_id} value={data.id} label={data.name} className="col-4 form-check form-switch ms-4" onChangeFunction={(e) => checkBoxHandler(e)}/>
                                 })
                             ) : (
                                 <></>
