@@ -16,7 +16,7 @@ export const ModifyQuest = () => {
     const questRdx = useSelector((state) => state.quest);
     const gameRdx = useSelector(gameData);
 
-    const [ questInformation, setQuestInformation ] = useState({
+    const [ questData, setQuestData ] = useState({
         name: questRdx?.questInformation?.name,
         goal:  questRdx?.questInformation?.goal,
         delievered_by_character_id:  questRdx?.questInformation?.delievered_by_character_id,
@@ -71,7 +71,7 @@ export const ModifyQuest = () => {
 
     //HANDLERS
     const inputHandler = (e) => {        
-        setQuestInformation((prevState) => ({
+        setQuestData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }));
@@ -81,7 +81,7 @@ export const ModifyQuest = () => {
 
     //handler para el dropdown del formulario
     const dropdownHandler = (e) => {       
-        setQuestInformation((prevState) => ({
+        setQuestData((prevState) => ({
             ...prevState,
             [e.target.name]: parseInt(e.target.value)
         }));
@@ -184,7 +184,7 @@ export const ModifyQuest = () => {
                         className='col-9 QuestCardShadow fw-bold text-center rounded'
                         name="name"
                         required={true}
-                        placeholder={questRdx?.questInformation?.name || "Título"}
+                        placeholder={questRdx?.questInformation?.name}
                         onChange={(e) => inputHandler(e)}/>
                 </Col>
             </Row>
