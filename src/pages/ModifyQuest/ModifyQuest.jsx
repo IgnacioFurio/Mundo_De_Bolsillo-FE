@@ -8,6 +8,7 @@ import { getCharactersByWorldId } from '../../services/character.apicalls';
 import { validate } from '../../helpers/validations.helper';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useNavigate } from 'react-router-dom';
+import { getCharactersByQuestrId } from '../../services/quest.apicall';
 
 export const ModifyQuest = () => {
     const navigate = useNavigate();
@@ -47,6 +48,7 @@ export const ModifyQuest = () => {
 
     const [ worlds, setWorlds ] = useState([]);
     const [ characters, setCharacters ] = useState([]);
+    const [ charactersDoingQuest, setCharactersDoingQuest ] = useState([]);
     const [ locations, setLocations ] = useState([]);
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
@@ -64,7 +66,8 @@ export const ModifyQuest = () => {
         };
     },[ worlds ]);
     
-    useEffect(() => { console.log(questInformation) },[questInformation]);
+    useEffect(() => { charactersInQuest();  },[characters]);
+    // useEffect(() => { console.log(charactersDoingQuest) },[questInformation]);
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -140,6 +143,16 @@ export const ModifyQuest = () => {
         .catch((error) => {console.log(error)});
     };
 
+    //apicall que trae todos los personajes según la quest_id
+    const charactersInQuest = () => {
+        getCharactersByQuestrId(questRdx?.questInformation.id)
+        .then((result) => {           
+            setCharactersDoingQuest(result.data.data);
+        })
+        .catch((error) => {console.log(error);
+        })
+    };
+
      //CHECKS
     const checkError = (e) => {     
         let error = "";
@@ -187,7 +200,7 @@ export const ModifyQuest = () => {
                                 >
                                 <option 
                                     value={questRdx?.questInformation?.delieveredByCharacter?.id} 
-                                    label={`Contado por...: ${questRdx?.questInformation?.delieveredByCharacter?.name}`}
+                                    label={`Contado por: ${questRdx?.questInformation?.delieveredByCharacter?.name}`}
                                 />
                                 {!characters ? ( 
                                         <></>
@@ -259,6 +272,16 @@ export const ModifyQuest = () => {
                         </Col>
                     </Row>
                 </Container>
+            </Row>
+            <Row>
+                <Col className='col-12 fw-bold text-center mt-2'>Personajes en misión</Col>
+                <Col className='col-12 d-flex justify-content-center text-center'>
+                    {charactersDoingQuest.map((data) => <button className='mx-1 rounded'>{data.character.name}</button>)}
+                </Col>                
+            </Row>
+            <Row className='text-center my-1'>
+                <Col className='col-12 fw-bold text-center mt-2'>Objetivos:</Col>
+                <Col className='col-12 mb-1'>{questRdx?.questInformation.goal || "??"}</Col>
             </Row>
             <Row>
                 <Col className='col-12 d-flex justify-content-evenly py-3'>
