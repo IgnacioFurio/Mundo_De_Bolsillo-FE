@@ -5,6 +5,7 @@ import { gameData } from '../../services/game.slice';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
+import { validate } from '../../helpers/validations.helper';
 
 export const ModifyQuest = () => {
     const questRdx = useSelector((state) => state.quest);
@@ -38,11 +39,11 @@ export const ModifyQuest = () => {
         };
     },[ worlds ]);
     
-    useEffect(() => { console.log(characters) },[]);
+    useEffect(() => { console.log(questInformation) },[questInformation]);
 
     //HANDLERS
     const inputHandler = (e) => {        
-        setNewQuestData((prevState) => ({
+        setQuestInformation((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }));
@@ -103,6 +104,29 @@ export const ModifyQuest = () => {
         })
         .catch((error) => {console.log(error)});
     };
+
+     //CHECKS
+    const checkError = (e) => {     
+        let error = "";
+    
+        let check = validate(
+            e.target.name,
+            e.target.value,
+            e.target.required
+            );
+            
+        error = check.message;
+
+        setValidInputfield((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Valid']: check.valid
+        }));
+        
+        setErrorInputfield((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Error']: error
+        }));
+    };
     
     return (
         <Container className='centerScrollLocations border border-black rounded pt-1'>
@@ -113,7 +137,7 @@ export const ModifyQuest = () => {
                         name="name"
                         required={true}
                         placeholder={questRdx?.questInformation?.name || "Título"}
-                        onChange={() => {}}/>
+                        onChange={(e) => inputHandler(e)}/>
                 </Col>
             </Row>
         </Container>
