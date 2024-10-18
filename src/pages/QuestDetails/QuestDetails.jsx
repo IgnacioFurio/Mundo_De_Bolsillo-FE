@@ -17,10 +17,6 @@ export const QuestDetails = () => {
     const [ charactersDoingQuest, setCharactersDoingQuest ] = useState([]);
 
     useEffect(() => { charactersInQuest(); }, []);
-    
-    useEffect(() => {
-        console.log(charactersDoingQuest);
-    }, [charactersDoingQuest]);
 
     // APICALLS
     const charactersInQuest = () => {
