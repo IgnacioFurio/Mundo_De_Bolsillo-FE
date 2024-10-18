@@ -8,14 +8,24 @@ import { getCharactersByWorldId } from '../../services/character.apicalls';
 
 export const ModifyQuest = () => {
     const questRdx = useSelector((state) => state.quest);
-    const gameRdx = useSelector(gameData)
+    const gameRdx = useSelector(gameData);
+
+    const [ questInformation, setQuestInformation ] = useState({
+        name: "",
+        goal: "",
+        delievered_by_character_id: null,
+        got_in_location_id: null,
+        happens_in_location_id: null,
+        characters_id: [],
+        status: true /*Predefinimos el estado de la misión como activa*/
+    });
 
     const [ worlds, setWorlds ] = useState([]);
     const [ characters, setCharacters ] = useState([]);
     const [ charactersQuest, setCharactersQuest ] = useState([]);
     const [ locations, setLocations ] = useState([]);
 
-    useEffect(() => {console.log(gameRdx.gameInformation);
+    useEffect(() => {console.log(questRdx.questInformation);
     }, []);
 
     //APICALLS
@@ -29,7 +39,18 @@ export const ModifyQuest = () => {
     },[ worlds ]);
     
     useEffect(() => { console.log(characters) },[]);
-        //APICALLS
+
+    //HANDLERS
+    const inputHandler = (e) => {        
+        setNewQuestData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }));
+
+        checkError(e);
+    };
+
+    //APICALLS
     //apicall que trae los mundos segun el id de la partida
     const getWorldsData = () => {
         getWorldGatesByGameId(gameRdx?.gameInformation?.id)//leemos el id de la partida en redux
@@ -88,10 +109,10 @@ export const ModifyQuest = () => {
             <Row className='QuestCardShadow text-center'>
                 <Col className='bannerRibbonQuest fw-bold py-2'>
                     <input 
-                        className='col-9 QuestCardShadow fs-4 fw-bold text-center rounded'
+                        className='col-9 QuestCardShadow fw-bold text-center rounded'
                         name="name"
                         required={true}
-                        placeholder={"Título"}
+                        placeholder={questRdx?.questInformation?.name || "Título"}
                         onChange={() => {}}/>
                 </Col>
             </Row>
