@@ -48,7 +48,7 @@ export const QuestDetails = () => {
         <Container>
             <Row className='d-flex justify-content-evenly pt-3'>
                     <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack("/games/my-games")}/></Col>
-                    <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/quest/modify-quest")}/></Col>
+                    <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/quests/modify-quest")}/></Col>
                     <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteQuestInfo()}/></Col>
             </Row>
             <Container className='centerScrollLocations border border-black rounded mt-3 pt-1'>
