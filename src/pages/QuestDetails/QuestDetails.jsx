@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
-import { deleteQuest } from '../../services/quest.apicall';
+import { deleteQuest, getCharactersByQuestrId } from '../../services/quest.apicall';
 
 export const QuestDetails = () => {
     const questRdx = useSelector((state) => state.quest)
@@ -14,9 +14,23 @@ export const QuestDetails = () => {
     const navigate = useNavigate();
 
     const [ quest, setQuest ] = useState(questRdx.questInformation);
+    const [ charactersDoingQuest, setCharactersDoingQuest ] = useState([]);
 
-    useEffect(() => {console.log(quest);
-    }, []);
+    useEffect(() => { charactersInQuest(); }, []);
+    
+    useEffect(() => {
+        console.log(charactersDoingQuest);
+    }, [charactersDoingQuest]);
+
+    // APICALLS
+    const charactersInQuest = () => {
+        getCharactersByQuestrId(quest?.id)
+        .then((result) => {           
+            setCharactersDoingQuest(result.data.data);
+        })
+        .catch((error) => {console.log(error);
+        })
+    };
 
     //HANDLERS
     const navigateBack = () => {
@@ -65,13 +79,13 @@ export const QuestDetails = () => {
                 </Row>
                 <Row>
                     <Col className='col-12 fw-bold text-center mt-2'>Personajes en misión</Col>
-                    <Col className='col-12 text-center'>
-                        {/* {charactersQuest.join(", ")} */}
+                    <Col className='col-12 d-flex justify-content-center text-center'>
+                        {charactersDoingQuest.map((data) => <button className='mx-1 rounded'>{data.character.name}</button>)}
                     </Col>                
                 </Row>
                 <Row className='text-center my-1'>
                     <Col className='col-12 fw-bold text-center mt-2'>Objetivos:</Col>
-                    <Col className='col-12 mb-1'>{quest?.goal}</Col>
+                    <Col className='col-12 mb-1'>{quest?.goal || "??"}</Col>
                 </Row>
             </Container>
         </Container>

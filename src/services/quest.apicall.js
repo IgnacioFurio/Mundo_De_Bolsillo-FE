@@ -9,6 +9,14 @@ export const getQuestByCharacterId = async (body) => {
     return await axios.post(`${root}/quest/get-by-character`, data);
 };
 
+export const getCharactersByQuestrId = async (body) => {
+    let data = {
+        quest_id: body
+    }
+
+    return await axios.post(`${root}/quest/get-by-quest`, data);
+};
+
 export const createQuest = async (body) => {
     return await axios.post(`${root}/quest/post`, body)
 };

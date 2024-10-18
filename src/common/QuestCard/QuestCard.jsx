@@ -65,7 +65,7 @@ export const QuestCard = ({ characterQuestData }) => {
                         <Col className='col-10'>{quest?.happensInLocation?.name || "??"}</Col>
                     </Row>
                     <Row className='text-center my-1'>
-                        <Col className='col-12 mb-1'>{quest?.goal}</Col>                            
+                        <Col className='col-12 mb-1'>{quest?.goal || "??"}</Col>                            
                     </Row>
                 </Container>
                 </>
