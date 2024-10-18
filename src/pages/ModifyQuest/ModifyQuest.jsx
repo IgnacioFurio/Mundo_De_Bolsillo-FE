@@ -279,9 +279,19 @@ export const ModifyQuest = () => {
                     {charactersDoingQuest.map((data) => <button className='mx-1 rounded'>{data.character.name}</button>)}
                 </Col>                
             </Row>
-            <Row className='text-center my-1'>
+            <Row className='text-center my-2'>
                 <Col className='col-12 fw-bold text-center mt-2'>Objetivos:</Col>
-                <Col className='col-12 mb-1'>{questRdx?.questInformation.goal || "??"}</Col>
+                <Col className='col-1'/>
+                <textarea 
+                    className='col-10 text-center rounded'
+                    name="description"
+                    required={false}
+                    type='textarea'
+                    placeholder={questRdx?.questInformation.goal || "¿De que se trata la misión?"}
+                    onChange={(e) => inputHandler(e)}
+                    style={{height: 8 + "em"}}
+                    />
+                <Col className='col-1'/>
             </Row>
             <Row>
                 <Col className='col-12 d-flex justify-content-evenly py-3'>
