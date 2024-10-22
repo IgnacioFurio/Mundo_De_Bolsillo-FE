@@ -5,7 +5,7 @@ import { gameData } from '../../services/game.slice';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
-import { validate } from '../../helpers/validations.helper';
+import { checkValid, validate } from '../../helpers/validations.helper';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useNavigate } from 'react-router-dom';
 import { getCharactersByQuestrId } from '../../services/quest.apicall';
@@ -29,7 +29,7 @@ export const ModifyQuest = () => {
     });
 
     const [ validInputField, setValidInputfield ] = useState({
-        nameValid: false,    /*Establecemos como falso los valores que son obligatorios */
+        nameValid: true,    /*Establecemos como falso los valores que son obligatorios */
         goalValid: true,
         delievered_by_character_idValid: true,
         got_in_location_idValid: true,
@@ -70,10 +70,9 @@ export const ModifyQuest = () => {
     
     useEffect(() => { charactersInQuest();  },[characters]);
     useEffect(() => { filter(searchInput, characters);  },[searchInput]);
-    useEffect(() => { 
-        charactersInQuestHandler(questData.characters_id, characters);
-        console.log(charactersDoingQuest);
-    },[questData]);
+    useEffect(() => { charactersInQuestHandler(questData.characters_id, characters); },[questData]);
+
+    useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -253,9 +252,11 @@ export const ModifyQuest = () => {
                     <input 
                         className='col-9 QuestCardShadow fw-bold text-center rounded'
                         name="name"
+                        value={questData.name}
                         required={true}
                         placeholder={questRdx?.questInformation?.name}
-                        onChange={(e) => inputHandler(e)}/>
+                        onChange={(e) => inputHandler(e)}>
+                        </input>
                 </Col>
             </Row>
             <Row className='text-start'>                    
