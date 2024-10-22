@@ -71,9 +71,8 @@ export const ModifyQuest = () => {
     useEffect(() => { charactersInQuest();  },[characters]);
     useEffect(() => { filter(searchInput, characters);  },[searchInput]);
     useEffect(() => { 
-        console.log(questData.characters_id)
-        // console.log(charactersDoingQuest);
-        
+        charactersInQuestHandler(questData.characters_id, characters);
+        console.log(charactersDoingQuest);
     },[questData]);
 
     //HANDLERS
@@ -130,6 +129,20 @@ export const ModifyQuest = () => {
             ...prevState,
             characters_id: charactersArr
         }));
+    };
+
+    const charactersInQuestHandler = (data, characters) => {
+        let charactersQuestArr = [];
+
+        for (let i = 0; i < data.length; i++) {            
+            for (let j = 0; j < characters.length; j++) {
+                if (data[i] === characters[j]?.id) {
+                    charactersQuestArr.push(characters[j]);
+                };
+            };
+        };        
+
+        return setCharactersDoingQuest(charactersQuestArr);
     };
 
     //APICALLS
@@ -191,13 +204,16 @@ export const ModifyQuest = () => {
         getCharactersByQuestrId(questRdx?.questInformation.id)
         .then((result) => {     
             let charactersArr = result.data.data;
-            let characters_id = []
-            
+
+            let characters_id = [];
+            let characterData = [];
+                        
             for (let i = 0; i < charactersArr.length; i++) {
                 characters_id.push(charactersArr[i].character_id);
+                characterData.push(charactersArr[i].character)
             };
 
-            setCharactersDoingQuest(charactersArr);
+            setCharactersDoingQuest(characterData);
 
             setQuestData((prevState) => ({
                 ...prevState,
@@ -330,7 +346,7 @@ export const ModifyQuest = () => {
             <Row>
                 <Col className='col-12 fw-bold text-center mt-2'>Personajes en misión</Col>
                 <Col className='col-12 d-flex justify-content-center text-center'>
-                    {charactersDoingQuest.map((data) => <button key={data.id} className='mx-1 rounded'>{data.character.name}</button>)}
+                    {charactersDoingQuest.map((data) => <button key={data.id} className='mx-1 rounded'>{data.name}</button>)}
                 </Col>                
             </Row>
             <SearchBar className="col-9 rounded ps-3" onChangeFunction={(e) => shearchBarHandler(e)}/>
