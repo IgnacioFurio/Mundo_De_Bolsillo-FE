@@ -9,6 +9,8 @@ import { validate } from '../../helpers/validations.helper';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useNavigate } from 'react-router-dom';
 import { getCharactersByQuestrId } from '../../services/quest.apicall';
+import { SearchBar } from '../../common/SearchBar/SearchBar';
+import { CheckBox } from '../../common/CheckBox/CheckBox';
 
 export const ModifyQuest = () => {
     const navigate = useNavigate();
@@ -51,10 +53,10 @@ export const ModifyQuest = () => {
     const [ charactersDoingQuest, setCharactersDoingQuest ] = useState([]);
     const [ locations, setLocations ] = useState([]);
 
-    const [ submitStatus, setSubmitStatus ] = useState(false);
+    const [ searchInput, setSearchInput ]  = useState("");
+    const [ searchResult, setSearchResult ]  = useState("");
 
-    useEffect(() => {console.log(questRdx.questInformation);
-    }, []);
+    const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //APICALLS
     useEffect(() => { getWorldsData(); },[]);
@@ -67,7 +69,12 @@ export const ModifyQuest = () => {
     },[ worlds ]);
     
     useEffect(() => { charactersInQuest();  },[characters]);
-    // useEffect(() => { console.log(charactersDoingQuest) },[questInformation]);
+    useEffect(() => { filter(searchInput, characters);  },[searchInput]);
+    useEffect(() => { 
+        console.log(questData.characters_id)
+        // console.log(charactersDoingQuest);
+        
+    },[questData]);
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -87,6 +94,42 @@ export const ModifyQuest = () => {
         }));
 
         checkError(e);
+    };
+    
+    //handler y funcion para el componente barra buscadora
+    const shearchBarHandler = (e) => { setSearchInput(e.target.value); };
+
+    const filter = ( input, data ) => {
+        let result = data.filter((element) => {                        
+            if (element.name.toString().toLowerCase().includes(input.toLowerCase()) ) {
+                return element;
+            }
+        });
+        
+        setSearchResult(result)
+    };
+
+    //handler para el checkbox
+    const checkBoxHandler = (e) => {        
+        let charactersArr = [];
+        charactersArr = questData?.characters_id
+        
+        for (let i = 0; i < charactersArr.length; i++) {           
+            if (charactersArr[i] == e.target.value) {
+                charactersArr.splice(i, 1);
+
+                return setQuestData((prevState) => ({
+                    ...prevState,
+                    characters_id: charactersArr
+                }));
+            };           
+        };        
+        charactersArr.push(parseInt(e.target.value));
+        
+        return setQuestData((prevState) => ({
+            ...prevState,
+            characters_id: charactersArr
+        }));
     };
 
     //APICALLS
@@ -146,11 +189,22 @@ export const ModifyQuest = () => {
     //apicall que trae todos los personajes según la quest_id
     const charactersInQuest = () => {
         getCharactersByQuestrId(questRdx?.questInformation.id)
-        .then((result) => {           
-            setCharactersDoingQuest(result.data.data);
+        .then((result) => {     
+            let charactersArr = result.data.data;
+            let characters_id = []
+            
+            for (let i = 0; i < charactersArr.length; i++) {
+                characters_id.push(charactersArr[i].character_id);
+            };
+
+            setCharactersDoingQuest(charactersArr);
+
+            setQuestData((prevState) => ({
+                ...prevState,
+                characters_id: characters_id
+            }));
         })
-        .catch((error) => {console.log(error);
-        })
+        .catch((error) => {console.log(error); })
     };
 
      //CHECKS
@@ -276,8 +330,26 @@ export const ModifyQuest = () => {
             <Row>
                 <Col className='col-12 fw-bold text-center mt-2'>Personajes en misión</Col>
                 <Col className='col-12 d-flex justify-content-center text-center'>
-                    {charactersDoingQuest.map((data) => <button className='mx-1 rounded'>{data.character.name}</button>)}
+                    {charactersDoingQuest.map((data) => <button key={data.id} className='mx-1 rounded'>{data.character.name}</button>)}
                 </Col>                
+            </Row>
+            <SearchBar className="col-9 rounded ps-3" onChangeFunction={(e) => shearchBarHandler(e)}/>
+            <Row>
+                {searchInput !== "" ? 
+                    (
+                        searchResult.map((data) => {
+                            return <CheckBox key={data.id} checkedData={questData?.characters_id} value={data.id} label={data.name} className="col-4 form-check form-switch ms-4" onChangeFunction={(e) => checkBoxHandler(e)}/>
+                        })
+                    ) : (
+                        characters.length > 0 ? 
+                            (
+                                characters.map((data) => {
+                                    return <CheckBox key={data.id} checkedData={questData?.characters_id} value={data.id} label={data.name} className="col-4 form-check form-switch ms-4" onChangeFunction={(e) => checkBoxHandler(e)}/>
+                                })
+                            ) : (
+                                <></>
+                            )
+                    )}
             </Row>
             <Row className='text-center my-2'>
                 <Col className='col-12 fw-bold text-center mt-2'>Objetivos:</Col>

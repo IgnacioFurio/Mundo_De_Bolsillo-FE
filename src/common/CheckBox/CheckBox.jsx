@@ -2,40 +2,46 @@ import React, { useEffect, useState } from 'react'
 import { Col } from 'react-bootstrap'
 
 export const CheckBox = ({ checkedData, value, label, className, onChangeFunction }) => {
-    const [ data, setData ] = useState([]);
+    const [ data, setData ] = useState(checkedData);
+    const [ checkValue, setCheckValue ] = useState(value);
 
     const [ status, setStatus ] = useState(false);
-
-    useEffect(() => { setData(checkedData); }, []);
     
-    useEffect(() => { setStatus(checkHandler(data)); }, [ data ]);
+    useEffect(() => { checkHandler(data); }, [ data ]);
     
     const checkHandler = (data) => {  
         let result = false;
                 
         for (let i = 0; i < data.length; i++) {            
-                if (data[i] === value) {
+                if (parseInt(data[i]) === parseInt(value)) {
                     result = true;
                 };
             };
-            
-        return result;
+                        
+        setStatus(result);          // Actualizar el estado según el Array de data
+    };
+
+    const handleCheckboxChange = (e) => {
+        setStatus(e.target.checked); // Actualizar el estado según el checkbox
+        onChangeFunction(e);         // Llamar a la función que viene por props
     };
 
     return (
-        <>
-            {status === false ? (
-                <Col className={className} onChange={onChangeFunction}>
-                    <input className="form-check-input" value={value} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                    <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{label}</label>
-                </Col>
-            ) : (
-                <Col className={className} onChange={onChangeFunction}>
-                <input className="form-check-input" value={value} type="checkbox" role="switch" id="flexSwitchCheckChecked" checked/>
-                <label className="form-check-label" htmlFor="flexSwitchCheckChecked">{label}</label>
-            </Col>
-            )}
-            
-        </>
+        <Col className={className} >
+            <input 
+                className="form-check-input" 
+                value={checkValue} 
+                type="checkbox" 
+                role="switch" 
+                id={status ? "flexSwitchCheckChecked" : "flexSwitchCheckDefault"}
+                checked={status} // Input controlado por el estado "status"
+                onChange={(e) => handleCheckboxChange(e)} // Manejador de cambio
+            />
+            <label 
+                className="form-check-label" 
+                htmlFor={status ? "flexSwitchCheckChecked" : "flexSwitchCheckDefault"}>
+                {label}
+            </label>
+        </Col>
     )
 }
