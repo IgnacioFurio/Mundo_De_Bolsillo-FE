@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 //helper
 import { useSelector } from 'react-redux';
-import { validate } from '../../helpers/validations.helper';
+import { checkValid, validate } from '../../helpers/validations.helper';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { gameData } from '../../services/game.slice';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
@@ -71,7 +71,7 @@ export const NewQuest = () => {
 
     useEffect(() => { filter(searchInput, characters); },[ searchInput ]);
 
-    useEffect(() => { setSubmitStatus(checkSubmitStatus()); }, [validInputField]);
+    useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
 
     // TESTING ZONE ////////////////////////////////
     useEffect(() => { 
@@ -236,13 +236,6 @@ export const NewQuest = () => {
             ...prevState,
             [e.target.name + 'Error']: error
         }));
-    };
-
-    const checkSubmitStatus = () => {
-        for (const key in validInputField) {
-            if (validInputField[key] === false) { return false };
-        };
-        return true;
     };
 
     return (
