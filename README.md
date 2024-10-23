@@ -2,6 +2,8 @@
 
 Una aplicación para poder tener organizada la información de tus partidas de rol.
 
+<i>"Agh burzum-ishi krimpatul".</i> Sauron,
+
   <summary>Contenido 📝</summary>
   <ol>
     <li><a href="#objetivo-🎯">Objetivo 🎯</a></li>
@@ -30,10 +32,10 @@ En este repositorio encontrarás lo necesario para correr el front-end de la apl
 ---
 Como alguien que dirige partidas de rol he notado que durante las sesiones es muy dificil llevar la cuenta de todo lo que ocurre tanto en mesa como fuera de ella, la información fluye en todas las direcciones y muchas veces se pierde. 
 
-Con esta aplicación busco solucionar los problemas que he ido encontrando tanto como Director de Juego como Jugador de un plumazo;
+Con esta aplicación busco solucionar los problemas que he ido encontrando tanto dirigiendo como jugando de un plumazo;
 
 <li>Un lugar dónde poder tener controlados los elementos de la ambientación tales como los personajes tanto jugadores como no jugadores, y los sitios por donde se mueven.</li>
-<li>Registrar de manera instantanea los lugares por dónde pasan, asi como los secretos o pistas que puedan descubrir.</li>
+<li>Registrar de manera instantánea los lugares por dónde pasan, asi como los secretos o pistas que puedan descubrir.</li>
 <li>Crear escenas que recojan los elementos de la partida y sus sucesos.</li>
 <li>Crear la sesión añadiendo la escenas necesarias.</li>
 <li>Al señalar que la sesión ha finalizado poder comprobar que cosas se han visto en la mesa, o cuales se han quedado en el tintero.</li>
@@ -65,40 +67,56 @@ Con esta aplicación busco solucionar los problemas que he ido encontrando tanto
 1. Clonar el repositorio // Clone repository
 2. ` $ npm install `
 3. ` $ npm run dev `
-4. Una vez en la página principal crear la primera partida.
-5. Ahora es el momento de poblar esa partida para hacerla sentir viva, recomiendo seguir el siguiente orden; localizaciónes, personajes, secretos y misiones.
-6. Hacer las consultas que consideres necesarias.
+4. Ve a la dirección `/games/new-games` para crear tu partida.
+5. A continuación visita `/worlds/new-world` y crea al menos un nuevo mundo.
+6. Ya puedes visitar `/games/my-games` y comenzar a navegar a través de una interfaz intuitiva. 
+7. Visita alguna de tus partidas y haz clic en el botón de editar, una vez aquí puedes activar o desactivar mundos dentro de tus partidas. 
+8. Ahora es el momento de poblar esos mundos para hacer sentir viva la partida, recomendamos seguir el siguiente orden de creación; localizaciónes, personajes, información/secretos y misiones.
+9. Hacer las consultas que consideres necesarias.
 
 ---
 ## Vistas
 ---
 
-Seguimos trabajando en la aplicación para poder enseñar algo más en las próximas semanas.
+Ya tenemos la primera muestra de las vistas rápidas que podemos apreciar dentro de una partida;
+
+<li>Mundos enlazados a esta partida.
+<li>Lugares y personajes creados dentro de estos mundos
+<li>Detalles rápidos acerca de estos lugares y personajes.
 
 
-<img src= "./src/assets/ReadMe/mundosMobile.jpg"/>
+<img src= "./src/assets/ReadMe/readMe.gif"/>
 
-|||
+Además, todavía hay funcionalidades que están por ser mostradas, lee abajo para saber más.
 
-<img src= "./src/assets/ReadMe/partidasMobile.jpg"/>
+
+
 
 ---
 ## Futuras funcionalidades
 ---
 
-⬛ Creación de partidas dónde organizarte la información para cada una de ellas.
+⬛ Creación de partidas dónde organizar toda la información para cada una de ellas.
 
 ⬛ Creación de mundos ligados a partidas.
 
 ⬛ Creación de personajes y lugares ligados a los mundos.
 
-⬜ Creación de secretos/pistas y misiones ligados tanto a personajes como a lugares.
-
-⬜ Asociación de lugares dentro de otros como sitios que visitar, ej; el Distrito Norte es un barrio de la ciudad de WaterDeep, ambos son lugares, pero uno lo puedes encontrar dentro de otro.
+⬛ Creación de secretos/pistas y misiones ligados tanto a personajes como a lugares.
 
 ⬜ Creación de escenas que recojan lo necesario para poder montar el ambiente para la partida.
 
 ⬜ Creación de sesiones que recojan las distintas escenas que puede ser que tengan lugar.
+
+⬜ Creación de facciones asociadas a personajes, permitiendo que estos puedan pertenecer a varias al mismo tiempo.
+
+⬜ Asociación de lugares dentro de otros como sitios que visitar, ej; el Distrito Norte es un barrio de la ciudad de WaterDeep, ambos son lugares, pero uno lo puedes encontrar dentro de otro.
+
+⬜ Añadir una barra de navegación en condiciones.
+
+⬜ Y de paso un buen pie de página con algo de promoción del equipo desarrollador ;P.
+
+
 
 ---
 ## Contribuciones
