@@ -19,6 +19,7 @@ export const ModifyQuest = () => {
     const gameRdx = useSelector(gameData);
 
     const [ questData, setQuestData ] = useState({
+        id: questRdx?.questInformation.id,
         name: questRdx?.questInformation?.name,
         goal:  questRdx?.questInformation?.goal,
         delievered_by_character_id:  questRdx?.questInformation?.delievered_by_character_id,
@@ -70,7 +71,10 @@ export const ModifyQuest = () => {
     
     useEffect(() => { charactersInQuest();  },[characters]);
     useEffect(() => { filter(searchInput, characters);  },[searchInput]);
-    useEffect(() => { charactersInQuestHandler(questData.characters_id, characters); },[questData]);
+    useEffect(() => { charactersInQuestHandler(questData.characters_id, characters); 
+        console.log(questData);
+        
+    },[questData]);
 
     useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
 
@@ -373,7 +377,8 @@ export const ModifyQuest = () => {
                 <Col className='col-1'/>
                 <textarea 
                     className='col-10 text-center rounded'
-                    name="description"
+                    name="goal"
+                    value={questData?.goal}
                     required={false}
                     type='textarea'
                     placeholder={questRdx?.questInformation.goal || "¿De que se trata la misión?"}
