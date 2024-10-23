@@ -1,36 +1,38 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-//helper
-import { useSelector } from 'react-redux';
-import { checkValid, validate } from '../../helpers/validations.helper';
-import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
+import { Col, Container, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import { gameData } from '../../services/game.slice';
+import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
-import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
-import { Col, Container, Row } from 'react-bootstrap';
-import { createQuest } from '../../services/quest.apicall';
+import { checkValid, validate } from '../../helpers/validations.helper';
+import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
+import { useNavigate } from 'react-router-dom';
+import { getCharactersByQuestrId, modifyQuest } from '../../services/quest.apicall';
 import { SearchBar } from '../../common/SearchBar/SearchBar';
 import { CheckBox } from '../../common/CheckBox/CheckBox';
+import { questInfo } from '../../services/quest.slice';
 
-export const NewQuest = () => {
-
+export const ModifyQuest = () => {
     const navigate = useNavigate();
-    const gameRdx = useSelector(gameData)
+    const dispatch = useDispatch();
 
-    //HOOKS
-    const [ newQuestData, setNewQuestData ] = useState({
-        name: "",
-        goal: "",
-        delievered_by_character_id: null,
-        got_in_location_id: null,
-        happens_in_location_id: null,
+    const questRdx = useSelector((state) => state.quest);
+    const gameRdx = useSelector(gameData);
+
+    const [ questData, setQuestData ] = useState({
+        id: questRdx?.questInformation.id,
+        name: questRdx?.questInformation?.name,
+        goal:  questRdx?.questInformation?.goal,
+        delievered_by_character_id:  questRdx?.questInformation?.delievered_by_character_id,
+        got_in_location_id:  questRdx?.questInformation?.got_in_location_id,
+        happens_in_location_id:  questRdx?.questInformation?.happens_in_location_id,
         characters_id: [],
         status: true /*Predefinimos el estado de la misión como activa*/
     });
 
     const [ validInputField, setValidInputfield ] = useState({
-        nameValid: false,    /*Establecemos como falso los valores que son obligatorios */
+        nameValid: true,    /*Establecemos como falso los valores que son obligatorios */
         goalValid: true,
         delievered_by_character_idValid: true,
         got_in_location_idValid: true,
@@ -49,17 +51,17 @@ export const NewQuest = () => {
         status: ""
     });
 
-    const [ submitStatus, setSubmitStatus ] = useState(false);
-
     const [ worlds, setWorlds ] = useState([]);
     const [ characters, setCharacters ] = useState([]);
-    const [ charactersQuest, setCharactersQuest ] = useState([]);
+    const [ charactersDoingQuest, setCharactersDoingQuest ] = useState([]);
     const [ locations, setLocations ] = useState([]);
 
-    const [ searchInput, setSearchInput ] = useState("");
-    const [ searchResult, setSearchResult ] = useState([]);
-    
-    //VALIDATIONS
+    const [ searchInput, setSearchInput ]  = useState("");
+    const [ searchResult, setSearchResult ]  = useState("");
+
+    const [ submitStatus, setSubmitStatus ] = useState(false);
+
+    //APICALLS
     useEffect(() => { getWorldsData(); },[]);
     
     useEffect(() => {       
@@ -68,42 +70,36 @@ export const NewQuest = () => {
             getLocationsData();
         };
     },[ worlds ]);
-
-    useEffect(() => { filter(searchInput, characters); },[ searchInput ]);
+    
+    useEffect(() => { charactersInQuest();  },[characters]);
+    useEffect(() => { filter(searchInput, characters);  },[searchInput]);
+    useEffect(() => { charactersInQuestHandler(questData.characters_id, characters); 
+        console.log(questData);
+        
+    },[questData]);
 
     useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
 
-    // TESTING ZONE ////////////////////////////////
-    useEffect(() => { 
-        setCharactersQuest(() => {
-            let charactersArr = [];
-            
-            for (let i = 0; i < characters.length; i++) {
-                for (let j = 0; j < newQuestData.characters_id.length; j++) {
-                    if (characters[i].id === newQuestData.characters_id[j]) {
-                        charactersArr.push(characters[i].name); 
-                    };
-                }
-            };
-            
-            return charactersArr;
-        });
-
-    }, [newQuestData]);
-
-    // useEffect(() => { console.log(newQuestData.characters_id);  }, [charactersQuest])
-
-
     //HANDLERS
     const inputHandler = (e) => {        
-        setNewQuestData((prevState) => ({
+        setQuestData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }));
 
         checkError(e);
-    };
+};
 
+    //handler para el dropdown del formulario
+    const dropdownHandler = (e) => {       
+        setQuestData((prevState) => ({
+            ...prevState,
+            [e.target.name]: parseInt(e.target.value)
+        }));
+
+        checkError(e);
+    };
+    
     //handler y funcion para el componente barra buscadora
     const shearchBarHandler = (e) => { setSearchInput(e.target.value); };
 
@@ -117,45 +113,47 @@ export const NewQuest = () => {
         setSearchResult(result)
     };
 
-    //handler para el dropdown del formulario
-    const dropdownHandler = (e) => {       
-        setNewQuestData((prevState) => ({
-            ...prevState,
-            [e.target.name]: parseInt(e.target.value)
-        }));
-
-        checkError(e);
-    };
-    
     //handler para el checkbox
-    const checkBoxHandler = (e) => {
+    const checkBoxHandler = (e) => {        
         let charactersArr = [];
-        charactersArr = newQuestData.characters_id
+        charactersArr = questData?.characters_id
         
         for (let i = 0; i < charactersArr.length; i++) {           
             if (charactersArr[i] == e.target.value) {
                 charactersArr.splice(i, 1);
 
-                setNewQuestData((prevState) => ({
+                return setQuestData((prevState) => ({
                     ...prevState,
                     characters_id: charactersArr
                 }));
-                return;
             };           
         };        
         charactersArr.push(parseInt(e.target.value));
         
-        setNewQuestData((prevState) => ({
+        return setQuestData((prevState) => ({
             ...prevState,
             characters_id: charactersArr
         }));
-        return 
     };
-    
+
+    const charactersInQuestHandler = (data, characters) => {
+        let charactersQuestArr = [];
+
+        for (let i = 0; i < data.length; i++) {            
+            for (let j = 0; j < characters.length; j++) {
+                if (data[i] === characters[j]?.id) {
+                    charactersQuestArr.push(characters[j]);
+                };
+            };
+        };        
+
+        return setCharactersDoingQuest(charactersQuestArr);
+    };
+
     //APICALLS
     //apicall que trae los mundos segun el id de la partida
     const getWorldsData = () => {
-        getWorldGatesByGameId(gameRdx.gameInformation.id)//leemos el id de la partida en redux
+        getWorldGatesByGameId(gameRdx?.gameInformation?.id)//leemos el id de la partida en redux
         .then((result) => {
             let data = result?.data?.data;
             let worlds = []; //array dónde guardaremos los id de los mundos
@@ -206,16 +204,42 @@ export const NewQuest = () => {
         .catch((error) => {console.log(error)});
     };
 
-    //apicall para registrar la nueva misión
-    const createNewQuest = () => {
-        createQuest(newQuestData)
-        .then((result) => {
+    //apicall que trae todos los personajes según la quest_id
+    const charactersInQuest = () => {
+        getCharactersByQuestrId(questRdx?.questInformation.id)
+        .then((result) => {     
+            let charactersArr = result.data.data;
+
+            let characters_id = [];
+            let characterData = [];
+                        
+            for (let i = 0; i < charactersArr.length; i++) {
+                characters_id.push(charactersArr[i].character_id);
+                characterData.push(charactersArr[i].character)
+            };
+
+            setCharactersDoingQuest(characterData);
+
+            setQuestData((prevState) => ({
+                ...prevState,
+                characters_id: characters_id
+            }));
+        })
+        .catch((error) => {console.log(error); })
+    };
+
+    //apicall que envia los datos modificados
+    const modifyQuestInfo = () => {       
+        modifyQuest(questData)
+        .then(() => {
+            dispatch(questInfo({questInformation: {}}));      
+
             navigate("/games/game-details");
         })
         .catch((error) => console.log(error))
     };
 
-    //CHECKS
+     //CHECKS
     const checkError = (e) => {     
         let error = "";
     
@@ -237,17 +261,19 @@ export const NewQuest = () => {
             [e.target.name + 'Error']: error
         }));
     };
-
+    
     return (
         <Container className='centerScrollLocations border border-black rounded pt-1'>
             <Row className='QuestCardShadow text-center'>
                 <Col className='bannerRibbonQuest fw-bold py-2'>
                     <input 
-                        className='col-9 QuestCardShadow fs-4 fw-bold text-center rounded'
+                        className='col-9 QuestCardShadow fw-bold text-center rounded'
                         name="name"
+                        value={questData.name}
                         required={true}
-                        placeholder={"Título"}
-                        onChange={(e) => inputHandler(e)}/>
+                        placeholder={questRdx?.questInformation?.name}
+                        onChange={(e) => inputHandler(e)}>
+                        </input>
                 </Col>
             </Row>
             <Row className='text-start'>                    
@@ -260,7 +286,10 @@ export const NewQuest = () => {
                                 name={"delievered_by_character_id"} 
                                 onChange={(e) => dropdownHandler(e)}
                                 >
-                                <option value={null} label={"Contado por..."}/>
+                                <option 
+                                    value={questRdx?.questInformation?.delieveredByCharacter?.id} 
+                                    label={`Contado por: ${questRdx?.questInformation?.delieveredByCharacter?.name}`}
+                                />
                                 {!characters ? ( 
                                         <></>
                                     ) : (
@@ -284,7 +313,10 @@ export const NewQuest = () => {
                                 name={"got_in_location_id"} 
                                 onChange={(e) => dropdownHandler(e)}
                                 >
-                                <option value={null} label={"Escuchado en..."}/>
+                                <option 
+                                    value={questRdx?.questInformation?.gotInLocation?.id} 
+                                    label={`Escuchado en: ${questRdx?.questInformation.gotInLocation.name}` }
+                                    />
                                 {!locations ? ( 
                                         <></>
                                     ) : (
@@ -308,7 +340,10 @@ export const NewQuest = () => {
                                 name={"happens_in_location_id"} 
                                 onChange={(e) => dropdownHandler(e)}
                                 >
-                                <option value={null} label={"Ocurre en..."}/>
+                                <option 
+                                    value={questRdx?.questInformation?.happensInLocation?.id} 
+                                    label={`Ocurre en: ${questRdx?.questInformation?.happensInLocation?.name}`}
+                                    />
                                 {!locations ? ( 
                                         <></>
                                     ) : (
@@ -326,11 +361,10 @@ export const NewQuest = () => {
                     </Row>
                 </Container>
             </Row>
-            {/* BARRA BUSCADORA*/}
             <Row>
-                <Col className='col-12 fs-5 fw-bold text-center mt-2'>Personajes en misión</Col>
-                <Col className='col-12 text-center'>
-                    {charactersQuest.join(", ")}
+                <Col className='col-12 fw-bold text-center mt-2'>Personajes en misión</Col>
+                <Col className='col-12 d-flex justify-content-center text-center'>
+                    {charactersDoingQuest.map((data) => <button key={data.id} className='mx-1 rounded'>{data.name}</button>)}
                 </Col>                
             </Row>
             <SearchBar className="col-9 rounded ps-3" onChangeFunction={(e) => shearchBarHandler(e)}/>
@@ -338,34 +372,38 @@ export const NewQuest = () => {
                 {searchInput !== "" ? 
                     (
                         searchResult.map((data) => {
-                            return <CheckBox key={data.id} checkedData={newQuestData.characters_id} value={data.id} label={data.name} className="col-4 form-check form-switch ms-4" onChangeFunction={(e) => checkBoxHandler(e)}/>
+                            return <CheckBox key={data.id} checkedData={questData?.characters_id} value={data.id} label={data.name} className="col-4 form-check form-switch ms-4" onChangeFunction={(e) => checkBoxHandler(e)}/>
                         })
                     ) : (
                         characters.length > 0 ? 
                             (
                                 characters.map((data) => {
-                                    return <CheckBox key={data.id} checkedData={newQuestData?.characters_id} value={data.id} label={data.name} className="col-4 form-check form-switch ms-4" onChangeFunction={(e) => checkBoxHandler(e)}/>
+                                    return <CheckBox key={data.id} checkedData={questData?.characters_id} value={data.id} label={data.name} className="col-4 form-check form-switch ms-4" onChangeFunction={(e) => checkBoxHandler(e)}/>
                                 })
                             ) : (
                                 <></>
                             )
                     )}
             </Row>
-            <Row className='text-center my-1'>
-                <Col className='col-12 mt-1 '> 
-                    <textarea 
-                        className='col-11 text-center rounded'
-                        name="goal"
-                        required={false}
-                        placeholder={"¿De que se trata la misión?"}
-                        onChange={(e) => inputHandler(e)}
-                        style={{height: 8 + "em"}}/>
-                </Col>
+            <Row className='text-center my-2'>
+                <Col className='col-12 fw-bold text-center mt-2'>Objetivos:</Col>
+                <Col className='col-1'/>
+                <textarea 
+                    className='col-10 text-center rounded'
+                    name="goal"
+                    value={questData?.goal}
+                    required={false}
+                    type='textarea'
+                    placeholder={questRdx?.questInformation.goal || "¿De que se trata la misión?"}
+                    onChange={(e) => inputHandler(e)}
+                    style={{height: 8 + "em"}}
+                    />
+                <Col className='col-1'/>
             </Row>
             <Row>
                 <Col className='col-12 d-flex justify-content-evenly py-3'>
-                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
-                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewQuest()}/>
+                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/quests/quest-details")}/>
+                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => modifyQuestInfo(questData)}/>
                 </Col>
             </Row>
         </Container>
