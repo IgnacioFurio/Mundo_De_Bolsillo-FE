@@ -21,9 +21,9 @@ export const createQuest = async (body) => {
     return await axios.post(`${root}/quest/post`, body)
 };
 
-// export const modifyLocation = async (body) => {
-//     return await axios.put(`${root}/location/put`, body);
-// };
+export const modifyQuest = async (body) => {
+    return await axios.put(`${root}/quest/put`, body);
+};
 
 export const deleteQuest = async (body) => {
     const data = {

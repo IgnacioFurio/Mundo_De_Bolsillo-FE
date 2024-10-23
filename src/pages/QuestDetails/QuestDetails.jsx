@@ -17,6 +17,8 @@ export const QuestDetails = () => {
     const [ charactersDoingQuest, setCharactersDoingQuest ] = useState([]);
 
     useEffect(() => { charactersInQuest(); }, []);
+    useEffect(() => { console.log(quest);
+    ; }, []);
 
     // APICALLS
     const charactersInQuest = () => {
@@ -76,7 +78,7 @@ export const QuestDetails = () => {
                 <Row>
                     <Col className='col-12 fw-bold text-center mt-2'>Personajes en misión</Col>
                     <Col className='col-12 d-flex justify-content-center text-center'>
-                        {charactersDoingQuest.map((data) => <button className='mx-1 rounded'>{data.character.name}</button>)}
+                        {charactersDoingQuest.map((data) => <button key={data.character.id} className='mx-1 rounded'>{data.character.name}</button>)}
                     </Col>                
                 </Row>
                 <Row className='text-center my-1'>

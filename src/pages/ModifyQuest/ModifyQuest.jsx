@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { gameData } from '../../services/game.slice';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
@@ -8,12 +8,14 @@ import { getCharactersByWorldId } from '../../services/character.apicalls';
 import { checkValid, validate } from '../../helpers/validations.helper';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useNavigate } from 'react-router-dom';
-import { getCharactersByQuestrId } from '../../services/quest.apicall';
+import { getCharactersByQuestrId, modifyQuest } from '../../services/quest.apicall';
 import { SearchBar } from '../../common/SearchBar/SearchBar';
 import { CheckBox } from '../../common/CheckBox/CheckBox';
+import { questInfo } from '../../services/quest.slice';
 
 export const ModifyQuest = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const questRdx = useSelector((state) => state.quest);
     const gameRdx = useSelector(gameData);
@@ -226,6 +228,17 @@ export const ModifyQuest = () => {
         .catch((error) => {console.log(error); })
     };
 
+    //apicall que envia los datos modificados
+    const modifyQuestInfo = () => {       
+        modifyQuest(questData)
+        .then(() => {
+            dispatch(questInfo({questInformation: {}}));      
+
+            navigate("/games/game-details");
+        })
+        .catch((error) => console.log(error))
+    };
+
      //CHECKS
     const checkError = (e) => {     
         let error = "";
@@ -390,7 +403,7 @@ export const ModifyQuest = () => {
             <Row>
                 <Col className='col-12 d-flex justify-content-evenly py-3'>
                     <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/quests/quest-details")}/>
-                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => {}}/>
+                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => modifyQuestInfo(questData)}/>
                 </Col>
             </Row>
         </Container>
