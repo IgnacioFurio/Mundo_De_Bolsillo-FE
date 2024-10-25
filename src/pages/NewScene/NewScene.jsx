@@ -4,7 +4,7 @@ import { characterData, characterInfo } from '../../services/character.slice';
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useNavigate } from 'react-router-dom';
-import { deleteCharacter } from '../../services/character.apicalls';
+import { deleteCharacter, getCharactersByWorldId } from '../../services/character.apicalls';
 import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
 import { Knowledge } from '../../common/Knowledge/Knowledge';
 import { Quest } from '../../common/Quest/Quest';
@@ -34,7 +34,8 @@ export const NewScene = () => {
     const [ worlds, setWorlds ] = useState([]);
     const [ worldsId, setWorldsId ] = useState([]);
     
-    const [ locations, setLocations ] = useState();
+    const [ locations, setLocations ] = useState([]);
+    const [ characters, setCharacters ] = useState([]);
 
     const [ showMoreData, setShowMoreData ] = useState({
         "": false,
@@ -48,12 +49,12 @@ export const NewScene = () => {
     }, []);
 
     useEffect(() => {
-        console.log(newSceneData);
         console.log(worldsId);
         console.log(worlds);
         console.log(locations);
+        console.log(characters);
         
-    }, [worlds]);
+    }, [characters]);
 
     useEffect(() => {console.log(newSceneData);  }, [newSceneData])
 
@@ -78,19 +79,9 @@ export const NewScene = () => {
     };
     
     //APICALL
-    const gatherLocationsInformation = () => {
-        getLocations(characterRdx?.characterInformation?.id)
-        .then((result) => { setAboutCharacter(result.data.data); })
-        .catch((error) => { console.log(error); })
-
-        getQuestByCharacterId(characterRdx?.characterInformation?.id)
-        .then((result) => { setAboutQuest(result.data.data); })
-        .catch((error) => { console.log(error); })
-    };
-
-    //apicall que trae todas las localizaciones segun el world_id
+    //apicall que trae todas las localizaciones segun el game_id
     const getLocationsData = () => {
-        getWorldGatesByGameId(gameRdx?.gameInformation?.id)
+        getWorldGatesByGameId(gameRdx?.gameInformation?.id) //traemos la información de los mundos enlazados
         .then((result) => { 
             let worldArr = result.data.data
             let worldsIdArr = [];
@@ -99,8 +90,8 @@ export const NewScene = () => {
                 worldsIdArr.push(worldArr[i].World.id);           
             };
 
-            setWorlds(worldArr)
-            setWorldsId(worldsIdArr);
+            setWorlds(worldArr);                            //seteamos los mundos
+            setWorldsId(worldsIdArr);                       //Seteamos los id de los mundos
         })
         .catch((error) => console.log(error))
 
@@ -116,10 +107,27 @@ export const NewScene = () => {
                 }
             };
             
-            setLocations(locations);//seteamos las localizaciones en su hook
+            setLocations(locations);//seteamos las localizaciones
+        })
+        .catch((error) => {console.log(error)});
+
+        getCharactersByWorldId(worldsId)
+        .then((result) => {            
+            let arr = result?.data?.data;
+            let characters = [];
+            
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = 0; j < arr[i].length; j++) {
+                    characters.push(arr[i][j]);                        
+                }
+            };
+            
+            setCharacters(characters);//seteamos los personajes en su hook
         })
         .catch((error) => {console.log(error)});
     };
+
+
 
     const deleteCharacterData = () => {
         deleteCharacter(characterRdx.characterInformation.id)
