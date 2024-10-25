@@ -34,7 +34,7 @@ export const NewScene = () => {
     const [ worlds, setWorlds ] = useState([]);
     const [ worldsId, setWorldsId ] = useState([]);
     
-    const [ aboutLocation, setAboutLocation ] = useState();
+    const [ locations, setLocations ] = useState();
 
     const [ showMoreData, setShowMoreData ] = useState({
         "": false,
@@ -50,6 +50,7 @@ export const NewScene = () => {
     useEffect(() => {
         console.log(worldsId);
         console.log(worlds);
+        console.log(locations);
         
     }, [worlds]);
 
@@ -82,7 +83,6 @@ export const NewScene = () => {
             let worldsIdArr = [];
 
             for (let i = 0; i < worldArr.length; i++) {
-                console.log(worldArr[i].World);
                 worldsIdArr.push(worldArr[i].World.id);           
             };
 
@@ -91,9 +91,10 @@ export const NewScene = () => {
         })
         .catch((error) => console.log(error))
 
-        getLocationsByWorldId(worlds)//traemos las localizaciones usando el array de los id de los mundos
+        getLocationsByWorldId(worldsId)//traemos las localizaciones usando el array de los id de los mundos
         .then((result) => {
             let arr = result?.data?.data;
+            
             let locations = [];            
             
             for (let i = 0; i < arr.length; i++) {
@@ -102,7 +103,7 @@ export const NewScene = () => {
                 }
             };
             
-            // setLocations(locations);//seteamos las localizaciones en su hook
+            setLocations(locations);//seteamos las localizaciones en su hook
         })
         .catch((error) => {console.log(error)});
     };
@@ -172,16 +173,29 @@ export const NewScene = () => {
                     />
             </Row>
             <Container className='centerScrollLocations col-10'>
-                <Row className='borderDataCard align-items-center py-1 px-2'>                            
-                    <Col className='text-center'>{}</Col>
-                </Row> 
-                <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>                            
-                    <Col className='locationIcon col-1 fw-bold'></Col>
-                    <Col className='col-10'> {}</Col>
-                </Row>
-                <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>
-                    <Col className='locationIcon col-1 fw-bold'></Col>
-                    <Col className='col-10'> {}</Col>
+                <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                    <Col className='locationIcon col-2 fw-bold text-center'></Col>
+                    <Col className='col-10'>
+                        <select 
+                            className='col-12 rounded'
+                            name={"delievered_by_character_id"} 
+                            onChange={(e) => dropdownHandler(e)}
+                            >
+                            <option value={null} label={"Contado por..."}/>
+                            {!locations ? ( 
+                                    <></>
+                                ) : (
+                                locations.map((data) => { 
+                                    return  <option
+                                        key={data.id}
+                                        value={data.id}
+                                        label={data.name}
+                                        >
+                                            {data.name}
+                                        </option>
+                            }))}
+                        </select>
+                    </Col>
                 </Row>
                 <Row className='borderDataCard py-2'>
                     <select className='MoreInfoSelector text-center fw-bold' onClick={(e) => InfoHandler(e)}> 
