@@ -5,7 +5,6 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useNavigate } from 'react-router-dom';
 import { deleteCharacter } from '../../services/character.apicalls';
-import { KnowledgeCard } from '../../common/KnowledgeCard/KnowledgeCard';
 import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
 import { Knowledge } from '../../common/Knowledge/Knowledge';
 import { Quest } from '../../common/Quest/Quest';
