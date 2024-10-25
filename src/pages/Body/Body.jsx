@@ -23,6 +23,7 @@ import { Quest } from '../../common/Quest/Quest'
 import { QuestDetails } from '../QuestDetails/QuestDetails'
 import { NewQuest } from '../NewQuest/NewQuest'
 import { ModifyQuest } from '../ModifyQuest/ModifyQuest'
+import { NewScene } from '../NewScene/NewScene'
 
 export const Body = () => {
     return (
@@ -49,6 +50,7 @@ export const Body = () => {
                 <Route path='/quests/new-quest' element={<NewQuest/>}/>
                 <Route path='/quests/quest-details' element={<QuestDetails/>}/>
                 <Route path='/quests/modify-quest' element={<ModifyQuest/>}/>
+                <Route path='/scenes/new-Scene' element={<NewScene/>}/>
             </Routes>
         </Container>
     )
