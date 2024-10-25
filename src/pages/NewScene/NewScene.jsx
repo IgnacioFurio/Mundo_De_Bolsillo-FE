@@ -48,17 +48,30 @@ export const NewScene = () => {
     }, []);
 
     useEffect(() => {
+        console.log(newSceneData);
         console.log(worldsId);
         console.log(worlds);
         console.log(locations);
         
     }, [worlds]);
 
+    useEffect(() => {console.log(newSceneData);  }, [newSceneData])
+
     //HANDLERS
     const inputHandler = (e) => {        
         setNewSceneData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
+        }));
+
+        checkError(e);
+    };
+    
+    //handler para el dropdown del formulario
+    const dropdownHandler = (e) => {       
+        setNewSceneData((prevState) => ({
+            ...prevState,
+            [e.target.name]: parseInt(e.target.value)
         }));
 
         checkError(e);
@@ -178,7 +191,7 @@ export const NewScene = () => {
                     <Col className='col-10'>
                         <select 
                             className='col-12 rounded'
-                            name={"delievered_by_character_id"} 
+                            name={"location_id"} 
                             onChange={(e) => dropdownHandler(e)}
                             >
                             <option value={null} label={"Contado por..."}/>
