@@ -44,9 +44,7 @@ export const NewScene = () => {
     });
 
     //USEEFFECT
-    useEffect(() => {
-        getLocationsData();
-    }, []);
+    useEffect(() => { getAllDataByWorldId();  }, []);
 
     useEffect(() => {
         console.log(worldsId);
@@ -80,12 +78,12 @@ export const NewScene = () => {
     
     //APICALL
     //apicall que trae todas las localizaciones segun el game_id
-    const getLocationsData = () => {
+    const getAllDataByWorldId = () => {
         getWorldGatesByGameId(gameRdx?.gameInformation?.id) //traemos la información de los mundos enlazados
         .then((result) => { 
             let worldArr = result.data.data
             let worldsIdArr = [];
-
+            
             for (let i = 0; i < worldArr.length; i++) {
                 worldsIdArr.push(worldArr[i].World.id);           
             };
@@ -95,7 +93,7 @@ export const NewScene = () => {
         })
         .catch((error) => console.log(error))
 
-        getLocationsByWorldId(worldsId)//traemos las localizaciones usando el array de los id de los mundos
+        getLocationsByWorldId(worldsId) //traemos las localizaciones usando el array de los id de los mundos
         .then((result) => {
             let arr = result?.data?.data;
             
@@ -186,7 +184,7 @@ export const NewScene = () => {
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
             <Row className='upperScroll d-flex justify-content-center align-items-center' >
                 <input 
-                    className='col-9 QuestCardShadow fw-bold text-center eb-garamond-font rounded ms-3'
+                    className='col-9 QuestCardShadow fw-bold text-center eb-garamond-font rounded ms-4'
                     name="title"
                     required={true}
                     placeholder={""}
@@ -202,7 +200,7 @@ export const NewScene = () => {
                             name={"location_id"} 
                             onChange={(e) => dropdownHandler(e)}
                             >
-                            <option value={null} label={"Contado por..."}/>
+                            <option value={null} label={"Sucede en ..."}/>
                             {!locations ? ( 
                                     <></>
                                 ) : (
