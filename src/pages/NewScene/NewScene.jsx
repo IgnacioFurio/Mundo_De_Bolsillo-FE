@@ -8,6 +8,7 @@ import { deleteCharacter, getCharactersByWorldId } from '../../services/characte
 import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
 import { Knowledge } from '../../common/Knowledge/Knowledge';
 import { Quest } from '../../common/Quest/Quest';
+import { CheckBox } from '../../common/CheckBox/CheckBox';
 import { getQuestByCharacterId } from '../../services/quest.apicall';
 import { gameData } from '../../services/game.slice';
 import { validate } from '../../helpers/validations.helper';
@@ -25,7 +26,7 @@ export const NewScene = () => {
     const [ newSceneData, setNewSceneData ] = useState(
         {
             title: "",
-            characters_id: [],
+            characters_id: [1,2],
             location_id: "",
             description: "",
         }
@@ -125,8 +126,6 @@ export const NewScene = () => {
         .catch((error) => {console.log(error)});
     };
 
-
-
     const deleteCharacterData = () => {
         deleteCharacter(characterRdx.characterInformation.id)
         .then(result => {
@@ -215,6 +214,24 @@ export const NewScene = () => {
                             }))}
                         </select>
                     </Col>
+                </Row>
+                <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                    <Col className='populationIcon col-2 fw-bold text-center'></Col>
+                    <Col className='col-10'>
+                    </Col>
+                    {!characters ? ( 
+                                    <></>
+                                ) : (
+                                characters.map((data) => { 
+                                    return  <CheckBox
+                                        key={data.id}
+                                        checkedData={newSceneData?.characters_id}
+                                        value={data.id} 
+                                        label={data.name} 
+                                        className={"col-6 form-check form-switch"}
+                                        onChangeFunction
+                                        />
+                            }))}
                 </Row>
                 <Row className='borderDataCard py-2'>
                     <select className='MoreInfoSelector text-center fw-bold' onClick={(e) => InfoHandler(e)}> 
