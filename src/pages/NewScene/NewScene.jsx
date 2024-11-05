@@ -26,7 +26,7 @@ export const NewScene = () => {
     const [ newSceneData, setNewSceneData ] = useState(
         {
             title: "",
-            characters_id: [1,2],
+            characters_id: [],
             location_id: "",
             description: "",
         }
@@ -48,12 +48,9 @@ export const NewScene = () => {
     useEffect(() => { getAllDataByWorldId();  }, []);
 
     useEffect(() => {
-        console.log(worldsId);
-        console.log(worlds);
-        console.log(locations);
-        console.log(characters);
-        
-    }, [characters]);
+        getAllLocationsVyWorldId();
+        getAllCharactersByWorldId();
+    }, [worldsId]);
 
     useEffect(() => {console.log(newSceneData);  }, [newSceneData])
 
@@ -61,7 +58,7 @@ export const NewScene = () => {
     const inputHandler = (e) => {        
         setNewSceneData((prevState) => ({
             ...prevState,
-            [e.target.name]: e.target.value
+            [e.target.name]: e?.target?.value
         }));
 
         checkError(e);
@@ -76,40 +73,69 @@ export const NewScene = () => {
 
         checkError(e);
     };
+
+    //handler para el checkbox
+    const checkBoxHandler = (e) => {
+        let charactersArr = [];
+        charactersArr =  newSceneData?.characters_id
+        
+        for (let i = 0; i < charactersArr.length; i++) {           
+            if (charactersArr[i] == e.target.value) {
+                charactersArr.splice(i, 1);
+
+                setNewSceneData((prevState) => ({
+                    ...prevState,
+                    characters_id: charactersArr
+                }));
+                return;
+            };           
+        };        
+        charactersArr.push(parseInt(e.target.value));
+        
+        setNewSceneData((prevState) => ({
+            ...prevState,
+            characters_id: charactersArr
+        }));
+        return 
+    };
     
     //APICALL
     //apicall que trae todas las localizaciones segun el game_id
     const getAllDataByWorldId = () => {
         getWorldGatesByGameId(gameRdx?.gameInformation?.id) //traemos la información de los mundos enlazados
         .then((result) => { 
-            let worldArr = result.data.data
+            let worldArr = result?.data?.data
             let worldsIdArr = [];
             
-            for (let i = 0; i < worldArr.length; i++) {
-                worldsIdArr.push(worldArr[i].World.id);           
+            for (let i = 0; i < worldArr?.length; i++) {
+                worldsIdArr?.push(worldArr[i]?.World.id);           
             };
 
             setWorlds(worldArr);                            //seteamos los mundos
             setWorldsId(worldsIdArr);                       //Seteamos los id de los mundos
         })
         .catch((error) => console.log(error))
+    };
 
+    const getAllLocationsVyWorldId = () => {
         getLocationsByWorldId(worldsId) //traemos las localizaciones usando el array de los id de los mundos
         .then((result) => {
             let arr = result?.data?.data;
             
             let locations = [];            
             
-            for (let i = 0; i < arr.length; i++) {
-                for (let j = 0; j < arr[i].length; j++) {
-                    locations.push(arr[i][j]);                        
-                }
+            for (let i = 0; i < arr?.length; i++) {
+                for (let j = 0; j < arr[i]?.length; j++) {
+                    locations?.push(arr[i][j]);                        
+                };
             };
             
             setLocations(locations);//seteamos las localizaciones
         })
         .catch((error) => {console.log(error)});
+    };
 
+    const getAllCharactersByWorldId = () => {
         getCharactersByWorldId(worldsId)
         .then((result) => {            
             let arr = result?.data?.data;
@@ -123,18 +149,8 @@ export const NewScene = () => {
             
             setCharacters(characters);//seteamos los personajes en su hook
         })
-        .catch((error) => {console.log(error)});
+        .catch((error) => {console.log(error)})
     };
-
-    const deleteCharacterData = () => {
-        deleteCharacter(characterRdx.characterInformation.id)
-        .then(result => {
-            dispatch(characterInfo({characterInformation: {}}));
-            navigateBack();
-        })
-        .catch((error) => {console.log(error);})
-    };
-
     //FUNCTION
     const navigateBack = () => {
         dispatch(characterInfo({characterInformation: {}}));
@@ -211,7 +227,8 @@ export const NewScene = () => {
                                         >
                                             {data.name}
                                         </option>
-                            }))}
+                                })
+                            )}
                         </select>
                     </Col>
                 </Row>
@@ -220,18 +237,18 @@ export const NewScene = () => {
                     <Col className='col-10'>
                     </Col>
                     {!characters ? ( 
-                                    <></>
-                                ) : (
-                                characters.map((data) => { 
-                                    return  <CheckBox
-                                        key={data.id}
-                                        checkedData={newSceneData?.characters_id}
-                                        value={data.id} 
-                                        label={data.name} 
-                                        className={"col-6 form-check form-switch"}
-                                        onChangeFunction
-                                        />
-                            }))}
+                            <></>
+                        ) : (
+                            characters.map((data) => { 
+                                return  <CheckBox
+                                    key={data.id}
+                                    checkedData={newSceneData?.characters_id}
+                                    value={data.id} 
+                                    label={data.name} 
+                                    className={"col-6 form-check form-switch"}
+                                    onChangeFunction={(e) => checkBoxHandler(e)}
+                                    />
+                    }))}
                 </Row>
                 <Row className='borderDataCard py-2'>
                     <select className='MoreInfoSelector text-center fw-bold' onClick={(e) => InfoHandler(e)}> 
