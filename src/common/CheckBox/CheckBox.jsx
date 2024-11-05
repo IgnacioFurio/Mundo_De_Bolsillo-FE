@@ -8,8 +8,6 @@ export const CheckBox = ({ checkedData, value, label, className, onChangeFunctio
     const [ status, setStatus ] = useState(false);
     
     useEffect(() => { checkHandler(data); }, [ data ]);
-    useEffect(() => { console.log(checkedData);
-    },[]);
     
     const checkHandler = (data) => {  
         let result = false;
