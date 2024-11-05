@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { characterData, characterInfo } from '../../services/character.slice';
+import { characterInfo } from '../../services/character.slice';
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useNavigate } from 'react-router-dom';
-import { deleteCharacter, getCharactersByWorldId } from '../../services/character.apicalls';
-import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
-import { Knowledge } from '../../common/Knowledge/Knowledge';
-import { Quest } from '../../common/Quest/Quest';
+import { getCharactersByWorldId } from '../../services/character.apicalls';
 import { CheckBox } from '../../common/CheckBox/CheckBox';
-import { getQuestByCharacterId } from '../../services/quest.apicall';
 import { gameData } from '../../services/game.slice';
 import { validate } from '../../helpers/validations.helper';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { SearchBar } from '../../common/SearchBar/SearchBar';
+import { createScene } from '../../services/scene.apicalls';
 
 export const NewScene = () => {
     //HOOKS
@@ -28,8 +25,9 @@ export const NewScene = () => {
         {
             title: "",
             characters_id: [],
-            location_id: "",
+            location_id: null,
             description: "",
+            game_id: gameRdx?.gameInformation?.id
         }
     );
 
@@ -49,6 +47,8 @@ export const NewScene = () => {
     const [ searchInput, setSearchInput ] = useState("");
     const [ searchResult, setSearchResult ] = useState([]);
 
+    const [ submitStatus, setSubmitStatus ] = useState(true);
+
     //USEEFFECT
     useEffect(() => { getAllDataByWorldId();  }, []);
 
@@ -59,13 +59,12 @@ export const NewScene = () => {
         };
     }, [worldsId]);
 
-    useEffect(() => { showCharactersInScene(); },[newSceneData]);
+    useEffect(() => { showCharactersInScene();
+        console.log(newSceneData);
+        
+    },[newSceneData]);
 
     useEffect(() => { filter(searchInput, characters); },[ searchInput ]);
-    
-    useEffect(() => {
-        console.log(characters);
-    },[charactersAtScene]);
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -178,27 +177,15 @@ export const NewScene = () => {
         })
         .catch((error) => {console.log(error)})
     };
-    //FUNCTION
-    const navigateBack = () => {
-        dispatch(characterInfo({characterInformation: {}}));
-        navigate("/games/game-details")
-    }; 
 
-    const InfoHandler = (e) => {
-        setShowMoreData({
-            "": false,
-            Secretos: false,
-            Misiones: false,
-        });
-
-        if (showMoreData[e.target.value] == false) {
-            setShowMoreData({
-                ...showMoreData,
-                [e.target.value]: true
-            });
-        };
+    const createNewScene = () => {
+        createScene(newSceneData)
+        .then((result) => {
+            navigate("/games/game-details");
+        })
+        .catch((error) => console.log(error))
     };
-
+    //FUNCITONS
     const showCharactersInScene = () => {        
         const charactersScene = characters.filter((data) => {            
             return newSceneData?.characters_id.includes(data.id)
@@ -233,7 +220,7 @@ export const NewScene = () => {
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
             <Row className='upperScroll d-flex justify-content-center align-items-center' >
                 <input 
-                    className='col-9 QuestCardShadow fw-bold text-center eb-garamond-font rounded ms-4'
+                    className='col-9 QuestCardShadow fw-bold fs-5 text-center eb-garamond-font rounded ms-4'
                     name="title"
                     required={true}
                     placeholder={""}
@@ -273,7 +260,7 @@ export const NewScene = () => {
                         <></>
                     ) : (
                         charactersAtScene.map((data) => {
-                            return <button key={data.id} className='rounded mx-1 my-1'>{data.name}</button>
+                            return <button key={data.id} className='rounded mx-1 my-1'>{data.name}</button  >
                         })
                     )}
                     </Col>
@@ -303,27 +290,23 @@ export const NewScene = () => {
                                     />
                     }))}
                 </Row>
-                <Row className='text-center my-1'>
+                <Row className='text-center py-1'>
                     <Col className='col-12 mt-1 '> 
                         <textarea 
                             className='col-11 text-center rounded'
-                            name="goal"
+                            name="description"
                             required={false}
                             placeholder={"¿Que ocurré en esta escena?"}
                             onChange={(e) => inputHandler(e)}
                             style={{height: 8 + "em"}}/>
                     </Col>
                 </Row>
-                <Row className='borderDataCard py-2'>
-                    <select className='MoreInfoSelector text-center fw-bold' onClick={(e) => InfoHandler(e)}> 
-                        <option value="">Información sobre:</option>
-                        <option value="Secretos">Rumores/Secretos</option>
-                        <option value="Misiones">Misiones</option>
-                    </select>
-                </Row>
-                {showMoreData.Secretos == true ? <Knowledge value={"Secretos"} aboutCharacterData={aboutCharacter} /> : <></>}
-                {showMoreData.Misiones == true ? <Quest value={"Misiones"} aboutQuestData={aboutQuest}/> : <></>}
-                
+            <Row>
+                <Col className='col-12 d-flex justify-content-evenly py-3'>
+                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
+                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewScene()}/>
+                </Col>
+            </Row>
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>
                 <Col className='col-12 text-center fw-bold'>{}</Col>
