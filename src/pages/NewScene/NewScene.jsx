@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
 import { CheckBox } from '../../common/CheckBox/CheckBox';
 import { gameData } from '../../services/game.slice';
-import { validate } from '../../helpers/validations.helper';
+import { checkValid, validate } from '../../helpers/validations.helper';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { SearchBar } from '../../common/SearchBar/SearchBar';
@@ -28,6 +28,15 @@ export const NewScene = () => {
             location_id: null,
             description: "",
             game_id: gameRdx?.gameInformation?.id
+        }
+    );
+    
+    const [ validInputField, setValidInputField ] = useState(
+        {
+            titleValid: false, //only set false when required
+            characters_idValid: true,
+            location_idValid: true,
+            descriptionValid: true,
         }
     );
 
@@ -59,12 +68,11 @@ export const NewScene = () => {
         };
     }, [worldsId]);
 
-    useEffect(() => { showCharactersInScene();
-        console.log(newSceneData);
-        
-    },[newSceneData]);
+    useEffect(() => { showCharactersInScene(); },[newSceneData]);
 
     useEffect(() => { filter(searchInput, characters); },[ searchInput ]);
+
+    useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -205,10 +213,10 @@ export const NewScene = () => {
             
         error = check.message;
 
-        // setValidInputfield((prevState) => ({
-        //     ...prevState,
-        //     [e.target.name + 'Valid']: check.valid
-        // }));
+        setValidInputField((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Valid']: check.valid
+        }));
         
         // setErrorInputfield((prevState) => ({
         //     ...prevState,
