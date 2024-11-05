@@ -251,7 +251,14 @@ export const NewScene = () => {
                 </Row>
                 <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                     <Col className='populationIcon col-2 fw-bold text-center'></Col>
-                    <Col className='col-10'>
+                    <Col className='col-10 my-1 d-flex flex-wrap'>
+                    {!charactersAtScene ? (
+                        <></>
+                    ) : (
+                        charactersAtScene.map((data) => {
+                            return <button key={data.id} className='rounded mx-1 my-1'>{data.name}</button>
+                        })
+                    )}
                     </Col>
                     {!characters ? ( 
                             <></>
