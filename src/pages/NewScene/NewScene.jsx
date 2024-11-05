@@ -277,7 +277,9 @@ export const NewScene = () => {
                         })
                     )}
                     </Col>
-                    <SearchBar className="col-12 rounded" onChangeFunction={(e) => shearchBarHandler(e)}/>
+                    <Col className='col-12'>
+                        <SearchBar className="col-12 rounded" onChangeFunction={(e) => shearchBarHandler(e)}/>
+                    </Col>
                     {searchInput !== "" ? ( 
                             searchResult.map((data) => {
                                 return  <CheckBox
