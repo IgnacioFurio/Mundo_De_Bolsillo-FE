@@ -14,6 +14,7 @@ import { gameData } from '../../services/game.slice';
 import { validate } from '../../helpers/validations.helper';
 import { getWorldGatesByGameId } from '../../services/worldgate.apicall';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
+import { SearchBar } from '../../common/SearchBar/SearchBar';
 
 export const NewScene = () => {
     //HOOKS
@@ -45,6 +46,9 @@ export const NewScene = () => {
         Misiones: false,
     });
 
+    const [ searchInput, setSearchInput ] = useState("");
+    const [ searchResult, setSearchResult ] = useState([]);
+
     //USEEFFECT
     useEffect(() => { getAllDataByWorldId();  }, []);
 
@@ -56,9 +60,11 @@ export const NewScene = () => {
     }, [worldsId]);
 
     useEffect(() => { showCharactersInScene(); },[newSceneData]);
+
+    useEffect(() => { filter(searchInput, characters); },[ searchInput ]);
     
     useEffect(() => {
-        console.log(charactersAtScene);
+        console.log(characters);
     },[charactersAtScene]);
 
     //HANDLERS
@@ -104,6 +110,20 @@ export const NewScene = () => {
             characters_id: charactersArr
         }));
         return 
+    };
+
+    //handler y funcion para el componente barra buscadora
+    const shearchBarHandler = (e) => { setSearchInput(e.target.value); };
+
+    const filter = ( input, data ) => {
+        
+        let result = data.filter((element) => {                        
+            if (element.name.toString().toLowerCase().includes(input.toLowerCase()) ) {
+                return element;
+            }
+        });
+        
+        setSearchResult(result)
     };
     
     //APICALL
@@ -260,8 +280,18 @@ export const NewScene = () => {
                         })
                     )}
                     </Col>
-                    {!characters ? ( 
-                            <></>
+                    <SearchBar className="col-12 rounded" onChangeFunction={(e) => shearchBarHandler(e)}/>
+                    {searchInput !== "" ? ( 
+                            searchResult.map((data) => {
+                                return  <CheckBox
+                                    key={data.id}
+                                    checkedData={newSceneData?.characters_id}
+                                    value={data.id} 
+                                    label={data.name} 
+                                    className={"col-6 form-check form-switch"}
+                                    onChangeFunction={(e) => checkBoxHandler(e)}
+                                    />
+                            })
                         ) : (
                             characters.map((data) => { 
                                 return  <CheckBox
