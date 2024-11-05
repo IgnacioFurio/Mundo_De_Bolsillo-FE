@@ -116,7 +116,6 @@ export const NewScene = () => {
     const shearchBarHandler = (e) => { setSearchInput(e.target.value); };
 
     const filter = ( input, data ) => {
-        
         let result = data.filter((element) => {                        
             if (element.name.toString().toLowerCase().includes(input.toLowerCase()) ) {
                 return element;
@@ -200,9 +199,7 @@ export const NewScene = () => {
         };
     };
 
-    const showCharactersInScene = () => {
-        console.log("showCharactersInScene");
-        
+    const showCharactersInScene = () => {        
         const charactersScene = characters.filter((data) => {            
             return newSceneData?.characters_id.includes(data.id)
         });
@@ -304,6 +301,17 @@ export const NewScene = () => {
                                     />
                     }))}
                 </Row>
+                <Row className='text-center my-1'>
+                    <Col className='col-12 mt-1 '> 
+                        <textarea 
+                            className='col-11 text-center rounded'
+                            name="goal"
+                            required={false}
+                            placeholder={"¿Que ocurré en esta escena?"}
+                            onChange={(e) => inputHandler(e)}
+                            style={{height: 8 + "em"}}/>
+                    </Col>
+                </Row>
                 <Row className='borderDataCard py-2'>
                     <select className='MoreInfoSelector text-center fw-bold' onClick={(e) => InfoHandler(e)}> 
                         <option value="">Información sobre:</option>
@@ -311,7 +319,6 @@ export const NewScene = () => {
                         <option value="Misiones">Misiones</option>
                     </select>
                 </Row>
-                
                 {showMoreData.Secretos == true ? <Knowledge value={"Secretos"} aboutCharacterData={aboutCharacter} /> : <></>}
                 {showMoreData.Misiones == true ? <Quest value={"Misiones"} aboutQuestData={aboutQuest}/> : <></>}
                 
