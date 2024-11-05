@@ -37,6 +37,7 @@ export const NewScene = () => {
     
     const [ locations, setLocations ] = useState([]);
     const [ characters, setCharacters ] = useState([]);
+    const [ charactersAtScene, setCharactersAtscene ] = useState([]);
 
     const [ showMoreData, setShowMoreData ] = useState({
         "": false,
@@ -48,11 +49,17 @@ export const NewScene = () => {
     useEffect(() => { getAllDataByWorldId();  }, []);
 
     useEffect(() => {
-        getAllLocationsVyWorldId();
-        getAllCharactersByWorldId();
+        if (Array.isArray(worldsId)) {
+            getAllLocationsByWorldId();
+            getAllCharactersByWorldId();
+        };
     }, [worldsId]);
 
-    useEffect(() => {console.log(newSceneData);  }, [newSceneData])
+    useEffect(() => { showCharactersInScene(); },[newSceneData]);
+    
+    useEffect(() => {
+        console.log(charactersAtScene);
+    },[charactersAtScene]);
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -100,7 +107,7 @@ export const NewScene = () => {
     };
     
     //APICALL
-    //apicall que trae todas las localizaciones segun el game_id
+    //apicall que trae los mundos segun el game_id
     const getAllDataByWorldId = () => {
         getWorldGatesByGameId(gameRdx?.gameInformation?.id) //traemos la información de los mundos enlazados
         .then((result) => { 
@@ -117,8 +124,9 @@ export const NewScene = () => {
         .catch((error) => console.log(error))
     };
 
-    const getAllLocationsVyWorldId = () => {
-        getLocationsByWorldId(worldsId) //traemos las localizaciones usando el array de los id de los mundos
+    //traemos las localizaciones usando el array de los id de los mundos
+    const getAllLocationsByWorldId = () => {
+        getLocationsByWorldId(worldsId) 
         .then((result) => {
             let arr = result?.data?.data;
             
@@ -170,6 +178,15 @@ export const NewScene = () => {
                 [e.target.value]: true
             });
         };
+    };
+
+    const showCharactersInScene = () => {
+        console.log("showCharactersInScene");
+        
+        const charactersScene = characters.filter((data) => {            
+            return newSceneData?.characters_id.includes(data.id)
+        });
+        setCharactersAtscene(charactersScene);
     };
 
     //CHECKS
