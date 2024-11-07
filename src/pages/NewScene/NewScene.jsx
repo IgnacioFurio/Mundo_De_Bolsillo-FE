@@ -74,6 +74,7 @@ export const NewScene = () => {
 
     useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
 
+    useEffect(() => {console.log(submitStatus);  }, [submitStatus]);
     //HANDLERS
     const inputHandler = (e) => {        
         setNewSceneData((prevState) => ({
@@ -144,8 +145,8 @@ export const NewScene = () => {
                 worldsIdArr?.push(worldArr[i]?.World.id);           
             };
 
-            setWorlds(worldArr);                            //seteamos los mundos
-            setWorldsId(worldsIdArr);                       //Seteamos los id de los mundos
+            setWorlds(worldArr);             //seteamos los mundos
+            setWorldsId(worldsIdArr);        //Seteamos los id de los mundos
         })
         .catch((error) => console.log(error))
     };
@@ -202,7 +203,9 @@ export const NewScene = () => {
     };
 
     //CHECKS
-    const checkError = (e) => {     
+    const checkError = (e) => {  
+        console.log(e.target.name + "Valid");
+           
         let error = "";
 
         let check = validate(
@@ -212,6 +215,8 @@ export const NewScene = () => {
             );
             
         error = check.message;
+        console.log(check);
+        
 
         setValidInputField((prevState) => ({
             ...prevState,
