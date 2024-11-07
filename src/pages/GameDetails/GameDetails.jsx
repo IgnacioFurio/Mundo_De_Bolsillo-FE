@@ -35,7 +35,8 @@ export const GameDetails = () => {
     const [ showPlaces, setShowPlaces ] = useState({
         "": false,
         Localizaciones: false,
-        Personajes: false
+        Personajes: false,
+        Escenas: false
     });
 
     //HANDLERS
@@ -95,7 +96,8 @@ export const GameDetails = () => {
         setShowPlaces({
             "": false,
             Localizaciones: false,
-            Personajes: false
+            Personajes: false,
+            Escenas: false,
         });
 
         if (showPlaces[e.target.value] == false) {
@@ -133,10 +135,12 @@ export const GameDetails = () => {
                     <option value="">Información sobre:</option>
                     <option value="Localizaciones">Localizaciones</option>
                     <option value="Personajes">Personajes</option>
+                    <option value="Escenas">Escenas</option>
                 </select>
 
                 {showPlaces.Localizaciones == true ? <Locations worldGates={worldGates}/> : <></>}            
                 {showPlaces.Personajes == true ? <Characters worldGates={worldGates}/> : <></>}            
+                {showPlaces.Escenas == true ? <></> : <></>}            
             </Row>
         </Container>
     )
