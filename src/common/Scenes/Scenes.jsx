@@ -7,6 +7,7 @@ import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getAllWorlds } from '../../services/world.apicalls';
 import { extractWorldId } from '../../helpers/GameDetails.helper';
 import { getScenesByGameId } from '../../services/scene.apicalls';
+import { SceneCard } from '../SceneCard/SceneCard';
 
 export const Scenes = ({ gameData }) => {
     const navigate = useNavigate();
@@ -36,7 +37,7 @@ export const Scenes = ({ gameData }) => {
             <Row className='d-flex justify-content-center mt-1'>
             {scenes.map(data => {
                 return <Col key={data.id} className='col-11 col-sm-11 col-md-8 m-1'>                        
-                            {/* <LocationCard locationsData={data} worldsData={worlds}/> */}
+                            <SceneCard sceneData={data}/>
                         </Col>
             })}
             </Row>
