@@ -272,8 +272,7 @@ export const ModifyQuest = () => {
                         value={questData.name}
                         required={true}
                         placeholder={questRdx?.questInformation?.name}
-                        onChange={(e) => inputHandler(e)}>
-                        </input>
+                        onChange={(e) => inputHandler(e)}/>
                 </Col>
             </Row>
             <Row className='text-start'>                    

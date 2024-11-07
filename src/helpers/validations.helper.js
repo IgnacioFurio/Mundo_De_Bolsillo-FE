@@ -15,10 +15,9 @@ export const validate = ( input, data, required ) => {
         case "description":
         case "goal":
             
-            if (!/^[\p{L}\p{N}\s\p{P}]{0,500}$/u.test(data)) {
-                console.log(!/^[\p{L}\p{N}\s\p{P}]{0,500}$/u.test(data));
+            if (!/^[\p{L}\p{N}\s\p{P}]{0,1500}$/u.test(data)) {
                 
-                return {message: "Lo sentimos pero solo puedes escribir hasta 500 caracteres.", valid: false}
+                return {message: "Lo sentimos pero solo puedes escribir hasta 1500 caracteres.", valid: false}
             }
 
             return {message: "No se si es una locura o una genialidad, pero por ahora es momento de dar un paso más.", valid: true}
@@ -59,7 +58,7 @@ export const validate = ( input, data, required ) => {
 
             return {message: "La guardia se ha quedado tranquila ante tú explicación, puedes continuar.", valid: true}
             break; 
-                       
+            
         case "commerce":
             
             if (!/^[\p{L}\p{N}\s\p{P}]{0,100}$/u.test(data)) {
@@ -76,6 +75,7 @@ export const validate = ( input, data, required ) => {
         case "delievered_by_character_id":
         case "got_in_location_id":
         case "happens_in_location_id":
+        case "location_id":
             
             if (data === NaN && required === true) {
                 return {message: "Algo nos impide continuar, por favor inténtalo de nuevo más tarde.", valid: false}
