@@ -203,9 +203,7 @@ export const NewScene = () => {
     };
 
     //CHECKS
-    const checkError = (e) => {  
-        console.log(e.target.name + "Valid");
-           
+    const checkError = (e) => {      
         let error = "";
 
         let check = validate(
@@ -214,9 +212,7 @@ export const NewScene = () => {
             e.target.required
             );
             
-        error = check.message;
-        console.log(check);
-        
+        error = check.message;        
 
         setValidInputField((prevState) => ({
             ...prevState,
