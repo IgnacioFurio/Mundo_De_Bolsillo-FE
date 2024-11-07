@@ -1,9 +1,13 @@
 import axios from "axios";
 import { root } from "./apiCalls";
 
-// export const getAllgames = async () => {
-//     return await axios.get(`${root}/game/getall`);
-// };
+export const getScenesByGameId = async (body) => {
+    let data = {
+        game_id: body
+    };
+
+    return await axios.post(`${root}/scene/get-all-by-game`, data);
+};
 
 export const createScene = async (body) => {
     return await axios.post(`${root}/scene/post`, body)

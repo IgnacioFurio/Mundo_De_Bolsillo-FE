@@ -17,6 +17,7 @@ import { Container, Row , Col} from 'react-bootstrap';
 import { extractWorldId } from '../../helpers/GameDetails.helper';
 //css
 import "./GameDetails.css";
+import { Scenes } from '../../common/Scenes/Scenes';
 
 
 export const GameDetails = () => {
@@ -140,7 +141,7 @@ export const GameDetails = () => {
 
                 {showPlaces.Localizaciones == true ? <Locations worldGates={worldGates}/> : <></>}            
                 {showPlaces.Personajes == true ? <Characters worldGates={worldGates}/> : <></>}            
-                {showPlaces.Escenas == true ? <></> : <></>}            
+                {showPlaces.Escenas == true ? <Scenes gameData={gameInformation}/> : <></>}            
             </Row>
         </Container>
     )
