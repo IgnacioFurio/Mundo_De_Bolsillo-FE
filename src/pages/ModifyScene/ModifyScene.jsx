@@ -24,7 +24,9 @@ export const ModifyScene = () => {
         {
             title: sceneRdx?.sceneInformation?.title,
             characters: sceneRdx?.sceneInformation?.characters,
-            characters_id: [],
+            characters_id: sceneRdx?.sceneInformation.characters.map((data) => {
+                return data.character_id;
+            }),
             location_id: sceneRdx?.sceneInformation?.location_id,
             location: sceneRdx?.sceneInformation?.location,
             description: sceneRdx?.sceneInformation?.description,
@@ -63,11 +65,16 @@ export const ModifyScene = () => {
         };        
     },[ worlds ]);
     
-    useEffect(() => { console.log(charactersAtScene); },[characters]);
+    //Aqui duplico codigo porque debido al orden de creación de los componentes hay que mostra los 
+    //personajes nada mas llega la información a desde la apicall
+    useEffect(() => { showCharactersAtScene(sceneData); },[characters]);
+    useEffect(() => { showCharactersAtScene(sceneData); 
+        console.log(sceneData);
+        
+    }, [sceneData]);
+    
     useEffect(() => { filter(searchInput, characters);  },[searchInput]);
-
     useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
-    useEffect(() => { console.log(sceneData); }, [sceneData]);
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -123,20 +130,6 @@ export const ModifyScene = () => {
             ...prevState,
             characters_id: charactersArr
         }));
-    };
-
-    const charactersAtSceneHandler = (data, characters) => {
-        let charactersSceneArr = [];
-
-        for (let i = 0; i < data.length; i++) {            
-            for (let j = 0; j < characters.length; j++) {
-                if (data[i] === characters[j]?.id) {
-                    charactersSceneArr.push(characters[j]);
-                };
-            };
-        };        
-
-        return setCharactersAtscene(charactersSceneArr);
     };
 
     //APICALLS
@@ -205,7 +198,7 @@ export const ModifyScene = () => {
             
         error = check.message;
 
-        setValidInputfield((prevState) => ({
+        setValidInputField((prevState) => ({
             ...prevState,
             [e.target.name + 'Valid']: check.valid
         }));
@@ -214,6 +207,14 @@ export const ModifyScene = () => {
             ...prevState,
             [e.target.name + 'Error']: error
         }));
+    };
+
+    //FUNCITONS
+    const showCharactersAtScene = () => {      
+        const charactersScene = characters.filter((data) => {            
+            return sceneData.characters_id.includes(data.id)
+        });
+        setCharactersAtscene(charactersScene);
     };
     
     return (

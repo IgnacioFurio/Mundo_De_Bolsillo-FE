@@ -40,6 +40,15 @@ export const NewScene = () => {
         }
     );
 
+    const [ errorInputField, setErrorInputfield ] = useState(
+        {
+            titleError: "",
+            characters_idError: "",
+            location_idError: "",
+            descriptionError: "",
+        }
+    );
+
     const [ worlds, setWorlds ] = useState([]);
     const [ worldsId, setWorldsId ] = useState([]);
     
@@ -219,10 +228,10 @@ export const NewScene = () => {
             [e.target.name + 'Valid']: check.valid
         }));
         
-        // setErrorInputfield((prevState) => ({
-        //     ...prevState,
-        //     [e.target.name + 'Error']: error
-        // }));
+        setErrorInputfield((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Error']: error
+        }));
     };
 
     return (
