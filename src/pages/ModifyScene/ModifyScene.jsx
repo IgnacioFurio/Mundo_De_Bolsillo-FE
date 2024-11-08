@@ -22,10 +22,12 @@ export const ModifyScene = () => {
 
     const [ sceneData, setSceneData ] = useState(
         {
-            title: "",
+            title: sceneRdx?.sceneInformation?.title,
+            characters: sceneRdx?.sceneInformation?.characters,
             characters_id: [],
-            location_id: null,
-            description: "",
+            location_id: sceneRdx?.sceneInformation?.location_id,
+            location: sceneRdx?.sceneInformation?.location,
+            description: sceneRdx?.sceneInformation?.description,
             game_id: gameRdx?.gameInformation?.id
         }
     );
@@ -38,16 +40,6 @@ export const ModifyScene = () => {
             descriptionValid: true,
         }
     );
-    
-    const [ errorInputField, setErrorInputfield ] = useState({
-        nameError: "",
-        goalError: "",
-        delievered_by_character_idError: "",
-        got_in_location_idError: "",
-        happens_in_location_idError: "",
-        characters_idError: "",
-        status: ""
-    });
 
     const [ worlds, setWorlds ] = useState([]);
     const [ worldsId, setWorldsId ] = useState([]);
@@ -55,12 +47,6 @@ export const ModifyScene = () => {
     const [ locations, setLocations ] = useState([]);
     const [ characters, setCharacters ] = useState([]);
     const [ charactersAtScene, setCharactersAtscene ] = useState([]);
-
-    const [ showMoreData, setShowMoreData ] = useState({
-        "": false,
-        Secretos: false,
-        Misiones: false,
-    });
 
     const [ searchInput, setSearchInput ] = useState("");
     const [ searchResult, setSearchResult ] = useState([]);
@@ -74,19 +60,18 @@ export const ModifyScene = () => {
         if (Array.isArray(worlds)) {
             getCharactersData();
             getLocationsData();
-        };
-        console.log(worlds);
-        
+        };        
     },[ worlds ]);
     
-    useEffect(() => { charactersInQuest();  },[characters]);
+    useEffect(() => { console.log(charactersAtScene); },[characters]);
     useEffect(() => { filter(searchInput, characters);  },[searchInput]);
 
     useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
+    useEffect(() => { console.log(sceneData); }, [sceneData]);
 
     //HANDLERS
     const inputHandler = (e) => {        
-        setQuestData((prevState) => ({
+        setSceneData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }));
@@ -96,7 +81,7 @@ export const ModifyScene = () => {
 
     //handler para el dropdown del formulario
     const dropdownHandler = (e) => {       
-        setQuestData((prevState) => ({
+        setSceneData((prevState) => ({
             ...prevState,
             [e.target.name]: parseInt(e.target.value)
         }));
@@ -120,13 +105,13 @@ export const ModifyScene = () => {
     //handler para el checkbox
     const checkBoxHandler = (e) => {        
         let charactersArr = [];
-        charactersArr = questData?.characters_id
+        charactersArr = sceneData?.characters_id
         
         for (let i = 0; i < charactersArr.length; i++) {           
             if (charactersArr[i] == e.target.value) {
                 charactersArr.splice(i, 1);
 
-                return setQuestData((prevState) => ({
+                return setSceneData((prevState) => ({
                     ...prevState,
                     characters_id: charactersArr
                 }));
@@ -134,24 +119,24 @@ export const ModifyScene = () => {
         };        
         charactersArr.push(parseInt(e.target.value));
         
-        return setQuestData((prevState) => ({
+        return setSceneData((prevState) => ({
             ...prevState,
             characters_id: charactersArr
         }));
     };
 
-    const charactersInQuestHandler = (data, characters) => {
-        let charactersQuestArr = [];
+    const charactersAtSceneHandler = (data, characters) => {
+        let charactersSceneArr = [];
 
         for (let i = 0; i < data.length; i++) {            
             for (let j = 0; j < characters.length; j++) {
                 if (data[i] === characters[j]?.id) {
-                    charactersQuestArr.push(characters[j]);
+                    charactersSceneArr.push(characters[j]);
                 };
             };
         };        
 
-        return setCharactersDoingQuest(charactersQuestArr);
+        return setCharactersAtscene(charactersSceneArr);
     };
 
     //APICALLS
@@ -208,41 +193,6 @@ export const ModifyScene = () => {
         .catch((error) => {console.log(error)});
     };
 
-    //apicall que trae todos los personajes según la quest_id
-    const charactersInQuest = () => {
-        getCharactersByQuestrId(sceneRdx?.sceneInformation.id)
-        .then((result) => {     
-            let charactersArr = result.data.data;
-
-            let characters_id = [];
-            let characterData = [];
-                        
-            for (let i = 0; i < charactersArr.length; i++) {
-                characters_id.push(charactersArr[i].character_id);
-                characterData.push(charactersArr[i].character)
-            };
-
-            setCharactersDoingQuest(characterData);
-
-            setQuestData((prevState) => ({
-                ...prevState,
-                characters_id: characters_id
-            }));
-        })
-        .catch((error) => {console.log(error); })
-    };
-
-    //apicall que envia los datos modificados
-    const modifyQuestInfo = () => {       
-        modifyQuest(questData)
-        .then(() => {
-            dispatch(questInfo({sceneInformation: {}}));      
-
-            navigate("/games/game-details");
-        })
-        .catch((error) => console.log(error))
-    };
-
      //CHECKS
     const checkError = (e) => {     
         let error = "";
@@ -289,7 +239,10 @@ export const ModifyScene = () => {
                                 name={"location_id"} 
                                 onChange={(e) => dropdownHandler(e)}
                                 >
-                                <option value={null} label={"Sucede en ..."}/>
+                                <option 
+                                    value={sceneRdx?.sceneInformation?.id} 
+                                    label={`Sucede en ${sceneRdx?.sceneInformation?.location?.name}`}
+                                    />
                                 {!locations ? ( 
                                         <></>
                                     ) : (
@@ -350,6 +303,7 @@ export const ModifyScene = () => {
                     <textarea 
                         className='col-11 text-center rounded'
                         name="description"
+                        value={sceneData?.description}
                         required={false}
                         placeholder={"¿Que ocurré en esta escena?"}
                         onChange={(e) => inputHandler(e)}
