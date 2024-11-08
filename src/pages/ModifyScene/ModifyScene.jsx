@@ -12,6 +12,7 @@ import { getCharactersByQuestrId, modifyQuest } from '../../services/quest.apica
 import { SearchBar } from '../../common/SearchBar/SearchBar';
 import { CheckBox } from '../../common/CheckBox/CheckBox';
 import { questInfo } from '../../services/quest.slice';
+import { modifyScene } from '../../services/scene.apicalls';
 
 export const ModifyScene = () => {
     const navigate = useNavigate();
@@ -195,6 +196,15 @@ export const ModifyScene = () => {
         .catch((error) => {console.log(error)});
     };
 
+    //apicall que modifica la informacion de la escena en la base de datos
+    const modifySceneInfo = () => {
+        modifyScene(sceneData)
+        .then((response) => (
+            console.log(response.data.data)            
+        ))
+        .catch((error) => {console.log(error)})
+    };
+
      //CHECKS
     const checkError = (e) => {     
         let error = "";
@@ -323,7 +333,7 @@ export const ModifyScene = () => {
             <Row>
                 <Col className='col-12 d-flex justify-content-evenly py-3'>
                     <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details/scenes/scene-details")}/>
-                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => modifyQuestInfo(questData)}/>
+                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => modifySceneInfo(questData)}/>
                 </Col>
             </Row>
         </Container>

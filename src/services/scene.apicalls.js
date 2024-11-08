@@ -13,9 +13,9 @@ export const createScene = async (body) => {
     return await axios.post(`${root}/scene/post`, body)
 };
 
-// export const modifyGame = async (body) => {
-//     return await axios.put(`${root}/game/put`, body);
-// };
+export const modifyScene = async (body) => {
+    return await axios.put(`${root}/scene/put`, body);
+};
 
 // export const deleteGame = async (body) => {
 //     const data = {
