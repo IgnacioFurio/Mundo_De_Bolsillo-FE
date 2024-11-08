@@ -17,10 +17,12 @@ export const SceneDetails = () => {
     const dispatch = useDispatch();
 
     const sceneRdx = useSelector(sceneData);
+    const [ charactersAtScene, setCharactersAtScene ] = useState([]);
     
     //USEEFFECT
-    useEffect(() => {console.log(sceneRdx);
-    }, []);
+    useEffect(() => {console.log(charactersAtScene);  }, []);
+    
+    useEffect(() => { getCharactersAtScene(); }, [sceneRdx]);
     //FUNCTIONS
     const navigateBack = (e) => {
         // eliminar la información guardada en redux acerca de la escena
@@ -29,7 +31,7 @@ export const SceneDetails = () => {
     };
 
     //APICALLS
-    const deleteLocationData = (locationId) => {
+    const deleteSceneData = (locationId) => {
         deleteLocation(locationId)
         .then(result => {
             navigateBack();
@@ -37,32 +39,42 @@ export const SceneDetails = () => {
         .catch((error) => {console.log(error);})
     };
 
+    //FUNCITONS
+    const getCharactersAtScene = () => {
+        let charactersArr = [];
+
+        sceneRdx?.sceneInformation?.characters.map((data) => {
+            charactersArr.push(data.characterId);
+        });
+
+        setCharactersAtScene(charactersArr);
+    };
+
     return (
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
             <Row className='d-flex justify-content-evenly py-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack()}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/locations/modify-location")}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteLocationData(sceneRdx?.sceneInformation?.id)}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/scenes/modify-scene")}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteSceneData(sceneRdx?.sceneInformation?.id)}/></Col>
             </Row> 
             <Row className='upperScroll d-flex justify-content-center align-items-center pt-2' >
                 <Col className='col-9 text-center fs-4 fw-bold eb-garamond-font ps-3'>{sceneRdx?.sceneInformation?.title.toUpperCase()} </Col>
             </Row>
             <Container className='centerScrollLocations col-10'>
                 <Row className='borderDataCard align-items-center col-10 py-1 px-2'>                            
-                    <Col className='governmentIcon col-1 fw-bold text-center'></Col>
-                    <Col className='col-9'>{sceneRdx?.sceneInformation?.government}</Col>
+                    <Col className='locationIcon col-1 fw-bold text-center'></Col>
+                    <Col className='col-9'>{sceneRdx?.sceneInformation?.location?.name}</Col>
                 </Row> 
                 <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>                            
-                    <Col className='defensesIcon col-1 fw-bold'></Col>
-                    <Col className='col-10'> {sceneRdx?.sceneInformation?.defenses}</Col>
-                </Row>
-                <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>
-                    <Col className='commerceIcon col-1 fw-bold'></Col>
-                    <Col className='col-10'> {sceneRdx?.sceneInformation?.commerce}</Col>
-                </Row>
-                <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>
                     <Col className='populationIcon col-1 fw-bold'></Col>
-                    <Col className='col-10'> {sceneRdx?.sceneInformation?.population}</Col>
+                    <Col className='col-10 my-1 d-flex flex-wrap'>
+                    {charactersAtScene.map((data) => {
+                            return <button key={data.id} className='rounded mx-1 my-1'>{data.name}</button  >
+                        })}
+                    </Col>                
+                </Row>
+                <Row className='borderDataCard d-flex align-items-center mt-0 py-1 px-2'>                            
+                    <Col className='col-12 text-center'> {sceneRdx?.sceneInformation?.description}</Col>
                 </Row>
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>
