@@ -13,6 +13,7 @@ import { SearchBar } from '../../common/SearchBar/SearchBar';
 import { CheckBox } from '../../common/CheckBox/CheckBox';
 import { questInfo } from '../../services/quest.slice';
 import { modifyScene } from '../../services/scene.apicalls';
+import { sceneInfo } from '../../services/scene.slice';
 
 export const ModifyScene = () => {
     const navigate = useNavigate();
@@ -24,13 +25,13 @@ export const ModifyScene = () => {
     const [ sceneData, setSceneData ] = useState(
         {
             id: sceneRdx?.sceneInformation?.id,
-            game_id: gameRdx?.gameInformation?.id,
             title: sceneRdx?.sceneInformation?.title,
+            description: sceneRdx?.sceneInformation?.description,
+            location_id: sceneRdx?.sceneInformation?.location_id,
+            game_id: gameRdx?.gameInformation?.id,
             characters_id: sceneRdx?.sceneInformation.characters.map((data) => {
                 return data.character_id;
             }),
-            location_id: sceneRdx?.sceneInformation?.location_id,
-            description: sceneRdx?.sceneInformation?.description,
         }
     );
     
@@ -207,9 +208,11 @@ export const ModifyScene = () => {
     //apicall que modifica la informacion de la escena en la base de datos
     const modifySceneInfo = () => {
         modifyScene(sceneData)
-        .then((response) => (
-            console.log(response.data.data)            
-        ))
+        .then(() => {
+            dispatch(sceneInfo({sceneInformation: {}}));
+            
+            navigate("/games/game-details");
+        })
         .catch((error) => {console.log(error)})
     };
 
