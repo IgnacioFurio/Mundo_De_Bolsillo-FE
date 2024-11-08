@@ -40,6 +40,15 @@ export const NewScene = () => {
         }
     );
 
+    const [ errorInputField, setErrorInputfield ] = useState(
+        {
+            titleError: "",
+            characters_idError: "",
+            location_idError: "",
+            descriptionError: "",
+        }
+    );
+
     const [ worlds, setWorlds ] = useState([]);
     const [ worldsId, setWorldsId ] = useState([]);
     
@@ -219,10 +228,10 @@ export const NewScene = () => {
             [e.target.name + 'Valid']: check.valid
         }));
         
-        // setErrorInputfield((prevState) => ({
-        //     ...prevState,
-        //     [e.target.name + 'Error']: error
-        // }));
+        setErrorInputfield((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Error']: error
+        }));
     };
 
     return (
@@ -310,12 +319,12 @@ export const NewScene = () => {
                             style={{height: 8 + "em"}}/>
                     </Col>
                 </Row>
-            <Row>
-                <Col className='col-12 d-flex justify-content-evenly py-3'>
-                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
-                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewScene()}/>
-                </Col>
-            </Row>
+                <Row>
+                    <Col className='col-12 d-flex justify-content-evenly py-3'>
+                        <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
+                        <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewScene()}/>
+                    </Col>
+                </Row>
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>
                 <Col className='col-12 text-center fw-bold'>{}</Col>

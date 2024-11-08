@@ -8,6 +8,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 //common
 import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import { WoodenButton } from '../WoodenButton/WoodenButton';
+import { sceneInfo } from '../../services/scene.slice';
 
 export const SceneCard = ({ sceneData }) => {
     
@@ -16,6 +17,7 @@ export const SceneCard = ({ sceneData }) => {
     const dispatch = useDispatch();
 
     const [ scene, setScene ] = useState({
+        id: sceneData.id,
         game_id: sceneData.game_id,
         title: sceneData.title,
         description: sceneData.description,
@@ -36,9 +38,9 @@ export const SceneCard = ({ sceneData }) => {
         showMore === true ? setShowMore(false) : setShowMore(true);
     };
 
-    const characterDetailsHandler = (e) => {
-        dispatch(characterInfo({characterInformation: sceneData}));
-        navigate("/games/game-details/characters/character-details");
+    const sceneDetailsHandler = (e) => {
+        dispatch(sceneInfo({sceneInformation: scene}));
+        navigate("/games/game-details/scenes/scene-details");
     };
 
     const getCharactersAtScene = () => {
@@ -53,9 +55,9 @@ export const SceneCard = ({ sceneData }) => {
 
     return (
         <Container>
-            <Row className='upperScroll' onClick={() => characterDetailsHandler()}>
-                <Col className='d-flex align-items-center ms-3 text-center fw-bold'>
-                    <div>{scene?.title.toUpperCase()}</div>
+            <Row className='upperScroll' onClick={() => sceneDetailsHandler()}>
+                <Col className='d-flex justify-content-center align-items-center ms-3 text-center text-uppercase fw-bold'>
+                    {scene?.title}
                 </Col>
             </Row>
             {showMore === true ? (
