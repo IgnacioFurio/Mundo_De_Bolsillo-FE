@@ -17,6 +17,7 @@ export const SceneCard = ({ sceneData }) => {
     const dispatch = useDispatch();
 
     const [ scene, setScene ] = useState({
+        id: sceneData.id,
         game_id: sceneData.game_id,
         title: sceneData.title,
         description: sceneData.description,

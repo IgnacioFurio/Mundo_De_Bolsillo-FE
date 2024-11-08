@@ -23,21 +23,26 @@ export const ModifyScene = () => {
 
     const [ sceneData, setSceneData ] = useState(
         {
+            id: sceneRdx?.sceneInformation?.id,
+            game_id: gameRdx?.gameInformation?.id,
             title: sceneRdx?.sceneInformation?.title,
-            characters: sceneRdx?.sceneInformation?.characters,
             characters_id: sceneRdx?.sceneInformation.characters.map((data) => {
                 return data.character_id;
             }),
             location_id: sceneRdx?.sceneInformation?.location_id,
-            location: sceneRdx?.sceneInformation?.location,
             description: sceneRdx?.sceneInformation?.description,
-            game_id: gameRdx?.gameInformation?.id
         }
     );
     
+    const [ sceneExpandedData, setsceneExpandedData ] = useState(
+        {
+            characters: sceneRdx?.sceneInformation?.characters,
+            location: sceneRdx?.sceneInformation?.location,
+        }
+    );
     const [ validInputField, setValidInputField ] = useState(
         {
-            titleValid: false, //only set false when required
+            titleValid: true,
             characters_idValid: true,
             location_idValid: true,
             descriptionValid: true,
@@ -80,11 +85,14 @@ export const ModifyScene = () => {
     useEffect(() => { showCharactersAtScene(sceneData); },[characters]);
     useEffect(() => { 
         showCharactersAtScene(sceneData); 
-        console.log(sceneData);
+        console.log(sceneRdx.sceneInformation);
     }, [sceneData]);
     
     useEffect(() => { filter(searchInput, characters);  },[searchInput]);
-    useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
+    useEffect(() => { setSubmitStatus(checkValid(validInputField)); 
+        console.log(validInputField);
+        
+    }, [validInputField]);
 
     //HANDLERS
     const inputHandler = (e) => {        
@@ -333,7 +341,7 @@ export const ModifyScene = () => {
             <Row>
                 <Col className='col-12 d-flex justify-content-evenly py-3'>
                     <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details/scenes/scene-details")}/>
-                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => modifySceneInfo(questData)}/>
+                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => modifySceneInfo()}/>
                 </Col>
             </Row>
         </Container>
