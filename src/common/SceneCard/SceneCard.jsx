@@ -8,6 +8,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 //common
 import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import { WoodenButton } from '../WoodenButton/WoodenButton';
+import { sceneInfo } from '../../services/scene.slice';
 
 export const SceneCard = ({ sceneData }) => {
     
@@ -37,7 +38,7 @@ export const SceneCard = ({ sceneData }) => {
     };
 
     const sceneDetailsHandler = (e) => {
-        dispatch(characterInfo({characterInformation: sceneData}));
+        dispatch(sceneInfo({sceneInformation: scene}));
         navigate("/games/game-details/scenes/scene-details");
     };
 
