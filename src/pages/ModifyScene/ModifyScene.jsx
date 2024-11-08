@@ -43,6 +43,15 @@ export const ModifyScene = () => {
         }
     );
 
+    const [ errorInputField, setErrorInputfield ] = useState(
+        {
+            titleError: "",
+            characters_idError: "",
+            location_idError: "",
+            descriptionError: "",
+        }
+    );
+
     const [ worlds, setWorlds ] = useState([]);
     const [ worldsId, setWorldsId ] = useState([]);
     
@@ -68,9 +77,9 @@ export const ModifyScene = () => {
     //Aqui duplico codigo porque debido al orden de creación de los componentes hay que mostra los 
     //personajes nada mas llega la información a desde la apicall
     useEffect(() => { showCharactersAtScene(sceneData); },[characters]);
-    useEffect(() => { showCharactersAtScene(sceneData); 
+    useEffect(() => { 
+        showCharactersAtScene(sceneData); 
         console.log(sceneData);
-        
     }, [sceneData]);
     
     useEffect(() => { filter(searchInput, characters);  },[searchInput]);
@@ -222,9 +231,9 @@ export const ModifyScene = () => {
             <Row className='QuestCardShadow text-center'>
                 <Col className='bannerRibbonQuest fw-bold py-2'>
                     <input 
-                        className='col-9 QuestCardShadow fw-bold text-center rounded'
-                        name="name"
-                        value={sceneRdx?.sceneInformation?.title.toUpperCase()}
+                        className='col-9 QuestCardShadow fw-bold text-center text-uppercase rounded'
+                        name="title"
+                        value={sceneData?.title}
                         required={true}
                         placeholder={sceneRdx?.sceneInformation?.title}
                         onChange={(e) => inputHandler(e)}/>
@@ -313,7 +322,7 @@ export const ModifyScene = () => {
             </Row>
             <Row>
                 <Col className='col-12 d-flex justify-content-evenly py-3'>
-                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/scenes/scene-details")}/>
+                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details/scenes/scene-details")}/>
                     <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => modifyQuestInfo(questData)}/>
                 </Col>
             </Row>
