@@ -310,12 +310,12 @@ export const NewScene = () => {
                             style={{height: 8 + "em"}}/>
                     </Col>
                 </Row>
-            <Row>
-                <Col className='col-12 d-flex justify-content-evenly py-3'>
-                    <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
-                    <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewScene()}/>
-                </Col>
-            </Row>
+                <Row>
+                    <Col className='col-12 d-flex justify-content-evenly py-3'>
+                        <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
+                        <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewScene()}/>
+                    </Col>
+                </Row>
             </Container> 
             <Row className='downScroll d-flex justify-content-center align-items-center'>
                 <Col className='col-12 text-center fw-bold'>{}</Col>
