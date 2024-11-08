@@ -56,8 +56,8 @@ export const SceneCard = ({ sceneData }) => {
     return (
         <Container>
             <Row className='upperScroll' onClick={() => sceneDetailsHandler()}>
-                <Col className='d-flex align-items-center ms-3 text-center fw-bold'>
-                    <div>{scene?.title.toUpperCase()}</div>
+                <Col className='d-flex justify-content-center align-items-center ms-3 text-center text-uppercase fw-bold'>
+                    {scene?.title}
                 </Col>
             </Row>
             {showMore === true ? (
