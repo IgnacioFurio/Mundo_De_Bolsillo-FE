@@ -36,9 +36,9 @@ export const SceneCard = ({ sceneData }) => {
         showMore === true ? setShowMore(false) : setShowMore(true);
     };
 
-    const characterDetailsHandler = (e) => {
+    const sceneDetailsHandler = (e) => {
         dispatch(characterInfo({characterInformation: sceneData}));
-        navigate("/games/game-details/characters/character-details");
+        navigate("/games/game-details/scenes/scene-details");
     };
 
     const getCharactersAtScene = () => {
@@ -53,7 +53,7 @@ export const SceneCard = ({ sceneData }) => {
 
     return (
         <Container>
-            <Row className='upperScroll' onClick={() => characterDetailsHandler()}>
+            <Row className='upperScroll' onClick={() => sceneDetailsHandler()}>
                 <Col className='d-flex align-items-center ms-3 text-center fw-bold'>
                     <div>{scene?.title.toUpperCase()}</div>
                 </Col>
