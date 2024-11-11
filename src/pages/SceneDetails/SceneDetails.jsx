@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 //redux
 import { useDispatch, useSelector } from 'react-redux';
-import { locationData, locationInfo } from '../../services/location.slice';
 import { sceneData, sceneInfo } from '../../services/scene.slice';
 //components
 import { useNavigate } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 //apicall
-import { deleteLocation } from '../../services/location.apicalls';
 import { deleteScene } from '../../services/scene.apicalls';
 
 export const SceneDetails = () => {
