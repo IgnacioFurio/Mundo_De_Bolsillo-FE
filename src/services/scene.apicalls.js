@@ -17,10 +17,10 @@ export const modifyScene = async (body) => {
     return await axios.put(`${root}/scene/put`, body);
 };
 
-// export const deleteGame = async (body) => {
-//     const data = {
-//         game_id: body
-//     }
+export const deleteScene = async (body) => {
+    const data = {
+        scene_id: body
+    }
 
-//     return await axios.delete(`${root}/game/delete`,{data})
-// };
+    return await axios.delete(`${root}/scene/delete`,{data})
+};
