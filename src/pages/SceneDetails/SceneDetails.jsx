@@ -9,6 +9,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 //apicall
 import { deleteLocation } from '../../services/location.apicalls';
+import { deleteScene } from '../../services/scene.apicalls';
 
 export const SceneDetails = () => {
     //HOOKS
@@ -20,7 +21,7 @@ export const SceneDetails = () => {
     const [ charactersAtScene, setCharactersAtScene ] = useState([]);
     
     //USEEFFECT
-    useEffect(() => {console.log(charactersAtScene);  }, []);
+    useEffect(() => {console.log(sceneRdx?.sceneInformation?.id);  }, []);
     
     useEffect(() => { getCharactersAtScene(); }, [sceneRdx]);
     //FUNCTIONS
@@ -31,8 +32,8 @@ export const SceneDetails = () => {
     };
 
     //APICALLS
-    const deleteSceneData = (locationId) => {
-        deleteLocation(locationId)
+    const deleteSceneData = () => {
+        deleteScene(sceneRdx?.sceneInformation?.id)
         .then(result => {
             navigateBack();
         })
@@ -55,7 +56,7 @@ export const SceneDetails = () => {
             <Row className='d-flex justify-content-evenly py-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack()}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/scenes/modify-scene")}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteSceneData(sceneRdx?.sceneInformation?.id)}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteSceneData()}/></Col>
             </Row> 
             <Row className='upperScroll d-flex justify-content-center align-items-center pt-2' >
                 <Col className='col-9 text-center fs-4 fw-bold eb-garamond-font ps-3'>{sceneRdx?.sceneInformation?.title.toUpperCase()} </Col>
