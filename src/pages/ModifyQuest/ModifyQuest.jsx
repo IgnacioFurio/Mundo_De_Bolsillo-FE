@@ -314,7 +314,7 @@ export const ModifyQuest = () => {
                                 >
                                 <option 
                                     value={questRdx?.questInformation?.gotInLocation?.id} 
-                                    label={`Escuchado en: ${questRdx?.questInformation.gotInLocation.name}` }
+                                    label={`Escuchado en: ${questRdx?.questInformation?.gotInLocation?.name}` }
                                     />
                                 {!locations ? ( 
                                         <></>
