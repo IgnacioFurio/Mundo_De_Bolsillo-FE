@@ -26,6 +26,7 @@ import { ModifyQuest } from '../ModifyQuest/ModifyQuest'
 import { NewScene } from '../NewScene/NewScene'
 import { SceneDetails } from '../SceneDetails/SceneDetails'
 import { ModifyScene } from '../ModifyScene/ModifyScene'
+import { Sessions } from '../../common/Sessions/Sessions'
 
 export const Body = () => {
     return (
@@ -55,6 +56,7 @@ export const Body = () => {
                 <Route path='/scenes/new-scene' element={<NewScene/>}/>
                 <Route path='/games/game-details/scenes/scene-details' element={<SceneDetails/>}/>
                 <Route path='/scenes/modify-scene' element={<ModifyScene/>}/>
+                <Route path='/sesions/my-sessions' element={<Sessions/>}/>
             </Routes>
         </Container>
     )
