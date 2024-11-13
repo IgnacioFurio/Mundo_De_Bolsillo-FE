@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { gameData } from '../../services/game.slice';
 import { validate } from '../../helpers/validations.helper';
+import { getScenesByGameId } from '../../services/scene.apicalls';
 
 export const NewSession = () => {
     const navigate = useNavigate();
@@ -42,7 +43,7 @@ export const NewSession = () => {
     //USEEFFECT
     useEffect(() => {
         console.log(gameRdx.gameInformation);
-        console.log(newSessionData);
+        getAllScenesByGameId(gameRdx?.gameInformation?.id)
     }, []);
 
     useEffect(() => {console.log(newSessionData)}, [newSessionData]);
@@ -55,6 +56,15 @@ export const NewSession = () => {
         }));
 
         checkError(e);
+    };
+
+    //APICALLS
+    const getAllScenesByGameId = (gameId) => {
+        getScenesByGameId(gameId)
+        .then((result) => {
+            setScenes(result?.data?.data);
+        })
+        .catch((error) => {console.log(error)})
     };
 
     //CHECKS
@@ -93,23 +103,17 @@ export const NewSession = () => {
             </Row>
             <Container className='centerScrollLocations col-10'>
                 <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
-                    <Col className='locationIcon col-2 fw-bold text-center'></Col>
-                    <Col className='col-10'>
-                        <select 
-                            className='col-12 rounded'
-                            name={"location_id"} 
-                            onChange={(e) => dropdownHandler(e)}
-                            >
-                            <option value={null} label={"Sucede en ..."}/>
-                        </select>
-                    </Col>
-                </Row>
-                <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
-                    <Col className='populationIcon col-2 fw-bold text-center'></Col>
                     <Col className='col-10 my-1 d-flex flex-wrap'>
                     </Col>
                     <Col className='col-12'>
                         <SearchBar className="col-12 rounded" onChangeFunction={(e) => shearchBarHandler(e)}/>
+                        {!scenes ? (
+                                <></>
+                            ) : (
+                                scenes.map((data) => {
+                                    return <div key={data.id}>{data?.title}</div>
+                                })
+                        )}
                     </Col>
                 </Row>
                 <Row className='text-center py-1'>
@@ -118,7 +122,7 @@ export const NewSession = () => {
                             className='col-11 text-center rounded'
                             name="description"
                             required={false}
-                            placeholder={"¿Que ocurré en esta escena?"}
+                            placeholder={"Resumen de lo ocurrido en la sesión"}
                             onChange={(e) => inputHandler(e)}
                             style={{height: 8 + "em"}}/>
                     </Col>
