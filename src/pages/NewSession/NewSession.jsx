@@ -1,0 +1,138 @@
+import React, { useEffect, useState } from 'react'
+import { Col, Container, Row } from 'react-bootstrap';
+import { SearchBar } from '../../common/SearchBar/SearchBar';
+import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { gameData } from '../../services/game.slice';
+import { validate } from '../../helpers/validations.helper';
+
+export const NewSession = () => {
+    const navigate = useNavigate();
+    const gameRdx = useSelector(gameData);
+    
+    const [ newSessionData, setNewSessionData ] = useState(
+        {
+            title: "",
+            description: "",
+            game_id: gameRdx?.gameInformation?.id
+        }
+    );
+
+    const [ validInputField, setValidInputField ] = useState(
+        {   //valor en falso para los requeridos
+            titleValid: false,
+            descriptionValid: true,
+            game_idValid: true,
+        }
+    );
+
+    const [ errorInputField, setErrorInputfield ] = useState(
+        {
+            titleError: "",
+            descriptionError: "",
+            game_idError: "",
+        }
+    );
+
+    const [ scenes, setScenes ] = useState([]);
+
+    const [ submitStatus, setSubmitStatus ] = useState(false);
+
+    //USEEFFECT
+    useEffect(() => {
+        console.log(gameRdx.gameInformation);
+        console.log(newSessionData);
+    }, []);
+
+    useEffect(() => {console.log(newSessionData)}, [newSessionData]);
+
+    //HANDLERS
+    const inputHandler = (e) => {                
+        setNewSessionData((prevState) => ({
+            ...prevState,
+            [e.target.name]: e?.target?.value
+        }));
+
+        checkError(e);
+    };
+
+    //CHECKS
+    const checkError = (e) => {      
+        let error = "";
+
+        let check = validate(
+            e.target.name,
+            e.target.value,
+            e.target.required
+            );
+            
+        error = check.message;        
+
+        setValidInputField((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Valid']: check.valid
+        }));
+        
+        setErrorInputfield((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Error']: error
+        }));
+    };
+
+    return (
+        <Container className='col-12 col-sm-11 col-md-8 pb-2'>
+            <Row className='upperScroll d-flex justify-content-center align-items-center' >
+                <input 
+                    className='col-9 QuestCardShadow fw-bold fs-5 text-center eb-garamond-font rounded ms-4'
+                    name="title"
+                    required={true}
+                    placeholder={""}
+                    onChange={(e) => inputHandler(e)}
+                    />
+            </Row>
+            <Container className='centerScrollLocations col-10'>
+                <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                    <Col className='locationIcon col-2 fw-bold text-center'></Col>
+                    <Col className='col-10'>
+                        <select 
+                            className='col-12 rounded'
+                            name={"location_id"} 
+                            onChange={(e) => dropdownHandler(e)}
+                            >
+                            <option value={null} label={"Sucede en ..."}/>
+                        </select>
+                    </Col>
+                </Row>
+                <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                    <Col className='populationIcon col-2 fw-bold text-center'></Col>
+                    <Col className='col-10 my-1 d-flex flex-wrap'>
+                    </Col>
+                    <Col className='col-12'>
+                        <SearchBar className="col-12 rounded" onChangeFunction={(e) => shearchBarHandler(e)}/>
+                    </Col>
+                </Row>
+                <Row className='text-center py-1'>
+                    <Col className='col-12 mt-1 '> 
+                        <textarea 
+                            className='col-11 text-center rounded'
+                            name="description"
+                            required={false}
+                            placeholder={"¿Que ocurré en esta escena?"}
+                            onChange={(e) => inputHandler(e)}
+                            style={{height: 8 + "em"}}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className='col-12 d-flex justify-content-evenly py-3'>
+                        <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
+                        <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewScene()}/>
+                    </Col>
+                </Row>
+            </Container> 
+            <Row className='downScroll d-flex justify-content-center align-items-center'>
+                <Col className='col-12 text-center fw-bold'>{}</Col>
+            </Row>
+        </Container>
+    );
+};

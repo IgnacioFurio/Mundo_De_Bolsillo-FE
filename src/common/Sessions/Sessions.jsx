@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import { NewRegisterButton } from '../NewRegisterButton/NewRegisterButton';
+import { useNavigate } from 'react-router-dom';
 
 export const Sessions = ({ gameData }) => {
+    const navigate = useNavigate();
+
     const [ sessions, setSessions ] = useState([]);
     const [ gameInformation, setGameInformation ] = useState(gameData);
 
