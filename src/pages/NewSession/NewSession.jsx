@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { gameData } from '../../services/game.slice';
 import { validate } from '../../helpers/validations.helper';
 import { getScenesByGameId } from '../../services/scene.apicalls';
+import { DraggableSceneCard } from '../../common/DraggableSceneCard/DraggableSceneCard';
 
 export const NewSession = () => {
     const navigate = useNavigate();
@@ -37,16 +38,18 @@ export const NewSession = () => {
     );
 
     const [ scenes, setScenes ] = useState([]);
+    const [ scenesAtSession, setScenesAtSession ] = useState([]);
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //USEEFFECT
-    useEffect(() => {
-        console.log(gameRdx.gameInformation);
-        getAllScenesByGameId(gameRdx?.gameInformation?.id)
-    }, []);
+    useEffect(() => { getAllScenesByGameId(gameRdx?.gameInformation?.id) }, []);
 
     useEffect(() => {console.log(newSessionData)}, [newSessionData]);
+    useEffect(() => {
+        console.log(scenesAtSession);
+        console.log(scenes);
+    }, [scenesAtSession]);
 
     //HANDLERS
     const inputHandler = (e) => {                
@@ -90,6 +93,40 @@ export const NewSession = () => {
         }));
     };
 
+
+    //FUNCTIONS
+    const setScenesForSession = (e, dataId, source) => {        
+        if (source === "scenes") {
+            const newSceneSession = scenes.filter(scene => scene.id === dataId);            
+
+            const avaliableScenes = scenes.filter(scene => scene.id !== dataId);
+
+            setScenesAtSession(prevScenesAtSession => [
+                ...prevScenesAtSession,
+                ...newSceneSession
+            ]);
+            setScenes(avaliableScenes);
+        }else if (source === "scenesAtSession") {
+            const removeSceneSession = scenesAtSession.filter(scene => scene.id !== dataId); 
+
+            const avaliableScenes = scenesAtSession.filter(scene => scene.id === dataId);
+
+            setScenesAtSession(removeSceneSession);
+            setScenes(prevScenes => [
+                ...prevScenes,
+                ...avaliableScenes
+            ]);
+        };
+    };
+
+    const startDrag = (e, item, source) => {};
+
+    const draggingOver = (e) => {
+        e.preventDefault();
+    };
+
+    const onDrop = (e, destination) => {};
+
     return (
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
             <Row className='upperScroll d-flex justify-content-center align-items-center' >
@@ -97,21 +134,52 @@ export const NewSession = () => {
                     className='col-9 QuestCardShadow fw-bold fs-5 text-center eb-garamond-font rounded ms-4'
                     name="title"
                     required={true}
-                    placeholder={""}
+                    placeholder={"¿Cómo llamarás a la sesión?"}
                     onChange={(e) => inputHandler(e)}
                     />
             </Row>
             <Container className='centerScrollLocations col-10'>
-                <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
-                    <Col className='col-10 my-1 d-flex flex-wrap'>
+                <Row 
+                    className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'
+                    droppable="true">                            
+                    <Col className='col-12 my-1 text-center fw-bold'>Escenas</Col>
+                    <Col 
+                        className='col-12 rounded' 
+                        droppabe="true" 
+                        onDrop={(e) => onDrop(e, "scenesAtSession")} 
+                        onDragOver={(e) => draggingOver(e)}
+                        style={{
+                            height: '5em',
+                            border: '1px solid #ddd',
+                            cursor: 'move'
+                        }}>
+                            {!scenesAtSession ? (
+                                    <></>
+                                ) : (
+                                    scenesAtSession.map((data) => {
+                                        return <button 
+                                        key={data.id}
+                                        className='col-12 d-flex justify-content-evenly align-items-center rounded my-1'
+                                        onClick={(e) => setScenesForSession(e, data.id, "scenesAtSession")}>
+                                            {scenesAtSession.findIndex(scene => scene.id === data.id)}{" "}{data.title}
+                                        </button>
+                                    })
+                                )
+                            }
                     </Col>
+                </Row>
+                <Row>
                     <Col className='col-12'>
                         <SearchBar className="col-12 rounded" onChangeFunction={(e) => shearchBarHandler(e)}/>
                         {!scenes ? (
                                 <></>
                             ) : (
                                 scenes.map((data) => {
-                                    return <div key={data.id}>{data?.title}</div>
+                                    return <DraggableSceneCard 
+                                        key={data.id}
+                                        sceneData={data} 
+                                        onClickFunction={(e) => setScenesForSession(e, data.id, "scenes")}
+                                        scenes={scenes}/>
                                 })
                         )}
                     </Col>
