@@ -98,7 +98,6 @@ export const NewSession = () => {
     const setScenesForSession = (e, dataId, source) => {        
         if (source === "scenes") {
             const newSceneSession = scenes.filter(scene => scene.id === dataId);            
-
             const avaliableScenes = scenes.filter(scene => scene.id !== dataId);
 
             setScenesAtSession(prevScenesAtSession => [
@@ -106,12 +105,12 @@ export const NewSession = () => {
                 ...newSceneSession
             ]);
             setScenes(avaliableScenes);
-        }else if (source === "scenesAtSession") {
-            const removeSceneSession = scenesAtSession.filter(scene => scene.id !== dataId); 
-
+        } else if (source === "scenesAtSession") {
+            const sceneSession = scenesAtSession.filter(scene => scene.id !== dataId); 
+            
             const avaliableScenes = scenesAtSession.filter(scene => scene.id === dataId);
 
-            setScenesAtSession(removeSceneSession);
+            setScenesAtSession(sceneSession);
             setScenes(prevScenes => [
                 ...prevScenes,
                 ...avaliableScenes
@@ -158,9 +157,9 @@ export const NewSession = () => {
                                 ) : (
                                     scenesAtSession.map((data) => {
                                         return <button 
-                                        key={data.id}
-                                        className='col-12 d-flex justify-content-evenly align-items-center rounded my-1'
-                                        onClick={(e) => setScenesForSession(e, data.id, "scenesAtSession")}>
+                                            key={data.id}
+                                            className='col-12 d-flex justify-content-evenly align-items-center rounded my-1'
+                                            onClick={(e) => setScenesForSession(e, data.id, "scenesAtSession")}>
                                             {scenesAtSession.findIndex(scene => scene.id === data.id)}{" "}{data.title}
                                         </button>
                                     })
