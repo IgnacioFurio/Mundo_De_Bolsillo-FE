@@ -283,7 +283,10 @@ export const NewScene = () => {
                     )}
                     </Col>
                     <Col className='col-12'>
-                        <SearchBar className="col-12 rounded" onChangeFunction={(e) => shearchBarHandler(e)}/>
+                        <SearchBar 
+                            className="col-12 rounded" 
+                            onChangeFunction={(e) => shearchBarHandler(e)}
+                            placeholder={"¿A quién buscas?"}/>
                     </Col>
                     {searchInput !== "" ? ( 
                             searchResult.map((data) => {
