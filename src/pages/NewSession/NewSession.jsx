@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import { SearchBar } from '../../common/SearchBar/SearchBar';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
@@ -45,14 +45,12 @@ export const NewSession = () => {
     //USEEFFECT
     useEffect(() => { getAllScenesByGameId(gameRdx?.gameInformation?.id) }, []);
 
-    useEffect(() => {console.log(newSessionData)}, [newSessionData]);
-    useEffect(() => {
-        console.log(scenesAtSession);
-        console.log(scenes);
-    }, [scenesAtSession]);
+    useEffect(() => {    }, [scenesAtSession]);
 
     //HANDLERS
-    const inputHandler = (e) => {                
+    const inputHandler = (e) => {      
+        console.log(e.target.value);
+        
         setNewSessionData((prevState) => ({
             ...prevState,
             [e.target.name]: e?.target?.value
@@ -118,13 +116,36 @@ export const NewSession = () => {
         };
     };
 
-    const startDrag = (e, item, source) => {};
+    const startDrag = (e, index) => {
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("sceneIndex", index);
+    };
 
     const draggingOver = (e) => {
         e.preventDefault();
     };
 
-    const onDrop = (e, destination) => {};
+    const onDrop = (e, index) => {
+        e.preventDefault();
+        
+        // Recuperar los índices como números
+        const draggedIndex = parseInt(e.dataTransfer.getData("sceneIndex"), 10);
+        
+        // Crear una copia del array para modificar
+        const updatedList = [...scenesAtSession];
+        
+        // Sacar el elemento arrastrado
+        const [ draggedItem ] = updatedList.splice(draggedIndex, 1);
+
+        if (draggedIndex < index) {
+            updatedList.splice(index, 0, draggedItem);            
+        } else if (draggedIndex > index) {
+            updatedList.splice(index, 0, draggedItem);
+        };
+        
+        // Actualizar la lista
+        setScenesAtSession(updatedList);
+    };
 
     return (
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
@@ -143,24 +164,27 @@ export const NewSession = () => {
                     droppable="true">                            
                     <Col className='col-12 my-1 text-center fw-bold'>Escenas</Col>
                     <Col 
-                        className='col-12 rounded' 
+                        className='col-12 py-2 rounded' 
                         droppabe="true" 
-                        onDrop={(e) => onDrop(e, "scenesAtSession")} 
-                        onDragOver={(e) => draggingOver(e)}
                         style={{
-                            height: '5em',
                             border: '1px solid #ddd',
-                            cursor: 'move'
+                            cursor: 'move',
+                            alignContent: "center"
                         }}>
                             {!scenesAtSession ? (
                                     <></>
                                 ) : (
-                                    scenesAtSession.map((data) => {
+                                    scenesAtSession.map((data, index) => {
                                         return <button 
                                             key={data.id}
+                                            draggable="true"
                                             className='col-12 d-flex justify-content-evenly align-items-center rounded my-1'
-                                            onClick={(e) => setScenesForSession(e, data.id, "scenesAtSession")}>
-                                            {scenesAtSession.findIndex(scene => scene.id === data.id)}{" "}{data.title}
+                                            data-index={index}
+                                            onClick={(e) => setScenesForSession(e, data.id, "scenesAtSession")}
+                                            onDragStart={(e) => startDrag(e, index)}
+                                            onDragOver={(e) => draggingOver(e)}
+                                            onDrop={(e) => onDrop(e, index)}>
+                                            {index}{" "}{data.title}
                                         </button>
                                     })
                                 )

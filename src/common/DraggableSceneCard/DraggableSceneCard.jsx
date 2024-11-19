@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-//redux
-import { useDispatch } from 'react-redux';
-import { characterInfo } from '../../services/character.slice';
 //bootstrap
 import { Col, Container, Row } from 'react-bootstrap';
 //common
 import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
-import { WoodenButton } from '../WoodenButton/WoodenButton';
-import { sceneInfo } from '../../services/scene.slice';
 
 export const DraggableSceneCard = ({ sceneData, onClickFunction }) => {  
     const [ index, setIndex ] = useState()
