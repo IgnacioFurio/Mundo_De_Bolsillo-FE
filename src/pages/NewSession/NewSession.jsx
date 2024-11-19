@@ -179,7 +179,6 @@ export const NewSession = () => {
                                             key={data.id}
                                             draggable="true"
                                             className='col-12 d-flex justify-content-evenly align-items-center rounded my-1'
-                                            data-index={index}
                                             onClick={(e) => setScenesForSession(e, data.id, "scenesAtSession")}
                                             onDragStart={(e) => startDrag(e, index)}
                                             onDragOver={(e) => draggingOver(e)}
