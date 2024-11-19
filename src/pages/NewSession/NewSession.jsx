@@ -195,7 +195,7 @@ export const NewSession = () => {
                         <SearchBar 
                             className="col-12 rounded" 
                             onChangeFunction={(e) => shearchBarHandler(e)}
-                            placeholder={"Escribe la escena que buscas"}/>
+                            placeholder={"¿Qué escena buscas?"}/>
                         {!scenes ? (
                                 <></>
                             ) : (
