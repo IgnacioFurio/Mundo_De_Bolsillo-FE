@@ -192,7 +192,10 @@ export const NewSession = () => {
                 </Row>
                 <Row>
                     <Col className='col-12'>
-                        <SearchBar className="col-12 rounded" onChangeFunction={(e) => shearchBarHandler(e)}/>
+                        <SearchBar 
+                            className="col-12 rounded" 
+                            onChangeFunction={(e) => shearchBarHandler(e)}
+                            placeholder={"Escribe la escena que buscas"}/>
                         {!scenes ? (
                                 <></>
                             ) : (
@@ -212,7 +215,7 @@ export const NewSession = () => {
                             className='col-11 text-center rounded'
                             name="description"
                             required={false}
-                            placeholder={"Resumen de lo ocurrido en la sesión"}
+                            placeholder={"Resumen de ha de ocurrir en la sesión"}
                             onChange={(e) => inputHandler(e)}
                             style={{height: 8 + "em"}}/>
                     </Col>
