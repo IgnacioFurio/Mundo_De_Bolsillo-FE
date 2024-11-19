@@ -8,6 +8,7 @@ import { gameData } from '../../services/game.slice';
 import { validate } from '../../helpers/validations.helper';
 import { getScenesByGameId } from '../../services/scene.apicalls';
 import { DraggableSceneCard } from '../../common/DraggableSceneCard/DraggableSceneCard';
+import { extractWorldId } from '../../helpers/GameDetails.helper';
 
 export const NewSession = () => {
     const navigate = useNavigate();
@@ -17,7 +18,8 @@ export const NewSession = () => {
         {
             title: "",
             description: "",
-            game_id: gameRdx?.gameInformation?.id
+            game_id: gameRdx?.gameInformation?.id,
+            scenesAtSessionIds: [],
         }
     );
 
@@ -45,12 +47,18 @@ export const NewSession = () => {
     //USEEFFECT
     useEffect(() => { getAllScenesByGameId(gameRdx?.gameInformation?.id) }, []);
 
-    useEffect(() => {    }, [scenesAtSession]);
+    useEffect(() => { 
+        setNewSessionData((prevState) => ({
+            ...prevState,
+            scenesAtSessionIds: extractWorldId(scenesAtSession)
+        }));
 
+    }, [scenesAtSession]);
+
+    useEffect(() => {console.log(newSessionData);
+    }, [newSessionData]);
     //HANDLERS
-    const inputHandler = (e) => {      
-        console.log(e.target.value);
-        
+    const inputHandler = (e) => {              
         setNewSessionData((prevState) => ({
             ...prevState,
             [e.target.name]: e?.target?.value
@@ -128,13 +136,10 @@ export const NewSession = () => {
     const onDrop = (e, index) => {
         e.preventDefault();
         
-        // Recuperar los índices como números
         const draggedIndex = parseInt(e.dataTransfer.getData("sceneIndex"), 10);
         
-        // Crear una copia del array para modificar
         const updatedList = [...scenesAtSession];
         
-        // Sacar el elemento arrastrado
         const [ draggedItem ] = updatedList.splice(draggedIndex, 1);
 
         if (draggedIndex < index) {
@@ -143,7 +148,6 @@ export const NewSession = () => {
             updatedList.splice(index, 0, draggedItem);
         };
         
-        // Actualizar la lista
         setScenesAtSession(updatedList);
     };
 
