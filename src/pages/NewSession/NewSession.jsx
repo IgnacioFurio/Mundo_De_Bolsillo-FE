@@ -90,7 +90,11 @@ export const NewSession = () => {
     const getAllScenesByGameId = (gameId) => {
         getScenesByGameId(gameId)
         .then((result) => {
-            setScenes(result?.data?.data);
+            let scenes = result?.data?.data
+
+            let notVisitedScenes = scenes.filter((scene) => { return scene.session_id === null });
+                        
+            setScenes(notVisitedScenes);
         })
         .catch((error) => {console.log(error)})
     };
@@ -98,8 +102,6 @@ export const NewSession = () => {
     const createNewSession = () => {
         createSession(newSessionData)
         .then((result) => {
-            console.log(result?.data?.data);
-            
             navigate("/games/game-details");
         })
         .catch(error => console.log(error))
