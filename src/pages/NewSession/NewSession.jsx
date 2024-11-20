@@ -9,6 +9,7 @@ import { checkValid, validate } from '../../helpers/validations.helper';
 import { getScenesByGameId } from '../../services/scene.apicalls';
 import { DraggableSceneCard } from '../../common/DraggableSceneCard/DraggableSceneCard';
 import { extractWorldId } from '../../helpers/GameDetails.helper';
+import { createSession } from '../../services/session.apicalls';
 
 export const NewSession = () => {
     const navigate = useNavigate();
@@ -94,6 +95,15 @@ export const NewSession = () => {
         .catch((error) => {console.log(error)})
     };
 
+    const createNewSession = () => {
+        createSession(newSessionData)
+        .then((result) => {
+            console.log(result?.data?.data);
+            
+            navigate("/games/game-details");
+        })
+        .catch(error => console.log(error))
+    };
     //CHECKS
     const checkError = (e) => {      
         let error = "";
@@ -251,7 +261,7 @@ export const NewSession = () => {
                 <Row>
                     <Col className='col-12 d-flex justify-content-evenly py-3'>
                         <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
-                        <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewScene()}/>
+                        <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewSession()}/>
                     </Col>
                 </Row>
             </Container> 
