@@ -9,12 +9,6 @@ export const Sessions = ({ gameData }) => {
     const [ sessions, setSessions ] = useState([]);
     const [ gameInformation, setGameInformation ] = useState(gameData);
 
-    //USEEFFECT
-    useEffect(() => {
-        console.log(gameInformation);
-        
-    }, []);
-
     return (
         <Container>
             <Row>
