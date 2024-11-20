@@ -5,7 +5,7 @@ import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { gameData } from '../../services/game.slice';
-import { validate } from '../../helpers/validations.helper';
+import { checkValid, validate } from '../../helpers/validations.helper';
 import { getScenesByGameId } from '../../services/scene.apicalls';
 import { DraggableSceneCard } from '../../common/DraggableSceneCard/DraggableSceneCard';
 import { extractWorldId } from '../../helpers/GameDetails.helper';
@@ -58,12 +58,9 @@ export const NewSession = () => {
 
     }, [scenesAtSession]);
 
-    // useEffect(() => {console.log(newSessionData);   }, [newSessionData]);
+    useEffect(() => { filter(searchInput, scenes); },[ searchInput ]);
 
-    useEffect(() => { filter(searchInput, scenes); 
-        console.log(searchResult);
-        
-    },[ searchInput ]);
+    useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
 
     //HANDLERS
     const inputHandler = (e) => {              
