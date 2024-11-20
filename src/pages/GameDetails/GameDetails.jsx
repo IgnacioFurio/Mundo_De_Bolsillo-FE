@@ -11,13 +11,14 @@ import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { Locations } from '../../common/Locations/Locations';
 import { Characters } from '../../common/Characters/Characters';
+import { Scenes } from '../../common/Scenes/Scenes';
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
 //helper
 import { extractWorldId } from '../../helpers/GameDetails.helper';
 //css
 import "./GameDetails.css";
-import { Scenes } from '../../common/Scenes/Scenes';
+import { Sessions } from '../../common/Sessions/Sessions';
 
 
 export const GameDetails = () => {
@@ -34,10 +35,10 @@ export const GameDetails = () => {
     const [ locations, setlocations ] = useState();
 
     const [ showPlaces, setShowPlaces ] = useState({
-        "": false,
+        Sesiones: true,
+        Escenas: false,
         Localizaciones: false,
         Personajes: false,
-        Escenas: false
     });
 
     //HANDLERS
@@ -95,10 +96,10 @@ export const GameDetails = () => {
 
     const InfoHandler = (e) => {
         setShowPlaces({
-            "": false,
+            Sesiones: false,
+            Escenas: false,
             Localizaciones: false,
             Personajes: false,
-            Escenas: false,
         });
 
         if (showPlaces[e.target.value] == false) {
@@ -133,15 +134,16 @@ export const GameDetails = () => {
                 )}
 
                 <select className='MoreInfoSelector text-center fw-bold my-2' onClick={(e) => InfoHandler(e)}> 
-                    <option value="">Información sobre:</option>
+                    <option value="Sesiones">Sesiones</option>
+                    <option value="Escenas">Escenas</option>
                     <option value="Localizaciones">Localizaciones</option>
                     <option value="Personajes">Personajes</option>
-                    <option value="Escenas">Escenas</option>
                 </select>
 
+                {showPlaces.Sesiones == true ? <Sessions gameData={gameInformation}/> : <></>}            
+                {showPlaces.Escenas == true ? <Scenes gameData={gameInformation}/> : <></>}            
                 {showPlaces.Localizaciones == true ? <Locations worldGates={worldGates}/> : <></>}            
                 {showPlaces.Personajes == true ? <Characters worldGates={worldGates}/> : <></>}            
-                {showPlaces.Escenas == true ? <Scenes gameData={gameInformation}/> : <></>}            
             </Row>
         </Container>
     )
