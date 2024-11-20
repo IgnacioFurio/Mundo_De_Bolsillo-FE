@@ -42,6 +42,9 @@ export const NewSession = () => {
     const [ scenes, setScenes ] = useState([]);
     const [ scenesAtSession, setScenesAtSession ] = useState([]);
 
+    const [ searchInput, setSearchInput ] = useState("");
+    const [ searchResult, setSearchResult ] = useState([]);
+
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     //USEEFFECT
@@ -55,8 +58,13 @@ export const NewSession = () => {
 
     }, [scenesAtSession]);
 
-    useEffect(() => {console.log(newSessionData);
-    }, [newSessionData]);
+    // useEffect(() => {console.log(newSessionData);   }, [newSessionData]);
+
+    useEffect(() => { filter(searchInput, scenes); 
+        console.log(searchResult);
+        
+    },[ searchInput ]);
+
     //HANDLERS
     const inputHandler = (e) => {              
         setNewSessionData((prevState) => ({
@@ -65,6 +73,19 @@ export const NewSession = () => {
         }));
 
         checkError(e);
+    };
+
+    //handler y funcion para el componente barra buscadora
+    const shearchBarHandler = (e) => { setSearchInput(e.target.value); };
+
+    const filter = ( input, data ) => {
+        let result = data.filter((element) => {                        
+            if (element.title.toString().toLowerCase().includes(input.toLowerCase())) {
+                return element;
+            }
+        });
+        
+        setSearchResult(result);
     };
 
     //APICALLS
@@ -200,10 +221,16 @@ export const NewSession = () => {
                             className="col-12 rounded" 
                             onChangeFunction={(e) => shearchBarHandler(e)}
                             placeholder={"¿Qué escena buscas?"}/>
-                        {!scenes ? (
-                                <></>
-                            ) : (
+                        {!searchInput ? (
                                 scenes.map((data) => {
+                                    return <DraggableSceneCard 
+                                        key={data.id}
+                                        sceneData={data} 
+                                        onClickFunction={(e) => setScenesForSession(e, data.id, "scenes")}
+                                        scenes={scenes}/>
+                                })
+                            ) : (
+                                searchResult.map((data) => {
                                     return <DraggableSceneCard 
                                         key={data.id}
                                         sceneData={data} 
