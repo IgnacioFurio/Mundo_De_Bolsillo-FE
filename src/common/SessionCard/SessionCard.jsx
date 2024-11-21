@@ -21,6 +21,7 @@ export const SessionCard = ({ sessionData }) => {
 
     const [ showMore, setShowMore ] = useState(false);
 
+    useEffect(() => { sortOff(session?.scenesAtSession) }, []);
     //HANDLER
     const showMoreHandler = () => {
         showMore === true ? setShowMore(false) : setShowMore(true);
@@ -29,6 +30,19 @@ export const SessionCard = ({ sessionData }) => {
     const sessionDetailsHandler = (e) => {
         dispatch(sessionInfo({sessionInformation: session}));
         navigate("/games/game-details/session/session-details");
+    };
+
+    //FUNCTIONS
+    
+    const sortOff = (arr) => {        
+        const sortArr = [...arr].sort((a,b) => a.session_index - b.session_index);
+
+        setSession((prevState) => (
+            {
+                ...prevState,
+                scenesAtSession: sortArr
+            }
+        ));
     };
 
     return (
@@ -64,7 +78,7 @@ export const SessionCard = ({ sessionData }) => {
                                     <Col className='col-1 text-center'>
                                         {data.session_index + 1}
                                     </Col>
-                                    <Col className='col-11 text-start'>
+                                    <Col className='col-10 text-start'>
                                         {data.title}
                                     </Col>
                                 </Row>

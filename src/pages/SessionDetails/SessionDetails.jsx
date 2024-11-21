@@ -22,13 +22,24 @@ export const SessionDetails = () => {
         }
     );
 
-    useEffect(() => {console.log(session)}, [sessionRdx]);
+    useEffect(() => { sortOff(session.scenesAtSession)}, [sessionRdx]);
 
     //FUNCTIONS
     const navigateBack = (e) => {
         // eliminar la información guardada en redux acerca de la escena
         dispatch(sceneInfo({sceneInformation: {}})); 
         navigate("/games/game-details");
+    };
+
+    const sortOff = (arr) => {        
+        const sortArr = [...arr].sort((a,b) => a.session_index - b.session_index);
+
+        setSession((prevState) => (
+            {
+                ...prevState,
+                scenesAtSession: sortArr
+            }
+        ));
     };
 
     return (
@@ -38,9 +49,9 @@ export const SessionDetails = () => {
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/session/modify-session")}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteSceneData()}/></Col>
             </Row> 
-            <Row className='upperScroll' onClick={() => sessionDetailsHandler()}>
+            <Row className='upperScroll'>
                 <Col className='d-flex justify-content-center align-items-center ms-3 text-center text-uppercase fw-bold'>
-                    {sessionRdx?.sessionInformation.title}
+                    {sessionRdx?.sessionInformation?.title}
                 </Col>
             </Row>
                 <Container className='centerScrollLocations col-10'>
