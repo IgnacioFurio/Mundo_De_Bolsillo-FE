@@ -19,7 +19,7 @@ export const SessionCard = ({ sessionData }) => {
 
     const [ showMore, setShowMore ] = useState(false);
 
-    useEffect(() => {console.log(session);  }, []);
+    useEffect(() => {console.log(session.scenesAtSession);  }, []);
 
     //HANDLER
     const showMoreHandler = () => {
@@ -45,7 +45,7 @@ export const SessionCard = ({ sessionData }) => {
                             {session?.description}
                         </Col>
                     </Row>
-                    {scenesAtSession.length > 0 ? (
+                    {session?.scenesAtSession?.length > 0 ? (
                         <Row className='text-center py-1'>
                             <Col className='col-12 mt-1 fw-bold'> 
                                 Escenas:
@@ -59,12 +59,12 @@ export const SessionCard = ({ sessionData }) => {
                         </Row>
                         )
                     }
-                    {scenesAtSession.map((data) => {
+                    {session?.scenesAtSession?.map((data) => {
                         return  <Row key={data.id} className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
-                                    <Col className='col-3 text-center'>
+                                    <Col className='col-1 text-center'>
                                         {data.session_index + 1}
                                     </Col>
-                                    <Col className='col-9 text-start'>
+                                    <Col className='col-11 text-start'>
                                         {data.title}
                                     </Col>
                                 </Row>
