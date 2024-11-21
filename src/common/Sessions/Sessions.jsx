@@ -3,6 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { NewRegisterButton } from '../NewRegisterButton/NewRegisterButton';
 import { useNavigate } from 'react-router-dom';
 import { getSessionsByGameId } from '../../services/session.apicalls';
+import { SessionCard } from '../SessionCard/SessionCard';
 
 export const Sessions = ({ gameData }) => {
     const navigate = useNavigate();
@@ -30,9 +31,7 @@ export const Sessions = ({ gameData }) => {
             </Row>
             <Row className='d-flex justify-content-center mt-1'>
             {sessions.map(data => {
-                return <Col key={data.id} className='col-11 col-sm-11 col-md-8 m-1'>                        
-                            {data.title}
-                        </Col>
+                return <SessionCard key={data.id} sessionData={data}/>
             })}
             </Row>
         </Container>
