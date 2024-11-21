@@ -1,39 +1,37 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
-import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
-import { sessionInfo } from '../../services/session.slice';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'
+import { sessionData, sessionInfo } from '../../services/session.slice';
+import { Col, Container, Row } from 'react-bootstrap';
+import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
+import { sceneInfo } from '../../services/scene.slice';
+import { deleteSession } from '../../services/session.apicalls';
 
-export const SessionCard = ({ sessionData }) => {
+export const SessionDetails = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const sessionRdx = useSelector(sessionData);
+
     const [ session, setSession ] = useState(
         {
-            id: sessionData?.id,
-            game_id: sessionData?.game_id,
-            title: sessionData?.title,
-            description: sessionData?.description,
-            scenesAtSession: sessionData?.Scenes
+            id: sessionRdx?.sessionInformation?.id,
+            game_id: sessionRdx?.sessionInformation?.game_id,
+            title: sessionRdx?.sessionInformation?.title,
+            description: sessionRdx?.sessionInformation?.description,
+            scenesAtSession: sessionRdx?.sessionInformation?.scenesAtSession
         }
     );
 
-    const [ showMore, setShowMore ] = useState(false);
-
-    useEffect(() => { sortOff(session?.scenesAtSession) }, []);
-    //HANDLER
-    const showMoreHandler = () => {
-        showMore === true ? setShowMore(false) : setShowMore(true);
-    };
-
-    const sessionDetailsHandler = (e) => {
-        dispatch(sessionInfo({sessionInformation: session}));
-        navigate("/games/game-details/session/session-details");
-    };
+    useEffect(() => { sortOff(session?.scenesAtSession)}, [sessionRdx]);
 
     //FUNCTIONS
-    
+    const navigateBack = (e) => {
+        // eliminar la información guardada en redux acerca de la escena
+        dispatch(sceneInfo({sceneInformation: {}})); 
+        navigate("/games/game-details");
+    };
+
     const sortOff = (arr) => {        
         const sortArr = [...arr].sort((a,b) => a.session_index - b.session_index);
 
@@ -45,21 +43,35 @@ export const SessionCard = ({ sessionData }) => {
         ));
     };
 
+    //ACPICALLS
+    const deleteSessionById = () => {
+        deleteSession(session?.id)
+        .then((result) => {
+            dispatch(sessionInfo({sessionInformation: {}}));      
+            navigate("/games/game-details")
+        })
+        .catch(error => console.log(error))
+    };
+
     return (
         <Container>
-            <Row className='upperScroll' onClick={() => sessionDetailsHandler()}>
+            <Row className='d-flex justify-content-evenly py-3'>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack()}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/session/modify-session")}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteSessionById()}/></Col>
+            </Row> 
+            <Row className='upperScroll'>
                 <Col className='d-flex justify-content-center align-items-center ms-3 text-center text-uppercase fw-bold'>
-                    {sessionData?.title}
+                    {sessionRdx?.sessionInformation?.title}
                 </Col>
             </Row>
-            {showMore === true ? (
                 <Container className='centerScrollLocations col-10'>
                     <Row className='text-center py-1'>
                         <Col className='col-12 mt-1 '> 
-                            {session?.description}
+                            {sessionRdx?.sessionInformation?.description}
                         </Col>
                     </Row>
-                    {session?.scenesAtSession?.length > 0 ? (
+                    {sessionRdx?.sessionInformation?.scenesAtSession?.length > 0 ? (
                         <Row className='text-center py-1'>
                             <Col className='col-12 mt-1 fw-bold'> 
                                 Escenas:
@@ -84,15 +96,8 @@ export const SessionCard = ({ sessionData }) => {
                                 </Row>
                     })}
                 </Container>
-            ) : (
-                <></>
-            )}
-            
-            <Row className='downScroll' onClick={(e) => showMoreHandler(e)}>
+            <Row className='downScroll'>
                 <Col className='col-12 fw-bold text-center text-white'>{}</Col>
-                <Col>
-                    {showMore === false ? <NextPrevButton action="Down"/> : <NextPrevButton action="Up"/>}
-                </Col>
             </Row>
         </Container>
     )

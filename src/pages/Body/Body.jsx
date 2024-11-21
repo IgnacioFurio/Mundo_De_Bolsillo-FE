@@ -28,6 +28,7 @@ import { SceneDetails } from '../SceneDetails/SceneDetails'
 import { ModifyScene } from '../ModifyScene/ModifyScene'
 import { Sessions } from '../../common/Sessions/Sessions'
 import { NewSession } from '../NewSession/NewSession'
+import { SessionDetails } from '../SessionDetails/SessionDetails'
 
 export const Body = () => {
     return (
@@ -59,6 +60,7 @@ export const Body = () => {
                 <Route path='/scenes/modify-scene' element={<ModifyScene/>}/>
                 <Route path='/sesions/my-sessions' element={<Sessions/>}/>
                 <Route path='/sessions/new-session' element={<NewSession/>}/>
+                <Route path='/games/game-details/session/session-details' element={<SessionDetails/>}/>
             </Routes>
         </Container>
     )
