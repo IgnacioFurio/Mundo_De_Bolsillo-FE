@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
-import { sessionData } from '../../services/session.slice';
+import { sessionData, sessionInfo } from '../../services/session.slice';
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { sceneInfo } from '../../services/scene.slice';
+import { deleteSession } from '../../services/session.apicalls';
 
 export const SessionDetails = () => {
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ export const SessionDetails = () => {
         }
     );
 
-    useEffect(() => { sortOff(session.scenesAtSession)}, [sessionRdx]);
+    useEffect(() => { sortOff(session?.scenesAtSession)}, [sessionRdx]);
 
     //FUNCTIONS
     const navigateBack = (e) => {
@@ -42,12 +43,22 @@ export const SessionDetails = () => {
         ));
     };
 
+    //ACPICALLS
+    const deleteSessionById = () => {
+        deleteSession(session?.id)
+        .then((result) => {
+            dispatch(sessionInfo({sessionInformation: {}}));      
+            navigate("/games/game-details")
+        })
+        .catch(error => console.log(error))
+    };
+
     return (
         <Container>
             <Row className='d-flex justify-content-evenly py-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack()}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/session/modify-session")}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteSceneData()}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteSessionById()}/></Col>
             </Row> 
             <Row className='upperScroll'>
                 <Col className='d-flex justify-content-center align-items-center ms-3 text-center text-uppercase fw-bold'>
