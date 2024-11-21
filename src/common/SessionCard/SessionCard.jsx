@@ -3,8 +3,10 @@ import { Col, Container, Row } from 'react-bootstrap'
 import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import { sessionInfo } from '../../services/session.slice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const SessionCard = ({ sessionData }) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [ session, setSession ] = useState(
@@ -19,8 +21,6 @@ export const SessionCard = ({ sessionData }) => {
 
     const [ showMore, setShowMore ] = useState(false);
 
-    useEffect(() => {console.log(session.scenesAtSession);  }, []);
-
     //HANDLER
     const showMoreHandler = () => {
         showMore === true ? setShowMore(false) : setShowMore(true);
@@ -28,7 +28,7 @@ export const SessionCard = ({ sessionData }) => {
 
     const sessionDetailsHandler = (e) => {
         dispatch(sessionInfo({sessionInformation: session}));
-        navigate("/games/game-details/scenes/scene-details");
+        navigate("/games/game-details/session/session-details");
     };
 
     return (
