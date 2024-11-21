@@ -12,6 +12,7 @@ import characterSlice from "../services/character.slice";
 import knowledgeSlice from "../services/knowledge.slice";
 import questSlice from "../services/quest.slice";
 import sceneSlice  from "../services/scene.slice";
+import sessionSlice  from "../services/session.slice";
 
 import thunk from 'redux-thunk';
 
@@ -23,6 +24,7 @@ const reducers = combineReducers({
     knowledge: knowledgeSlice,
     quest: questSlice,
     scene: sceneSlice,
+    session: sessionSlice,
 })
 
 const persistConfig = {

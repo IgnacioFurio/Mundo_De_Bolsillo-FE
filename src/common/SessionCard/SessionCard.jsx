@@ -1,32 +1,39 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
+import { sessionInfo } from '../../services/session.slice';
+import { useDispatch } from 'react-redux';
 
 export const SessionCard = ({ sessionData }) => {
+    const dispatch = useDispatch();
 
     const [ session, setSession ] = useState(
         {
-            id: sessionData.id,
-            game_id: sessionData.game_id,
-            title: sessionData.title,
-            description: sessionData.description,
+            id: sessionData?.id,
+            game_id: sessionData?.game_id,
+            title: sessionData?.title,
+            description: sessionData?.description,
+            scenesAtSession: sessionData?.Scenes
         }
     );
 
-    const [ scenesAtSession, setScenesAtSession ] = useState(sessionData.Scenes);
-
     const [ showMore, setShowMore ] = useState(false);
 
-    useEffect(() => {console.log(scenesAtSession);  }, []);
+    useEffect(() => {console.log(session);  }, []);
 
     //HANDLER
     const showMoreHandler = () => {
         showMore === true ? setShowMore(false) : setShowMore(true);
     };
 
+    const sessionDetailsHandler = (e) => {
+        dispatch(sessionInfo({sessionInformation: session}));
+        navigate("/games/game-details/scenes/scene-details");
+    };
+
     return (
         <Container>
-            <Row className='upperScroll' onClick={() => sceneDetailsHandler()}>
+            <Row className='upperScroll' onClick={() => sessionDetailsHandler()}>
                 <Col className='d-flex justify-content-center align-items-center ms-3 text-center text-uppercase fw-bold'>
                     {sessionData?.title}
                 </Col>
