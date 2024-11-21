@@ -46,7 +46,19 @@ export const GameDetails = () => {
 
     useEffect(() => { getAllWorldGatesByGameId(); }, []);
 
-    // FUNCTIONS
+    //APICALLS
+    const getAllWorldGatesByGameId = () => {
+        getWorldGatesByGameId(gameInformation?.id)
+            .then(result => {
+                let worlds = [];
+    
+                for (let i = 0; i < result?.data?.data?.length; i++) {
+                    worlds.push(result?.data?.data[i]?.World);
+                };
+                setWorldGates(worlds.sort((a,b) => a.id - b.id));
+            })
+            .catch(error => console.log(error?.response?.data?.error))
+    };
     const deleteGameData = (game_id) => {
 
         for (let i = 0; i < worldGates.length; i++) {
@@ -80,19 +92,6 @@ export const GameDetails = () => {
         };
     };
 
-    //APICALLS
-    const getAllWorldGatesByGameId = () => {
-        getWorldGatesByGameId(gameInformation?.id)
-            .then(result => {
-                let worlds = [];
-    
-                for (let i = 0; i < result?.data?.data?.length; i++) {
-                    worlds.push(result?.data?.data[i]?.World);
-                };
-                setWorldGates(worlds.sort((a,b) => a.id - b.id));
-            })
-            .catch(error => console.log(error?.response?.data?.error))
-    };
 
     return (
         <Container id={gameInformation?.id} className='col-12 col-sm-10 col-md-9 col-lg-8 col-xl-7'>
