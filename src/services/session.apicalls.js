@@ -1,13 +1,13 @@
 import axios from "axios";
 import { root } from "./apiCalls";
 
-// export const getSessionsByGameId = async (body) => {
-//     let data = {
-//         game_id: body
-//     };
+export const getSessionsByGameId = async (body) => {
+    let data = {
+        game_id: body
+    };
 
-//     return await axios.post(`${root}/session/get-all-by-game`, data);
-// };
+    return await axios.post(`${root}/session/get-all-by-game`, data);
+};
 
 export const createSession = async (body) => {
     return await axios.post(`${root}/session/post`, body)
