@@ -6,19 +6,16 @@ import { gameData, gameInfo } from '../../services/game.slice';
 //apicall
 import { deleteGame } from '../../services/game.apicalls';
 import { deleteWorldGate, getWorldGatesByGameId } from '../../services/worldgate.apicall';
-import { getLocationsByWorldId } from '../../services/location.apicalls';
 //components
-import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
+import { Sessions } from '../../common/Sessions/Sessions';
+import { Scenes } from '../../common/Scenes/Scenes';
 import { Locations } from '../../common/Locations/Locations';
 import { Characters } from '../../common/Characters/Characters';
-import { Scenes } from '../../common/Scenes/Scenes';
+import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 //bootstrap
 import { Container, Row , Col} from 'react-bootstrap';
-//helper
-import { extractWorldId } from '../../helpers/GameDetails.helper';
 //css
 import "./GameDetails.css";
-import { Sessions } from '../../common/Sessions/Sessions';
 
 
 export const GameDetails = () => {
@@ -32,7 +29,7 @@ export const GameDetails = () => {
 
     const [ worldGates, setWorldGates ] = useState([]);
 
-    const [ locations, setlocations ] = useState();
+    // const [ locations, setlocations ] = useState([]);
 
     const [ showPlaces, setShowPlaces ] = useState({
         Sesiones: true,
@@ -47,35 +44,7 @@ export const GameDetails = () => {
         navigate("/games/my-games");
     };
 
-    useEffect(() => { // Bring worlds linked to the game
-        getWorldGatesByGameId(gameInformation.id)
-        .then(result => {
-            let worlds = [];
-
-            for (let i = 0; i < result.data.data.length; i++) {
-                worlds.push(result.data.data[i].World);
-            };
-            setWorldGates(worlds.sort((a,b) => a.id - b.id));
-        })
-        .catch(error => console.log(error.response.data.error))
-    }, []);
-
-    useEffect(() => {
-        getLocationsByWorldId(extractWorldId(worldGates))
-        .then(result => {
-            let arr = result.data.data;
-            let locations = [];
-
-            for (let i = 0; i < arr.length; i++) {
-                    for (let j = 0; j < arr[i].length; j++) {
-                        locations.push(arr[i][j]);                        
-                    }
-            };
-
-            setlocations(locations);
-        })
-        .catch(error => console.log(error.response.data.error))
-    }, [worldGates]);
+    useEffect(() => { getAllWorldGatesByGameId(); }, []);
 
     // FUNCTIONS
     const deleteGameData = (game_id) => {
@@ -83,7 +52,7 @@ export const GameDetails = () => {
         for (let i = 0; i < worldGates.length; i++) {
             deleteWorldGate({game_id: game_id, world_id: worldGates[i].id})
             .then(() => {})
-            .catch(error => console.log(error.response.data.error))
+            .catch(error => console.log(error?.response?.data?.error))
         };
 
         deleteGame(game_id)
@@ -91,9 +60,10 @@ export const GameDetails = () => {
             dispatch(gameInfo({gameInformation: {}}));      
             navigate("/games/my-games");
         })
-        .catch(error => console.log(error.response.data.error));
+        .catch(error => console.log(error?.response?.data?.error));
     };
 
+    //HANDELRS
     const InfoHandler = (e) => {
         setShowPlaces({
             Sesiones: false,
@@ -102,12 +72,26 @@ export const GameDetails = () => {
             Personajes: false,
         });
 
-        if (showPlaces[e.target.value] == false) {
+        if (showPlaces[e?.target?.value] == false) {
             setShowPlaces({
                 ...showPlaces,
-                [e.target.value]: true
+                [e?.target?.value]: true
             });
         };
+    };
+
+    //APICALLS
+    const getAllWorldGatesByGameId = () => {
+        getWorldGatesByGameId(gameInformation?.id)
+            .then(result => {
+                let worlds = [];
+    
+                for (let i = 0; i < result?.data?.data?.length; i++) {
+                    worlds.push(result?.data?.data[i]?.World);
+                };
+                setWorldGates(worlds.sort((a,b) => a.id - b.id));
+            })
+            .catch(error => console.log(error?.response?.data?.error))
     };
 
     return (
@@ -115,21 +99,25 @@ export const GameDetails = () => {
             <Row className='d-flex justify-content-evenly pt-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack("/games/my-games")}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/games/modify-game")}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteGameData(gameInformation.id)}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteGameData(gameInformation?.id)}/></Col>
             </Row>            
             <Row className='d-flex justify-content-center align-items-center'>
                 <Col className='detailsStone mt-4 py-2'>
-                    <div className='gamePortraitTitle p-3'><p className='gameDetailsTitle d-flex justify-content-center col-12 fs-4 fw-bold mb-0'>{gameInformation.title}</p></div>
+                    <div className='gamePortraitTitle p-3'>
+                        <p className='gameDetailsTitle d-flex justify-content-center col-12 fs-4 fw-bold mb-0'>
+                            {gameInformation?.title}
+                        </p>
+                    </div>
                 </Col>                    
             </Row>
             <Row className='detailsBackground mx-1'>
-                <Col className='col-12 text-center mb-3 mx-2'>{gameInformation.description}</Col> 
+                <Col className='col-12 text-center mb-3 mx-2'>{gameInformation?.description}</Col> 
                 <Col className='col-12 text-center fw-bold my-2'>Mundos enlazados</Col>     
 
                 {worldGates.map((data) => 
                 <Container key={data.id} className='d-flex justify-content-center col-12 col-sm-6 col-lg-4 my-2'>
                     <Col style={{width: '1.2em', cursor: 'default'}} className='switchDesignOn col-2 ms-2'></Col>
-                    <Col className='col-4 col-sm-5 col-lg-3 mx-2'>{data.name}</Col>
+                    <Col className='col-4 col-sm-5 col-lg-3 mx-2'>{data?.name}</Col>
                 </Container>
                 )}
 
