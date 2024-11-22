@@ -106,6 +106,7 @@ export const NewSession = () => {
         })
         .catch(error => console.log(error))
     };
+    
     //CHECKS
     const checkError = (e) => {      
         let error = "";

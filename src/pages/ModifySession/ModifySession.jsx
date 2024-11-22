@@ -54,6 +54,16 @@ export const ModifySession = () => {
 
     // useEffect(() => { console.log(scenes);  }, [session]);
 
+    //HANDLERS
+    const inputHandler = (e) => {              
+        setSession((prevState) => ({
+            ...prevState,
+            [e.target.name]: e?.target?.value
+        }));
+
+        checkError(e);
+    };
+
     //APICALLS
     const getAllScenesByGameId = (gameId) => {
         getScenesByGameId(gameId)
@@ -70,9 +80,6 @@ export const ModifySession = () => {
         if (source === "scenes") {
             const sceneSession = scenes.filter(scene => scene.id === dataId);            
             const avaliableScenes = scenes.filter(scene => scene.id !== dataId);
-
-            console.log("sceneSession", sceneSession);
-            console.log("avaliableScenes", avaliableScenes);
             
             setSession((prevState) => (
                 {
