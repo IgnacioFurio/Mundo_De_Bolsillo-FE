@@ -76,14 +76,32 @@ export const NewSession = () => {
     //handler y funcion para el componente barra buscadora
     const shearchBarHandler = (e) => { setSearchInput(e.target.value); };
 
-    const filter = ( input, data ) => {
-        let result = data.filter((element) => {                        
-            if (element.title.toString().toLowerCase().includes(input.toLowerCase())) {
-                return element;
-            }
-        });
+    
+    const startDragHandler = (e, index) => {
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("sceneIndex", index);
+    };
+    
+    const draggingOverHandler = (e) => {
+        e.preventDefault();
+    };
+
+    const onDropHandler = (e, index) => {
+        e.preventDefault();
         
-        setSearchResult(result);
+        const draggedIndex = parseInt(e.dataTransfer.getData("sceneIndex"), 10);
+        
+        const updatedList = [...scenesAtSession];
+        
+        const [ draggedItem ] = updatedList.splice(draggedIndex, 1);
+
+        if (draggedIndex < index) {
+            updatedList.splice(index, 0, draggedItem);            
+        } else if (draggedIndex > index) {
+            updatedList.splice(index, 0, draggedItem);
+        };
+        
+        setScenesAtSession(updatedList);
     };
 
     //APICALLS
@@ -91,14 +109,14 @@ export const NewSession = () => {
         getScenesByGameId(gameId)
         .then((result) => {
             let scenes = result?.data?.data
-
+            
             let notVisitedScenes = scenes.filter((scene) => { return scene.session_id === null });
-                        
+            
             setScenes(notVisitedScenes);
         })
         .catch((error) => {console.log(error)})
     };
-
+    
     const createNewSession = () => {
         createSession(newSessionData)
         .then((result) => {
@@ -117,10 +135,10 @@ export const NewSession = () => {
             e.target.required
             );
             
-        error = check.message;        
-
-        setValidInputField((prevState) => ({
-            ...prevState,
+            error = check.message;        
+            
+            setValidInputField((prevState) => ({
+                ...prevState,
             [e.target.name + 'Valid']: check.valid
         }));
         
@@ -129,7 +147,16 @@ export const NewSession = () => {
             [e.target.name + 'Error']: error
         }));
     };
-
+    
+    const filter = ( input, data ) => {
+        let result = data.filter((element) => {                        
+            if (element.title.toString().toLowerCase().includes(input.toLowerCase())) {
+                return element;
+            }
+        });
+        
+        setSearchResult(result);
+    };
 
     //FUNCTIONS
     const setScenesForSession = (e, dataId, source) => {        
@@ -155,32 +182,6 @@ export const NewSession = () => {
         };
     };
 
-    const startDrag = (e, index) => {
-        e.dataTransfer.effectAllowed = "move";
-        e.dataTransfer.setData("sceneIndex", index);
-    };
-
-    const draggingOver = (e) => {
-        e.preventDefault();
-    };
-
-    const onDrop = (e, index) => {
-        e.preventDefault();
-        
-        const draggedIndex = parseInt(e.dataTransfer.getData("sceneIndex"), 10);
-        
-        const updatedList = [...scenesAtSession];
-        
-        const [ draggedItem ] = updatedList.splice(draggedIndex, 1);
-
-        if (draggedIndex < index) {
-            updatedList.splice(index, 0, draggedItem);            
-        } else if (draggedIndex > index) {
-            updatedList.splice(index, 0, draggedItem);
-        };
-        
-        setScenesAtSession(updatedList);
-    };
 
     return (
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
@@ -215,9 +216,9 @@ export const NewSession = () => {
                                             draggable="true"
                                             className='col-12 d-flex justify-content-evenly align-items-center rounded my-1'
                                             onClick={(e) => setScenesForSession(e, data.id, "scenesAtSession")}
-                                            onDragStart={(e) => startDrag(e, index)}
-                                            onDragOver={(e) => draggingOver(e)}
-                                            onDrop={(e) => onDrop(e, index)}>
+                                            onDragStart={(e) => startDragHandler(e, index)}
+                                            onDragOver={(e) => draggingOverHandler(e)}
+                                            onDrop={(e) => onDropHandler(e, index)}>
                                             {index}{" "}{data.title}
                                         </button>
                                     })

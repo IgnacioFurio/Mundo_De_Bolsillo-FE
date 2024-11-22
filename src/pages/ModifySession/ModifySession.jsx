@@ -54,7 +54,7 @@ export const ModifySession = () => {
 
     useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
 
-    // useEffect(() => { console.log(scenes);  }, [session]);
+    useEffect(() => { console.log(session);  }, [session]);
 
     //HANDLERS
     const inputHandler = (e) => {              
@@ -66,7 +66,6 @@ export const ModifySession = () => {
         checkError(e);
     };
 
-    //handler y funcion para el componente barra buscadora
     const shearchBarHandler = (e) => { setSearchInput(e.target.value); };
 
     const filter = ( input, data ) => {
@@ -77,6 +76,38 @@ export const ModifySession = () => {
         });
         
         setSearchResult(result);
+    };
+    
+    const startDragHandler = (e, index) => {
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("sceneIndex", index);
+    };
+
+    const draggingOverHAndler = (e) => {
+        e.preventDefault();
+    };
+
+    const onDropHandler = (e, index) => {
+        e.preventDefault();
+        
+        const draggedIndex = parseInt(e.dataTransfer.getData("sceneIndex"), 10);
+        
+        const updatedList = [...session?.scenesAtSession];
+        
+        const [ draggedItem ] = updatedList.splice(draggedIndex, 1);
+
+        if (draggedIndex < index) {
+            updatedList.splice(index, 0, draggedItem);            
+        } else if (draggedIndex > index) {
+            updatedList.splice(index, 0, draggedItem);
+        };
+        
+        setSession((prevState) => (
+            {
+                ...prevState,
+                scenesAtSession: [...updatedList]
+            }
+        ));
     };
 
     //APICALLS
@@ -139,6 +170,7 @@ export const ModifySession = () => {
         ));
     };
 
+
     //CHECKS
     const checkError = (e) => {      
         let error = "";
@@ -196,9 +228,9 @@ export const ModifySession = () => {
                                             draggable="true"
                                             className='col-12 d-flex justify-content-evenly align-items-center rounded my-1'
                                             onClick={(e) => setScenesForSession(e, data.id, "scenesAtSession")}
-                                            onDragStart={(e) => startDrag(e, index)}
-                                            onDragOver={(e) => draggingOver(e)}
-                                            onDrop={(e) => onDrop(e, index)}>
+                                            onDragStart={(e) => startDragHandler(e, index)}
+                                            onDragOver={(e) => draggingOverHAndler(e)}
+                                            onDrop={(e) => onDropHandler(e, index)}>
                                             {index}{" "}{data.title}
                                         </button>
                                     })
