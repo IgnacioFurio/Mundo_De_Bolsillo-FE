@@ -7,6 +7,7 @@ import { SearchBar } from '../../common/SearchBar/SearchBar';
 import { DraggableSceneCard } from '../../common/DraggableSceneCard/DraggableSceneCard';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { getScenesByGameId } from '../../services/scene.apicalls';
+import { checkValid, validate } from '../../helpers/validations.helper';
 
 export const ModifySession = () => {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ export const ModifySession = () => {
 
     const [ validInputField, setValidInputField ] = useState(
         {   //valor en falso para los requeridos
-            titleValid: false,
+            titleValid: true,
             descriptionValid: true,
             game_idValid: true,
         }
@@ -44,13 +45,12 @@ export const ModifySession = () => {
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
-    useEffect(() => { 
-        console.log("hmm");
-        
+    useEffect(() => {         
         getAllScenesByGameId(session?.game_id);
-
         sortOff(session?.scenesAtSession);
     }, [sessionRdx]);
+
+    useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
 
     // useEffect(() => { console.log(scenes);  }, [session]);
 
@@ -122,6 +122,29 @@ export const ModifySession = () => {
                 scenesAtSession: sortArr
             }
         ));
+    };
+
+    //CHECKS
+    const checkError = (e) => {      
+        let error = "";
+
+        let check = validate(
+            e.target.name,
+            e.target.value,
+            e.target.required
+            );
+            
+        error = check.message;        
+
+        setValidInputField((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Valid']: check.valid
+        }));
+        
+        setErrorInputfield((prevState) => ({
+            ...prevState,
+            [e.target.name + 'Error']: error
+        }));
     };
 
     return (
