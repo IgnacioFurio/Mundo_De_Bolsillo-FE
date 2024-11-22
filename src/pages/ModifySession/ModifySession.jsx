@@ -50,6 +50,8 @@ export const ModifySession = () => {
         sortOff(session?.scenesAtSession);
     }, [sessionRdx]);
 
+    useEffect(() => { filter(searchInput, scenes); },[ searchInput ]);
+
     useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
 
     // useEffect(() => { console.log(scenes);  }, [session]);
@@ -62,6 +64,19 @@ export const ModifySession = () => {
         }));
 
         checkError(e);
+    };
+
+    //handler y funcion para el componente barra buscadora
+    const shearchBarHandler = (e) => { setSearchInput(e.target.value); };
+
+    const filter = ( input, data ) => {
+        let result = data.filter((element) => {                        
+            if (element.title.toString().toLowerCase().includes(input.toLowerCase())) {
+                return element;
+            }
+        });
+        
+        setSearchResult(result);
     };
 
     //APICALLS
