@@ -6,6 +6,7 @@ import { sessionData } from '../../services/session.slice';
 import { SearchBar } from '../../common/SearchBar/SearchBar';
 import { DraggableSceneCard } from '../../common/DraggableSceneCard/DraggableSceneCard';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
+import { getScenesByGameId } from '../../services/scene.apicalls';
 
 export const ModifySession = () => {
     const navigate = useNavigate();
@@ -37,19 +38,74 @@ export const ModifySession = () => {
     );
 
     const [ scenes, setScenes ] = useState([]);
-    const [ scenesAtSession, setScenesAtSession ] = useState([]);
 
     const [ searchInput, setSearchInput ] = useState("");
     const [ searchResult, setSearchResult ] = useState([]);
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
-    useEffect(() => { sortOff(session?.scenesAtSession); }, [sessionRdx]);
+    useEffect(() => { 
+        console.log("hmm");
+        
+        getAllScenesByGameId(session?.game_id);
 
-    useEffect(() => { console.log();
-    }, [session]);
+        sortOff(session?.scenesAtSession);
+    }, [sessionRdx]);
+
+    // useEffect(() => { console.log(scenes);  }, [session]);
+
+    //APICALLS
+    const getAllScenesByGameId = (gameId) => {
+        getScenesByGameId(gameId)
+        .then((result) => {
+            let scenes = result?.data?.data
+                        
+            setScenes(scenes);
+        })
+        .catch((error) => {console.log(error)})
+    };
 
     //FUNCTIONS
+    const setScenesForSession = (e, dataId, source) => {                  
+        if (source === "scenes") {
+            const sceneSession = scenes.filter(scene => scene.id === dataId);            
+            const avaliableScenes = scenes.filter(scene => scene.id !== dataId);
+
+            console.log("sceneSession", sceneSession);
+            console.log("avaliableScenes", avaliableScenes);
+            
+            setSession((prevState) => (
+                {
+                    ...prevState,
+                    scenesAtSession: [
+                        ...(prevState.scenesAtSession || []),
+                        ...sceneSession
+                    ]
+                }
+            ));
+
+            setScenes(avaliableScenes);
+
+        } else if (source === "scenesAtSession") {
+            const sceneSession = session?.scenesAtSession.filter(scene => scene.id !== dataId);             
+            const avaliableScenes = session?.scenesAtSession.filter(scene => scene.id === dataId);
+            
+            setSession((prevState) => (
+                {
+                    ...prevState,
+                    scenesAtSession: sceneSession
+                }
+            ));
+
+            setScenes((prevState) =>
+                [
+                    ...prevState,
+                    ...avaliableScenes,
+                ]
+            );
+        };
+    };
+
     const sortOff = (arr) => {        
         const sortArr = [...arr].sort((a,b) => a.session_index - b.session_index);
         

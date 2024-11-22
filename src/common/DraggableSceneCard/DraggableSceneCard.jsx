@@ -15,26 +15,28 @@ export const DraggableSceneCard = ({ sceneData, onClickFunction }) => {
         description: sceneData?.description,
         location: sceneData?.location,
         characters: sceneData?.CharacterScenes,
-        session_index: "",
+        session_index: null,
     });
 
     const [ charactersAtScene, setCharactersAtScene ] = useState([]);
 
     const [ showMore, setShowMore ] = useState(false);
 
-    useEffect(() => { getCharactersAtScene(); },[scene]);
+    useEffect(() => { getCharactersAtScene(scene); },[scene]);
     
     //HANDLER
     const showMoreHandler = () => {
         showMore === true ? setShowMore(false) : setShowMore(true);
     };
 
-    const getCharactersAtScene = () => {
+    const getCharactersAtScene = (arr) => {
         let charactersArr = [];
-
-        scene.characters.map((data) => {
-            charactersArr.push(data.characterId);
-        });
+        
+        if (arr.length < 0 ) {
+            scene?.characters.map((data) => {
+                charactersArr.push(data.characterId);
+            });
+        };
 
         setCharactersAtScene(charactersArr.sort((a,b)  => a.name - b.name));
     };
