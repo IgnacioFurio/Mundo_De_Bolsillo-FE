@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { sessionData } from '../../services/session.slice';
+import { sessionData, sessionInfo } from '../../services/session.slice';
 import { SearchBar } from '../../common/SearchBar/SearchBar';
 import { DraggableSceneCard } from '../../common/DraggableSceneCard/DraggableSceneCard';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
 import { getScenesByGameId } from '../../services/scene.apicalls';
 import { checkValid, validate } from '../../helpers/validations.helper';
+import { modifySession } from '../../services/session.apicalls';
 
 export const ModifySession = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const sessionRdx = useSelector(sessionData);
     
     const [ session, setSession ] = useState(
         {
+            id: sessionRdx?.sessionInformation?.id,
             title: sessionRdx?.sessionInformation?.title,
             description: sessionRdx?.sessionInformation?.description,
-            game_id: sessionRdx?.sessionInformation?.id,
+            game_id: sessionRdx?.sessionInformation?.game_id,
             scenesAtSession: sessionRdx?.sessionInformation?.scenesAtSession,
         }
     );
@@ -47,14 +50,14 @@ export const ModifySession = () => {
 
     useEffect(() => {         
         getAllScenesByGameId(session?.game_id);
-        sortOff(session?.scenesAtSession);
+        sortOff(session?.scenesAtSession);        
     }, [sessionRdx]);
 
     useEffect(() => { filter(searchInput, scenes); },[ searchInput ]);
 
     useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
 
-    useEffect(() => { console.log(session);  }, [session]);
+    useEffect(() => { console.log(session); }, [session.scenesAtSession]);
 
     //HANDLERS
     const inputHandler = (e) => {              
@@ -119,6 +122,15 @@ export const ModifySession = () => {
             setScenes(scenes);
         })
         .catch((error) => {console.log(error)})
+    };
+
+    const modifyTheSession = () => {
+        modifySession(session)
+        .then((result) => {
+            dispatch(sessionInfo({sessionInformation: {session}}));
+            navigate('/games/game-details/session/session-details');
+        })
+        .catch(error => console.log(error.response.data.error))
     };
 
     //FUNCTIONS
@@ -278,7 +290,7 @@ export const ModifySession = () => {
                 <Row>
                     <Col className='col-12 d-flex justify-content-evenly py-3'>
                         <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
-                        <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewSession()}/>
+                        <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => modifyTheSession()}/>
                     </Col>
                 </Row>
             </Container> 

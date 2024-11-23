@@ -32,8 +32,8 @@ export const SessionDetails = () => {
         navigate("/games/game-details");
     };
 
-    const sortOff = (arr) => {        
-        const sortArr = [...arr].sort((a,b) => a.session_index - b.session_index);
+    const sortOff = (arr) => {  
+        const sortArr = [...arr].sort((a,b) => a?.session_index - b?.session_index);
 
         setSession((prevState) => (
             {
