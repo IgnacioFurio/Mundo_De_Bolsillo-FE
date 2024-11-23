@@ -6,7 +6,7 @@ import { sessionData, sessionInfo } from '../../services/session.slice';
 import { SearchBar } from '../../common/SearchBar/SearchBar';
 import { DraggableSceneCard } from '../../common/DraggableSceneCard/DraggableSceneCard';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
-import { getScenesByGameId } from '../../services/scene.apicalls';
+import { getNonVisitedScenesByGameId, getScenesByGameId } from '../../services/scene.apicalls';
 import { checkValid, validate } from '../../helpers/validations.helper';
 import { modifySession } from '../../services/session.apicalls';
 
@@ -49,7 +49,7 @@ export const ModifySession = () => {
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
     useEffect(() => {         
-        getAllScenesByGameId(session?.game_id);
+        getAllNonVisitedScenesByGameId(session?.game_id);
         sortOff(session?.scenesAtSession);        
     }, [sessionRdx]);
 
@@ -81,6 +81,7 @@ export const ModifySession = () => {
         setSearchResult(result);
     };
     
+    /*{ DRAG AND DROP HANDLERS }*/
     const startDragHandler = (e, index) => {
         e.dataTransfer.effectAllowed = "move";
         e.dataTransfer.setData("sceneIndex", index);
@@ -114,8 +115,8 @@ export const ModifySession = () => {
     };
 
     //APICALLS
-    const getAllScenesByGameId = (gameId) => {
-        getScenesByGameId(gameId)
+    const getAllNonVisitedScenesByGameId = (gameId) => {
+        getNonVisitedScenesByGameId(gameId)
         .then((result) => {
             let scenes = result?.data?.data
                         
