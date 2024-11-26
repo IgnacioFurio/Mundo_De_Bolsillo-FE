@@ -57,8 +57,6 @@ export const ModifySession = () => {
 
     useEffect(() => { setSubmitStatus(checkValid(validInputField)); }, [validInputField]);
 
-    useEffect(() => { console.log(session); }, [session.scenesAtSession]);
-
     //HANDLERS
     const inputHandler = (e) => {              
         setSession((prevState) => ({
@@ -128,7 +126,7 @@ export const ModifySession = () => {
     const modifyTheSession = () => {
         modifySession(session)
         .then((result) => {
-            dispatch(sessionInfo({sessionInformation: {session}}));
+            dispatch(sessionInfo({sessionInformation: session}));
             navigate('/games/game-details/session/session-details');
         })
         .catch(error => console.log(error.response.data.error))
