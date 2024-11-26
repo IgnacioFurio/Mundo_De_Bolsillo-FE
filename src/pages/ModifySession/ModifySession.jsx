@@ -242,7 +242,7 @@ export const ModifySession = () => {
                                             onDragStart={(e) => startDragHandler(e, index)}
                                             onDragOver={(e) => draggingOverHAndler(e)}
                                             onDrop={(e) => onDropHandler(e, index)}>
-                                            {index}{" "}{data.title}
+                                            {index + 1}{" "}{data.title}
                                         </button>
                                     })
                                 )
