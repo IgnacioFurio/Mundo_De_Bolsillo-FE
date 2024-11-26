@@ -127,7 +127,7 @@ export const ModifySession = () => {
         modifySession(session)
         .then((result) => {
             dispatch(sessionInfo({sessionInformation: session}));
-            navigate('/games/game-details/session/session-details');
+            navigate('/games/game-details');
         })
         .catch(error => console.log(error.response.data.error))
     };
