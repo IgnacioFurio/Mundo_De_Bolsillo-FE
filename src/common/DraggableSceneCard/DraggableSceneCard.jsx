@@ -31,16 +31,12 @@ export const DraggableSceneCard = ({ sceneData, onClickFunction }) => {
 
     const getCharactersAtScene = (arr) => {
         let charactersArr = [];
-        console.log(arr.characters.length);
         
         if (arr?.characters?.length > 0 ) {
-            scene?.characters.map((data) => {
-                console.log(data);
-                
+            scene?.characters.map((data) => {                
                 charactersArr.push(data.characterId);
             });
         };
-        console.log(charactersArr);
         
         setCharactersAtScene(charactersArr.sort((a,b)  => a.name - b.name));
     };
