@@ -22,10 +22,7 @@ export const DraggableSceneCard = ({ sceneData, onClickFunction }) => {
 
     const [ showMore, setShowMore ] = useState(false);
 
-    useEffect(() => { getCharactersAtScene(scene);
-        console.log(charactersAtScene);
-        
-     },[scene]);
+    useEffect(() => { getCharactersAtScene(scene); },[scene]);
     
     //HANDLER
     const showMoreHandler = () => {
