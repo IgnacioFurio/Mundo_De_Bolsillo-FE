@@ -59,8 +59,8 @@ export const GameDetails = () => {
             })
             .catch(error => console.log(error?.response?.data?.error))
     };
-    const deleteGameData = (game_id) => {
 
+    const deleteGameData = (game_id) => {
         for (let i = 0; i < worldGates.length; i++) {
             deleteWorldGate({game_id: game_id, world_id: worldGates[i].id})
             .then(() => {})
