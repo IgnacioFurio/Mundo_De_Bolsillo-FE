@@ -9,6 +9,14 @@ export const getScenesByGameId = async (body) => {
     return await axios.post(`${root}/scene/get-all-by-game`, data);
 };
 
+export const getNonVisitedScenesByGameId = async (body) => {
+    let data = {
+        game_id: body
+    };
+    
+    return await axios.post(`${root}/scene/get-non-visited-by-game`, data);
+};
+
 export const createScene = async (body) => {
     return await axios.post(`${root}/scene/post`, body)
 };

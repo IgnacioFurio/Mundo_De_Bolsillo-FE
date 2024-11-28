@@ -1,32 +1,33 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
-import { SearchBar } from '../../common/SearchBar/SearchBar';
-import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { gameData } from '../../services/game.slice';
-import { checkValid, validate } from '../../helpers/validations.helper';
-import { getScenesByGameId } from '../../services/scene.apicalls';
+import { sessionData, sessionInfo } from '../../services/session.slice';
+import { SearchBar } from '../../common/SearchBar/SearchBar';
 import { DraggableSceneCard } from '../../common/DraggableSceneCard/DraggableSceneCard';
-import { extractWorldId } from '../../helpers/GameDetails.helper';
-import { createSession } from '../../services/session.apicalls';
+import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
+import { getNonVisitedScenesByGameId, getScenesByGameId } from '../../services/scene.apicalls';
+import { checkValid, validate } from '../../helpers/validations.helper';
+import { modifySession } from '../../services/session.apicalls';
 
-export const NewSession = () => {
+export const ModifySession = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const gameRdx = useSelector(gameData);
+    const sessionRdx = useSelector(sessionData);
     
-    const [ newSessionData, setNewSessionData ] = useState(
+    const [ session, setSession ] = useState(
         {
-            title: "",
-            description: "",
-            game_id: gameRdx?.gameInformation?.id,
-            scenesAtSessionIds: [],
+            id: sessionRdx?.sessionInformation?.id,
+            title: sessionRdx?.sessionInformation?.title,
+            description: sessionRdx?.sessionInformation?.description,
+            game_id: sessionRdx?.sessionInformation?.game_id,
+            scenesAtSession: sessionRdx?.sessionInformation?.scenesAtSession,
         }
     );
 
     const [ validInputField, setValidInputField ] = useState(
         {   //valor en falso para los requeridos
-            titleValid: false,
+            titleValid: true,
             descriptionValid: true,
             game_idValid: true,
         }
@@ -41,23 +42,16 @@ export const NewSession = () => {
     );
 
     const [ scenes, setScenes ] = useState([]);
-    const [ scenesAtSession, setScenesAtSession ] = useState([]);
 
     const [ searchInput, setSearchInput ] = useState("");
     const [ searchResult, setSearchResult ] = useState([]);
 
     const [ submitStatus, setSubmitStatus ] = useState(false);
 
-    //USEEFFECT
-    useEffect(() => { getAllScenesByGameId(gameRdx?.gameInformation?.id) }, []);
-
-    useEffect(() => { 
-        setNewSessionData((prevState) => ({
-            ...prevState,
-            scenesAtSessionIds: extractWorldId(scenesAtSession)
-        }));
-
-    }, [scenesAtSession]);
+    useEffect(() => {         
+        getAllNonVisitedScenesByGameId(session?.game_id);
+        sortOff(session?.scenesAtSession);        
+    }, [sessionRdx]);
 
     useEffect(() => { filter(searchInput, scenes); },[ searchInput ]);
 
@@ -65,7 +59,7 @@ export const NewSession = () => {
 
     //HANDLERS
     const inputHandler = (e) => {              
-        setNewSessionData((prevState) => ({
+        setSession((prevState) => ({
             ...prevState,
             [e.target.name]: e?.target?.value
         }));
@@ -73,16 +67,25 @@ export const NewSession = () => {
         checkError(e);
     };
 
-    //handler y funcion para el componente barra buscadora
     const shearchBarHandler = (e) => { setSearchInput(e.target.value); };
 
+    const filter = ( input, data ) => {
+        let result = data.filter((element) => {                        
+            if (element.title.toString().toLowerCase().includes(input.toLowerCase())) {
+                return element;
+            }
+        });
+        
+        setSearchResult(result);
+    };
     
+    /*{ DRAG AND DROP HANDLERS }*/
     const startDragHandler = (e, index) => {
         e.dataTransfer.effectAllowed = "move";
         e.dataTransfer.setData("sceneIndex", index);
     };
-    
-    const draggingOverHandler = (e) => {
+
+    const draggingOverHAndler = (e) => {
         e.preventDefault();
     };
 
@@ -91,7 +94,7 @@ export const NewSession = () => {
         
         const draggedIndex = parseInt(e.dataTransfer.getData("sceneIndex"), 10);
         
-        const updatedList = [...scenesAtSession];
+        const updatedList = [...session?.scenesAtSession];
         
         const [ draggedItem ] = updatedList.splice(draggedIndex, 1);
 
@@ -101,30 +104,84 @@ export const NewSession = () => {
             updatedList.splice(index, 0, draggedItem);
         };
         
-        setScenesAtSession(updatedList);
+        setSession((prevState) => (
+            {
+                ...prevState,
+                scenesAtSession: [...updatedList]
+            }
+        ));
     };
 
     //APICALLS
-    const getAllScenesByGameId = (gameId) => {
-        getScenesByGameId(gameId)
+    const getAllNonVisitedScenesByGameId = (gameId) => {
+        getNonVisitedScenesByGameId(gameId)
         .then((result) => {
             let scenes = result?.data?.data
-            
-            let notVisitedScenes = scenes.filter((scene) => { return scene.session_id === null });
-            
-            setScenes(notVisitedScenes);
+                        
+            setScenes(scenes);
         })
         .catch((error) => {console.log(error)})
     };
-    
-    const createNewSession = () => {
-        createSession(newSessionData)
+
+    const modifyTheSession = () => {
+        modifySession(session)
         .then((result) => {
-            navigate("/games/game-details");
+            dispatch(sessionInfo({sessionInformation: session}));
+            navigate('/games/game-details');
         })
-        .catch(error => console.log(error))
+        .catch(error => console.log(error.response.data.error))
     };
-    
+
+    //FUNCTIONS
+    const setScenesForSession = (e, dataId, source) => {                  
+        if (source === "scenes") {
+            const sceneSession = scenes.filter(scene => scene.id === dataId);            
+            const avaliableScenes = scenes.filter(scene => scene.id !== dataId);
+            
+            setSession((prevState) => (
+                {
+                    ...prevState,
+                    scenesAtSession: [
+                        ...(prevState.scenesAtSession || []),
+                        ...sceneSession
+                    ]
+                }
+            ));
+
+            setScenes(avaliableScenes);
+
+        } else if (source === "scenesAtSession") {
+            const sceneSession = session?.scenesAtSession.filter(scene => scene.id !== dataId);             
+            const avaliableScenes = session?.scenesAtSession.filter(scene => scene.id === dataId);
+            
+            setSession((prevState) => (
+                {
+                    ...prevState,
+                    scenesAtSession: sceneSession
+                }
+            ));
+
+            setScenes((prevState) =>
+                [
+                    ...prevState,
+                    ...avaliableScenes,
+                ]
+            );
+        };
+    };
+
+    const sortOff = (arr) => {        
+        const sortArr = [...arr].sort((a,b) => a.session_index - b.session_index);
+        
+        setSession((prevState) => (
+            {
+                ...prevState,
+                scenesAtSession: sortArr
+            }
+        ));
+    };
+
+
     //CHECKS
     const checkError = (e) => {      
         let error = "";
@@ -135,10 +192,10 @@ export const NewSession = () => {
             e.target.required
             );
             
-            error = check.message;        
-            
-            setValidInputField((prevState) => ({
-                ...prevState,
+        error = check.message;        
+
+        setValidInputField((prevState) => ({
+            ...prevState,
             [e.target.name + 'Valid']: check.valid
         }));
         
@@ -147,41 +204,6 @@ export const NewSession = () => {
             [e.target.name + 'Error']: error
         }));
     };
-    
-    const filter = ( input, data ) => {
-        let result = data.filter((element) => {                        
-            if (element.title.toString().toLowerCase().includes(input.toLowerCase())) {
-                return element;
-            }
-        });
-        
-        setSearchResult(result);
-    };
-
-    //FUNCTIONS
-    const setScenesForSession = (e, dataId, source) => {        
-        if (source === "scenes") {
-            const newSceneSession = scenes.filter(scene => scene.id === dataId);            
-            const avaliableScenes = scenes.filter(scene => scene.id !== dataId);
-
-            setScenesAtSession(prevScenesAtSession => [
-                ...prevScenesAtSession,
-                ...newSceneSession
-            ]);
-            setScenes(avaliableScenes);
-        } else if (source === "scenesAtSession") {
-            const sceneSession = scenesAtSession.filter(scene => scene.id !== dataId); 
-            
-            const avaliableScenes = scenesAtSession.filter(scene => scene.id === dataId);
-
-            setScenesAtSession(sceneSession);
-            setScenes(prevScenes => [
-                ...prevScenes,
-                ...avaliableScenes
-            ]);
-        };
-    };
-
 
     return (
         <Container className='col-12 col-sm-11 col-md-8 pb-2'>
@@ -190,6 +212,7 @@ export const NewSession = () => {
                     className='col-9 QuestCardShadow fw-bold fs-5 text-center eb-garamond-font rounded ms-4'
                     name="title"
                     required={true}
+                    value={session.title}
                     placeholder={"¿Cómo llamarás a la sesión?"}
                     onChange={(e) => inputHandler(e)}
                     />
@@ -207,19 +230,19 @@ export const NewSession = () => {
                             cursor: 'move',
                             alignContent: "center"
                         }}>
-                            {!scenesAtSession ? (
+                            {!session?.scenesAtSession ? (
                                     <></>
                                 ) : (
-                                    scenesAtSession.map((data, index) => {
+                                    session?.scenesAtSession.map((data, index) => {
                                         return <button 
                                             key={data.id}
                                             draggable="true"
                                             className='col-12 d-flex justify-content-evenly align-items-center rounded my-1'
                                             onClick={(e) => setScenesForSession(e, data.id, "scenesAtSession")}
                                             onDragStart={(e) => startDragHandler(e, index)}
-                                            onDragOver={(e) => draggingOverHandler(e)}
+                                            onDragOver={(e) => draggingOverHAndler(e)}
                                             onDrop={(e) => onDropHandler(e, index)}>
-                                            {index}{" "}{data.title}
+                                            {index + 1}{" "}{data.title}
                                         </button>
                                     })
                                 )
@@ -228,7 +251,7 @@ export const NewSession = () => {
                 </Row>
                 <Row>
                     <Col className='col-12'>
-                        <SearchBar 
+                        <SearchBar
                             className="col-12 rounded" 
                             onChangeFunction={(e) => shearchBarHandler(e)}
                             placeholder={"¿Qué escena buscas?"}/>
@@ -257,6 +280,7 @@ export const NewSession = () => {
                             className='col-11 text-center rounded'
                             name="description"
                             required={false}
+                            value={session.description}
                             placeholder={"Resumen de ha de ocurrir en la sesión"}
                             onChange={(e) => inputHandler(e)}
                             style={{height: 8 + "em"}}/>
@@ -265,7 +289,7 @@ export const NewSession = () => {
                 <Row>
                     <Col className='col-12 d-flex justify-content-evenly py-3'>
                         <WoodenButton activateButton={true} action="back" clickFunction={() => navigate("/games/game-details")}/>
-                        <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => createNewSession()}/>
+                        <WoodenButton activateButton={submitStatus} action="submit" clickFunction={() => modifyTheSession()}/>
                     </Col>
                 </Row>
             </Container> 
@@ -274,4 +298,4 @@ export const NewSession = () => {
             </Row>
         </Container>
     );
-};
+}

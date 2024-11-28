@@ -13,9 +13,9 @@ export const createSession = async (body) => {
     return await axios.post(`${root}/session/post`, body)
 };
 
-// export const modifySession = async (body) => {
-//     return await axios.put(`${root}/session/put`, body);
-// };
+export const modifySession = async (body) => {
+    return await axios.put(`${root}/session/put`, body);
+};
 
 export const deleteSession = async (body) => {
     const data = {

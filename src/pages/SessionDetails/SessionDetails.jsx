@@ -32,8 +32,8 @@ export const SessionDetails = () => {
         navigate("/games/game-details");
     };
 
-    const sortOff = (arr) => {        
-        const sortArr = [...arr].sort((a,b) => a.session_index - b.session_index);
+    const sortOff = (arr) => {  
+        const sortArr = [...arr].sort((a,b) => a?.session_index - b?.session_index);
 
         setSession((prevState) => (
             {
@@ -57,7 +57,7 @@ export const SessionDetails = () => {
         <Container>
             <Row className='d-flex justify-content-evenly py-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack()}/></Col>
-                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/session/modify-session")}/></Col>
+                <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/sessions/modify-session")}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="delete" clickFunction={() => deleteSessionById()}/></Col>
             </Row> 
             <Row className='upperScroll'>
