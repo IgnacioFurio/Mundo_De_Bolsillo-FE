@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { sessionData, sessionInfo } from '../../services/session.slice';
 import { Col, Container, Row } from 'react-bootstrap';
 import { WoodenButton } from '../../common/WoodenButton/WoodenButton';
+import { SceneCard } from '../../common/SceneCard/SceneCard';
 import { sceneInfo } from '../../services/scene.slice';
 import { deleteSession } from '../../services/session.apicalls';
 
@@ -23,6 +24,11 @@ export const SessionDetails = () => {
         }
     );
 
+    useEffect(() => {
+        console.log(session);
+        
+    },[]);
+    
     useEffect(() => { sortOff(session?.scenesAtSession)}, [sessionRdx]);
 
     //FUNCTIONS
@@ -86,14 +92,9 @@ export const SessionDetails = () => {
                         )
                     }
                     {session?.scenesAtSession?.map((data) => {
-                        return  <Row key={data.id} className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
-                                    <Col className='col-1 text-center'>
-                                        {data.session_index + 1}
-                                    </Col>
-                                    <Col className='col-10 text-start'>
-                                        {data.title}
-                                    </Col>
-                                </Row>
+                        return  <Col key={data.id} className='col-12 col-sm-11 col-md-8 mt-1'>                        
+                                    <SceneCard sceneData={data}/>
+                                </Col>
                     })}
                 </Container>
             <Row className='downScroll'>

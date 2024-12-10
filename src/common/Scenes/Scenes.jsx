@@ -18,10 +18,11 @@ export const Scenes = ({ gameData }) => {
 
     //USEEFFECT
     useEffect(() => { getAllScenesByGameId(); },[gameInformation]);
+    useEffect(() => { console.log(scenes); },[scenes]);
 
     const getAllScenesByGameId = () => {
         getScenesByGameId(gameInformation.id)
-        .then((result) => {
+        .then((result) => {            
             setScenes(result?.data?.data);
         })
         .catch((error) => {console.log(error)})
