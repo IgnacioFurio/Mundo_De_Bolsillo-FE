@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import { WoodenButton } from '../WoodenButton/WoodenButton';
-import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
-import { getQuestByCharacterId } from '../../services/quest.apicall';
 import "./ButtonInfoCard.css";
 
 
