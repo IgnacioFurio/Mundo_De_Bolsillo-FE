@@ -2,4 +2,18 @@
     border: 3px outset #827222;
     background-color: #dcbe25;
     border-radius: 20px;
+    box-shadow: 
+        4px 4px 8px rgba(53, 53, 53, 0.2), /* Sombra más oscura */
+        -4px -4px 8px rgba(255, 246, 181, 0.6); /* Sombra más clara */
+    transition: all 0.2s ease-in-out; /* Animación suave */
+}
+
+.buttonInfoCard:active{
+    box-shadow: 
+    inset 4px 4px 8px rgba(53, 53, 53, 0.2), 
+    inset -4px -4px 8px rgba(255, 246, 181, 0.6); 
+}
+
+.buttonInfoCard:hover{
+    background-color: #f7df66; /* Color más claro en hover */
 }

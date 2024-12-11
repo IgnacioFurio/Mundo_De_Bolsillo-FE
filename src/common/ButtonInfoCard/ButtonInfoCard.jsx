@@ -24,7 +24,7 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
             <Modal show={show} centered onHide={() => handleClose()}>
                 <Modal.Header closeButton>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body >
                     <Col className='bannerRibbon text-center fw-bold py-2'>
                         {infoCard?.name || infoCard?.title}
                     </Col>
