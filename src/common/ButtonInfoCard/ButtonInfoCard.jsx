@@ -12,54 +12,9 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
 
     const [ sourceType, setSourceType ] = useState(source);
 
-    const [ showMoreData, setShowMoreData ] = useState({
-        "": false,
-        Secretos: false,
-        Misiones: false,
-    });
-
     //HANDLERS
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    const InfoHandler = (e) => {
-        setShowMoreData({
-            "": false,
-            Secretos: false,
-            Misiones: false,
-        });
-
-        if (showMoreData[e.target.value] == false) {
-            setShowMoreData({
-                ...showMoreData,
-                [e.target.value]: true
-            });
-        };
-    };
-
-    useEffect(() => {
-        console.log(infoCard);
-    },[]);
-
-    useEffect(() => { gatherDataFromCharacter(); }, [showMoreData]);
-
-    //APICALL
-    const gatherDataFromCharacter = () => {
-        // getKnowledgeByCharacterId(infoCard?.id)
-        // .then((result) => { setAboutCharacter(result.data.data); })
-        // .catch((error) => { console.log(error); })
-
-        getQuestByCharacterId(infoCard?.id)
-        .then((result) => { 
-            let incomingQuest = result.data.data
-            
-            console.log(incomingQuest);
-
-
-            setQuest(incomingQuest); 
-        })
-        .catch((error) => { console.log(error); })
-    };
 
     return (
         <>
@@ -68,7 +23,7 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                 onClick={() => handleShow()}>
                     {infoCard.name || infoCard.title}
             </button>   
-            <Modal show={show} centered onHide={handleClose}>
+            <Modal show={show} centered onHide={() => handleClose()}>
                 <Modal.Header closeButton>
                 </Modal.Header>
                 <Modal.Body>
