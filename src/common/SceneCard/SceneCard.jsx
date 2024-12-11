@@ -33,8 +33,6 @@ export const SceneCard = ({ sceneData }) => {
     //USEEFFECT
     useEffect(() => { getCharactersAtScene(); },[scene]);
 
-    useEffect(() => {console.log(scene);
-    }, [])
     //HANDLER
     const showMoreHandler = () => {
         showMore === true ? setShowMore(false) : setShowMore(true);
@@ -74,7 +72,7 @@ export const SceneCard = ({ sceneData }) => {
                     <Col className='populationIcon col-2 fw-bold text-center'></Col>
                     <Col className='col-9 my-1 d-flex flex-wrap'>
                     {charactersAtScene.map((data) => {
-                            return <ButtonInfoCard key={data.id} infoCard={data}/>
+                            return <ButtonInfoCard key={data.id} infoCard={data} source={"characters"}/>
                         })}
                     </Col>
                 </Row>
