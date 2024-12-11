@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import { WoodenButton } from '../WoodenButton/WoodenButton';
 import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
 import { getQuestByCharacterId } from '../../services/quest.apicall';
+import "./ButtonInfoCard.css";
 
 
 export const ButtonInfoCard = ({ infoCard, source }) => {
@@ -16,8 +17,6 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
         Secretos: false,
         Misiones: false,
     });
-
-    const [ quest, setQuest ] = useState([]);
 
     //HANDLERS
     const handleClose = () => setShow(false);
@@ -65,16 +64,18 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
     return (
         <>
             <button 
-                className='rounded mx-1 my-1'
+                className='buttonInfoCard mx-1 my-1'
                 onClick={() => handleShow()}>
                     {infoCard.name || infoCard.title}
             </button>   
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} centered onHide={handleClose}>
+                <Modal.Header closeButton>
+                </Modal.Header>
                 <Modal.Body>
                     <Col className='bannerRibbon text-center fw-bold py-2'>
                         {infoCard?.name || infoCard?.title}
                     </Col>
-                    {source === "location" ? (
+                    {sourceType === "location" ? (
                         <Container className='centerScrollLocations col-10 '>
                             <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='governmentIcon col-1 fw-bold text-center'></Col>
@@ -100,7 +101,7 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                     ) : (
                         <></>
                     )}
-                    {source === "characters" ? (
+                    {sourceType  === "characters" ? (
                         <Container className='centerScrollLocations col-10'>
                             <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='text-center'>{infoCard?.description}</Col>
@@ -119,7 +120,6 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                     )}
                     <Col className='col-12 d-flex justify-content-evenly py-3'>
                         <WoodenButton activateButton={true} action="back" clickFunction={() => handleClose()}/>
-                        <WoodenButton activateButton={true} action="submit" clickFunction={() => {}}/>
                     </Col>
                 </Modal.Body>
             </Modal>

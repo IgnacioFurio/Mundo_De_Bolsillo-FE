@@ -64,13 +64,13 @@ export const SceneCard = ({ sceneData }) => {
                 <Container className='centerScrollLocations col-10'>
                 <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                     <Col className='locationIcon col-2 fw-bold text-center'></Col>
-                    <Col className='col-9'>
+                    <Col className='col-10'>
                         <ButtonInfoCard infoCard={scene?.location} source={"location"}/>
                     </Col>
                 </Row>
                 <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                     <Col className='populationIcon col-2 fw-bold text-center'></Col>
-                    <Col className='col-9 my-1 d-flex flex-wrap'>
+                    <Col className='col-10 my-1 d-flex flex-wrap'>
                     {charactersAtScene.map((data) => {
                             return <ButtonInfoCard key={data.id} infoCard={data} source={"characters"}/>
                         })}
