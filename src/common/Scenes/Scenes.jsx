@@ -2,10 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { NewRegisterButton } from '../NewRegisterButton/NewRegisterButton';
-import { LocationCard } from '../LocationCard/LocationCard';
-import { getLocationsByWorldId } from '../../services/location.apicalls';
-import { getAllWorlds } from '../../services/world.apicalls';
-import { extractWorldId } from '../../helpers/GameDetails.helper';
 import { getScenesByGameId } from '../../services/scene.apicalls';
 import { SceneCard } from '../SceneCard/SceneCard';
 
