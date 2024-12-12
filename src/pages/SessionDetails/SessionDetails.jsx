@@ -60,7 +60,7 @@ export const SessionDetails = () => {
     };
 
     return (
-        <Container>
+        <Container className='shadowCard'>
             <Row className='d-flex justify-content-evenly py-3'>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="back" clickFunction={() => navigateBack()}/></Col>
                 <Col className='col-4 d-flex justify-content-center'><WoodenButton action="edit" clickFunction={() => navigate("/sessions/modify-session")}/></Col>
@@ -71,32 +71,32 @@ export const SessionDetails = () => {
                     {sessionRdx?.sessionInformation?.title}
                 </Col>
             </Row>
-                <Container className='centerScrollLocations col-10'>
+            <Container className='centerScrollLocations col-10'>
+                <Row className='text-center py-1'>
+                    <Col className='col-12 mt-1 '> 
+                        {sessionRdx?.sessionInformation?.description}
+                    </Col>
+                </Row>
+                {sessionRdx?.sessionInformation?.scenesAtSession?.length > 0 ? (
                     <Row className='text-center py-1'>
-                        <Col className='col-12 mt-1 '> 
-                            {sessionRdx?.sessionInformation?.description}
+                        <Col className='col-12 mt-1 fw-bold'> 
+                            Escenas:
                         </Col>
                     </Row>
-                    {sessionRdx?.sessionInformation?.scenesAtSession?.length > 0 ? (
-                        <Row className='text-center py-1'>
-                            <Col className='col-12 mt-1 fw-bold'> 
-                                Escenas:
+                    ) : (
+                    <Row className='text-center py-1'>
+                        <Col className='col-12 mt-1 fw-bold'> 
+                            Sin escenas aún
+                        </Col>
+                    </Row>
+                    )
+                }
+                {session?.scenesAtSession?.map((data) => {
+                    return  <Col key={data.id} className='col-12 col-sm-11 col-md-8 mt-1'>                        
+                                <SceneCard sceneData={data}/>
                             </Col>
-                        </Row>
-                        ) : (
-                        <Row className='text-center py-1'>
-                            <Col className='col-12 mt-1 fw-bold'> 
-                                Sin escenas aún
-                            </Col>
-                        </Row>
-                        )
-                    }
-                    {session?.scenesAtSession?.map((data) => {
-                        return  <Col key={data.id} className='col-12 col-sm-11 col-md-8 mt-1'>                        
-                                    <SceneCard sceneData={data}/>
-                                </Col>
-                    })}
-                </Container>
+                })}
+            </Container>
             <Row className='downScroll'>
                 <Col className='col-12 fw-bold text-center text-white'>{}</Col>
             </Row>

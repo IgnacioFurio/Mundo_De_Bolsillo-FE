@@ -33,6 +33,11 @@ export const SceneCard = ({ sceneData }) => {
     //USEEFFECT
     useEffect(() => { getCharactersAtScene(); },[scene]);
 
+    useEffect(() => {
+        console.log(charactersAtScene);
+        //getAllKNowledgeByCharacterId()
+    }, [charactersAtScene]);
+
     //HANDLER
     const showMoreHandler = () => {
         showMore === true ? setShowMore(false) : setShowMore(true);
@@ -54,7 +59,7 @@ export const SceneCard = ({ sceneData }) => {
     };
 
     return (
-        <Container>
+        <Container className='shadowCard'>
             <Row className='upperScroll' onClick={() => sceneDetailsHandler()}>
                 <Col className='d-flex justify-content-center align-items-center ms-3 text-center text-uppercase fw-bold'>
                     {scene?.title}
