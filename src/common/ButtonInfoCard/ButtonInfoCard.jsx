@@ -19,14 +19,14 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
             <button 
                 className='buttonInfoCard mx-1 my-1'
                 onClick={() => handleShow()}>
-                    {infoCard.name || infoCard.title}
+                    {infoCard?.name || infoCard?.title || infoCard?.quest?.name}
             </button>   
             <Modal show={show} centered onHide={() => handleClose()}>
                 <Modal.Header closeButton>
                 </Modal.Header>
                 <Modal.Body >
                     <Col className='bannerRibbon text-center fw-bold py-2'>
-                        {infoCard?.name || infoCard?.title}
+                        {infoCard?.name || infoCard?.title || infoCard?.quest?.name}
                     </Col>
                     {sourceType === "location" ? (
                         <Container className='centerScrollLocations col-10 '>
@@ -96,6 +96,28 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                             </Row>
                         </Container>
                     ) : (
+                        <></>
+                    )}
+                    
+                    {sourceType  === "quest" ? (
+                        <Container className='centerScrollLocations col-11 mt-1'>
+                            <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                                <Col className='heardFromCharacterIcon col-2 fw-bold text-center'></Col>
+                                <Col className='col-10'>{infoCard?.delieveredByCharacter?.name || "??"}</Col>
+                            </Row>
+                            <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                                <Col className='heardOnLocationIcon col-2 fw-bold text-center'></Col>
+                                <Col className='col-10'>{infoCard?.gotInLocation?.name || "??"}</Col>
+                            </Row>
+                            <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                                <Col className='locationIcon col-2 fw-bold text-center'></Col>
+                                <Col className='col-10'>{infoCard?.happensInLocation?.name || "??"}</Col>
+                            </Row>
+                            <Row className='text-center my-1'>
+                                <Col className='col-12 mb-1'>{infoCard?.quest?.goal || "??"}</Col>                            
+                            </Row>
+                        </Container>
+                        ) : (
                         <></>
                     )}
                     <Col className='col-12 d-flex justify-content-evenly py-3'>

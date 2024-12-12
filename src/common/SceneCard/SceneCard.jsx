@@ -11,6 +11,7 @@ import { WoodenButton } from '../WoodenButton/WoodenButton';
 import { sceneInfo } from '../../services/scene.slice';
 import { ButtonInfoCard } from '../ButtonInfoCard/ButtonInfoCard';
 import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
+import { getQuestByCharacterId } from '../../services/quest.apicall';
 
 export const SceneCard = ({ sceneData }) => {
     
@@ -29,6 +30,7 @@ export const SceneCard = ({ sceneData }) => {
 
     const [ charactersAtScene, setCharactersAtScene ] = useState([]);
     const [ charactersKnowledge, setChararactersKnowledge] = useState([]);
+    const [ charactersQuest, setChararactersQuest] = useState([]);
 
     const [ showMore, setShowMore ] = useState(false);
 
@@ -37,7 +39,7 @@ export const SceneCard = ({ sceneData }) => {
 
     useEffect(() => { 
         getAllKNowledgeByCharacterId();
-        getQuestByCharactersId();
+        getAllQuestByCharactersId();
     }, [charactersAtScene]);
 
     //HANDLER
@@ -62,19 +64,23 @@ export const SceneCard = ({ sceneData }) => {
 
     //APICALLS
     const getAllKNowledgeByCharacterId = () => {
-        const knowledge = charactersAtScene.map(data => data.id)
+        const characters_id = charactersAtScene.map(data => data.id);
 
-        getKnowledgeByCharacterId(knowledge)
+        getKnowledgeByCharacterId(characters_id)
         .then((result) => {
             setChararactersKnowledge(result?.data?.data.flat());
         })
         .catch((error) => console.log(error))
     };
 
-    const getQuestByCharactersId = () => {
-        const quest = charactersAtScene.map(data => data.id)
-        console.log(quest);
-        
+    const getAllQuestByCharactersId = () => {
+        const characters_id = charactersAtScene.map(data => data.id);
+
+        getQuestByCharacterId(characters_id)
+        .then((result) => {
+            setChararactersQuest(result?.data?.data);
+        })
+        .catch((error) => console.log(error))
     };
 
     return (
@@ -111,9 +117,9 @@ export const SceneCard = ({ sceneData }) => {
                 <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                     <Col className='questIcon col-2 fw-bold text-center'></Col>
                     <Col className='col-10 my-1 d-flex flex-wrap'>
-                    {/* {charactersKnowledge.map((data) => {
-                            return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
-                        })} */}
+                    {charactersQuest.map((data) => {
+                            return <ButtonInfoCard key={data.id} infoCard={data} source={"quest"}/>
+                        })}
                     </Col>
                 </Row>
                 <Row className='text-center py-1'>
