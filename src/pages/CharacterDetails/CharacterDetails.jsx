@@ -18,25 +18,34 @@ export const CharacterDetails = () => {
 
     const characterRdx = useSelector(characterData);
 
-    const [ aboutCharacter, setAboutCharacter ] = useState();
+    const [ characterId, setCharactersId ] = useState([characterRdx?.characterInformation?.id]);
+
+    const [ aboutCharacter, setAboutCharacter ] = useState([]);
     
-    const [ aboutQuest, setAboutQuest ] = useState();
+    const [ aboutQuest, setAboutQuest ] = useState([]);
 
     const [ questList, setQuestList ] = useState();
 
     const [ showMoreData, setShowMoreData ] = useState({
-        "": false,
         Secretos: false,
         Misiones: false,
     });
 
     //USEEFFECT
-    useEffect(() => { gatherDataFromCharacter(); }, [showMoreData]);
+    useEffect(() => { gatherDataFromCharacter(); }, [characterRdx]);
+    useEffect(() => { 
+        setShowMoreData({
+            Secretos: true,
+            Misiones: false,
+        }); 
+    }, [aboutCharacter]);
     
     //APICALL
     const gatherDataFromCharacter = () => {
-        getKnowledgeByCharacterId(characterRdx?.characterInformation?.id)
-        .then((result) => { setAboutCharacter(result.data.data); })
+        getKnowledgeByCharacterId(characterId)
+        .then((result) => {             
+            setAboutCharacter(result?.data?.data[0]); 
+        })
         .catch((error) => { console.log(error); })
 
         getQuestByCharacterId(characterRdx?.characterInformation?.id)
@@ -61,7 +70,6 @@ export const CharacterDetails = () => {
 
     const InfoHandler = (e) => {
         setShowMoreData({
-            "": false,
             Secretos: false,
             Misiones: false,
         });

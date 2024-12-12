@@ -9,8 +9,6 @@ export const Knowledge = ({ aboutCharacterData }) => {
 
     const navigate = useNavigate();
 
-    const [ knowledgeData, setKnowledgeDAta ] = useState(aboutCharacterData);
-
     return (
     <Container className='py-2'>
             <Row>
@@ -19,9 +17,11 @@ export const Knowledge = ({ aboutCharacterData }) => {
                 </Col>
             </Row>
             <Row className='d-flex justify-content-center'>
-            {knowledgeData.map(data => {
-                return <KnowledgeCard key={data.id} aboutCharacterData={data}/>
-            })}
+                {!aboutCharacterData ? (
+                    <div className='text-center fw-bold'>Error 404 Información no encontrada</div>
+                ) : (
+                    aboutCharacterData.map(data => { return <KnowledgeCard key={data.id} aboutCharacterData={data}/>})
+                )}
             </Row>
         </Container>
     )
