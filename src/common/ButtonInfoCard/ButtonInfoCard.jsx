@@ -71,6 +71,33 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                     ) : (
                         <></>
                     )}
+
+                    {sourceType  === "knowledge" ? (
+                        <Container className='centerScrollLocations col-11 mt-1'>
+                            <Row className='d-flex justify-content-start align-items-center py-1 px-2'>                            
+                                <Col className='col-2 fw-bold text-center'></Col>
+                                <Col className='col-10'>{infoCard?.description || "??"}</Col>
+                            </Row>
+                            <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                                <Col className='characterIcon col-2 fw-bold text-center'></Col>
+                                <Col className='col-10'>{infoCard?.aboutCharacter?.name || "??"}</Col>
+                            </Row>
+                            <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                                <Col className='heardFromCharacterIcon col-2 fw-bold text-center'></Col>
+                                <Col className='col-10'>{infoCard?.heardFromCharacter?.name || "??"}</Col>
+                            </Row>
+                            <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                                <Col className='locationIcon col-2 fw-bold text-center'></Col>
+                                <Col className='col-10'>{infoCard?.aboutLocation?.name || "??"}</Col>
+                            </Row>
+                            <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                                <Col className='heardOnLocationIcon col-2 fw-bold text-center'></Col>
+                                <Col className='col-10'>{infoCard?.heardOnLocation?.name || "??"}</Col>
+                            </Row>
+                        </Container>
+                    ) : (
+                        <></>
+                    )}
                     <Col className='col-12 d-flex justify-content-evenly py-3'>
                         <WoodenButton activateButton={true} action="back" clickFunction={() => handleClose()}/>
                     </Col>

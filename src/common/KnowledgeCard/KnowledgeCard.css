@@ -48,6 +48,14 @@
     background-position: center;
 }
 
+.questIcon{
+    height: 2em;
+    background-image: url('../../assets/quest.png');
+    background-size: 1.4em 1.4em;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 
 @keyframes purpleShine {
     0%{

@@ -10,6 +10,7 @@ import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import { WoodenButton } from '../WoodenButton/WoodenButton';
 import { sceneInfo } from '../../services/scene.slice';
 import { ButtonInfoCard } from '../ButtonInfoCard/ButtonInfoCard';
+import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
 
 export const SceneCard = ({ sceneData }) => {
     
@@ -27,16 +28,14 @@ export const SceneCard = ({ sceneData }) => {
     });
 
     const [ charactersAtScene, setCharactersAtScene ] = useState([]);
+    const [ charactersKnowledge, setChararactersKnowledge] = useState([]);
 
     const [ showMore, setShowMore ] = useState(false);
 
     //USEEFFECT
     useEffect(() => { getCharactersAtScene(); },[scene]);
 
-    useEffect(() => {
-        console.log(charactersAtScene);
-        //getAllKNowledgeByCharacterId()
-    }, [charactersAtScene]);
+    useEffect(() => { getAllKNowledgeByCharacterId();}, [charactersAtScene]);
 
     //HANDLER
     const showMoreHandler = () => {
@@ -56,6 +55,17 @@ export const SceneCard = ({ sceneData }) => {
         });
 
         setCharactersAtScene(charactersArr);
+    };
+
+    //APICALLS
+    const getAllKNowledgeByCharacterId = () => {
+        const knowledge = charactersAtScene.map(data => data.id)
+
+        getKnowledgeByCharacterId(knowledge)
+        .then((result) => {
+            setChararactersKnowledge(result?.data?.data.flat());
+        })
+        .catch((error) => console.log(error))
     };
 
     return (
@@ -79,6 +89,22 @@ export const SceneCard = ({ sceneData }) => {
                     {charactersAtScene.map((data) => {
                             return <ButtonInfoCard key={data.id} infoCard={data} source={"characters"}/>
                         })}
+                    </Col>
+                </Row>
+                <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                    <Col className='knowledgeIcon col-2 fw-bold text-center'></Col>
+                    <Col className='col-10 my-1 d-flex flex-wrap'>
+                    {charactersKnowledge.map((data) => {
+                            return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
+                        })}
+                    </Col>
+                </Row>
+                <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
+                    <Col className='questIcon col-2 fw-bold text-center'></Col>
+                    <Col className='col-10 my-1 d-flex flex-wrap'>
+                    {/* {charactersKnowledge.map((data) => {
+                            return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
+                        })} */}
                     </Col>
                 </Row>
                 <Row className='text-center py-1'>

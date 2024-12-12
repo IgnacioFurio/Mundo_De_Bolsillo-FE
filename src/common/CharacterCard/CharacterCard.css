@@ -51,6 +51,15 @@
     background-position: left;
 }
 
+.knowledgeIcon{
+    height: 3em;
+    width: 2em;
+    background-image: url('../../assets/information.png');
+    background-size: 1.6em 1.6em;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
 .characterCardDescription{
     background-color: rgb(235, 214, 129);
 }
