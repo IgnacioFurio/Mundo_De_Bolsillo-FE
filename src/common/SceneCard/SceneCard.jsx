@@ -35,7 +35,10 @@ export const SceneCard = ({ sceneData }) => {
     //USEEFFECT
     useEffect(() => { getCharactersAtScene(); },[scene]);
 
-    useEffect(() => { getAllKNowledgeByCharacterId();}, [charactersAtScene]);
+    useEffect(() => { 
+        getAllKNowledgeByCharacterId();
+        getQuestByCharactersId();
+    }, [charactersAtScene]);
 
     //HANDLER
     const showMoreHandler = () => {
@@ -66,6 +69,12 @@ export const SceneCard = ({ sceneData }) => {
             setChararactersKnowledge(result?.data?.data.flat());
         })
         .catch((error) => console.log(error))
+    };
+
+    const getQuestByCharactersId = () => {
+        const quest = charactersAtScene.map(data => data.id)
+        console.log(quest);
+        
     };
 
     return (

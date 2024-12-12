@@ -48,7 +48,7 @@ export const CharacterDetails = () => {
         })
         .catch((error) => { console.log(error); })
 
-        getQuestByCharacterId(characterRdx?.characterInformation?.id)
+        getQuestByCharacterId(characterId)
         .then((result) => { setAboutQuest(result.data.data); })
         .catch((error) => { console.log(error); })
     };
