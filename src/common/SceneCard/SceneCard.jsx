@@ -94,7 +94,7 @@ export const SceneCard = ({ sceneData }) => {
                 <Container className='centerScrollLocations col-10'>
                 <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                     <Col className='locationIcon col-2 fw-bold text-center'></Col>
-                    <Col className='col-10'>
+                    <Col className='col-10 my-1 d-flex flex-wrap'>
                         <ButtonInfoCard infoCard={scene?.location} source={"location"}/>
                     </Col>
                 </Row>

@@ -82,6 +82,11 @@ export const SessionDetails = () => {
                         <Col className='col-12 mt-1 fw-bold'> 
                             Escenas:
                         </Col>
+                            {session?.scenesAtSession?.map((data) => {
+                                return  <Col className='col-12 mx-1 my-2'>
+                                    <SceneCard key={data.id} sceneData={data}/>
+                                </Col>
+                            })}
                     </Row>
                     ) : (
                     <Row className='text-center py-1'>
@@ -91,9 +96,6 @@ export const SessionDetails = () => {
                     </Row>
                     )
                 }
-                {session?.scenesAtSession?.map((data) => {
-                    return  <SceneCard key={data.id} sceneData={data}/>
-                })}
             </Container>
             <Row className='downScroll'>
                 <Col className='col-12 fw-bold text-center text-white'>{}</Col>
