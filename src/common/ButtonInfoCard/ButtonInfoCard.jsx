@@ -32,19 +32,19 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                         <Container className='centerScrollLocations col-10 '>
                             <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='governmentIcon col-1 fw-bold text-center'></Col>
-                                <Col className='col-9'>{infoCard?.government}</Col>
+                                <Col className='col-9'>{infoCard?.government || "??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>                            
                                 <Col className='defensesIcon col-1 fw-bold'></Col>
-                                <Col className='col-10'> {infoCard?.defenses}</Col>
+                                <Col className='col-10'> {infoCard?.defenses || "??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>
                                 <Col className='commerceIcon col-1 fw-bold'></Col>
-                                <Col className='col-10'> {infoCard?.commerce}</Col>
+                                <Col className='col-10'> {infoCard?.commerce || "??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>
                                 <Col className='populationIcon col-1 fw-bold'></Col>
-                                <Col className='col-10'> {infoCard?.population}</Col>
+                                <Col className='col-10'> {infoCard?.population || "??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex justify-content-start align-items-center mt-0 py-1 px-2'>
                                 <Col className='worldIcon col-1 fw-bold text-center'></Col>
@@ -57,15 +57,15 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                     {sourceType  === "characters" ? (
                         <Container className='centerScrollLocations col-10'>
                             <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2'>                            
-                                <Col className='text-center'>{infoCard?.description}</Col>
+                                <Col className='text-center'>{infoCard?.description ||"??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='fromLocationIcon col-2 fw-bold text-center'/>
-                                <Col className='col-9'>{infoCard?.fromLocation?.name}</Col>
+                                <Col className='col-9'>{infoCard?.fromLocation?.name || "??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2' >
                                 <Col className='lastLocationKnownIcon col-2 fw-bold text-center'></Col>
-                                <Col className='col-9'>{infoCard?.lastLocationKnown?.name}</Col>
+                                <Col className='col-9'>{infoCard?.lastLocationKnown?.name || "??"}</Col>
                             </Row>
                         </Container>
                     ) : (
