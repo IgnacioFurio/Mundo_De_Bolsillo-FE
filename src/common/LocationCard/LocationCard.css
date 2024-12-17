@@ -4,19 +4,6 @@
     filter: drop-shadow(0 0 0.25em #58585888) drop-shadow(0 0 0.30em #23232390);
 }
 
-.centerScrollLocations{
-    --paper-dark: #e5c93d ;
-    --paper-color: #ffed87;
-    color:black;
-    box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5);
-    background: linear-gradient(
-        135deg,
-        var(--paper-dark),
-        50%,
-        var(--paper-color)
-    );
-}
-
 .upperScroll{
     cursor: pointer;
     color: rgb(253, 231, 255);
@@ -28,6 +15,24 @@
     background-position: bottom;
     filter: drop-shadow(0 0 1px black);
     animation: blueShineText 2s infinite;
+}
+
+.centerScrollLocations{
+    --paper-dark: #e5c93d ;
+    --paper-color: #ffed87;
+    color:black;
+    box-shadow: inset 0px 0px 10px rgba(0,0,0,0.5);
+    background: linear-gradient(
+        135deg,
+        var(--paper-dark),
+        50%,
+        var(--paper-color)
+    );
+    border: solid 0.5px #827222
+}
+
+.shadowCard{
+    filter: drop-shadow(0 0 5px rgb(52, 52, 52));
 }
 
 .downScroll{
@@ -55,8 +60,7 @@
 }
 
 .borderDataCard{
-    border-top: solid 1px black;
-    border-bottom: solid 1px black;
+    border: solid 1px black;
 }
 
 

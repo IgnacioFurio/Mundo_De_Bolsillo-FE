@@ -2,7 +2,6 @@
     height: 6em;
 }
 
-
 .characterPicture{
     height: 5em;
     width: 5em;
@@ -49,6 +48,15 @@
     background-size: 1.3em 1.3em;
     background-repeat: no-repeat;
     background-position: left;
+}
+
+.knowledgeIcon{
+    height: 3em;
+    width: 2em;
+    background-image: url('../../assets/information.png');
+    background-size: 1.6em 1.6em;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .characterCardDescription{
