@@ -8,7 +8,7 @@ import { gameData } from '../../services/game.slice';
 import { checkValid, validate } from '../../helpers/validations.helper';
 import { getScenesByGameId } from '../../services/scene.apicalls';
 import { DraggableSceneCard } from '../../common/DraggableSceneCard/DraggableSceneCard';
-import { extractWorldId } from '../../helpers/GameDetails.helper';
+import { extractId } from '../../helpers/GameDetails.helper';
 import { createSession } from '../../services/session.apicalls';
 
 export const NewSession = () => {
@@ -54,7 +54,7 @@ export const NewSession = () => {
     useEffect(() => { 
         setNewSessionData((prevState) => ({
             ...prevState,
-            scenesAtSessionIds: extractWorldId(scenesAtSession)
+            scenesAtSessionIds: extractId(scenesAtSession)
         }));
 
     }, [scenesAtSession]);

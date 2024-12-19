@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { NewRegisterButton } from '../NewRegisterButton/NewRegisterButton';
 import { CharacterCard } from '../CharacterCard/CharacterCard';
 import { getAllWorlds } from '../../services/world.apicalls';
-import { extractWorldId } from '../../helpers/GameDetails.helper';
+import { extractId } from '../../helpers/GameDetails.helper';
 import { getCharactersByWorldId } from '../../services/character.apicalls';
 
 
@@ -16,7 +16,7 @@ export const Characters = ({ worldGates }) => {
     const [ worlds, setWorlds ] = useState();
 
     useEffect(() => {
-        getCharactersByWorldId(extractWorldId(worldGates))
+        getCharactersByWorldId(extractId(worldGates))
         .then(result => {
             let arr = result.data.data;
             let characters = [];
