@@ -5,7 +5,7 @@ import { NewRegisterButton } from '../NewRegisterButton/NewRegisterButton';
 import { LocationCard } from '../LocationCard/LocationCard';
 import { getLocationsByWorldId } from '../../services/location.apicalls';
 import { getAllWorlds } from '../../services/world.apicalls';
-import { extractWorldId } from '../../helpers/GameDetails.helper';
+import { extractId } from '../../helpers/GameDetails.helper';
 
 export const Locations = ({worldGates}) => {
     const navigate = useNavigate();
@@ -16,7 +16,7 @@ export const Locations = ({worldGates}) => {
 
 
     useEffect(() => {
-        getLocationsByWorldId(extractWorldId(worldGates))
+        getLocationsByWorldId(extractId(worldGates))
         .then(result => {
             let arr = result.data.data;
             let locations = [];

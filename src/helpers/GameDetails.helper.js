@@ -1,9 +1,9 @@
-export const extractWorldId = (arr) => {
-    let world_ids = [];
+export const extractId = (arr) => {
+    let arr_ids = [];
     
     for (let i = 0; i < arr.length; i++) {
-        world_ids.push(arr[i].id);
+        arr_ids.push(arr[i].id);
     };
     
-    return world_ids;
+    return arr_ids;
 };
