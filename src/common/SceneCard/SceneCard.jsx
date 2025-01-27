@@ -38,8 +38,10 @@ export const SceneCard = ({ sceneData }) => {
     useEffect(() => { getCharactersAtScene(); },[scene]);
 
     useEffect(() => { 
-        getAllKNowledgeByCharacterId();
-        getAllQuestByCharactersId();
+        if (charactersAtScene.length > 0) {
+            getAllKnowledgeByCharacterId();
+            getAllQuestByCharactersId();
+        };
     }, [charactersAtScene]);
 
     //HANDLER
@@ -63,11 +65,11 @@ export const SceneCard = ({ sceneData }) => {
     };
 
     //APICALLS
-    const getAllKNowledgeByCharacterId = () => {
+    const getAllKnowledgeByCharacterId = () => {        
         const characters_id = charactersAtScene.map(data => data.id);
 
         getKnowledgeByCharacterId(characters_id)
-        .then((result) => {
+        .then((result) => {                      
             setChararactersKnowledge(result?.data?.data.flat());
         })
         .catch((error) => console.log(error))
@@ -109,9 +111,12 @@ export const SceneCard = ({ sceneData }) => {
                 <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                     <Col className='knowledgeIcon col-2 fw-bold text-center'></Col>
                     <Col className='col-10 my-1 d-flex flex-wrap'>
-                    {charactersKnowledge.map((data) => {
-                            return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
+                    //conocido//
+                    {charactersKnowledge.map((data) => {                     
+                            return <ButtonInfoCard key={data.id} infoCard={data.Knowledge} source={"knowledge"}/>
                         })}
+
+                    //no conocido//
                     </Col>
                 </Row>
                 <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
