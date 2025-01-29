@@ -111,12 +111,9 @@ export const SceneCard = ({ sceneData }) => {
                 <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                     <Col className='knowledgeIcon col-2 fw-bold text-center'></Col>
                     <Col className='col-10 my-1 d-flex flex-wrap'>
-                    //conocido//
-                    {charactersKnowledge.map((data) => {                     
-                            return <ButtonInfoCard key={data.id} infoCard={data.Knowledge} source={"knowledge"}/>
-                        })}
-
-                    //no conocido//
+                        {charactersKnowledge.map((data) => {                     
+                                return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
+                            })}
                     </Col>
                 </Row>
                 <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
