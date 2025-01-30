@@ -56,6 +56,14 @@
     background-position: center;
 }
 
+.charactersKnowIcon{
+    height: 2em;
+    background-image: url('../../assets/pergamino.png');
+    background-size: 1.4em 1.4em;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 
 @keyframes purpleShine {
     0%{

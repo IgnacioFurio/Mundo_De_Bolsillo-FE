@@ -23,11 +23,6 @@ export const SessionDetails = () => {
             scenesAtSession: sessionRdx?.sessionInformation?.scenesAtSession
         }
     );
-
-    useEffect(() => {
-        console.log(session);
-        
-    },[]);
     
     useEffect(() => { sortOff(session?.scenesAtSession)}, [sessionRdx]);
 
@@ -83,8 +78,8 @@ export const SessionDetails = () => {
                             Escenas:
                         </Col>
                             {session?.scenesAtSession?.map((data) => {
-                                return  <Col className='col-12 mx-1 my-2'>
-                                    <SceneCard key={data.id} sceneData={data}/>
+                                return  <Col key={data.id} className='col-12 mx-1 my-2'>
+                                    <SceneCard sceneData={data}/>
                                 </Col>
                             })}
                     </Row>
