@@ -28,9 +28,9 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
             } else if (infoCard.npc === true) {
                 setButtonClassName('buttonInfoCard redButton mx-1 my-1');
             }
-        }
+        };
         
-        if (source === "knowledge") {
+        if (source === "knowledge" && characters) {
             let newClassName = '';
             let hasPlayerCharacter = characters.some(data => data.npc === false);
             let hasNonPlayerCharacter = characters.some(data => data.npc === true);
@@ -44,10 +44,12 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
             };
             
             setButtonClassName(newClassName);
-        }
+        };
     };
 
-    const concantNames = (characters) => {
+    const concantNames = (characters) => {        
+        if (!characters){ return };
+
         let names = characters.map(data => data.name);
     
         if (names.length === 0) return "";
@@ -55,7 +57,7 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
         if (names.length === 1) return names[0]; 
 
         return names.slice(0, -1).join(", ") + " y " + names[names.length - 1];
-    }
+    };
 
     return (
         <>
@@ -118,30 +120,29 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                     {sourceType  === "knowledge" ? (
                         <Container className='centerScrollLocations col-11 mt-1'>
                             <Row className='d-flex justify-content-start align-items-center py-1 px-2'>                            
-                                <Col className='col-12 text-center'>{infoCard?.Knowledge?.description || "??"}</Col>
+                                <Col className='col-12 text-center'>{ infoCard?.description || infoCard?.Knowledge?.description || "??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='charactersKnowIcon col-2 fw-bold text-center' title='Lo saben ...'></Col>
                                 <Col className='col-10 flex-wrap'>
-                                    {concantNames(infoCard.charactersKnow)}
-
+                                    {concantNames(infoCard?.charactersKnow) || "??"}
                                 </Col>
                             </Row>
                             <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='characterIcon col-2 fw-bold text-center' title='Acerca de ...'></Col>
-                                <Col className='col-10'>{infoCard?.Knowledge?.aboutCharacter?.name || "??"}</Col>
+                                <Col className='col-10'>{infoCard?.aboutCharacter?.name || infoCard?.Knowledge?.aboutCharacter?.name || "??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='heardFromCharacterIcon  col-2 fw-bold text-center' title='Contado por ...'></Col>
-                                <Col className='col-10'>{infoCard?.Knowledge?.heardFromCharacter?.name || "??"}</Col>
+                                <Col className='col-10'>{ infoCard?.heardFromCharacter?.name || infoCard?.Knowledge?.heardFromCharacter?.name || "??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='locationIcon col-2 fw-bold text-center' title='Ocurre en ...'></Col>
-                                <Col className='col-10'>{infoCard?.Knowledge?.aboutLocation?.name || "??"}</Col>
+                                <Col className='col-10'>{infoCard?.aboutLocation?.name || infoCard?.Knowledge?.aboutLocation?.name || "??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='heardOnLocationIcon col-2 fw-bold text-center' title='Escuchado en ...'></Col>
-                                <Col className='col-10'>{infoCard?.Knowledge?.heardOnLocation?.name || "??"}</Col>
+                                <Col className='col-10'>{infoCard?.heardOnLocation?.name || infoCard?.Knowledge?.heardOnLocation?.name || "??"}</Col>
                             </Row>
                         </Container>
                     ) : (

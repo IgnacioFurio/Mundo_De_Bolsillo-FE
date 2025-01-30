@@ -3,14 +3,19 @@ import { root } from "./apiCalls";
 
 export const getKnowledgeByCharacterId = async (body) => {
     let data = {
+        about_character_id: body
+    };
+    return await axios.post(`${root}/knowledge/get-by-character`, data);
+};
+
+export const getKnowledgeKnownByCharacterId = async (body) => {
+    let data = {
         characters_id: body
     };
     return await axios.post(`${root}/knowledge-characters/get-by-character`, data);
 };
 
 export const getKnowledgeByLocationId = async (body) => {
-    console.log(body);
-    
     let data = {
         about_location_id: body
     };

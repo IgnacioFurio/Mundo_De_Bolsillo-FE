@@ -10,7 +10,7 @@ import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import { WoodenButton } from '../WoodenButton/WoodenButton';
 import { sceneInfo } from '../../services/scene.slice';
 import { ButtonInfoCard } from '../ButtonInfoCard/ButtonInfoCard';
-import { getKnowledgeByCharacterId, getKnowledgeByLocationId } from '../../services/knowledge.apicalls';
+import { getKnowledgeByLocationId, getKnowledgeKnownByCharacterId,  } from '../../services/knowledge.apicalls';
 import { getQuestByCharacterId } from '../../services/quest.apicall';
 
 export const SceneCard = ({ sceneData }) => {
@@ -40,7 +40,7 @@ export const SceneCard = ({ sceneData }) => {
 
     useEffect(() => { 
         if (charactersAtScene.length > 0) {
-            getAllKnowledgeByCharacterId();
+            getAllKnowledgeAtScene();
             getAllQuestByCharactersId();
         };
     }, [charactersAtScene]);
@@ -66,10 +66,10 @@ export const SceneCard = ({ sceneData }) => {
     };
 
     //APICALLS
-    const getAllKnowledgeByCharacterId = () => {        
+    const getAllKnowledgeAtScene = () => {        
         const characters_id = charactersAtScene.map(data => data.id);
 
-        getKnowledgeByCharacterId(characters_id)
+        getKnowledgeKnownByCharacterId(characters_id)
         .then((result) => {                      
             setChararactersKnowledge(result?.data?.data.flat());
         })
@@ -120,6 +120,9 @@ export const SceneCard = ({ sceneData }) => {
                     <Col className='col-10 my-1 d-flex flex-wrap'>
                         {charactersKnowledge.map((data) => {                     
                                 return <ButtonInfoCard key={data.Knowledge.id} infoCard={data} source={"knowledge"}/>
+                            })}
+                        {locationKnowledge.map((data, index) => { 
+                                return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
                             })}
                     </Col>
                 </Row>
