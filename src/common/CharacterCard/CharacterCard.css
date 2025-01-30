@@ -38,7 +38,7 @@
     background-image: url('../../assets/fromLocation.png');
     background-size: 1.2em 1.2em;
     background-repeat: no-repeat;
-    background-position: left;
+    background-position: center;
 }
 
 .lastLocationKnownIcon{
@@ -47,7 +47,7 @@
     background-image: url('../../assets/lastLocationKnown.png');
     background-size: 1.3em 1.3em;
     background-repeat: no-repeat;
-    background-position: left;
+    background-position: center;
 }
 
 .knowledgeIcon{

@@ -103,12 +103,12 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                                 <Col className='text-center'>{infoCard?.description ||"??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2'>                            
-                                <Col className='fromLocationIcon col-2 fw-bold text-center'/>
-                                <Col className='col-9'>{infoCard?.fromLocation?.name || "??"}</Col>
+                                <Col className='fromLocationIcon col-2 fw-bold'/>
+                                <Col className='col-10 tex-center'>{infoCard?.fromLocation?.name || "??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex justify-content-start align-items-center py-1 px-2' >
                                 <Col className='lastLocationKnownIcon col-2 fw-bold text-center'></Col>
-                                <Col className='col-9'>{infoCard?.lastLocationKnown?.name || "??"}</Col>
+                                <Col className='col-10'>{infoCard?.lastLocationKnown?.name || "??"}</Col>
                             </Row>
                         </Container>
                     ) : (
