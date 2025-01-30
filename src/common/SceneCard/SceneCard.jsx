@@ -35,6 +35,9 @@ export const SceneCard = ({ sceneData }) => {
     const [ showMore, setShowMore ] = useState(false);
 
     //USEEFFECT
+    useEffect(() => {
+        console.log(charactersKnowledge);
+    }, [charactersKnowledge]);
     useEffect(() => { getCharactersAtScene(); },[scene]);
 
     useEffect(() => { 
@@ -112,7 +115,7 @@ export const SceneCard = ({ sceneData }) => {
                     <Col className='knowledgeIcon col-2 fw-bold text-center'></Col>
                     <Col className='col-10 my-1 d-flex flex-wrap'>
                         {charactersKnowledge.map((data) => {                     
-                                return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
+                                return <ButtonInfoCard key={data.Knowledge.id} infoCard={data} source={"knowledge"}/>
                             })}
                     </Col>
                 </Row>

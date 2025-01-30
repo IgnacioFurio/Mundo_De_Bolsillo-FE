@@ -14,10 +14,7 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
 
     const [ characters, setCharacters ] = useState(infoCard?.charactersKnow);
 
-    useEffect(() => { 
-        console.log(source);
-        
-        classButtonHandler(source); }, []);
+    useEffect(() => { classButtonHandler(source); }, []);
 
     //HANDLERS
     const handleClose = () => setShow(false);
@@ -38,7 +35,6 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
             let hasPlayerCharacter = characters.some(data => data.npc === false);
             let hasNonPlayerCharacter = characters.some(data => data.npc === true);
             
-            //informacion de 
             if (hasPlayerCharacter === true && hasNonPlayerCharacter === true ) {
                 newClassName = 'buttonInfoCard purpleButton mx-1 my-1';
             } else  if (hasPlayerCharacter === true) {
@@ -51,7 +47,7 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
         }
     };
 
-    const formatNames = (characters) => {
+    const concantNames = (characters) => {
         let names = characters.map(data => data.name);
     
         if (names.length === 0) return "";
@@ -127,7 +123,7 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                             <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='charactersKnowIcon col-2 fw-bold text-center' title='Lo saben ...'></Col>
                                 <Col className='col-10 flex-wrap'>
-                                    {formatNames(infoCard.charactersKnow)}
+                                    {concantNames(infoCard.charactersKnow)}
 
                                 </Col>
                             </Row>
