@@ -8,6 +8,15 @@ export const getKnowledgeByCharacterId = async (body) => {
     return await axios.post(`${root}/knowledge-characters/get-by-character`, data);
 };
 
+export const getKnowledgeByLocationId = async (body) => {
+    console.log(body);
+    
+    let data = {
+        about_location_id: body
+    };
+    return await axios.post(`${root}/knowledge/get-by-location`, data);
+};
+
 export const createKnowledge = async (body) => {
     return await axios.post(`${root}/knowledge/post`, body)
 };

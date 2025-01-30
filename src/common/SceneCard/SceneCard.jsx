@@ -10,7 +10,7 @@ import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import { WoodenButton } from '../WoodenButton/WoodenButton';
 import { sceneInfo } from '../../services/scene.slice';
 import { ButtonInfoCard } from '../ButtonInfoCard/ButtonInfoCard';
-import { getKnowledgeByCharacterId } from '../../services/knowledge.apicalls';
+import { getKnowledgeByCharacterId, getKnowledgeByLocationId } from '../../services/knowledge.apicalls';
 import { getQuestByCharacterId } from '../../services/quest.apicall';
 
 export const SceneCard = ({ sceneData }) => {
@@ -30,6 +30,7 @@ export const SceneCard = ({ sceneData }) => {
 
     const [ charactersAtScene, setCharactersAtScene ] = useState([]);
     const [ charactersKnowledge, setChararactersKnowledge] = useState([]);
+    const [ locationKnowledge, setLocationKnowledge] = useState([]);
     const [ charactersQuest, setChararactersQuest] = useState([]);
 
     const [ showMore, setShowMore ] = useState(false);
@@ -71,6 +72,12 @@ export const SceneCard = ({ sceneData }) => {
         getKnowledgeByCharacterId(characters_id)
         .then((result) => {                      
             setChararactersKnowledge(result?.data?.data.flat());
+        })
+        .catch((error) => console.log(error))
+
+        getKnowledgeByLocationId(scene?.location?.id)
+        .then((result) => { 
+            setLocationKnowledge(result?.data?.data.flat());
         })
         .catch((error) => console.log(error))
     };
