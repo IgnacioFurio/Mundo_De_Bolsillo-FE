@@ -10,16 +10,51 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
 
     const [ sourceType, setSourceType ] = useState(source);
 
+    const [ buttonClassName, setButtonClassName ]  = useState('buttonInfoCard mx-1 my-1');
 
-    useEffect(() => {infoCard},[]);
+    const [ characters, setCharacters ] = useState(infoCard?.charactersKnow);
+
+    useEffect(() => { classButtonHandler(source); }, []);
+
     //HANDLERS
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    //HANDLERS
+    const classButtonHandler = (source) => {
+        
+        if (source === "knowledge") {
+            let newClassName = '';
+            let hasPlayerCharacter = characters.some(data => data.npc === false);
+            let hasNonPlayerCharacter = characters.some(data => data.npc === true);
+            
+            //informacion de 
+            if (hasPlayerCharacter === true && hasNonPlayerCharacter === true ) {
+                newClassName = 'buttonInfoCard purpleButton mx-1 my-1';
+            } else  if (hasPlayerCharacter === true) {
+                newClassName = 'buttonInfoCard blueButton mx-1 my-1';
+            } else  if (hasNonPlayerCharacter === true) {
+                newClassName = 'buttonInfoCard redButton mx-1 my-1';
+            };
+            
+            setButtonClassName(newClassName);
+        }
+    };
+
+    const formatNames = (characters) => {
+        let names = characters.map(data => data.name);
+    
+        if (names.length === 0) return "";
+        
+        if (names.length === 1) return names[0]; 
+
+        return names.slice(0, -1).join(", ") + " y " + names[names.length - 1];
+    }
+
     return (
         <>
             <button 
-                className='buttonInfoCard mx-1 my-1'
+                className={buttonClassName}
                 onClick={() => handleShow()}>
                     {infoCard?.name|| infoCard?.title || infoCard?.Knowledge?.title || infoCard?.quest?.name}
             </button>   
@@ -82,9 +117,8 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                             <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='charactersKnowIcon col-2 fw-bold text-center' title='Lo saben ...'></Col>
                                 <Col className='col-10 flex-wrap'>
-                                    {infoCard.charactersKnow.map(data => {
-                                        return data.name + " "
-                                    })}
+                                    {formatNames(infoCard.charactersKnow)}
+
                                 </Col>
                             </Row>
                             <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
@@ -92,7 +126,7 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                                 <Col className='col-10'>{infoCard?.Knowledge?.aboutCharacter?.name || "??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
-                                <Col className='heardFromCharacterIcon col-2 fw-bold text-center' title='Contado por ...'></Col>
+                                <Col className='heardFromCharacterIcon  col-2 fw-bold text-center' title='Contado por ...'></Col>
                                 <Col className='col-10'>{infoCard?.Knowledge?.heardFromCharacter?.name || "??"}</Col>
                             </Row>
                             <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            

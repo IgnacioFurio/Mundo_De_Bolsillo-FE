@@ -3,8 +3,8 @@
     background-color: #dcbe25;
     border-radius: 20px;
     box-shadow: 
-        4px 4px 8px rgba(53, 53, 53, 0.2), 
-        -4px -4px 8px rgba(255, 246, 181, 0.6); 
+    4px 4px 8px rgba(53, 53, 53, 0.2), 
+    -4px -4px 8px rgba(255, 246, 181, 0.6); 
     transition: all 0.2s ease-in-out; 
 }
 
@@ -16,4 +16,55 @@
 
 .buttonInfoCard:hover{
     background-color: #f7df66; 
+}
+
+/*PARA REPRESENTAR INFORMACION QUE SABE ALGUN PERSONAJE*/
+.blueButton{
+    border: 3px outset #1c2468;
+    background-color: #21c9e7;
+}
+
+.blueButton:active{
+    box-shadow: 
+    inset 4px 4px 8px #1c2468, 
+    inset -4px -4px 8px #21c9e7; 
+}
+
+.blueButton:hover{
+    background-color: #a4e2ed; 
+}
+/*PARA REPRESENTAR INFORMACION QUE SABE ALGUN NPC*/
+.redButton{
+    border: 3px outset #a01d14;
+    background-color: #fb734e;
+}
+
+.redButton:active{
+    box-shadow: 
+    inset 4px 4px 8px #a01d14, 
+    inset -4px -4px 8px #fb734e; 
+}
+
+.redButton:hover{
+    background-color: #fa9c82; 
+}
+/*PARA REPRESENTAR INFORMACION QUE SABEN TANTO NPC COMO PERSONAJES*/
+.purpleButton{
+    border: 3px outset #a01468;
+    background: linear-gradient(135deg,#21c9e7,#fb734e);
+}
+
+.purpleButton:active{
+    box-shadow: 
+    inset 4px 4px 8px #a01468, 
+    inset -4px -4px 8px #1c2468; 
+}
+
+.purpleButton:hover{
+    background: linear-gradient(135deg,#a4e2ed,#fa9c82);
+}
+/*PARA INFORMACION ENTREGADA EN ESTA ESCENA*/
+.greenButton{
+    border: 3px outset #22681c;
+    background-color: #8be721;
 }
