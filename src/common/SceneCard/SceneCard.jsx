@@ -10,7 +10,7 @@ import { NextPrevButton } from '../NextPrevButton/NextPrevButton';
 import { WoodenButton } from '../WoodenButton/WoodenButton';
 import { sceneInfo } from '../../services/scene.slice';
 import { ButtonInfoCard } from '../ButtonInfoCard/ButtonInfoCard';
-import { getKnowledgeByLocationId, getKnowledgeKnownByCharacterId,  } from '../../services/knowledge.apicalls';
+import { getKnowledgeByCharacterId, getKnowledgeByLocationId, getKnowledgeKnownByCharacterId,  } from '../../services/knowledge.apicalls';
 import { getQuestByCharacterId } from '../../services/quest.apicall';
 
 export const SceneCard = ({ sceneData }) => {
@@ -31,12 +31,18 @@ export const SceneCard = ({ sceneData }) => {
     const [ charactersAtScene, setCharactersAtScene ] = useState([]);
     const [ charactersKnowledge, setChararactersKnowledge] = useState([]);
     const [ locationKnowledge, setLocationKnowledge] = useState([]);
+    const [ aboutCharacters, setAboutCharacters ] = useState([]);
+    const [ filteredKNowledge, setFilteredKnowledge ] = useState([])
+
     const [ charactersQuest, setChararactersQuest] = useState([]);
 
     const [ showMore, setShowMore ] = useState(false);
 
     //USEEFFECT
-    useEffect(() => { getCharactersAtScene(); },[scene]);
+    useEffect(() => { 
+        getCharactersAtScene(); 
+        filterKnownKnowledge();        
+    },[scene]);
 
     useEffect(() => { 
         if (charactersAtScene.length > 0) {
@@ -80,6 +86,12 @@ export const SceneCard = ({ sceneData }) => {
             setLocationKnowledge(result?.data?.data.flat());
         })
         .catch((error) => console.log(error))
+        
+        getKnowledgeByCharacterId(characters_id)
+        .then((result) => { 
+            setAboutCharacters(result?.data?.data.flat());
+        })
+        .catch((error) => console.log(error))
     };
 
     const getAllQuestByCharactersId = () => {
@@ -90,6 +102,15 @@ export const SceneCard = ({ sceneData }) => {
             setChararactersQuest(result?.data?.data);
         })
         .catch((error) => console.log(error))
+    };
+
+    //FUNCIOTNS
+    const filterKnownKnowledge = () => {
+        let knownKnowledgeIds = new Set(charactersKnowledge.map(data => data.Knowledge.id)); 
+
+        let result = aboutCharacters.filter((data) => !knownKnowledgeIds.has(data.id));
+        
+        setFilteredKnowledge(result);
     };
 
     return (
@@ -121,7 +142,10 @@ export const SceneCard = ({ sceneData }) => {
                         {charactersKnowledge.map((data) => {                     
                                 return <ButtonInfoCard key={data.Knowledge.id} infoCard={data} source={"knowledge"}/>
                             })}
-                        {locationKnowledge.map((data, index) => { 
+                        {locationKnowledge.map((data) => { 
+                                return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
+                            })}
+                        {filteredKNowledge.map((data) => { 
                                 return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
                             })}
                     </Col>
