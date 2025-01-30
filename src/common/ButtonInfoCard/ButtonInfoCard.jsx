@@ -14,7 +14,10 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
 
     const [ characters, setCharacters ] = useState(infoCard?.charactersKnow);
 
-    useEffect(() => { classButtonHandler(source); }, []);
+    useEffect(() => { 
+        console.log(source);
+        
+        classButtonHandler(source); }, []);
 
     //HANDLERS
     const handleClose = () => setShow(false);
@@ -22,6 +25,13 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
 
     //HANDLERS
     const classButtonHandler = (source) => {
+        if (source === "characters") {
+            if (infoCard.npc === false) {
+                setButtonClassName('buttonInfoCard blueButton mx-1 my-1');
+            } else if (infoCard.npc === true) {
+                setButtonClassName('buttonInfoCard redButton mx-1 my-1');
+            }
+        }
         
         if (source === "knowledge") {
             let newClassName = '';
@@ -45,7 +55,7 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
         let names = characters.map(data => data.name);
     
         if (names.length === 0) return "";
-        
+
         if (names.length === 1) return names[0]; 
 
         return names.slice(0, -1).join(", ") + " y " + names[names.length - 1];
