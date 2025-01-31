@@ -142,10 +142,10 @@ export const SceneCard = ({ sceneData }) => {
                         {charactersKnowledge.map((data) => {                     
                                 return <ButtonInfoCard key={data.Knowledge.id} infoCard={data} source={"knowledge"}/>
                             })}
-                        {locationKnowledge.map((data) => { 
+                        {filteredKNowledge.map((data) => { 
                                 return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
                             })}
-                        {filteredKNowledge.map((data) => { 
+                        {locationKnowledge.map((data) => { 
                                 return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
                             })}
                     </Col>
