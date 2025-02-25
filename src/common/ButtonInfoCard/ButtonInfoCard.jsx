@@ -171,7 +171,7 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                         <></>
                     )}
                     <Col className='col-12 d-flex justify-content-evenly py-3'>
-                        <WoodenButton activateButton={true} action="back" clickFunction={() => handleClose()}/>
+                        <WoodenButton activateButton={true} action="delive" clickFunction={() => handleClose()}/>
                     </Col>
                 </Modal.Body>
             </Modal>

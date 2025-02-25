@@ -77,6 +77,11 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
                 
                 return {text: "Borrar", classButton: "deleteButtonDesign", classText: "deleteText d-flex justify-content-center align-items-center fw-bold"};
                 break;
+            
+            case "delive":
+                
+                return {text: "Entregar", classButton: "sendButtonDesign", classText: "sendText d-flex justify-content-center align-items-center fw-bold"};
+                break;
         
             default:
                 break;
@@ -106,7 +111,7 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
                         </Modal.Footer>
                     </Modal>
                 </>
-            ) : (
+                ) : (
                 action === "submit" ? (
                     <>
                         <div className={buttonDesign.classButton} onClick={() => handleActivate()}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
@@ -128,10 +133,32 @@ export const WoodenButton = ({ activateButton, action, clickFunction }) => {
                             </Modal.Footer>
                         </Modal>
                     </>
-                ): (
-                    <div className={buttonDesign.classButton} onClick={clickFunction}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
-                )
-            )}
+                    ) : (
+                    action === "delive" ? (
+                        <>
+                            <div className={buttonDesign.classButton} onClick={() => handleActivate()}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
+                            <Modal show={show} onHide={() => handleClose()}>
+                                <Modal.Header className=' text-center' closeButton>
+                                    <Modal.Title></Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body className='text-center'>
+                                    <p>Estamos a un paso de registrar la información en nuestra biblioteca.</p>
+                                    <p>¿Quieres que nuestros especialistas archiven esta información?</p>
+                                </Modal.Body>
+                                <Modal.Footer className='d-flex justify-content-evenly'>
+                                    <div>
+                                        <WoodenButton  action="back" clickFunction={() => setShow(false)}/>
+                                    </div>
+                                    <div>
+                                        <WoodenButton  action="send" clickFunction={clickFunction}/>
+                                    </div>
+                                </Modal.Footer>
+                            </Modal>
+                        </>
+                        ): (
+                        <div className={buttonDesign.classButton} onClick={clickFunction}><p className={buttonDesign.classText}>{buttonDesign.text}</p></div>
+                    )
+            ))}
         </Container>
     )
 };
