@@ -68,8 +68,19 @@
     border: 3px outset #22681c;
     background-color: #8be721;
 }
+.greenButton:active{
+    box-shadow: 
+    inset 4px 4px 8px #8be721, 
+    inset -4px -4px 8px #22681c; 
+}
+.greenButton:hover{
+    background-color: #bef87d; 
+}
 /*PARA REPRESENTAR INFORMACION DESCONOCIDA POR UN PERSONAJE/PNJ EN LA ESCENA*/
 .greyButton{
     border: 3px outset #3e3e3e;
     background-color: #c5c6c4;
+}
+.greyButton:hover{
+    background-color: #eeefee; 
 }

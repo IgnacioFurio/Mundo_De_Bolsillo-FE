@@ -132,7 +132,7 @@ export const ButtonInfoCard = ({ infoCard, moreData, source }) => {
                                     {Array.isArray(characters) ? (
                                         charactersKnowledge.map((data) => (
                                             <button key={data.id} className='buttonInfoCard greenButton mx-1 my-1'>
-                                            {data.name}
+                                                {data.name}
                                             </button>
                                         ))
                                         ) : (
@@ -142,7 +142,7 @@ export const ButtonInfoCard = ({ infoCard, moreData, source }) => {
                                     {Array.isArray(characters) ? (
                                         charactersIgnoringKnowledge.map((data) => (
                                             <button key={data.id} className='buttonInfoCard greyButton mx-1 my-1'>
-                                            {data.name}
+                                                {data.name}
                                             </button>
                                         ))
                                         ) : (
