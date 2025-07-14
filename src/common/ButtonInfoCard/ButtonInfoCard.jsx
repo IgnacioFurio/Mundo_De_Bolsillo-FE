@@ -5,22 +5,28 @@ import { WoodenButton } from '../WoodenButton/WoodenButton';
 import "./ButtonInfoCard.css";
 
 
-export const ButtonInfoCard = ({ infoCard, source }) => {
+export const ButtonInfoCard = ({ infoCard, moreData, source }) => {
     const [show, setShow] = useState(false);
 
     const [ sourceType, setSourceType ] = useState(source);
 
     const [ buttonClassName, setButtonClassName ]  = useState('buttonInfoCard mx-1 my-1');
 
-    const [ characters, setCharacters ] = useState(infoCard?.charactersKnow);
+    const [ characters, setCharacters ] = useState(moreData ?? []);
+    const [ charactersKnowledge, setCharactersKnowledge ] = useState(infoCard?.charactersKnow ?? []);
+    const [ charactersIgnoringKnowledge, setCharactersIgnoringKnowledge ] = useState([]);
 
-    useEffect(() => { classButtonHandler(source); }, []);
+    const [ charactersGrantedKnowledge , setCharactersGrantedKnowledge ] = useState("");
+
+    useEffect(() => { 
+        classButtonHandler(source);
+        filterCharactersKnowledge(characters, charactersKnowledge)       
+     }, []);
 
     //HANDLERS
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    //HANDLERS
     const classButtonHandler = (source) => {
         if (source === "characters") {
             if (infoCard.npc === false) {
@@ -30,10 +36,10 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
             }
         };
         
-        if (source === "knowledge" && characters) {
+        if (source === "knowledge" && charactersKnowledge) {
             let newClassName = '';
-            let hasPlayerCharacter = characters.some(data => data.npc === false);
-            let hasNonPlayerCharacter = characters.some(data => data.npc === true);
+            let hasPlayerCharacter = charactersKnowledge.some(data => data.npc === false);
+            let hasNonPlayerCharacter = charactersKnowledge.some(data => data.npc === true);
             
             if (hasPlayerCharacter === true && hasNonPlayerCharacter === true ) {
                 newClassName = 'buttonInfoCard purpleButton mx-1 my-1';
@@ -47,16 +53,13 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
         };
     };
 
-    const concantNames = (characters) => {        
-        if (!characters){ return };
+    //FUNCTIONS
+    const filterCharactersKnowledge = (characters, charactersKnowledge) => {
+        let charactersIdKnowledge = charactersKnowledge.map(data => {return data.id}) 
 
-        let names = characters.map(data => data.name);
-    
-        if (names.length === 0) return "";
-
-        if (names.length === 1) return names[0]; 
-
-        return names.slice(0, -1).join(", ") + " y " + names[names.length - 1];
+        let charactersSet = new Set(charactersIdKnowledge)
+        let ignorantCharacters = characters.filter(data => !charactersSet.has(data.id))
+        setCharactersIgnoringKnowledge(ignorantCharacters);
     };
 
     return (
@@ -124,9 +127,29 @@ export const ButtonInfoCard = ({ infoCard, source }) => {
                             </Row>
                             <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='charactersKnowIcon col-2 fw-bold text-center' title='Lo saben ...'></Col>
-                                <Col className='col-10 flex-wrap'>
-                                    {concantNames(infoCard?.charactersKnow) || "??"}
+                                <Col className='col-10 flex-wrap    '>
+                                    {/*Characters that know the info*/}
+                                    {Array.isArray(characters) ? (
+                                        charactersKnowledge.map((data) => (
+                                            <button key={data.id} className='buttonInfoCard greenButton mx-1 my-1'>
+                                            {data.name}
+                                            </button>
+                                        ))
+                                        ) : (
+                                        <p>??</p>
+                                        )}
+                                    {/*Characters that ignore the info*/}
+                                    {Array.isArray(characters) ? (
+                                        charactersIgnoringKnowledge.map((data) => (
+                                            <button key={data.id} className='buttonInfoCard greyButton mx-1 my-1'>
+                                            {data.name}
+                                            </button>
+                                        ))
+                                        ) : (
+                                        <p>??</p>
+                                        )}
                                 </Col>
+                                <Col className='col-2 d-flex justify-content-center border' onClick={() => filterCharactersKnowledge(characters, charactersKnowledge)}>+</Col>
                             </Row>
                             <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                                 <Col className='characterIcon col-2 fw-bold text-center' title='Acerca de ...'></Col>

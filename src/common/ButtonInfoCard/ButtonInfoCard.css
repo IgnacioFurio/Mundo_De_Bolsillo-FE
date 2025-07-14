@@ -63,8 +63,13 @@
 .purpleButton:hover{
     background: linear-gradient(135deg,#a4e2ed,#fa9c82);
 }
-/*PARA INFORMACION ENTREGADA EN ESTA ESCENA*/
+/*PARA REPRESENTAR INFORMACION CONOCIDA POR UN PERSONAJE/PNJ EN LA ESCENA*/
 .greenButton{
     border: 3px outset #22681c;
     background-color: #8be721;
+}
+/*PARA REPRESENTAR INFORMACION DESCONOCIDA POR UN PERSONAJE/PNJ EN LA ESCENA*/
+.greyButton{
+    border: 3px outset #3e3e3e;
+    background-color: #c5c6c4;
 }

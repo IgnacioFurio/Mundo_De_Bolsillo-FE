@@ -41,14 +41,14 @@ export const SceneCard = ({ sceneData }) => {
     //USEEFFECT
     useEffect(() => { 
         getCharactersAtScene(); 
-        filterKnownKnowledge();        
+        filterKnownKnowledge();                
     },[scene]);
 
     useEffect(() => { 
         if (charactersAtScene.length > 0) {
             getAllKnowledgeAtScene();
             getAllQuestByCharactersId();
-        };
+        };        
     }, [charactersAtScene]);
 
     //HANDLER
@@ -139,15 +139,17 @@ export const SceneCard = ({ sceneData }) => {
                 <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
                     <Col className='knowledgeIcon col-2 fw-bold text-center' title='Información'></Col>
                     <Col className='col-10 my-1 d-flex flex-wrap'>
-                        {charactersKnowledge.map((data) => {                     
-                                return <ButtonInfoCard key={data.Knowledge.id} infoCard={data} source={"knowledge"}/>
+                        {charactersKnowledge.map((data) => {    
+                            console.log(data);
+                                             
+                                return <ButtonInfoCard key={data.Knowledge.id} infoCard={data} moreData={charactersAtScene} source={"knowledge"}/>
                             })}
-                        {filteredKNowledge.map((data) => { 
-                                return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
+                        {/* {filteredKNowledge.map((data) => { 
+                                return <ButtonInfoCard key={data.id} infoCard={data}  source={"knowledge"}/>
                             })}
                         {locationKnowledge.map((data) => { 
                                 return <ButtonInfoCard key={data.id} infoCard={data} source={"knowledge"}/>
-                            })}
+                            })} */}
                     </Col>
                 </Row>
                 <Row className='borderDataCard d-flex border border-black justify-content-start align-items-center py-1 px-2'>                            
